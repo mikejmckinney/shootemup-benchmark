@@ -614,5 +614,39 @@ for (const row of rows) {
   if (!pattern.test(readme)) throw new Error(`README metrics marker missing or malformed: ${row.treatment}`);
   readme = readme.replace(pattern, metrics);
 }
+
+// Keep the candidate gallery in the same descending gate-adjusted-ROI order as
+// the generated results table. Non-candidate sections (such as exploratory
+// continuations) retain their relative order after the ranked gallery.
+const headingStarts = [...readme.matchAll(/^## /gm)].map(match => match.index);
+const candidateSections = [];
+for (let index = 0; index < headingStarts.length; index += 1) {
+  const start = headingStarts[index];
+  const headingEnd = headingStarts[index + 1] ?? readme.length;
+  const headingSection = readme.slice(start, headingEnd);
+  const generatedSectionOffset = headingSection.indexOf("<!-- GENERATED_CONTINUATION_RESULTS_START -->");
+  const end = generatedSectionOffset >= 0 ? start + generatedSectionOffset : headingEnd;
+  const section = readme.slice(start, end);
+  const marker = section.match(/<!-- GENERATED_METRICS:([a-z0-9_]+) -->/);
+  if (marker) candidateSections.push({ treatment: marker[1], start, end, section });
+}
+
+const sectionsByTreatment = new Map(candidateSections.map(section => [section.treatment, section]));
+for (const row of decisionRows) {
+  if (!sectionsByTreatment.has(row.treatment)) {
+    throw new Error(`README gallery section missing: ${row.treatment}`);
+  }
+}
+if (candidateSections.length !== decisionRows.length) {
+  throw new Error(`README gallery has ${candidateSections.length} candidate sections; expected ${decisionRows.length}`);
+}
+
+const galleryStart = Math.min(...candidateSections.map(section => section.start));
+for (const section of [...candidateSections].sort((left, right) => right.start - left.start)) {
+  readme = `${readme.slice(0, section.start)}${readme.slice(section.end)}`;
+}
+const orderedGallery = decisionRows.map(row => sectionsByTreatment.get(row.treatment).section).join("");
+readme = `${readme.slice(0, galleryStart)}${orderedGallery}${readme.slice(galleryStart)}`;
+
 fs.writeFileSync(readmePath, readme);
 console.log(report);
