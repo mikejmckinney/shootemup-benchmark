@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_sol_low_opencode",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-sol-low-opencode.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-sol-low-opencode",
+  "supabase_url": "https://dzaanahymatycckwzgyi.supabase.co",
+  "supabase_project_ref": "dzaanahymatycckwzgyi",
+  "supabase_public_key": "sb_publishable_LpMrOWVggFN4ru78vh1CnA_rFm9OC8w",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Production game deployed; live anonymous leaderboard insert/read and database rejection of invalid payloads verified."
+}

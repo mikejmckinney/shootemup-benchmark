@@ -1,0 +1,20 @@
+{
+  "requests": {
+    "http://127.0.0.1:9301|neon-barrage-ui-game-v1": {
+      "base_url": "http://127.0.0.1:9301",
+      "idempotency_key": "neon-barrage-ui-game-v1",
+      "message_sha256": "0f3f46898fce65af2f3001ad05c5a0ddcb1d90e68d0d25e807f290361410f1c5",
+      "retry_owner": "coordinator",
+      "submitted_at": 1786073054.6907775,
+      "task_id": "7250a7b4-f442-48e5-bcf5-3ff19a60e854"
+    },
+    "http://127.0.0.1:9302|neon-barrage-platform-data-v1": {
+      "base_url": "http://127.0.0.1:9302",
+      "idempotency_key": "neon-barrage-platform-data-v1",
+      "message_sha256": "d30243e48e0374ffe038a399cd7b78a36607ed7d9ac58553ae32b525f9f45ff7",
+      "retry_owner": "coordinator",
+      "submitted_at": 1786073066.2720246,
+      "task_id": "5e9ecab9-0fb7-4159-a8ef-9a75fd1aff80"
+    }
+  }
+}

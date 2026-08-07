@@ -1,0 +1,108 @@
+{
+  "source": "OpenCode SQLite session ledger",
+  "database": "/home/codespace/.local/share/opencode/opencode.db",
+  "selection": {
+    "candidate_directory": "/workspaces/shootemup-benchmark/candidates/a2a_async_streaming_opencode",
+    "started_ms": 1786073005679,
+    "ended_ms": 1786074128674,
+    "rule": "sessions rooted in candidate directory during run, plus recursive parent_id descendants"
+  },
+  "agents_started": 3,
+  "root_sessions": 3,
+  "child_sessions": 0,
+  "peak_concurrent_agents": 3,
+  "turns": 127,
+  "tool_calls": 262,
+  "coordination_events": 0,
+  "coordination_tool_calls": 0,
+  "tool_counts": {
+    "todowrite": 11,
+    "glob": 34,
+    "read": 45,
+    "bash": 146,
+    "grep": 15,
+    "apply_patch": 11
+  },
+  "usage": {
+    "input_tokens": 7940759,
+    "cached_input_tokens": 7593984,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 109039,
+    "reasoning_output_tokens": 52799
+  },
+  "provider_reported_cost_usd": 0,
+  "sessions": [
+    {
+      "id": "ses_025c0b31dffedK8q7wKlkTL543",
+      "project_id": "d3d5dcdbe766d05435173da528dfdc4f9085277b",
+      "workspace_id": null,
+      "parent_id": null,
+      "slug": "brave-orchid",
+      "directory": "/workspaces/shootemup-benchmark/candidates/a2a_async_streaming_opencode",
+      "title": "Coordinating A2A Async Streaming OpenCode Benchmark",
+      "version": "1.18.14",
+      "cost": 0,
+      "tokens_input": 185733,
+      "tokens_output": 15292,
+      "tokens_reasoning": 15061,
+      "tokens_cache_read": 5881344,
+      "tokens_cache_write": 0,
+      "agent": "build",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786073009378,
+      "time_updated": 1786074128504
+    },
+    {
+      "id": "ses_025bff3b6ffeXEhHy9pmY4qtlV",
+      "project_id": "d3d5dcdbe766d05435173da528dfdc4f9085277b",
+      "workspace_id": null,
+      "parent_id": null,
+      "slug": "brave-knight",
+      "directory": "/workspaces/shootemup-benchmark/candidates/a2a_async_streaming_opencode",
+      "title": "Neon Barrage Frontend Game Implementation",
+      "version": "1.18.14",
+      "cost": 0,
+      "tokens_input": 83525,
+      "tokens_output": 28381,
+      "tokens_reasoning": 17174,
+      "tokens_cache_read": 967168,
+      "tokens_cache_write": 0,
+      "agent": "build",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786073058378,
+      "time_updated": 1786073986593
+    },
+    {
+      "id": "ses_025bfc1a7ffey20hn58w4UCdF6",
+      "project_id": "d3d5dcdbe766d05435173da528dfdc4f9085277b",
+      "workspace_id": null,
+      "parent_id": null,
+      "slug": "calm-eagle",
+      "directory": "/workspaces/shootemup-benchmark/candidates/a2a_async_streaming_opencode",
+      "title": "Neon Barrage Data Layer Implementation",
+      "version": "1.18.14",
+      "cost": 0,
+      "tokens_input": 77517,
+      "tokens_output": 12567,
+      "tokens_reasoning": 20564,
+      "tokens_cache_read": 745472,
+      "tokens_cache_write": 0,
+      "agent": "build",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786073071192,
+      "time_updated": 1786073936046
+    }
+  ]
+}

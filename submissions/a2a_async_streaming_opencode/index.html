@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080a1a" />
+    <meta
+      name="description"
+      content="Neon Barrage is a fast, responsive browser arcade shooter."
+    />
+    <title>Neon Barrage // Arcade Defense</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Neon Barrage home">
+          <span class="brand-mark" aria-hidden="true">NB</span>
+          <span class="brand-name">NEON <strong>BARRAGE</strong></span>
+        </a>
+        <div class="topbar-center" aria-label="Arcade connection status">
+          <span class="status-dot" id="connectionDot" aria-hidden="true"></span>
+          <span id="connectionLabel">ARCADE LINK READY</span>
+        </div>
+        <button
+          class="mute-button"
+          id="muteButton"
+          data-testid="mute-button"
+          type="button"
+          aria-pressed="false"
+          aria-label="Mute sound"
+        >
+          <span class="speaker-icon" id="speakerIcon" aria-hidden="true">)))</span>
+          <span id="muteLabel">SOUND ON</span>
+        </button>
+      </header>
+
+      <main class="app-shell">
+        <section class="game-column" aria-labelledby="mission-heading">
+          <div class="section-kicker">
+            <p>SECTOR 07 <span>/</span> LIVE FIRE</p>
+            <p class="phase-readout" id="phaseLabel">STANDBY</p>
+          </div>
+
+          <div class="game-card">
+            <div class="game-card-topline">
+              <div>
+                <p class="card-eyebrow">ORBITAL DEFENSE NETWORK</p>
+                <h1 id="mission-heading">Hold the line.</h1>
+              </div>
+              <div class="mission-chip"><span></span> MISSION 01</div>
+            </div>
+
+            <div class="hud" aria-label="Mission status">
+              <div class="hud-block hud-score">
+                <span class="hud-label">SCORE</span>
+                <strong id="score" data-testid="score">0</strong>
+              </div>
+              <div class="hud-divider" aria-hidden="true"></div>
+              <div class="hud-block">
+                <span class="hud-label">LIVES</span>
+                <strong id="lives" data-testid="lives">3</strong>
+              </div>
+              <div class="hud-divider" aria-hidden="true"></div>
+              <div class="hud-block">
+                <span class="hud-label">WAVE</span>
+                <strong id="level">01</strong>
+              </div>
+              <div class="hud-spacer"></div>
+              <div class="target-readout">
+                <span class="hud-label">THREAT</span>
+                <span id="threatLabel">SCANNING</span>
+              </div>
+            </div>
+
+            <div class="game-stage" id="gameStage" data-phase="ready">
+              <canvas
+                id="gameCanvas"
+                data-testid="game-canvas"
+                width="960"
+                height="540"
+                aria-label="Neon Barrage game field"
+              ></canvas>
+              <div class="stage-grid" aria-hidden="true"></div>
+              <div class="stage-noise" aria-hidden="true"></div>
+
+              <div class="ready-overlay stage-overlay" id="readyOverlay">
+                <div class="ready-mark" aria-hidden="true"><span>NB</span></div>
+                <p class="overlay-kicker">INCOMING SIGNAL</p>
+                <h2>Defend the <em>last light.</em></h2>
+                <p class="overlay-copy">
+                  Pilot the interceptor, chain your shots, and survive the rising swarm.
+                </p>
+              </div>
+
+              <div class="gameover-overlay stage-overlay" id="gameOverOverlay" hidden>
+                <div class="gameover-card">
+                  <p class="overlay-kicker">SIGNAL LOST</p>
+                  <h2>Run complete.</h2>
+                  <p class="final-score-label">FINAL SCORE <strong id="finalScore">0</strong></p>
+                  <form id="scoreForm" novalidate>
+                    <label class="input-label" for="playerName">
+                      <span>PILOT TAG</span>
+                      <span>1-16 CHARACTERS</span>
+                    </label>
+                    <div class="input-row">
+                      <input
+                        id="playerName"
+                        data-testid="player-name"
+                        name="name"
+                        type="text"
+                        maxlength="16"
+                        minlength="1"
+                        autocomplete="nickname"
+                        placeholder="ENTER YOUR TAG"
+                        spellcheck="false"
+                        aria-describedby="submitStatus"
+                      />
+                      <button id="submitScore" data-testid="submit-score" type="submit">
+                        TRANSMIT
+                      </button>
+                    </div>
+                    <p class="form-status" id="submitStatus" role="status" aria-live="polite"></p>
+                  </form>
+                </div>
+              </div>
+
+              <div class="mission-action">
+                <button id="startButton" data-testid="start-button" type="button">
+                  LAUNCH MISSION
+                </button>
+                <span id="actionHint">CLICK TO DEPLOY</span>
+              </div>
+            </div>
+
+            <div class="touch-controls" data-testid="touch-controls" aria-label="Touch controls">
+              <div class="touch-pad">
+                <button type="button" class="touch-button touch-up" data-control="up" aria-label="Move up">UP</button>
+                <button type="button" class="touch-button touch-left" data-control="left" aria-label="Move left">LEFT</button>
+                <button type="button" class="touch-button touch-down" data-control="down" aria-label="Move down">DOWN</button>
+                <button type="button" class="touch-button touch-right" data-control="right" aria-label="Move right">RIGHT</button>
+              </div>
+              <button type="button" class="touch-fire" data-control="fire" aria-label="Fire weapon">
+                <span>FIRE</span>
+              </button>
+            </div>
+
+            <div class="game-footer">
+              <div class="control-hint">
+                <span class="keycap">W</span><span class="keycap">A</span><span class="keycap">S</span><span class="keycap">D</span>
+                <span>MOVE</span>
+                <span class="keycap wide-key">SPACE</span><span>FIRE</span>
+              </div>
+              <p class="run-status" id="runStatus" role="status" aria-live="polite">Systems nominal. Awaiting pilot.</p>
+            </div>
+          </div>
+        </section>
+
+        <aside class="side-column" aria-label="Mission intel">
+          <section class="leaderboard-card">
+            <div class="side-heading">
+              <div>
+                <p class="card-eyebrow">PUBLIC CHANNEL</p>
+                <h2>Top pilots</h2>
+              </div>
+              <span class="rank-count" id="leaderboardCount">TOP 10</span>
+            </div>
+            <div class="leaderboard" id="leaderboard" data-testid="leaderboard" aria-live="polite">
+              <div class="leaderboard-state loading-state">
+                <span class="loading-bar"></span>
+                <span class="loading-bar short"></span>
+                <span class="loading-bar"></span>
+              </div>
+            </div>
+            <button class="refresh-button" id="refreshLeaderboard" type="button">
+              <span aria-hidden="true">&#8635;</span> REFRESH CHANNEL
+            </button>
+          </section>
+
+          <section class="briefing-card">
+            <div class="briefing-orbit" aria-hidden="true"><span></span></div>
+            <p class="card-eyebrow">FIELD BRIEFING</p>
+            <h2>Read the pattern.</h2>
+            <p>
+              The swarm accelerates every wave. Keep moving through the crossfire and let the
+              overdrive meter build your score.
+            </p>
+            <div class="briefing-meta">
+              <span><i class="meta-dot cyan"></i> LIVE COMBAT</span>
+              <span><i class="meta-dot pink"></i> SCORE SYNC</span>
+            </div>
+          </section>
+        </aside>
+      </main>
+
+      <footer class="site-footer">
+        <span>NB // ORBITAL DEFENSE NETWORK</span>
+        <span>ALL SYSTEMS <b>GO</b></span>
+      </footer>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

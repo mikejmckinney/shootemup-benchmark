@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_luna_max_opencode_retest",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-luna-max-opencode-retest.mikejmckinney.workers.dev",
+  "cloudflare_project": "shootemup-bench-monolith-luna-max-opencode-retest",
+  "supabase_url": "https://tzndzreblsmiktsqxufo.supabase.co",
+  "supabase_project_ref": "tzndzreblsmiktsqxufo",
+  "supabase_public_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6bmR6cmVibHNtaWt0c3F4dWZvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMzg3MzgsImV4cCI6MjEwMTYxNDczOH0.l8DkEeKIVddBfwN9-8JpuksLWz7EBnHkpMDoBUAEksY",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Deployed as a Cloudflare Worker static-assets bundle; Supabase RLS migration applied and anonymous insert/read round trip verified."
+}

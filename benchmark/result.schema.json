@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["treatment", "status", "cloudflare_url", "cloudflare_project", "supabase_url", "supabase_project_ref", "supabase_public_key", "verification", "notes"],
+  "properties": {
+    "treatment": {"type": "string"},
+    "status": {"const": "complete"},
+    "cloudflare_url": {"type": "string", "format": "uri"},
+    "cloudflare_project": {"type": "string"},
+    "supabase_url": {"type": "string", "format": "uri"},
+    "supabase_project_ref": {"type": "string"},
+    "supabase_public_key": {"type": "string"},
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["production_http_status", "leaderboard_round_trip", "tests_passed"],
+      "properties": {
+        "production_http_status": {"const": 200},
+        "leaderboard_round_trip": {"const": true},
+        "tests_passed": {"const": true}
+      }
+    },
+    "notes": {"type": "string"}
+  }
+}

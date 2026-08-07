@@ -1,0 +1,8 @@
+Complete and verified.
+
+- Live game: [Cloudflare Pages](https://shootemup-bench-native-isolated-neon-barrage-pages.pages.dev)
+- Supabase project: `gajiddibjfrhrjioliqx`
+- Verification: HTTP 200, leaderboard round trip passed, invalid insert rejected, browser adapter/UI checks passed, 7 tests passed.
+- Artifacts: [benchmark-result.json](/workspaces/shootemup-benchmark/candidates/native_isolated/benchmark-result.json), [README.md](/workspaces/shootemup-benchmark/candidates/native_isolated/README.md), [coordination-log.md](/workspaces/shootemup-benchmark/candidates/native_isolated/coordination-log.md)
+
+Deployment and database security followed the current [Cloudflare Pages](https://developers.cloudflare.com/pages/get-started/direct-upload/) and [Supabase API security](https://supabase.com/docs/guides/api/securing-your-api) guidance.

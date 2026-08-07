@@ -1,0 +1,16 @@
+.gitignore
+BENCHMARK_TASK.md
+README.md
+benchmark-result.json
+dist/assets/index-CJKwnX2T.js
+dist/assets/index-C_gaDX_S.css
+dist/index.html
+index.html
+package-lock.json
+package.json
+src/config.js
+src/game-logic.js
+src/main.js
+src/style.css
+supabase/migrations/001_create_leaderboard.sql
+tests/game-logic.test.mjs

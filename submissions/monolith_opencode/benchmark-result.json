@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_opencode",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-opencode-neon-barrage.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-opencode-neon-barrage",
+  "supabase_url": "https://lyyyxbxacrxqflxmtlqq.supabase.co",
+  "supabase_project_ref": "lyyyxbxacrxqflxmtlqq",
+  "supabase_public_key": "sb_publishable_cgwOqQeY8eHfwsHYrnepJw_5kfrA-sD",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Deployed the responsive canvas shooter and applied append-only public leaderboard RLS; verified a live insert/read round trip as VERIFY."
+}

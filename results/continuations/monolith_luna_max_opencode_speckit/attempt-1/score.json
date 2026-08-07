@@ -1,0 +1,32 @@
+{
+  "treatment": "monolith_luna_max_opencode_speckit",
+  "continuation_attempt": 1,
+  "classification": "exploratory completion after the original timeout",
+  "automated_points": 52,
+  "manual_points": 41,
+  "pre_regression_score": 93,
+  "posthoc_deductions": {
+    "physical_name_entry": 2,
+    "total": 2
+  },
+  "corrected_score": 91,
+  "quality_gate_factor": 0.8,
+  "original_run": {
+    "elapsed_seconds": 2700,
+    "estimated_api_cost_usd": 0.47956064,
+    "total_tokens": 13824267
+  },
+  "continuation": {
+    "elapsed_seconds": 2577,
+    "estimated_api_cost_usd": 0.70387872,
+    "total_tokens": 24238397
+  },
+  "cumulative": {
+    "elapsed_seconds": 5277,
+    "elapsed_minutes": 87.95,
+    "estimated_api_cost_usd": 1.18343936,
+    "total_tokens": 38062664,
+    "gate_adjusted_roi": 7.135763580604206
+  },
+  "roi_formula": "score * clamp((score - 87) / 5, 0, 1) / sqrt(cost_usd * elapsed_minutes)"
+}

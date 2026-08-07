@@ -1,0 +1,16 @@
+
+> neon-barrage@1.0.0 test
+> node --test tests/*.test.mjs
+
+✔ initial game state is ready with a full hull (2.282492ms)
+✔ circle collision detects overlap but not separated objects (0.502067ms)
+✔ score and callsign validation rejects unsafe or impossible values (0.412503ms)
+✔ difficulty escalates as score crosses wave thresholds (0.623326ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 159.086004

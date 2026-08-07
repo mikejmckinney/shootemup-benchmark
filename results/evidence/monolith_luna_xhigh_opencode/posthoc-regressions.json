@@ -1,0 +1,60 @@
+{
+  "treatment": "monolith_luna_xhigh_opencode",
+  "evaluated_at": "2026-08-06T04:41:56.859Z",
+  "live_url": "https://shootemup-bench-monolith-luna-xhigh-opencode-neon-barrage.pages.dev",
+  "methodology": "Live production build with Supabase REST requests mocked in-browser; no leaderboard rows were written.",
+  "checks": {
+    "progression_start_consistency": {
+      "passed": true,
+      "applicable": false,
+      "before": null,
+      "after": null
+    },
+    "physical_name_entry": {
+      "passed": false,
+      "expected": "WASD wasd",
+      "actual": ""
+    },
+    "advertised_keyboard_restart": {
+      "passed": true,
+      "advertised": false,
+      "applicable": false
+    },
+    "immediate_click_restart": {
+      "passed": false,
+      "button_found": false,
+      "state": {
+        "phase": "gameover",
+        "score": 7317,
+        "lives": 3,
+        "playerX": 480,
+        "playerY": 528,
+        "enemyCount": 1,
+        "projectileCount": 0
+      }
+    }
+  },
+  "requests": [],
+  "console_errors": [
+    "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+    "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+  ],
+  "page_errors": [],
+  "http_status": 200,
+  "progress_before_start": [],
+  "progress_after_start": [],
+  "state_after_submit": {
+    "phase": "gameover",
+    "score": 7317,
+    "lives": 3,
+    "playerX": 480,
+    "playerY": 528,
+    "enemyCount": 1,
+    "projectileCount": 0
+  },
+  "active_element_after_submit": {
+    "tag": "BODY",
+    "id": null,
+    "testid": null
+  }
+}

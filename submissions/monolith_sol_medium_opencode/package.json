@@ -1,0 +1,19 @@
+{
+  "name": "neon-barrage",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "vitest run",
+    "test:production": "node tests/production-smoke.mjs",
+    "typecheck": "tsc --noEmit --allowJs --checkJs --skipLibCheck --target ES2022 --module ESNext --moduleResolution bundler src/game-core.js"
+  },
+  "devDependencies": {
+    "playwright": "1.54.1",
+    "typescript": "5.8.3",
+    "vite": "6.3.5",
+    "vitest": "3.1.4"
+  }
+}

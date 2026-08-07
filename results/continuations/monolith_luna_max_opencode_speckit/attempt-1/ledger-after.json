@@ -1,0 +1,50 @@
+{
+  "source": "OpenCode SQLite recursive session tree",
+  "database": "/home/codespace/.local/share/opencode/opencode.db",
+  "root_session": "ses_02762193effe5yp6vPjG8s7okm",
+  "captured_at": "2026-08-06T23:05:43.446Z",
+  "sessions_count": 1,
+  "child_sessions": 0,
+  "turns": 234,
+  "tool_calls": 442,
+  "coordination_tool_calls": 0,
+  "tool_counts": {
+    "todowrite": 21,
+    "glob": 18,
+    "read": 142,
+    "bash": 151,
+    "apply_patch": 48,
+    "grep": 59,
+    "webfetch": 3
+  },
+  "usage": {
+    "input_tokens": 37869232,
+    "cached_input_tokens": 36791808,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 193432,
+    "reasoning_output_tokens": 83417
+  },
+  "provider_reported_cost_usd": 0,
+  "sessions": [
+    {
+      "id": "ses_02762193effe5yp6vPjG8s7okm",
+      "parent_id": null,
+      "directory": "/workspaces/shootemup-benchmark/candidates/monolith_luna_max_opencode_speckit",
+      "title": "BENCHMARK_TASK.md Constitution Principles Setup",
+      "cost": 0,
+      "tokens_input": 1077424,
+      "tokens_output": 110015,
+      "tokens_reasoning": 83417,
+      "tokens_cache_read": 36791808,
+      "tokens_cache_write": 0,
+      "agent": "build",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786045654721,
+      "time_updated": 1786057542906
+    }
+  ]
+}

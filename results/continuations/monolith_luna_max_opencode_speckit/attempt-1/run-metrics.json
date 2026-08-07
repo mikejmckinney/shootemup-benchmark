@@ -1,0 +1,25 @@
+{
+  "treatment": "monolith_luna_max_opencode_speckit",
+  "continuation_attempt": 1,
+  "started_at": "2026-08-06T22:22:46Z",
+  "ended_at": "2026-08-06T23:05:43Z",
+  "exit_code": 0,
+  "timed_out": false,
+  "limit_seconds": 2700,
+  "wall_seconds": 2577,
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "runtime": "opencode",
+  "usage": {
+    "input_tokens": 24166062,
+    "cached_input_tokens": 23422976,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 72335,
+    "reasoning_output_tokens": 25974
+  },
+  "turns": 137,
+  "tool_calls": 213,
+  "resumed_root_agents": 1,
+  "new_child_sessions": 0,
+  "coordination_tool_calls": 0
+}

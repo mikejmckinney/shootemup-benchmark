@@ -1,0 +1,24 @@
+{
+  "treatment": "dynamic_luna_max_opencode_superpowers",
+  "continuation_attempt": 6,
+  "status": "stopped_by_user",
+  "started_at": "2026-08-07T02:28:29Z",
+  "last_durable_session_update": "2026-08-07T02:37:10Z",
+  "measured_wall_seconds": 521,
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "runtime": "opencode",
+  "usage": {
+    "input_tokens": 2014602,
+    "cached_input_tokens": 1878528,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 24907,
+    "reasoning_output_tokens": 17081,
+    "total_tokens": 2039509
+  },
+  "estimated_api_cost_usd": 0.09467376,
+  "turns": 23,
+  "tool_calls": 50,
+  "new_child_sessions": 1,
+  "coordination_tool_calls": 1
+}

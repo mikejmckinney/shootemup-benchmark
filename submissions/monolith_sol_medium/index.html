@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#050414" />
+    <meta name="description" content="Neon Barrage — a synthwave browser shoot-'em-up." />
+    <title>Neon Barrage</title>
+  </head>
+  <body>
+    <div class="stars stars-a"></div><div class="stars stars-b"></div>
+    <header class="masthead">
+      <a class="brand" href="#game" aria-label="Neon Barrage home">
+        <span class="brand-mark">NB</span><span><small>THE OUTER GRID PRESENTS</small>NEON BARRAGE</span>
+      </a>
+      <button class="icon-button" data-testid="mute-button" aria-pressed="false" aria-label="Mute sound">
+        <span class="sound-icon">◖))</span><span class="mute-label">SOUND ON</span>
+      </button>
+    </header>
+
+    <main class="shell" id="game">
+      <section class="game-column" aria-label="Game area">
+        <div class="eyebrow"><span>SECTOR 07</span><span class="status-dot">SYSTEM ONLINE</span></div>
+        <div class="game-frame">
+          <div class="hud">
+            <div><small>SCORE</small><strong data-testid="score">000000</strong></div>
+            <div class="hud-center"><span></span><b>THREAT LEVEL <em id="level">01</em></b><span></span></div>
+            <div class="lives"><small>SHIELDS</small><strong data-testid="lives" aria-label="3 lives">◆ ◆ ◆</strong></div>
+          </div>
+          <div class="canvas-wrap">
+            <canvas width="800" height="900" data-testid="game-canvas" aria-label="Neon Barrage game canvas"></canvas>
+            <div class="scanlines"></div>
+            <div class="game-overlay" id="overlay">
+              <div class="reticle"><i></i><i></i><i></i></div>
+              <p class="kicker" id="overlay-kicker">PILOT LINK READY</p>
+              <h1 id="overlay-title">ENTER THE<br><span>BARRAGE</span></h1>
+              <p id="overlay-copy">Move through the grid. Break the swarm.<br>Chase a place among the legends.</p>
+              <button class="primary-button" data-testid="start-button"><span id="start-label">INITIATE LAUNCH</span><b>›</b></button>
+              <p class="key-hint"><kbd>WASD</kbd> / <kbd>ARROWS</kbd> TO MOVE &nbsp;·&nbsp; <kbd>SPACE</kbd> TO FIRE</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="touch-controls" data-testid="touch-controls" aria-label="Touch controls">
+          <div class="dpad">
+            <button data-control="up" aria-label="Move up">▲</button>
+            <button data-control="left" aria-label="Move left">◀</button>
+            <button data-control="down" aria-label="Move down">▼</button>
+            <button data-control="right" aria-label="Move right">▶</button>
+          </div>
+          <button class="fire-button" data-control="fire" aria-label="Fire"><span>FIRE</span></button>
+        </div>
+      </section>
+
+      <aside class="leader-panel" aria-labelledby="leader-title">
+        <div class="panel-heading">
+          <div><p class="kicker">GLOBAL SIGNAL</p><h2 id="leader-title">TOP PILOTS</h2></div>
+          <span class="live-pill"><i></i> LIVE</span>
+        </div>
+        <div class="leaderboard" data-testid="leaderboard" aria-live="polite">
+          <div class="board-state">CONTACTING OUTER GRID…</div>
+        </div>
+        <div class="submit-card" id="submit-card">
+          <p class="kicker">MISSION RECORD</p>
+          <label for="player-name">CALLSIGN <span>1–16 CHARACTERS</span></label>
+          <div class="name-row">
+            <input id="player-name" data-testid="player-name" maxlength="16" autocomplete="nickname" placeholder="YOUR NAME" disabled />
+            <button data-testid="submit-score" disabled aria-label="Submit score">↑</button>
+          </div>
+          <p class="form-status" id="form-status">Complete a run to transmit your score.</p>
+        </div>
+        <div class="intel">
+          <p class="kicker">PILOT INTEL</p>
+          <ul><li><span class="cyan">◆</span><div><b>CHAIN REACTIONS</b><small>Destroy drones quickly for escalating score.</small></div></li>
+          <li><span class="pink">⬡</span><div><b>KEEP MOVING</b><small>Enemy fire predicts your current vector.</small></div></li></ul>
+        </div>
+      </aside>
+    </main>
+    <footer><span>NEON BARRAGE // BUILD 1.0.0</span><span>© 2088 OUTER GRID COMMAND</span></footer>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

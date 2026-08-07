@@ -1,0 +1,20 @@
+
+> neon-barrage@1.0.0 test
+> vitest
+
+
+ RUN  v3.2.7 /workspaces/shootemup-benchmark/candidates/monolith_luna_max_opencode_speckit
+
+ ✓ tests/integration/app-flow.test.tsx (1 test) 54ms
+ ✓ tests/integration/leaderboard-client.test.ts (2 tests) 24ms
+ ✓ tests/unit/audio.test.ts (3 tests) 5ms
+ ✓ tests/unit/engine.test.ts (5 tests) 8ms
+ ✓ tests/unit/validation.test.ts (9 tests) 5ms
+ ✓ tests/integration/leaderboard-schema.test.ts (2 tests) 4ms
+ ✓ tests/unit/collision.test.ts (2 tests) 5ms
+
+ Test Files  7 passed (7)
+      Tests  24 passed (24)
+   Start at  23:07:49
+   Duration  7.00s (transform 251ms, setup 504ms, collect 473ms, tests 105ms, environment 3.45s, prepare 796ms)
+

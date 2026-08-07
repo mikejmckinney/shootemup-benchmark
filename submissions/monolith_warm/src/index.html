@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080c1c" />
+    <meta name="description" content="Neon Barrage — a fast, luminous browser shoot-'em-up." />
+    <title>Neon Barrage // Arcade Defense</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-glow page-glow--left"></div>
+    <div class="page-glow page-glow--right"></div>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-lockup">
+          <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div>
+            <p class="eyebrow">ORBITAL DEFENSE NETWORK // 2084</p>
+            <h1>NEON <span>BARRAGE</span></h1>
+          </div>
+        </div>
+        <button class="mute-button" id="muteButton" data-testid="mute-button" type="button" aria-pressed="false">SOUND ON</button>
+      </header>
+
+      <main class="game-layout">
+        <section class="game-card" aria-label="Neon Barrage game">
+          <div class="mission-bar">
+            <div class="mission-state"><span class="live-dot"></span><span>SECTOR 07 // LIVE</span></div>
+            <div class="wave-label" id="levelLabel">WAVE 01</div>
+            <div class="stat-group">
+              <div class="stat"><span class="stat-label">SCORE</span><strong data-testid="score" id="score">000000</strong></div>
+              <div class="stat stat--lives"><span class="stat-label">HULL</span><strong data-testid="lives" id="lives">◆ ◆ ◆</strong></div>
+            </div>
+          </div>
+
+          <div class="canvas-wrap" id="canvasWrap">
+            <canvas data-testid="game-canvas" id="gameCanvas" aria-label="Neon Barrage arcade shooter playfield"></canvas>
+            <div class="game-overlay is-visible" id="gameOverlay">
+              <div class="overlay-card">
+                <p class="overlay-kicker" id="overlayKicker">PILOT LINK ESTABLISHED</p>
+                <h2 id="overlayTitle">DEFEND THE GRID</h2>
+                <p id="overlayMessage">Hostile signatures are inbound. Keep the core online and make your mark on the global feed.</p>
+                <div class="final-score" id="finalScore" hidden><span>FINAL SCORE</span><strong id="finalScoreValue">000000</strong></div>
+                <button class="primary-button" data-testid="start-button" id="startButton" type="button">START MISSION</button>
+                <p class="overlay-hint"><kbd>WASD</kbd> / <kbd>ARROWS</kbd> MOVE <span>·</span> <kbd>SPACE</kbd> FIRE</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="touch-controls" data-testid="touch-controls" aria-label="Touch controls">
+            <div class="touch-cluster touch-cluster--movement">
+              <button type="button" data-action="up" aria-label="Move up">▲</button>
+              <div>
+                <button type="button" data-action="left" aria-label="Move left">◀</button>
+                <button type="button" data-action="down" aria-label="Move down">▼</button>
+                <button type="button" data-action="right" aria-label="Move right">▶</button>
+              </div>
+            </div>
+            <button class="fire-button" type="button" data-action="fire" aria-label="Fire">FIRE <span>✦</span></button>
+          </div>
+
+          <div class="controls-legend">
+            <span><i class="key-icon">W</i><i class="key-icon">A</i><i class="key-icon">S</i><i class="key-icon">D</i> MOVE</span>
+            <span><i class="key-icon key-icon--wide">SPACE</i> FIRE</span>
+            <span class="legend-tip">SURVIVE THE BARRAGE <b>↗</b></span>
+          </div>
+        </section>
+
+        <aside class="leaderboard-card" aria-label="Global leaderboard">
+          <div class="leaderboard-heading">
+            <div>
+              <p class="eyebrow">LIVE TELEMETRY</p>
+              <h2>GLOBAL <span>FEED</span></h2>
+            </div>
+            <span class="sync-status" id="leaderboardStatus">SYNCING</span>
+          </div>
+          <div class="leaderboard-rule"><span></span><span></span><span></span></div>
+          <ol class="leaderboard-list" data-testid="leaderboard" id="leaderboardList" aria-live="polite">
+            <li class="leaderboard-state">Connecting to the global feed…</li>
+          </ol>
+
+          <div class="score-entry">
+            <div class="entry-heading">
+              <div><p class="eyebrow">UPLOAD RUN</p><h3>Claim your signal</h3></div>
+              <span class="entry-limit">1–16 CHARS</span>
+            </div>
+            <label for="playerName">CALLSIGN</label>
+            <div class="entry-row">
+              <input data-testid="player-name" id="playerName" name="playerName" type="text" maxlength="16" autocomplete="nickname" placeholder="ENTER CALLSIGN" disabled />
+              <button class="submit-button" data-testid="submit-score" id="submitScore" type="button" disabled>SEND</button>
+            </div>
+            <p class="entry-message" id="entryMessage">Finish a run to submit your score.</p>
+          </div>
+        </aside>
+      </main>
+
+      <footer class="site-footer"><span>NEON BARRAGE / PILOT BUILD 1.0</span><span>NO SIGNAL IS SAFE</span></footer>
+    </div>
+    <script src="./config.js"></script>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

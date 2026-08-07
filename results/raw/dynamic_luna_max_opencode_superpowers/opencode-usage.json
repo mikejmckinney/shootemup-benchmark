@@ -1,0 +1,182 @@
+{
+  "source": "OpenCode SQLite session ledger",
+  "database": "/home/codespace/.local/share/opencode/opencode.db",
+  "selection": {
+    "candidate_directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+    "started_ms": 1786048837779,
+    "ended_ms": 1786051537881,
+    "rule": "sessions rooted in candidate directory during run, plus recursive parent_id descendants"
+  },
+  "agents_started": 6,
+  "root_sessions": 1,
+  "child_sessions": 5,
+  "peak_concurrent_agents": 3,
+  "turns": 142,
+  "tool_calls": 274,
+  "coordination_events": 6,
+  "coordination_tool_calls": 6,
+  "tool_counts": {
+    "skill": 25,
+    "todowrite": 7,
+    "glob": 19,
+    "read": 68,
+    "bash": 123,
+    "apply_patch": 18,
+    "grep": 8,
+    "task": 6
+  },
+  "usage": {
+    "input_tokens": 6242080,
+    "cached_input_tokens": 5643264,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 127148,
+    "reasoning_output_tokens": 82235
+  },
+  "provider_reported_cost_usd": 0,
+  "sessions": [
+    {
+      "id": "ses_027316d9effevgeDyFTBFek7vm",
+      "project_id": "9117b160dd154b660747d843abd223a777475a29",
+      "workspace_id": null,
+      "parent_id": null,
+      "slug": "glowing-forest",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Autonomous Superpowers Benchmark Implementation",
+      "version": "1.18.14",
+      "cost": 0,
+      "tokens_input": 201478,
+      "tokens_output": 19780,
+      "tokens_reasoning": 10667,
+      "tokens_cache_read": 2206720,
+      "tokens_cache_write": 0,
+      "agent": "build",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786048844385,
+      "time_updated": 1786051337803
+    },
+    {
+      "id": "ses_0272904edffeMrIqyf49oJ67Ex",
+      "project_id": "9117b160dd154b660747d843abd223a777475a29",
+      "workspace_id": null,
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "slug": "calm-planet",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Scaffold Neon Barrage (@general subagent)",
+      "version": "1.18.14",
+      "cost": 0,
+      "tokens_input": 54634,
+      "tokens_output": 4875,
+      "tokens_reasoning": 7621,
+      "tokens_cache_read": 585728,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786049395474,
+      "time_updated": 1786049709157
+    },
+    {
+      "id": "ses_02723c66fffep1RVMLG5dy6N07",
+      "project_id": "9117b160dd154b660747d843abd223a777475a29",
+      "workspace_id": null,
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "slug": "shiny-wolf",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Review scaffold task (@general subagent)",
+      "version": "1.18.14",
+      "cost": 0,
+      "tokens_input": 49550,
+      "tokens_output": 1122,
+      "tokens_reasoning": 8012,
+      "tokens_cache_read": 216576,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786049739152,
+      "time_updated": 1786049919402
+    },
+    {
+      "id": "ses_027209f9bffegcxnbdl5V19mwI",
+      "project_id": "9117b160dd154b660747d843abd223a777475a29",
+      "workspace_id": null,
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "slug": "neon-wizard",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Build game engine (@general subagent)",
+      "version": "1.18.14",
+      "cost": 0,
+      "tokens_input": 190595,
+      "tokens_output": 16170,
+      "tokens_reasoning": 26687,
+      "tokens_cache_read": 2310144,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786049945700,
+      "time_updated": 1786051323539
+    },
+    {
+      "id": "ses_0271938a8ffeVHcZWXus4k2qto",
+      "project_id": "9117b160dd154b660747d843abd223a777475a29",
+      "workspace_id": null,
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "slug": "curious-forest",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Review game engine (@general subagent)",
+      "version": "1.18.14",
+      "cost": 0,
+      "tokens_input": 64536,
+      "tokens_output": 1984,
+      "tokens_reasoning": 21590,
+      "tokens_cache_read": 261632,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786050430807,
+      "time_updated": 1786050876538
+    },
+    {
+      "id": "ses_0270b3c8effenr0G8Efx3s3fSk",
+      "project_id": "9117b160dd154b660747d843abd223a777475a29",
+      "workspace_id": null,
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "slug": "quiet-river",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Re-review engine fixes (@general subagent)",
+      "version": "1.18.14",
+      "cost": 0,
+      "tokens_input": 38023,
+      "tokens_output": 982,
+      "tokens_reasoning": 7658,
+      "tokens_cache_read": 62464,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786051347314,
+      "time_updated": 1786051516947
+    }
+  ]
+}

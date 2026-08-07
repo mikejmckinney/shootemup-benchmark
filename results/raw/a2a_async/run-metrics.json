@@ -1,0 +1,53 @@
+{
+  "treatment": "a2a_async",
+  "started_at": "2026-08-05T22:20:27Z",
+  "ended_at": "2026-08-05T22:44:29Z",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 1442,
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "runtime": "codex-a2a-async",
+  "agents_started": 3,
+  "turns": 3,
+  "usage": {
+    "input_tokens": 14503594,
+    "cached_input_tokens": 14070528,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 162056,
+    "reasoning_output_tokens": 63820
+  },
+  "coordinator_usage": {
+    "input_tokens": 8246480,
+    "cached_input_tokens": 8062976,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 57542,
+    "reasoning_output_tokens": 19840
+  },
+  "worker_usage": [
+    {
+      "input_tokens": 3113644,
+      "cached_input_tokens": 2995712,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 58474,
+      "reasoning_output_tokens": 19616,
+      "total_tokens": 3172118,
+      "thread_id": "019fd404-2953-7943-853c-7f2f0e122f53",
+      "source": "worker-gameplay-01-eb77fa12.jsonl"
+    },
+    {
+      "input_tokens": 3143470,
+      "cached_input_tokens": 3011840,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 46040,
+      "reasoning_output_tokens": 24364,
+      "total_tokens": 3189510,
+      "thread_id": "019fd404-25dd-7801-8987-b8d195dbaa99",
+      "source": "worker-platform-01-548ed41f.jsonl"
+    }
+  ],
+  "a2a_messages": 2,
+  "a2a_messages_completed": 2,
+  "a2a_messages_succeeded": 2,
+  "a2a_messages_failed": 0
+}

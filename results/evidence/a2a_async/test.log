@@ -1,0 +1,22 @@
+
+> neon-barrage@1.0.0 test
+> node --test tests/*.test.mjs tests/*.test.js
+
+✔ beginGame resets a run and movement stays inside the playfield (1.990138ms)
+✔ a player projectile destroys an enemy and awards its points (2.723948ms)
+✔ enemy contact costs one life and repeated contact can end the run (3.426372ms)
+✔ difficulty escalates with elapsed time (0.279015ms)
+✔ game-over adapter rules accept only non-negative safe integers (9.307652ms)
+✔ leaderboard names follow the public input contract (1.452949ms)
+✔ scores are bounded integers and submissions are normalized (1.329736ms)
+✔ difficulty escalates and collision geometry is deterministic (0.45086ms)
+✔ leaderboard client maps the worker schema and sends only public fields (2.751028ms)
+✔ invalid names and scores fail before network access (0.977332ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 498.709001

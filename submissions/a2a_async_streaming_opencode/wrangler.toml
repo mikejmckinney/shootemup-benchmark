@@ -1,0 +1,5 @@
+# Cloudflare Pages configuration. The Pages project name follows the
+# shootemup-bench-<treatment>- naming rule from BENCHMARK_TASK.md.
+name = "shootemup-bench-a2a-async-streaming-opencode-neon-barrage"
+compatibility_date = "2026-08-07"
+pages_build_output_dir = "dist"

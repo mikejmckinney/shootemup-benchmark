@@ -1,0 +1,60 @@
+{
+  "source": "OpenCode SQLite session ledger",
+  "database": "/home/codespace/.local/share/opencode/opencode.db",
+  "selection": {
+    "candidate_directory": "/workspaces/shootemup-benchmark/candidates/monolith_luna_max_opencode_speckit",
+    "started_ms": 1786045631014,
+    "ended_ms": 1786048331425,
+    "rule": "sessions rooted in candidate directory during run, plus recursive parent_id descendants"
+  },
+  "agents_started": 1,
+  "root_sessions": 1,
+  "child_sessions": 0,
+  "peak_concurrent_agents": 1,
+  "turns": 97,
+  "tool_calls": 229,
+  "coordination_events": 0,
+  "coordination_tool_calls": 0,
+  "tool_counts": {
+    "todowrite": 21,
+    "glob": 13,
+    "read": 95,
+    "bash": 34,
+    "apply_patch": 22,
+    "grep": 44
+  },
+  "usage": {
+    "input_tokens": 13703170,
+    "cached_input_tokens": 13368832,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 121097,
+    "reasoning_output_tokens": 57443
+  },
+  "provider_reported_cost_usd": 0,
+  "sessions": [
+    {
+      "id": "ses_02762193effe5yp6vPjG8s7okm",
+      "project_id": "cc6b218356bb250337ec47d7ee00ea3b0f5e1bb9",
+      "workspace_id": null,
+      "parent_id": null,
+      "slug": "eager-pixel",
+      "directory": "/workspaces/shootemup-benchmark/candidates/monolith_luna_max_opencode_speckit",
+      "title": "BENCHMARK_TASK.md Constitution Principles Setup",
+      "version": "1.18.14",
+      "cost": 0,
+      "tokens_input": 334338,
+      "tokens_output": 63654,
+      "tokens_reasoning": 57443,
+      "tokens_cache_read": 13368832,
+      "tokens_cache_write": 0,
+      "agent": "build",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786045654721,
+      "time_updated": 1786048242809
+    }
+  ]
+}

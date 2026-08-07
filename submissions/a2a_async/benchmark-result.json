@@ -1,0 +1,15 @@
+{
+  "treatment": "a2a_async",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-a2a-async-neon-barrage.pages.dev",
+  "cloudflare_project": "shootemup-bench-a2a-async-neon-barrage",
+  "supabase_url": "https://lyyyxbxacrxqflxmtlqq.supabase.co",
+  "supabase_project_ref": "lyyyxbxacrxqflxmtlqq",
+  "supabase_public_key": "sb_publishable_cgwOqQeY8eHfwsHYrnepJw_5kfrA-sD",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Both Luna Max A2A workers completed; gameplay engine/tests and Supabase append-only RLS migration/client were integrated. Production game-over submission and reload persistence were verified with the public key."
+}

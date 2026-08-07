@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#060816" />
+    <meta name="description" content="Neon Barrage — a fast, luminous browser shoot-'em-up." />
+    <title>Neon Barrage // Sector 09</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Neon Barrage home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>NEON <b>BARRAGE</b></span>
+      </a>
+      <div class="topbar-meta">
+        <span class="sector-label">SECTOR 09 <em>·</em> LIVE RUN</span>
+        <button class="mute-button" type="button" data-testid="mute-button" aria-pressed="false" aria-label="Unmute sound">
+          <span class="mute-icon" aria-hidden="true">◒</span><span class="mute-label">SOUND ON</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <section class="intro" aria-labelledby="game-title">
+        <div class="eyebrow"><span class="pulse-dot"></span> ARCADE PROTOCOL / 001</div>
+        <h1 id="game-title">Outrun the <span>void.</span></h1>
+        <p class="lede">Pilot the last lightship through a storm of hungry circuitry. Survive the descent, stack your score, and leave your signal in the hall of fame.</p>
+        <div class="intro-actions">
+          <button class="primary-button" type="button" data-testid="start-button"><span class="button-glyph">↗</span> Start run <kbd>SPACE</kbd></button>
+          <p class="microcopy"><span class="keycap">WASD</span> move <span class="keycap">SPACE</span> fire</p>
+        </div>
+      </section>
+
+      <section class="game-card" aria-label="Neon Barrage game">
+        <div class="card-topline">
+          <div class="run-status"><span class="status-dot"></span><span id="phase-label">STANDBY</span><span class="slash">//</span><span id="status-message">READY WHEN YOU ARE</span></div>
+          <div class="run-id">RUN ID <strong id="run-id">09—0001</strong></div>
+        </div>
+        <div class="hud">
+          <div class="hud-stat"><span class="hud-label">SCORE</span><strong data-testid="score">000000</strong></div>
+          <div class="hud-stat"><span class="hud-label">LIVES</span><strong data-testid="lives" class="lives-value">◆ ◆ ◆</strong></div>
+          <div class="hud-stat level-stat"><span class="hud-label">THREAT</span><strong id="level-value">LVL 01</strong></div>
+        </div>
+        <div class="canvas-wrap">
+          <canvas data-testid="game-canvas" width="1000" height="600" role="img" aria-label="Neon Barrage game canvas"></canvas>
+          <div class="canvas-vignette" aria-hidden="true"></div>
+          <div class="game-overlay" id="game-overlay">
+            <span class="overlay-kicker">SIGNAL LOST</span>
+            <strong id="overlay-title">READY TO DEPLOY?</strong>
+            <p id="overlay-copy">Press start and keep your lightship moving.</p>
+            <button class="secondary-button" type="button" data-testid="restart-button">↻ Restart run</button>
+          </div>
+        </div>
+        <div class="game-footer">
+          <div class="control-hint"><span class="keycap">←</span><span class="keycap">↑</span><span class="keycap">↓</span><span class="keycap">→</span> steer <span class="keycap wide">SPACE</span> fire</div>
+          <div class="telemetry" id="telemetry">SYNC / NOMINAL</div>
+        </div>
+        <div class="touch-controls" data-testid="touch-controls" aria-label="Touch controls">
+          <button type="button" data-action="left" aria-label="Move left">←</button>
+          <button type="button" data-action="up" aria-label="Move up">↑</button>
+          <button type="button" data-action="down" aria-label="Move down">↓</button>
+          <button type="button" data-action="right" aria-label="Move right">→</button>
+          <button type="button" class="touch-fire" data-action="fire" aria-label="Fire">FIRE</button>
+        </div>
+      </section>
+
+      <section class="below-grid">
+        <article class="briefing panel">
+          <div class="panel-heading"><span class="panel-index">01</span><h2>Mission brief</h2></div>
+          <p>Move with <span class="accent">WASD</span> or the arrow keys. Hold <span class="accent">Space</span> to fire. Every cleared wave accelerates the threat level — keep your ship moving and watch the edges.</p>
+          <div class="briefing-row"><span>HULL INTEGRITY</span><span class="line"></span><span class="accent">3 LIVES</span></div>
+          <div class="briefing-row"><span>BEST SIGNAL</span><span class="line"></span><span id="local-best">000000</span></div>
+        </article>
+        <article class="leaderboard-panel panel">
+          <div class="panel-heading"><span class="panel-index">02</span><h2>Signal archive</h2><span class="live-tag">TOP 10</span></div>
+          <div class="leaderboard-state" id="leaderboard-state" role="status" aria-live="polite">CONNECTING TO ARCHIVE…</div>
+          <ol class="leaderboard" data-testid="leaderboard" aria-label="Top ten leaderboard"></ol>
+          <button class="text-button" type="button" data-action="retry-leaderboard">↻ Refresh archive</button>
+        </article>
+      </section>
+
+      <section class="submit-panel panel" id="submit-panel" aria-labelledby="submit-title">
+        <div class="submit-copy"><div class="panel-heading"><span class="panel-index">03</span><h2 id="submit-title">Leave your signal</h2></div><p id="submit-help">Finish a run to etch your score into the archive.</p></div>
+        <form class="score-form" id="score-form" novalidate>
+          <label class="sr-only" for="player-name">Pilot name</label>
+          <input id="player-name" data-testid="player-name" name="name" type="text" maxlength="16" autocomplete="nickname" placeholder="PILOT NAME" aria-describedby="submit-help submit-message" />
+          <button class="primary-button compact" data-testid="submit-score" type="submit" disabled>Submit score <span>↗</span></button>
+        </form>
+        <p class="form-message" id="submit-message" role="status" aria-live="polite"></p>
+      </section>
+    </main>
+    <footer class="site-footer"><span>NEON BARRAGE / SIGNAL STABLE</span><span>BUILT FOR THE NIGHT SHIFT <i>✦</i></span></footer>
+  </body>
+</html>

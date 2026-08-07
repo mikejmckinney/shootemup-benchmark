@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#050718" />
+    <meta name="description" content="Neon Barrage - a fast, luminous browser shoot-'em-up." />
+    <title>Neon Barrage // Arcade Flight</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="supabase-config.js"></script>
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <div class="site-noise" aria-hidden="true"></div>
+    <main class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Neon Barrage home">
+          <span class="brand-mark" aria-hidden="true">NB</span>
+          <span class="brand-copy">
+            <strong>NEON BARRAGE</strong>
+            <small>ARCADE FLIGHT SYSTEMS</small>
+          </span>
+        </a>
+        <div class="topbar-meta">
+          <span class="live-dot"><i></i> LIVE SECTOR 07</span>
+          <button class="icon-button" type="button" data-testid="mute-button" aria-pressed="false" aria-label="Sound on">
+            <span class="sound-icon" aria-hidden="true">◖))</span>
+            <span class="mute-label">SOUND ON</span>
+          </button>
+        </div>
+      </header>
+
+      <section class="intro-grid" aria-labelledby="page-title">
+        <div class="intro-copy">
+          <p class="eyebrow"><span>01</span> PILOT TRANSMISSION</p>
+          <h1 id="page-title">Break the<br /><em>neon</em> tide.</h1>
+          <p class="intro-text">
+            Hostile signals are flooding the lower atmosphere. Thread the barrage,
+            keep your hull intact, and turn every clean hit into a higher orbit.
+          </p>
+          <div class="launch-row">
+            <button class="launch-button" type="button" data-testid="start-button">
+              <span class="launch-glyph" aria-hidden="true">&gt;</span>
+              <span class="launch-text">LAUNCH RUN</span>
+              <span class="launch-arrow" aria-hidden="true">↗</span>
+            </button>
+            <div class="control-note">
+              <span class="key-hint"><kbd>WASD</kbd> / <kbd>ARROWS</kbd></span>
+              <span>MOVE</span>
+              <span class="key-hint"><kbd>SPACE</kbd></span>
+              <span>FIRE</span>
+            </div>
+          </div>
+          <div class="mission-status" aria-live="polite">
+            <span class="status-pip"></span>
+            <span id="mission-status">SYSTEMS NOMINAL / AWAITING PILOT</span>
+          </div>
+        </div>
+
+        <div class="game-column">
+          <div class="game-frame">
+            <div class="game-frame-topline">
+              <span>NB//SIMULATION <b>v1.0.7</b></span>
+              <span id="wave-label">WAVE 01</span>
+              <span class="frame-signal"><i></i><i></i><i></i></span>
+            </div>
+            <div class="canvas-wrap">
+              <canvas data-testid="game-canvas" width="960" height="600" aria-label="Neon Barrage game canvas"></canvas>
+              <div class="canvas-reticle reticle-left" aria-hidden="true"></div>
+              <div class="canvas-reticle reticle-right" aria-hidden="true"></div>
+              <div class="ready-overlay" id="ready-overlay">
+                <span class="overlay-kicker">SECTOR LOCKED</span>
+                <strong>READY TO<br /><em>ENGAGE</em></strong>
+                <span class="overlay-hint">PRESS LAUNCH RUN TO BEGIN</span>
+              </div>
+              <div class="game-over-panel" id="game-over-panel" hidden>
+                <span class="overlay-kicker">SIGNAL LOST</span>
+                <strong>RUN<br /><em>COMPLETE</em></strong>
+                <p>FINAL SCORE <b id="final-score">000000</b></p>
+                <label for="player-name">PILOT TAG <span>1–16 CHARACTERS</span></label>
+                <div class="submit-row">
+                  <input id="player-name" data-testid="player-name" type="text" maxlength="16" autocomplete="off" spellcheck="false" placeholder="YOUR TAG" aria-describedby="submission-status" />
+                  <button id="submit-score" data-testid="submit-score" type="button">POST</button>
+                </div>
+                <p class="submission-status" id="submission-status" aria-live="polite"></p>
+              </div>
+            </div>
+            <div class="game-hud">
+              <div class="hud-stat">
+                <span>SCORE</span>
+                <strong data-testid="score">000000</strong>
+              </div>
+              <div class="hud-center"><span class="hud-crosshair">+</span><span id="hud-message">AWAITING LAUNCH</span></div>
+              <div class="hud-stat hud-lives">
+                <span>HULL</span>
+                <strong data-testid="lives" aria-label="3 lives">●●●</strong>
+              </div>
+            </div>
+          </div>
+          <div class="touch-controls" data-testid="touch-controls" aria-label="Touch movement controls">
+            <div class="touch-pad">
+              <button type="button" data-control="up" aria-label="Move up">▲</button>
+              <button type="button" data-control="left" aria-label="Move left">◀</button>
+              <button type="button" data-control="down" aria-label="Move down">▼</button>
+              <button type="button" data-control="right" aria-label="Move right">▶</button>
+            </div>
+            <button class="fire-button" type="button" data-control="fire" aria-label="Fire">FIRE<span>✦</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="lower-grid">
+        <div class="briefing-panel">
+          <div class="section-label"><span>02</span> FLIGHT BRIEFING</div>
+          <div class="briefing-items">
+            <div><span class="briefing-number">01</span><p><strong>Stay in the light</strong>Every hostile has a readable rhythm. Learn the gaps.</p></div>
+            <div><span class="briefing-number">02</span><p><strong>Keep moving</strong>Each wave accelerates. The edge is not a safe zone.</p></div>
+            <div><span class="briefing-number">03</span><p><strong>Leave a mark</strong>Submit your best run to the public pilot log.</p></div>
+          </div>
+        </div>
+        <div class="leaderboard-panel">
+          <div class="leaderboard-heading">
+            <div class="section-label"><span>03</span> PILOT LOG</div>
+            <span class="refresh-label" id="leaderboard-status">SYNCING</span>
+          </div>
+          <div class="leaderboard-wrap">
+            <ol data-testid="leaderboard" id="leaderboard" aria-live="polite">
+              <li class="leaderboard-message">LOADING PILOT SIGNALS<span class="loading-bars"><i></i><i></i><i></i></span></li>
+            </ol>
+          </div>
+          <p class="leaderboard-error" id="leaderboard-error" hidden></p>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>NEON BARRAGE / AEROSPACE ARCADE DIVISION</span>
+        <span>© 2088 <b>NO SIGNAL IS TOO LOUD</b></span>
+      </footer>
+    </main>
+  </body>
+</html>

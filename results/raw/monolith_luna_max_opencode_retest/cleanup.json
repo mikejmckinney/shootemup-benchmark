@@ -1,0 +1,8 @@
+{
+  "treatment": "monolith_luna_max_opencode_retest",
+  "project_ref": "tzndzreblsmiktsqxufo",
+  "requested_at": "2026-08-06T19:43:04Z",
+  "pause_http_status": 200,
+  "final_status": "INACTIVE",
+  "confirmed_inactive": true
+}

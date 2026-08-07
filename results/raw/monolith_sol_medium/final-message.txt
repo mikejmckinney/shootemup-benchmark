@@ -1,0 +1,18 @@
+Delivered and verified Neon Barrage end to end.
+
+- Live game: [Cloudflare Pages](https://shootemup-bench-monolith-sol-medium-neon-barrage.pages.dev)
+- Result artifact: [benchmark-result.json](/workspaces/shootemup-benchmark/candidates/monolith_sol_medium/benchmark-result.json)
+- Supabase migration: [leaderboard migration](/workspaces/shootemup-benchmark/candidates/monolith_sol_medium/supabase/migrations/20260805225333_create_leaderboard.sql)
+- Documentation: [README.md](/workspaces/shootemup-benchmark/candidates/monolith_sol_medium/README.md)
+
+Verification passed:
+
+- Production HTTP status: `200`
+- Desktop and mobile browser flows verified
+- All required selectors and test adapter verified
+- Real leaderboard submission persisted across reload
+- RLS enabled with read/insert-only public grants
+- Invalid rows and unauthorized updates rejected
+- 4 automated gameplay tests passed
+- Production build passed
+- Exact result-artifact schema validated

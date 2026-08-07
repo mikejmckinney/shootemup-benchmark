@@ -1,0 +1,27 @@
+{
+  "treatment": "monolith_sol_high_opencode",
+  "started_at": "2026-08-07T03:52:24Z",
+  "ended_at": "2026-08-07T04:06:52Z",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 868,
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "high",
+  "runtime": "opencode",
+  "methodology": "plain",
+  "methodology_version": "none",
+  "usage_source": "OpenCode SQLite session ledger",
+  "agents_started": 1,
+  "peak_concurrent_agents": 1,
+  "child_sessions": 0,
+  "turns": 34,
+  "tool_calls": 60,
+  "native_coordination_calls": 0,
+  "usage": {
+    "input_tokens": 1035159,
+    "cached_input_tokens": 968704,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 28020,
+    "reasoning_output_tokens": 5151
+  }
+}

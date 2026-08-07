@@ -1,0 +1,59 @@
+{
+  "source": "OpenCode SQLite session ledger",
+  "database": "/home/codespace/.local/share/opencode/opencode.db",
+  "selection": {
+    "candidate_directory": "/workspaces/shootemup-benchmark/candidates/monolith_luna_max_opencode_retest",
+    "started_ms": 1786043831000,
+    "ended_ms": 1786044906122,
+    "rule": "sessions rooted in candidate directory during run, plus recursive parent_id descendants"
+  },
+  "agents_started": 1,
+  "root_sessions": 1,
+  "child_sessions": 0,
+  "peak_concurrent_agents": 1,
+  "turns": 59,
+  "tool_calls": 81,
+  "coordination_events": 0,
+  "coordination_tool_calls": 0,
+  "tool_counts": {
+    "todowrite": 4,
+    "read": 8,
+    "glob": 2,
+    "bash": 55,
+    "apply_patch": 12
+  },
+  "usage": {
+    "input_tokens": 2467533,
+    "cached_input_tokens": 2370560,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 46297,
+    "reasoning_output_tokens": 16566
+  },
+  "provider_reported_cost_usd": 0,
+  "sessions": [
+    {
+      "id": "ses_0277ddeaaffeLhd3R2ydsvGu1I",
+      "project_id": "43c089273e4678c3636bba31ffb62fdb7b2fb840",
+      "workspace_id": null,
+      "parent_id": null,
+      "slug": "crisp-moon",
+      "directory": "/workspaces/shootemup-benchmark/candidates/monolith_luna_max_opencode_retest",
+      "title": "Autonomous Benchmark Task Implementation and Verification",
+      "version": "1.18.14",
+      "cost": 0,
+      "tokens_input": 96973,
+      "tokens_output": 29731,
+      "tokens_reasoning": 16566,
+      "tokens_cache_read": 2370560,
+      "tokens_cache_write": 0,
+      "agent": "build",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786043834711,
+      "time_updated": 1786044905972
+    }
+  ]
+}

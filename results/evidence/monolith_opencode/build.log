@@ -1,0 +1,13 @@
+
+> neon-barrage@1.0.0 build
+> vite build
+
+vite v6.4.3 building for production...
+transforming...
+✓ 6 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                  7.20 kB │ gzip: 2.19 kB
+dist/assets/index-C_gaDX_S.css  13.42 kB │ gzip: 3.91 kB
+dist/assets/index-CJKwnX2T.js   13.07 kB │ gzip: 5.31 kB
+✓ built in 266ms

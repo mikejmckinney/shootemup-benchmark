@@ -1,0 +1,102 @@
+{
+  "treatment": "a2a",
+  "started_at": "2026-08-05T17:23:58Z",
+  "ended_at": "2026-08-05T17:47:13Z",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 1395,
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "agents_started": 8,
+  "a2a_messages": 7,
+  "turns": 7,
+  "usage": {
+    "input_tokens": 15425109,
+    "cached_input_tokens": 14802432,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 178933,
+    "reasoning_output_tokens": 83938
+  },
+  "coordinator_usage": {
+    "input_tokens": 9663935,
+    "cached_input_tokens": 9443840,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 57330,
+    "reasoning_output_tokens": 21749
+  },
+  "worker_usage": [
+    {
+      "input_tokens": 1590603,
+      "cached_input_tokens": 1499392,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 46556,
+      "reasoning_output_tokens": 14496,
+      "total_tokens": 1637159,
+      "thread_id": "019fd2f5-4a98-7321-9d3b-b00ab9d91695",
+      "source": "worker-gameplay-01-9d71f0ae.jsonl"
+    },
+    {
+      "input_tokens": 1534156,
+      "cached_input_tokens": 1444096,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 14884,
+      "reasoning_output_tokens": 7639,
+      "total_tokens": 1549040,
+      "thread_id": "019fd303-0c44-7cf2-a38a-298c3549266f",
+      "source": "worker-gameplay-02-29016067.jsonl"
+    },
+    {
+      "input_tokens": 88240,
+      "cached_input_tokens": 57344,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1872,
+      "reasoning_output_tokens": 768,
+      "total_tokens": 90112,
+      "thread_id": "019fd308-6dc8-7090-8bfe-c7ada5b45979",
+      "source": "worker-gameplay-03-8e776406.jsonl"
+    },
+    {
+      "input_tokens": 1543537,
+      "cached_input_tokens": 1463552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 29409,
+      "reasoning_output_tokens": 19930,
+      "total_tokens": 1572946,
+      "thread_id": "019fd2f5-6f99-7f62-9d73-7c621b22c8e2",
+      "source": "worker-platform-01-496a513c.jsonl"
+    },
+    {
+      "input_tokens": 566603,
+      "cached_input_tokens": 523776,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 17448,
+      "reasoning_output_tokens": 12203,
+      "total_tokens": 584051,
+      "thread_id": "019fd2fe-f6ee-75a0-a313-e4ab16e585fc",
+      "source": "worker-platform-02-1c57f73b.jsonl"
+    },
+    {
+      "input_tokens": 355097,
+      "cached_input_tokens": 304896,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 9217,
+      "reasoning_output_tokens": 5881,
+      "total_tokens": 364314,
+      "thread_id": "019fd304-afe9-7182-80bb-d3a1e6ae5d6e",
+      "source": "worker-platform-03-17653bbb.jsonl"
+    },
+    {
+      "input_tokens": 82938,
+      "cached_input_tokens": 65536,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 2217,
+      "reasoning_output_tokens": 1272,
+      "total_tokens": 85155,
+      "thread_id": "019fd307-c8e2-73c2-af68-595c714c02ba",
+      "source": "worker-platform-04-2b9f9983.jsonl"
+    }
+  ],
+  "a2a_messages_completed": 7,
+  "a2a_messages_succeeded": 6,
+  "a2a_messages_failed": 1
+}

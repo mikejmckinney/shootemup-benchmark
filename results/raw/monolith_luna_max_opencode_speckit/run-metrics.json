@@ -1,0 +1,27 @@
+{
+  "treatment": "monolith_luna_max_opencode_speckit",
+  "started_at": "2026-08-06T19:47:11Z",
+  "ended_at": "2026-08-06T20:32:11Z",
+  "exit_code": 124,
+  "timed_out": true,
+  "wall_seconds": 2700,
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "runtime": "opencode",
+  "methodology": "speckit",
+  "methodology_version": "v0.16.0",
+  "usage_source": "OpenCode SQLite session ledger",
+  "agents_started": 1,
+  "peak_concurrent_agents": 1,
+  "child_sessions": 0,
+  "turns": 97,
+  "tool_calls": 229,
+  "native_coordination_calls": 0,
+  "usage": {
+    "input_tokens": 13703170,
+    "cached_input_tokens": 13368832,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 121097,
+    "reasoning_output_tokens": 57443
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "treatment": "monolith_luna_high_opencode",
+  "evaluated_at": "2026-08-06T04:42:00.126Z",
+  "live_url": "https://shootemup-bench-monolith-luna-high-opencode-neon-barrage.pages.dev",
+  "methodology": "Live production build with Supabase REST requests mocked in-browser; no leaderboard rows were written.",
+  "checks": {
+    "progression_start_consistency": {
+      "passed": true,
+      "applicable": true,
+      "before": 1,
+      "after": 1
+    },
+    "physical_name_entry": {
+      "passed": false,
+      "expected": "WASD wasd",
+      "actual": "WASD"
+    },
+    "advertised_keyboard_restart": {
+      "passed": true,
+      "advertised": false,
+      "applicable": false
+    },
+    "immediate_click_restart": {
+      "passed": true,
+      "button_found": true,
+      "state": {
+        "phase": "playing",
+        "score": 0,
+        "lives": 3,
+        "playerX": 450,
+        "playerY": 453,
+        "enemyCount": 1,
+        "projectileCount": 0
+      }
+    }
+  },
+  "requests": [],
+  "console_errors": [
+    "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+    "Pattern attribute value [A-Za-z0-9 _-]{1,16} is not a valid regular expression: Uncaught SyntaxError: Invalid regular expression: /[A-Za-z0-9 _-]{1,16}/v: Invalid character in character class",
+    "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+  ],
+  "page_errors": [],
+  "http_status": 200,
+  "progress_before_start": [
+    {
+      "selector": "#wave",
+      "text": "01"
+    }
+  ],
+  "progress_after_start": [
+    {
+      "selector": "#wave",
+      "text": "01"
+    }
+  ],
+  "state_after_submit": {
+    "phase": "over",
+    "score": 7317,
+    "lives": 3,
+    "playerX": 450,
+    "playerY": 453,
+    "enemyCount": 1,
+    "projectileCount": 0
+  },
+  "active_element_after_submit": {
+    "tag": "BODY",
+    "id": null,
+    "testid": null
+  }
+}

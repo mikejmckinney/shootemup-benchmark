@@ -1,0 +1,4 @@
+
+> neon-barrage@1.0.0 lint
+> node --check public/app.js && node --check src/game-engine.js
+

@@ -1,0 +1,5 @@
+Complete.
+
+- Live game: [Cloudflare Pages](https://shootemup-bench-monolith-warm-neon-barrage.pages.dev/)
+- Verified: HTTP 200, browser/mobile checks, adapter flow, Supabase round trip, 4/4 tests passing.
+- Result artifact: [benchmark-result.json](/workspaces/shootemup-benchmark/candidates/monolith_warm/benchmark-result.json)

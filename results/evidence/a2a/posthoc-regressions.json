@@ -1,0 +1,71 @@
+{
+  "treatment": "a2a",
+  "evaluated_at": "2026-08-06T01:22:58.048Z",
+  "live_url": "https://shootemup-bench-a2a-neon.pages.dev",
+  "methodology": "Live production build with Supabase REST requests mocked in-browser; no leaderboard rows were written.",
+  "checks": {
+    "progression_start_consistency": {
+      "passed": true,
+      "applicable": true,
+      "before": 1,
+      "after": 1
+    },
+    "physical_name_entry": {
+      "passed": true,
+      "expected": "WASD wasd",
+      "actual": "WASD wasd"
+    },
+    "advertised_keyboard_restart": {
+      "passed": true,
+      "advertised": false,
+      "applicable": false
+    },
+    "immediate_click_restart": {
+      "passed": true,
+      "button_found": true,
+      "state": {
+        "phase": "running",
+        "score": 0,
+        "lives": 3,
+        "playerX": 462,
+        "playerY": 518,
+        "enemyCount": 0,
+        "projectileCount": 0
+      }
+    }
+  },
+  "requests": [
+    "GET",
+    "POST",
+    "GET"
+  ],
+  "console_errors": [],
+  "page_errors": [],
+  "http_status": 200,
+  "progress_before_start": [
+    {
+      "selector": "#level-value",
+      "text": "01"
+    }
+  ],
+  "progress_after_start": [
+    {
+      "selector": "#level-value",
+      "text": "01"
+    }
+  ],
+  "state_after_submit": {
+    "phase": "game-over",
+    "score": 7317,
+    "lives": 0,
+    "playerX": 462,
+    "playerY": 518,
+    "enemyCount": 0,
+    "projectileCount": 0
+  },
+  "active_element_after_submit": {
+    "tag": "BODY",
+    "id": null,
+    "testid": null
+  }
+}

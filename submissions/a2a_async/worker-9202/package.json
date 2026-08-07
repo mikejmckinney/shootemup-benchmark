@@ -1,0 +1,18 @@
+{
+  "name": "neon-barrage-leaderboard-layer",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Browser-safe Supabase leaderboard data layer for Neon Barrage",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check src/leaderboard-client.js && node --check test/leaderboard-client.test.mjs && node --check test/migration.test.mjs",
+    "verify": "npm run check && npm test"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.112.1"
+  }
+}

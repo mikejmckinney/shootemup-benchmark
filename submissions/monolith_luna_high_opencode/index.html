@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#070b1c">
+  <title>Neon Barrage | Arcade Flight</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">✦</span><div><p class="eyebrow">ORBITAL DEFENSE // SECTOR 07</p><h1>NEON <span>BARRAGE</span></h1></div></div>
+      <button class="icon-button" id="mute-button" data-testid="mute-button" type="button" aria-label="Mute sound">◖ <span>Sound on</span></button>
+    </header>
+    <section class="game-layout">
+      <div class="game-card">
+        <div class="hud">
+          <div><span class="hud-label">SCORE</span><strong data-testid="score" id="score">000000</strong></div>
+          <div><span class="hud-label">WAVE</span><strong id="wave">01</strong></div>
+          <div><span class="hud-label">HULL</span><strong data-testid="lives" id="lives">♥ ♥ ♥</strong></div>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="game-canvas" data-testid="game-canvas" aria-label="Neon Barrage game area"></canvas>
+          <div class="game-overlay" id="start-overlay">
+            <p class="kicker">INCOMING SIGNAL</p><h2>Defend the<br><em>night sky.</em></h2>
+            <p class="overlay-copy">Pilot the last interceptor through an endless neon storm.</p>
+            <button class="primary-button" id="start-button" data-testid="start-button" type="button">Launch mission <span>→</span></button>
+            <p class="hint"><kbd>WASD</kbd> or <kbd>ARROWS</kbd> to move <i>·</i> <kbd>SPACE</kbd> to fire</p>
+          </div>
+          <div class="game-overlay hidden" id="game-over-overlay">
+            <p class="kicker danger">SIGNAL LOST</p><h2>Mission<br><em>terminated.</em></h2>
+            <p class="final-score">FINAL SCORE <strong id="final-score">000000</strong></p>
+            <div class="score-form"><label for="player-name">Pilot tag</label><div class="input-row"><input id="player-name" data-testid="player-name" maxlength="16" minlength="1" pattern="[A-Za-z0-9 _-]{1,16}" autocomplete="off" placeholder="ENTER NAME" aria-describedby="form-status"><button id="submit-score" data-testid="submit-score" class="primary-button small" type="button">Transmit</button></div><p class="form-status" id="form-status" role="status"></p></div>
+            <button class="secondary-button" id="restart-button" type="button">↻ Re-launch</button>
+          </div>
+        </div>
+        <div class="touch-controls" data-testid="touch-controls" id="touch-controls" aria-label="Touch controls">
+          <button type="button" data-control="left" aria-label="Move left">‹</button><button type="button" data-control="up" aria-label="Move up">⌃</button><button type="button" data-control="down" aria-label="Move down">⌄</button><button type="button" data-control="right" aria-label="Move right">›</button><button type="button" class="fire" data-control="fire" aria-label="Fire">✦</button>
+        </div>
+        <div class="control-strip"><span><i class="dot pink"></i> LIVE FEED</span><span id="status-text">AWAITING PILOT</span><span class="desktop-hint">MOVE <b>WASD</b> · FIRE <b>SPACE</b></span></div>
+      </div>
+      <aside class="leaderboard-card">
+        <div class="leader-heading"><div><p class="eyebrow">THE HALL OF FAME</p><h2>Top pilots</h2></div><span class="live-pill"><i></i> LIVE</span></div>
+        <p class="leader-subtitle">Only the sharpest survive the barrage.</p>
+        <div class="leader-status" id="leaderboard-status">Loading scores<span class="loader"></span></div>
+        <ol class="leaderboard" data-testid="leaderboard" id="leaderboard" aria-label="Top ten scores"></ol>
+        <div class="leader-footer"><span>RANKED BY SCORE</span><span>ALL SECTORS</span></div>
+      </aside>
+    </section>
+    <footer><span>NEON BARRAGE <b>v1.0.0</b></span><span>NO PILOT LEFT BEHIND</span></footer>
+  </main>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

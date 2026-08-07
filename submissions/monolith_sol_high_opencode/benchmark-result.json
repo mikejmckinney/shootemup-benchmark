@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_sol_high_opencode",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith_sol_high_opencode-neon.mikejmckinney.workers.dev",
+  "cloudflare_project": "shootemup-bench-monolith_sol_high_opencode-neon",
+  "supabase_url": "https://raoviqsosczfffvyhduf.supabase.co",
+  "supabase_project_ref": "raoviqsosczfffvyhduf",
+  "supabase_public_key": "sb_publishable_Fso4ru7emP7l7wrcUGBeCA_W4LVgi6J",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Responsive canvas shooter deployed as an exact-prefix Cloudflare static-assets Worker; production Chromium gameplay, mobile controls, database validation, RLS, and leaderboard reload persistence verified."
+}

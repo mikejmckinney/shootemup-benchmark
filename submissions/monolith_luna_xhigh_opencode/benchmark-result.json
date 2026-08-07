@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_luna_xhigh_opencode",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-luna-xhigh-opencode-neon-barrage.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-luna-xhigh-opencode-neon-barrage",
+  "supabase_url": "https://goldahgmnlsigqinqyvr.supabase.co",
+  "supabase_project_ref": "goldahgmnlsigqinqyvr",
+  "supabase_public_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvbGRhaGdtbmxzaWdxaW5xeXZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU5ODExMTEsImV4cCI6MjEwMTU1NzExMX0.6hLnk2CJr38vV6wc5CeeHohNWRxcF165ua3XPRGCq-A",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Canvas shooter deployed to Cloudflare Pages; Supabase scores table uses RLS with constrained public insert/select policies and was verified through the deployed config."
+}

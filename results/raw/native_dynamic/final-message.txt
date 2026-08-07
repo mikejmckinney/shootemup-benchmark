@@ -1,0 +1,6 @@
+Delivered and verified Neon Barrage.
+
+- Live: [Cloudflare Pages](https://shootemup-bench-native-dynamic-neon-barrage-pages.pages.dev)
+- Supabase project: `ssygpcxjilnmgtfdjari` with RLS migration and verified public insert/read persistence.
+- Typecheck, Vitest, build, and production smoke checks passed.
+- Result artifact: [benchmark-result.json](/workspaces/shootemup-benchmark/candidates/native_dynamic/benchmark-result.json)

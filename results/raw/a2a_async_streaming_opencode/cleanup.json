@@ -1,0 +1,8 @@
+{
+  "treatment": "a2a_async_streaming_opencode",
+  "project_ref": "bohmzatpqyqfcustnndm",
+  "requested_at": "2026-08-07T03:52:12Z",
+  "pause_http_status": 200,
+  "final_status": "INACTIVE",
+  "confirmed_inactive": true
+}

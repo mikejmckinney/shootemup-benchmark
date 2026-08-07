@@ -1,0 +1,22 @@
+{
+  "evaluated_at": "2026-08-06T21:25:56.762Z",
+  "candidate_dir": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+  "result_artifact_valid": false,
+  "automated_points": 0,
+  "automated_points_available": 54,
+  "checks": {
+    "valid_result_artifact": {
+      "passed": false,
+      "points_awarded": 0,
+      "points_available": 3,
+      "evidence": null
+    }
+  },
+  "console_errors": [],
+  "page_errors": [],
+  "supabase_requests": [],
+  "notes": [
+    "result artifact: ENOENT: no such file or directory, open '/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers/benchmark-result.json'",
+    "browser evaluation stopped: Error: valid benchmark-result.json is required for live evaluation\n    at file:///workspaces/shootemup-benchmark/benchmark/evaluator/evaluate.mjs:56:44"
+  ]
+}

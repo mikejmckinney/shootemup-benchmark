@@ -1,0 +1,2033 @@
+{
+  "generated_at": "2026-08-07T04:38:07.687Z",
+  "replicate_count_per_treatment": 1,
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "pricing": {
+    "as_of": "2026-08-06",
+    "source": "https://developers.openai.com/api/docs/pricing",
+    "service_tier": "standard",
+    "models": {
+      "gpt-5.6-luna": {
+        "uncached_input": 0.2,
+        "cached_input": 0.02,
+        "cache_write": 0.25,
+        "output": 1.2
+      },
+      "gpt-5.6-sol": {
+        "uncached_input": 5,
+        "cached_input": 0.5,
+        "cache_write": 6.25,
+        "output": 30
+      }
+    },
+    "web_search_usd_per_call": 0.01,
+    "long_context_threshold_input_tokens": 272000,
+    "captured_web_search_calls": {
+      "monolith": 3,
+      "native_dynamic": 1,
+      "native_isolated": 4,
+      "a2a": 5,
+      "monolith_warm": 0,
+      "a2a_async": 2,
+      "a2a_async_streaming_opencode": 0,
+      "monolith_sol_medium": 3,
+      "monolith_opencode": 0,
+      "monolith_sol_medium_opencode": 0,
+      "monolith_sol_low_opencode": 0,
+      "monolith_luna_xhigh_opencode": 0,
+      "monolith_sol_high_opencode": 0,
+      "monolith_luna_high_opencode": 0,
+      "monolith_luna_max_codex_minimal": 0,
+      "monolith_luna_max_opencode_retest": 0,
+      "monolith_luna_max_opencode_speckit": 0,
+      "dynamic_luna_max_opencode_superpowers": 0
+    }
+  },
+  "decision_model": {
+    "quality_gate": {
+      "status_values": [
+        "PASS",
+        "BORDERLINE",
+        "FAIL"
+      ],
+      "epsilon": 2,
+      "pass_minimum": 92,
+      "borderline_minimum": 88,
+      "borderline_maximum": 91,
+      "fail_maximum": 87,
+      "frontier_eligible_status": "PASS"
+    },
+    "headline_roi": {
+      "name": "gate_adjusted_roi",
+      "formula": "quality_score * gate_quality_factor / sqrt(estimated_api_cost_usd * wall_minutes)",
+      "gate_quality_factor": "clamp((quality_score - 87) / 5, 0, 1)",
+      "interpretation": "comparative index; higher is better; not conventional financial ROI"
+    },
+    "pareto_dimensions": {
+      "quality_tolerance_epsilon": 2,
+      "maximize": [
+        "quality_score"
+      ],
+      "minimize": [
+        "estimated_api_cost_usd",
+        "wall_minutes"
+      ]
+    },
+    "quality_tolerance_frontiers": {
+      "epsilon_0": [
+        "monolith",
+        "monolith_sol_medium_opencode",
+        "monolith_luna_xhigh_opencode",
+        "monolith_luna_max_codex_minimal"
+      ],
+      "epsilon_2": [
+        "monolith_sol_medium_opencode",
+        "monolith_luna_xhigh_opencode"
+      ],
+      "epsilon_3": [
+        "monolith_sol_medium_opencode",
+        "monolith_luna_xhigh_opencode"
+      ]
+    },
+    "quality_tolerance_scenarios": [
+      0,
+      2,
+      3
+    ],
+    "time_value_scenarios": [
+      {
+        "key": "usd_per_hour_0",
+        "usd_per_hour": 0,
+        "usd_per_minute": 0
+      },
+      {
+        "key": "usd_per_hour_3",
+        "usd_per_hour": 3,
+        "usd_per_minute": 0.05
+      },
+      {
+        "key": "usd_per_hour_10",
+        "usd_per_hour": 10,
+        "usd_per_minute": 0.16666666666666666
+      },
+      {
+        "key": "luna_max_sol_medium_break_even",
+        "usd_per_hour": 11.794821372223065,
+        "usd_per_minute": 0.19658035620371775
+      },
+      {
+        "key": "luna_xhigh_sol_medium_break_even",
+        "usd_per_hour": 16.33481803110517,
+        "usd_per_minute": 0.2722469671850861
+      },
+      {
+        "key": "usd_per_hour_25",
+        "usd_per_hour": 25,
+        "usd_per_minute": 0.4166666666666667
+      },
+      {
+        "key": "usd_per_hour_60",
+        "usd_per_hour": 60,
+        "usd_per_minute": 1
+      }
+    ],
+    "luna_sol_break_even_usd_per_minute": 0.19658035620371775,
+    "luna_sol_break_even_usd_per_hour": 11.794821372223065,
+    "luna_xhigh_sol_break_even_usd_per_minute": 0.2722469671850861,
+    "luna_xhigh_sol_break_even_usd_per_hour": 16.33481803110517,
+    "primary_scenario_usd_per_hour": null,
+    "displayed_scenario_usd_per_hour": 3,
+    "ordering": "gate_adjusted_roi_desc_then_quality_desc_then_cost_asc"
+  },
+  "comparisons": {
+    "minimal_context_vs_warm_cache": {
+      "candidate": "monolith_luna_max_codex_minimal",
+      "comparator": "monolith_warm",
+      "delta": {
+        "comparator_treatment": "monolith_warm",
+        "quality_score": 5,
+        "total_tokens": -1414164,
+        "non_cached_tokens": -24852,
+        "wall_seconds": -103,
+        "estimated_api_cost_usd": -0.03535464000000002,
+        "gate_adjusted_roi": 15.094712327416026
+      }
+    },
+    "methodology_vs_fresh_control": {
+      "monolith_luna_max_opencode_speckit": {
+        "comparator_treatment": "monolith_luna_max_opencode_retest",
+        "quality_score": -90,
+        "total_tokens": 11310437,
+        "non_cached_tokens": 312165,
+        "wall_seconds": 1624,
+        "estimated_api_cost_usd": 0.35719844,
+        "gate_adjusted_roi": -63.45614790007737
+      },
+      "dynamic_luna_max_opencode_superpowers": {
+        "comparator_treatment": "monolith_luna_max_opencode_retest",
+        "quality_score": -85,
+        "total_tokens": 3855398,
+        "non_cached_tokens": 582694,
+        "wall_seconds": 1624,
+        "estimated_api_cost_usd": 0.26284388,
+        "gate_adjusted_roi": -63.45614790007737
+      }
+    }
+  },
+  "exploratory_continuations": {
+    "classification": "Post-timeout exploratory outcomes; excluded from primary ranking",
+    "comparator_treatment": "monolith_luna_max_opencode_retest",
+    "rows": [
+      {
+        "treatment": "monolith_luna_max_opencode_speckit",
+        "label": "Monolith Luna Max OpenCode + Spec Kit",
+        "live_url": "https://shootemup-bench-monolith-luna-max-opencode-speckit-pages.pages.dev",
+        "source_path": "submissions/monolith_luna_max_opencode_speckit_continued/",
+        "evidence_path": "results/continuations/monolith_luna_max_opencode_speckit/attempt-1/evidence/",
+        "outcome": "Completed after one additional 42:57 continuation.",
+        "quality_score": 91,
+        "automated_points": 52,
+        "manual_points": 41,
+        "pre_regression_score": 93,
+        "posthoc_adjustment": -2,
+        "quality_gate": "BORDERLINE",
+        "gate_quality_factor": 0.8,
+        "estimated_api_cost_usd": 1.18343936,
+        "wall_seconds": 5277,
+        "wall_minutes": 87.95,
+        "total_tokens": 38062664,
+        "gate_adjusted_roi": 7.135763580604206,
+        "cleanup_confirmed": true,
+        "score_path": "results/continuations/monolith_luna_max_opencode_speckit/attempt-1/score.json",
+        "cleanup_path": "results/continuations/monolith_luna_max_opencode_speckit/attempt-1/cleanup.json",
+        "marginal_vs_control": {
+          "quality_score": -3,
+          "estimated_api_cost_usd": 1.06107716,
+          "wall_seconds": 4201,
+          "total_tokens": 35548834,
+          "gate_adjusted_roi": -56.32038431947316
+        }
+      },
+      {
+        "treatment": "dynamic_luna_max_opencode_superpowers",
+        "label": "Dynamic Luna Max OpenCode + Superpowers",
+        "live_url": "https://shootemup-bench-dynamic-luna-max-opencode-superpowers-avwr.pages.dev/",
+        "source_path": "submissions/dynamic_luna_max_opencode_superpowers_continued/",
+        "evidence_path": "results/continuations/dynamic_luna_max_opencode_superpowers/completed/evidence/",
+        "outcome": "Stopped by the user; the last clean deployed commit was graded and the parent integration remained unfinished.",
+        "quality_score": 89,
+        "automated_points": 48,
+        "manual_points": 43,
+        "pre_regression_score": 91,
+        "posthoc_adjustment": -2,
+        "quality_gate": "BORDERLINE",
+        "gate_quality_factor": 0.4,
+        "estimated_api_cost_usd": 2.34831336,
+        "wall_seconds": 14059,
+        "wall_minutes": 234.31666666666666,
+        "total_tokens": 48681046,
+        "gate_adjusted_roi": 1.517645656360469,
+        "cleanup_confirmed": true,
+        "score_path": "results/continuations/dynamic_luna_max_opencode_superpowers/completed/score.json",
+        "cleanup_path": "results/continuations/dynamic_luna_max_opencode_superpowers/completed/cleanup.json",
+        "marginal_vs_control": {
+          "quality_score": -5,
+          "estimated_api_cost_usd": 2.22595116,
+          "wall_seconds": 12983,
+          "total_tokens": 46167216,
+          "gate_adjusted_roi": -61.9385022437169
+        }
+      }
+    ]
+  },
+  "rows": [
+    {
+      "treatment": "monolith_luna_xhigh_opencode",
+      "label": "Monolith Luna Xhigh OpenCode",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "xhigh",
+      "runtime": "opencode",
+      "quality_score": 95,
+      "original_quality_score": 99,
+      "posthoc_adjustment": -4,
+      "automated_points": 54,
+      "manual_points": 45,
+      "wall_seconds": 722,
+      "wall_minutes": 12.033333333333333,
+      "total_tokens": 1308350,
+      "uncached_input_tokens": 67683,
+      "non_cached_tokens": 99006,
+      "cached_input_tokens": 1209344,
+      "output_tokens": 31323,
+      "reasoning_output_tokens": 7963,
+      "agents_started": 1,
+      "coordination_events": 0,
+      "successful_a2a_messages": null,
+      "failed_a2a_messages": null,
+      "captured_web_search_calls": 0,
+      "estimated_api_cost_usd": 0.07531108,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 0.07531108,
+        "web_search": 0
+      },
+      "token_efficiency": 72.61053999312111,
+      "non_cached_token_efficiency": 959.5378057895481,
+      "time_efficiency": 473.68421052631584,
+      "cost_efficiency": 1261.434572442727,
+      "cost_per_quality_point_usd": 0.0007927482105263158,
+      "square_root_roi": 99.79325624995356,
+      "gate_quality_factor": 1,
+      "gate_adjusted_roi": 99.79325624995356,
+      "quality_gate": "PASS",
+      "quality_gate_passed": true,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": -3,
+        "total_tokens": -15261470,
+        "non_cached_tokens": -225310,
+        "wall_seconds": -1005,
+        "estimated_api_cost_usd": -0.40013620000000005
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "monolith",
+        "quality_score": -3,
+        "total_tokens": -15261470,
+        "non_cached_tokens": -225310,
+        "wall_seconds": -1005,
+        "estimated_api_cost_usd": -0.40013620000000005,
+        "gate_adjusted_roi": 73.30189051276324
+      },
+      "dominated_by": [],
+      "pareto_frontier": true,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [],
+          "pareto_frontier": true
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [],
+          "pareto_frontier": true
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [],
+          "pareto_frontier": true
+        }
+      },
+      "strict_dominated_by": [],
+      "strict_pareto_frontier": true,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 1261.434572442727,
+        "usd_per_hour_3": 140.32957577670058,
+        "usd_per_hour_10": 45.65405508298548,
+        "luna_max_sol_medium_break_even": 38.92121801134446,
+        "luna_xhigh_sol_medium_break_even": 28.34678913283056,
+        "usd_per_hour_25": 18.666981172040895,
+        "usd_per_hour_60": 7.845634635648524
+      }
+    },
+    {
+      "treatment": "monolith_opencode",
+      "label": "Monolith OpenCode",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "runtime": "opencode",
+      "quality_score": 95,
+      "original_quality_score": 96,
+      "posthoc_adjustment": -1,
+      "automated_points": 54,
+      "manual_points": 42,
+      "wall_seconds": 797,
+      "wall_minutes": 13.283333333333333,
+      "total_tokens": 1587805,
+      "uncached_input_tokens": 81328,
+      "non_cached_tokens": 118365,
+      "cached_input_tokens": 1469440,
+      "output_tokens": 37037,
+      "reasoning_output_tokens": 11664,
+      "agents_started": 1,
+      "coordination_events": 0,
+      "successful_a2a_messages": null,
+      "failed_a2a_messages": null,
+      "captured_web_search_calls": 0,
+      "estimated_api_cost_usd": 0.0900988,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 0.0900988,
+        "web_search": 0
+      },
+      "token_efficiency": 59.83102459055111,
+      "non_cached_token_efficiency": 802.602120559287,
+      "time_efficiency": 429.1091593475533,
+      "cost_efficiency": 1054.3980607954823,
+      "cost_per_quality_point_usd": 0.0009484084210526316,
+      "square_root_roi": 86.83815074470819,
+      "gate_quality_factor": 1,
+      "gate_adjusted_roi": 86.83815074470819,
+      "quality_gate": "PASS",
+      "quality_gate_passed": true,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": -3,
+        "total_tokens": -14982015,
+        "non_cached_tokens": -205951,
+        "wall_seconds": -930,
+        "estimated_api_cost_usd": -0.38534848
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "monolith",
+        "quality_score": -3,
+        "total_tokens": -14982015,
+        "non_cached_tokens": -205951,
+        "wall_seconds": -930,
+        "estimated_api_cost_usd": -0.38534848,
+        "gate_adjusted_roi": 60.34678500751786
+      },
+      "dominated_by": [
+        "monolith_luna_xhigh_opencode"
+      ],
+      "pareto_frontier": false,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [
+            "monolith_luna_xhigh_opencode"
+          ],
+          "pareto_frontier": false
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [
+            "monolith_luna_xhigh_opencode"
+          ],
+          "pareto_frontier": false
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [
+            "monolith_luna_xhigh_opencode"
+          ],
+          "pareto_frontier": false
+        }
+      },
+      "strict_dominated_by": [
+        "monolith_luna_xhigh_opencode"
+      ],
+      "strict_pareto_frontier": false,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 1054.3980607954823,
+        "usd_per_hour_3": 125.95035063693754,
+        "usd_per_hour_10": 41.232859211072565,
+        "luna_max_sol_medium_break_even": 35.167715970835836,
+        "luna_xhigh_sol_medium_break_even": 25.63102218092026,
+        "usd_per_hour_25": 16.88942628124156,
+        "usd_per_hour_60": 7.103636452695798
+      }
+    },
+    {
+      "treatment": "monolith_luna_max_codex_minimal",
+      "label": "Monolith Luna Max Codex Minimal Context",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "runtime": "codex",
+      "quality_score": 97,
+      "original_quality_score": 99,
+      "posthoc_adjustment": -2,
+      "automated_points": 54,
+      "manual_points": 45,
+      "wall_seconds": 954,
+      "wall_minutes": 15.9,
+      "total_tokens": 2241691,
+      "uncached_input_tokens": 104323,
+      "non_cached_tokens": 148635,
+      "cached_input_tokens": 2093056,
+      "output_tokens": 44312,
+      "reasoning_output_tokens": 14638,
+      "agents_started": 1,
+      "coordination_events": 0,
+      "successful_a2a_messages": null,
+      "failed_a2a_messages": null,
+      "captured_web_search_calls": 0,
+      "estimated_api_cost_usd": 0.11590012,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 0.11590012,
+        "web_search": 0
+      },
+      "token_efficiency": 43.27090575819772,
+      "non_cached_token_efficiency": 652.6053755844855,
+      "time_efficiency": 366.03773584905656,
+      "cost_efficiency": 836.927520006019,
+      "cost_per_quality_point_usd": 0.0011948465979381444,
+      "square_root_roi": 71.45477060033258,
+      "gate_quality_factor": 1,
+      "gate_adjusted_roi": 71.45477060033258,
+      "quality_gate": "PASS",
+      "quality_gate_passed": true,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": -1,
+        "total_tokens": -14328129,
+        "non_cached_tokens": -175681,
+        "wall_seconds": -773,
+        "estimated_api_cost_usd": -0.35954716000000003
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "monolith_warm",
+        "quality_score": 5,
+        "total_tokens": -1414164,
+        "non_cached_tokens": -24852,
+        "wall_seconds": -103,
+        "estimated_api_cost_usd": -0.03535464000000002,
+        "gate_adjusted_roi": 15.094712327416026
+      },
+      "dominated_by": [
+        "monolith_opencode",
+        "monolith_luna_xhigh_opencode"
+      ],
+      "pareto_frontier": false,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [],
+          "pareto_frontier": true
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [
+            "monolith_opencode",
+            "monolith_luna_xhigh_opencode"
+          ],
+          "pareto_frontier": false
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [
+            "monolith_opencode",
+            "monolith_luna_xhigh_opencode"
+          ],
+          "pareto_frontier": false
+        }
+      },
+      "strict_dominated_by": [],
+      "strict_pareto_frontier": true,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 836.927520006019,
+        "usd_per_hour_3": 106.48807467497096,
+        "usd_per_hour_10": 35.0699576237771,
+        "luna_max_sol_medium_break_even": 29.924161221009996,
+        "luna_xhigh_sol_medium_break_even": 21.82410407459573,
+        "usd_per_hour_25": 14.389769655866077,
+        "usd_per_hour_60": 6.05648132625842
+      }
+    },
+    {
+      "treatment": "monolith_luna_max_opencode_retest",
+      "label": "Monolith Luna Max OpenCode Fresh Control",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "runtime": "opencode",
+      "quality_score": 94,
+      "original_quality_score": 98,
+      "posthoc_adjustment": -4,
+      "automated_points": 54,
+      "manual_points": 44,
+      "wall_seconds": 1076,
+      "wall_minutes": 17.933333333333334,
+      "total_tokens": 2513830,
+      "uncached_input_tokens": 96973,
+      "non_cached_tokens": 143270,
+      "cached_input_tokens": 2370560,
+      "output_tokens": 46297,
+      "reasoning_output_tokens": 16566,
+      "agents_started": 1,
+      "coordination_events": 0,
+      "successful_a2a_messages": null,
+      "failed_a2a_messages": null,
+      "captured_web_search_calls": 0,
+      "estimated_api_cost_usd": 0.12236220000000002,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 0.12236220000000002,
+        "web_search": 0
+      },
+      "token_efficiency": 37.39314114319584,
+      "non_cached_token_efficiency": 656.1038598450477,
+      "time_efficiency": 314.49814126394057,
+      "cost_efficiency": 768.2110978717283,
+      "cost_per_quality_point_usd": 0.0013017255319148937,
+      "square_root_roi": 63.45614790007737,
+      "gate_quality_factor": 1,
+      "gate_adjusted_roi": 63.45614790007737,
+      "quality_gate": "PASS",
+      "quality_gate_passed": true,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": -4,
+        "total_tokens": -14055990,
+        "non_cached_tokens": -181046,
+        "wall_seconds": -651,
+        "estimated_api_cost_usd": -0.35308508
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "monolith",
+        "quality_score": -4,
+        "total_tokens": -14055990,
+        "non_cached_tokens": -181046,
+        "wall_seconds": -651,
+        "estimated_api_cost_usd": -0.35308508,
+        "gate_adjusted_roi": 36.96478216288704
+      },
+      "dominated_by": [
+        "monolith_opencode",
+        "monolith_luna_xhigh_opencode",
+        "monolith_luna_max_codex_minimal"
+      ],
+      "pareto_frontier": false,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [
+            "monolith_opencode",
+            "monolith_luna_xhigh_opencode",
+            "monolith_luna_max_codex_minimal"
+          ],
+          "pareto_frontier": false
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [
+            "monolith_opencode",
+            "monolith_luna_xhigh_opencode",
+            "monolith_luna_max_codex_minimal"
+          ],
+          "pareto_frontier": false
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [
+            "monolith_opencode",
+            "monolith_luna_xhigh_opencode",
+            "monolith_luna_max_codex_minimal"
+          ],
+          "pareto_frontier": false
+        }
+      },
+      "strict_dominated_by": [
+        "monolith_opencode",
+        "monolith_luna_xhigh_opencode",
+        "monolith_luna_max_codex_minimal"
+      ],
+      "strict_pareto_frontier": false,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 768.2110978717283,
+        "usd_per_hour_3": 92.24468812888715,
+        "usd_per_hour_10": 30.212926348406654,
+        "luna_max_sol_medium_break_even": 25.769640082921526,
+        "luna_xhigh_sol_medium_break_even": 18.782502928300186,
+        "usd_per_hour_25": 12.377240777645476,
+        "usd_per_hour_60": 5.206113485158347
+      }
+    },
+    {
+      "treatment": "monolith_warm",
+      "label": "Monolith warm-cache",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "runtime": "codex",
+      "quality_score": 92,
+      "original_quality_score": 94,
+      "posthoc_adjustment": -2,
+      "automated_points": 54,
+      "manual_points": 40,
+      "wall_seconds": 1057,
+      "wall_minutes": 17.616666666666667,
+      "total_tokens": 3655855,
+      "uncached_input_tokens": 126577,
+      "non_cached_tokens": 173487,
+      "cached_input_tokens": 3482368,
+      "output_tokens": 46910,
+      "reasoning_output_tokens": 19988,
+      "agents_started": 1,
+      "coordination_events": 0,
+      "successful_a2a_messages": null,
+      "failed_a2a_messages": null,
+      "captured_web_search_calls": 0,
+      "estimated_api_cost_usd": 0.15125476000000002,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 0.15125476000000002,
+        "web_search": 0
+      },
+      "token_efficiency": 25.165111854819187,
+      "non_cached_token_efficiency": 530.2991002207658,
+      "time_efficiency": 313.3396404919584,
+      "cost_efficiency": 608.245320676189,
+      "cost_per_quality_point_usd": 0.0016440734782608697,
+      "square_root_roi": 56.360058272916554,
+      "gate_quality_factor": 1,
+      "gate_adjusted_roi": 56.360058272916554,
+      "quality_gate": "PASS",
+      "quality_gate_passed": true,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": -6,
+        "total_tokens": -12913965,
+        "non_cached_tokens": -150829,
+        "wall_seconds": -670,
+        "estimated_api_cost_usd": -0.32419252
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "monolith",
+        "quality_score": -6,
+        "total_tokens": -12913965,
+        "non_cached_tokens": -150829,
+        "wall_seconds": -670,
+        "estimated_api_cost_usd": -0.32419252,
+        "gate_adjusted_roi": 29.868692535726225
+      },
+      "dominated_by": [
+        "monolith_opencode",
+        "monolith_luna_xhigh_opencode",
+        "monolith_luna_max_codex_minimal"
+      ],
+      "pareto_frontier": false,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [
+            "monolith_opencode",
+            "monolith_luna_xhigh_opencode",
+            "monolith_luna_max_codex_minimal"
+          ],
+          "pareto_frontier": false
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [
+            "monolith_opencode",
+            "monolith_luna_xhigh_opencode",
+            "monolith_luna_max_codex_minimal"
+          ],
+          "pareto_frontier": false
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [
+            "monolith_opencode",
+            "monolith_luna_xhigh_opencode",
+            "monolith_luna_max_codex_minimal"
+          ],
+          "pareto_frontier": false
+        }
+      },
+      "strict_dominated_by": [
+        "monolith_opencode",
+        "monolith_luna_xhigh_opencode",
+        "monolith_luna_max_codex_minimal"
+      ],
+      "strict_pareto_frontier": false,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 608.245320676189,
+        "usd_per_hour_3": 89.1396777021889,
+        "usd_per_hour_10": 29.798865389054182,
+        "luna_max_sol_medium_break_even": 25.45412533150202,
+        "luna_xhigh_sol_medium_break_even": 18.595855898649003,
+        "usd_per_hour_25": 12.280531324674733,
+        "usd_per_hour_60": 5.177870713786669
+      }
+    },
+    {
+      "treatment": "a2a_async_streaming_opencode",
+      "label": "A2A async streaming OpenCode",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "runtime": "opencode-a2a-async-streaming",
+      "quality_score": 96,
+      "original_quality_score": 96,
+      "posthoc_adjustment": 0,
+      "automated_points": 54,
+      "manual_points": 42,
+      "wall_seconds": 1123,
+      "wall_minutes": 18.716666666666665,
+      "total_tokens": 8049798,
+      "uncached_input_tokens": 346775,
+      "non_cached_tokens": 455814,
+      "cached_input_tokens": 7593984,
+      "output_tokens": 109039,
+      "reasoning_output_tokens": 52799,
+      "agents_started": 3,
+      "coordination_events": 2,
+      "successful_a2a_messages": 2,
+      "failed_a2a_messages": 0,
+      "captured_web_search_calls": 0,
+      "estimated_api_cost_usd": 0.35208148,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 0.35208148,
+        "web_search": 0
+      },
+      "token_efficiency": 11.925765093732789,
+      "non_cached_token_efficiency": 210.61222340691597,
+      "time_efficiency": 307.74710596616205,
+      "cost_efficiency": 272.6641571718001,
+      "cost_per_quality_point_usd": 0.0036675154166666665,
+      "square_root_roi": 37.396881614720286,
+      "gate_quality_factor": 1,
+      "gate_adjusted_roi": 37.396881614720286,
+      "quality_gate": "PASS",
+      "quality_gate_passed": true,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": -2,
+        "total_tokens": -8520022,
+        "non_cached_tokens": 131498,
+        "wall_seconds": -604,
+        "estimated_api_cost_usd": -0.12336580000000003
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "a2a_async",
+        "quality_score": 0,
+        "total_tokens": -6615852,
+        "non_cached_tokens": -139308,
+        "wall_seconds": -319,
+        "estimated_api_cost_usd": -0.23040948,
+        "gate_adjusted_roi": 11.739068755348612
+      },
+      "dominated_by": [
+        "monolith_opencode",
+        "monolith_luna_xhigh_opencode",
+        "monolith_luna_max_codex_minimal",
+        "monolith_luna_max_opencode_retest"
+      ],
+      "pareto_frontier": false,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [
+            "monolith_luna_max_codex_minimal"
+          ],
+          "pareto_frontier": false
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [
+            "monolith_opencode",
+            "monolith_luna_xhigh_opencode",
+            "monolith_luna_max_codex_minimal",
+            "monolith_luna_max_opencode_retest"
+          ],
+          "pareto_frontier": false
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [
+            "monolith_opencode",
+            "monolith_luna_xhigh_opencode",
+            "monolith_luna_max_codex_minimal",
+            "monolith_luna_max_opencode_retest"
+          ],
+          "pareto_frontier": false
+        }
+      },
+      "strict_dominated_by": [
+        "monolith_luna_max_codex_minimal"
+      ],
+      "strict_pareto_frontier": false,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 272.6641571718001,
+        "usd_per_hour_3": 74.53909141050747,
+        "usd_per_hour_10": 27.653545469450325,
+        "luna_max_sol_medium_break_even": 23.813005514968616,
+        "luna_xhigh_sol_medium_break_even": 17.622318850696818,
+        "usd_per_hour_25": 11.778140191999706,
+        "usd_per_hour_60": 5.03441543522517
+      }
+    },
+    {
+      "treatment": "monolith_sol_medium_opencode",
+      "label": "Monolith Sol Medium OpenCode",
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "medium",
+      "runtime": "opencode",
+      "quality_score": 94,
+      "original_quality_score": 97,
+      "posthoc_adjustment": -3,
+      "automated_points": 54,
+      "manual_points": 43,
+      "wall_seconds": 510,
+      "wall_minutes": 8.5,
+      "total_tokens": 617030,
+      "uncached_input_tokens": 43031,
+      "non_cached_tokens": 59974,
+      "cached_input_tokens": 557056,
+      "output_tokens": 16943,
+      "reasoning_output_tokens": 1968,
+      "agents_started": 1,
+      "coordination_events": 0,
+      "successful_a2a_messages": null,
+      "failed_a2a_messages": null,
+      "captured_web_search_calls": 0,
+      "estimated_api_cost_usd": 1.001973,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 1.001973,
+        "web_search": 0
+      },
+      "token_efficiency": 152.34267377599144,
+      "non_cached_token_efficiency": 1567.3458498682762,
+      "time_efficiency": 663.5294117647059,
+      "cost_efficiency": 93.8149031959943,
+      "cost_per_quality_point_usd": 0.010659287234042553,
+      "square_root_roi": 32.20997452456845,
+      "gate_quality_factor": 1,
+      "gate_adjusted_roi": 32.20997452456845,
+      "quality_gate": "PASS",
+      "quality_gate_passed": true,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": -4,
+        "total_tokens": -15952790,
+        "non_cached_tokens": -264342,
+        "wall_seconds": -1217,
+        "estimated_api_cost_usd": 0.52652572
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "monolith",
+        "quality_score": -4,
+        "total_tokens": -15952790,
+        "non_cached_tokens": -264342,
+        "wall_seconds": -1217,
+        "estimated_api_cost_usd": 0.52652572,
+        "gate_adjusted_roi": 5.718608787378123
+      },
+      "dominated_by": [],
+      "pareto_frontier": true,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [],
+          "pareto_frontier": true
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [],
+          "pareto_frontier": true
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [],
+          "pareto_frontier": true
+        }
+      },
+      "strict_dominated_by": [],
+      "strict_pareto_frontier": true,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 93.8149031959943,
+        "usd_per_hour_3": 65.8737060897438,
+        "usd_per_hour_10": 38.86482194743354,
+        "luna_max_sol_medium_break_even": 35.167715970835836,
+        "luna_xhigh_sol_medium_break_even": 28.346789132830565,
+        "usd_per_hour_25": 20.688260270639123,
+        "usd_per_hour_60": 9.892682288194253
+      }
+    },
+    {
+      "treatment": "monolith",
+      "label": "Monolith (cold)",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "runtime": "codex",
+      "quality_score": 98,
+      "original_quality_score": 100,
+      "posthoc_adjustment": -2,
+      "automated_points": 54,
+      "manual_points": 46,
+      "wall_seconds": 1727,
+      "wall_minutes": 28.783333333333335,
+      "total_tokens": 16569820,
+      "uncached_input_tokens": 268642,
+      "non_cached_tokens": 324316,
+      "cached_input_tokens": 16245504,
+      "output_tokens": 55674,
+      "reasoning_output_tokens": 16899,
+      "agents_started": 1,
+      "coordination_events": 0,
+      "successful_a2a_messages": null,
+      "failed_a2a_messages": null,
+      "captured_web_search_calls": 3,
+      "estimated_api_cost_usd": 0.47544728,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 0.44544728,
+        "web_search": 0.03
+      },
+      "token_efficiency": 5.91436720495455,
+      "non_cached_token_efficiency": 302.1744224768436,
+      "time_efficiency": 204.28488708743487,
+      "cost_efficiency": 206.12169660535233,
+      "cost_per_quality_point_usd": 0.004851502857142857,
+      "square_root_roi": 26.49136573719033,
+      "gate_quality_factor": 1,
+      "gate_adjusted_roi": 26.49136573719033,
+      "quality_gate": "PASS",
+      "quality_gate_passed": true,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": 0,
+        "total_tokens": 0,
+        "non_cached_tokens": 0,
+        "wall_seconds": 0,
+        "estimated_api_cost_usd": 0
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "monolith",
+        "quality_score": 0,
+        "total_tokens": 0,
+        "non_cached_tokens": 0,
+        "wall_seconds": 0,
+        "estimated_api_cost_usd": 0,
+        "gate_adjusted_roi": 0
+      },
+      "dominated_by": [
+        "a2a_async_streaming_opencode",
+        "monolith_luna_max_codex_minimal"
+      ],
+      "pareto_frontier": false,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [],
+          "pareto_frontier": true
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [
+            "a2a_async_streaming_opencode",
+            "monolith_luna_max_codex_minimal"
+          ],
+          "pareto_frontier": false
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [
+            "a2a_async_streaming_opencode",
+            "monolith_opencode",
+            "monolith_luna_xhigh_opencode",
+            "monolith_luna_max_codex_minimal"
+          ],
+          "pareto_frontier": false
+        }
+      },
+      "strict_dominated_by": [],
+      "strict_pareto_frontier": true,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 206.12169660535233,
+        "usd_per_hour_3": 51.18525338782656,
+        "usd_per_hour_10": 18.586410538095905,
+        "luna_max_sol_medium_break_even": 15.977344257842606,
+        "luna_xhigh_sol_medium_break_even": 11.790718379141007,
+        "usd_per_hour_25": 7.859804925459073,
+        "usd_per_hour_60": 3.3494218810793854
+      }
+    },
+    {
+      "treatment": "a2a_async",
+      "label": "A2A asynchronous",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "runtime": "codex-a2a-async",
+      "quality_score": 96,
+      "original_quality_score": 98,
+      "posthoc_adjustment": -2,
+      "automated_points": 54,
+      "manual_points": 44,
+      "wall_seconds": 1442,
+      "wall_minutes": 24.033333333333335,
+      "total_tokens": 14665650,
+      "uncached_input_tokens": 433066,
+      "non_cached_tokens": 595122,
+      "cached_input_tokens": 14070528,
+      "output_tokens": 162056,
+      "reasoning_output_tokens": 63820,
+      "agents_started": 3,
+      "coordination_events": 2,
+      "successful_a2a_messages": 2,
+      "failed_a2a_messages": 0,
+      "captured_web_search_calls": 2,
+      "estimated_api_cost_usd": 0.58249096,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 0.56249096,
+        "web_search": 0.02
+      },
+      "token_efficiency": 6.545908295915967,
+      "non_cached_token_efficiency": 161.31146218758505,
+      "time_efficiency": 239.66712898751734,
+      "cost_efficiency": 164.8094246818869,
+      "cost_per_quality_point_usd": 0.006067614166666666,
+      "square_root_roi": 25.657812859371674,
+      "gate_quality_factor": 1,
+      "gate_adjusted_roi": 25.657812859371674,
+      "quality_gate": "PASS",
+      "quality_gate_passed": true,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": -2,
+        "total_tokens": -1904170,
+        "non_cached_tokens": 270806,
+        "wall_seconds": -285,
+        "estimated_api_cost_usd": 0.10704367999999997
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "monolith",
+        "quality_score": -2,
+        "total_tokens": -1904170,
+        "non_cached_tokens": 270806,
+        "wall_seconds": -285,
+        "estimated_api_cost_usd": 0.10704367999999997,
+        "gate_adjusted_roi": -0.8335528778186543
+      },
+      "dominated_by": [
+        "a2a_async_streaming_opencode",
+        "monolith_opencode",
+        "monolith_luna_xhigh_opencode",
+        "monolith_luna_max_codex_minimal",
+        "monolith_luna_max_opencode_retest"
+      ],
+      "pareto_frontier": false,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [
+            "a2a_async_streaming_opencode",
+            "monolith_luna_max_codex_minimal"
+          ],
+          "pareto_frontier": false
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [
+            "a2a_async_streaming_opencode",
+            "monolith_opencode",
+            "monolith_luna_xhigh_opencode",
+            "monolith_luna_max_codex_minimal",
+            "monolith_luna_max_opencode_retest"
+          ],
+          "pareto_frontier": false
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [
+            "a2a_async_streaming_opencode",
+            "monolith_opencode",
+            "monolith_luna_xhigh_opencode",
+            "monolith_luna_max_codex_minimal",
+            "monolith_luna_max_opencode_retest"
+          ],
+          "pareto_frontier": false
+        }
+      },
+      "strict_dominated_by": [
+        "a2a_async_streaming_opencode",
+        "monolith_luna_max_codex_minimal"
+      ],
+      "strict_pareto_frontier": false,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 164.8094246818869,
+        "usd_per_hour_3": 53.806905043113446,
+        "usd_per_hour_10": 20.923937818528326,
+        "luna_max_sol_medium_break_even": 18.08941079951307,
+        "luna_xhigh_sol_medium_break_even": 13.47275185573025,
+        "usd_per_hour_25": 9.059697875031002,
+        "usd_per_hour_60": 3.8999303397692646
+      }
+    },
+    {
+      "treatment": "a2a",
+      "label": "A2A synchronous",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "runtime": "codex",
+      "quality_score": 93,
+      "original_quality_score": 93,
+      "posthoc_adjustment": 0,
+      "automated_points": 54,
+      "manual_points": 39,
+      "wall_seconds": 1395,
+      "wall_minutes": 23.25,
+      "total_tokens": 15604042,
+      "uncached_input_tokens": 622677,
+      "non_cached_tokens": 801610,
+      "cached_input_tokens": 14802432,
+      "output_tokens": 178933,
+      "reasoning_output_tokens": 83938,
+      "agents_started": 8,
+      "coordination_events": 7,
+      "successful_a2a_messages": 6,
+      "failed_a2a_messages": 1,
+      "captured_web_search_calls": 5,
+      "estimated_api_cost_usd": 0.6853036400000001,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 0.6353036400000001,
+        "web_search": 0.05
+      },
+      "token_efficiency": 5.959994211756159,
+      "non_cached_token_efficiency": 116.01651676002045,
+      "time_efficiency": 240,
+      "cost_efficiency": 135.7062688299744,
+      "cost_per_quality_point_usd": 0.007368856344086023,
+      "square_root_roi": 23.298606724864417,
+      "gate_quality_factor": 1,
+      "gate_adjusted_roi": 23.298606724864417,
+      "quality_gate": "PASS",
+      "quality_gate_passed": true,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": -5,
+        "total_tokens": -965778,
+        "non_cached_tokens": 477294,
+        "wall_seconds": -332,
+        "estimated_api_cost_usd": 0.20985636000000008
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "monolith",
+        "quality_score": -5,
+        "total_tokens": -965778,
+        "non_cached_tokens": 477294,
+        "wall_seconds": -332,
+        "estimated_api_cost_usd": 0.20985636000000008,
+        "gate_adjusted_roi": -3.1927590123259115
+      },
+      "dominated_by": [
+        "monolith_warm",
+        "a2a_async_streaming_opencode",
+        "monolith_opencode",
+        "monolith_luna_xhigh_opencode",
+        "monolith_luna_max_codex_minimal",
+        "monolith_luna_max_opencode_retest"
+      ],
+      "pareto_frontier": false,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [
+            "a2a_async_streaming_opencode",
+            "monolith_opencode",
+            "monolith_luna_xhigh_opencode",
+            "monolith_luna_max_codex_minimal",
+            "monolith_luna_max_opencode_retest"
+          ],
+          "pareto_frontier": false
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [
+            "monolith_warm",
+            "a2a_async_streaming_opencode",
+            "monolith_opencode",
+            "monolith_luna_xhigh_opencode",
+            "monolith_luna_max_codex_minimal",
+            "monolith_luna_max_opencode_retest"
+          ],
+          "pareto_frontier": false
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [
+            "monolith_warm",
+            "a2a_async_streaming_opencode",
+            "monolith_opencode",
+            "monolith_luna_xhigh_opencode",
+            "monolith_luna_max_codex_minimal",
+            "monolith_luna_max_opencode_retest"
+          ],
+          "pareto_frontier": false
+        }
+      },
+      "strict_dominated_by": [
+        "a2a_async_streaming_opencode",
+        "monolith_opencode",
+        "monolith_luna_xhigh_opencode",
+        "monolith_luna_max_codex_minimal",
+        "monolith_luna_max_opencode_retest"
+      ],
+      "strict_pareto_frontier": false,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 135.7062688299744,
+        "usd_per_hour_3": 50.33002316198489,
+        "usd_per_hour_10": 20.39337889351596,
+        "luna_max_sol_medium_break_even": 17.694747606281975,
+        "luna_xhigh_sol_medium_break_even": 13.257219545564908,
+        "usd_per_hour_25": 8.965753447927025,
+        "usd_per_hour_60": 3.885474001030889
+      }
+    },
+    {
+      "treatment": "monolith_sol_high_opencode",
+      "label": "Monolith Sol High OpenCode",
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "high",
+      "runtime": "opencode",
+      "quality_score": 94,
+      "original_quality_score": 98,
+      "posthoc_adjustment": -4,
+      "automated_points": 54,
+      "manual_points": 44,
+      "wall_seconds": 868,
+      "wall_minutes": 14.466666666666667,
+      "total_tokens": 1063179,
+      "uncached_input_tokens": 66455,
+      "non_cached_tokens": 94475,
+      "cached_input_tokens": 968704,
+      "output_tokens": 28020,
+      "reasoning_output_tokens": 5151,
+      "agents_started": 1,
+      "coordination_events": 0,
+      "successful_a2a_messages": null,
+      "failed_a2a_messages": null,
+      "captured_web_search_calls": 0,
+      "estimated_api_cost_usd": 1.657227,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 1.657227,
+        "web_search": 0
+      },
+      "token_efficiency": 88.41408643323466,
+      "non_cached_token_efficiency": 994.9722148716592,
+      "time_efficiency": 389.86175115207374,
+      "cost_efficiency": 56.72125786026899,
+      "cost_per_quality_point_usd": 0.017630074468085108,
+      "square_root_roi": 19.197850972158662,
+      "gate_quality_factor": 1,
+      "gate_adjusted_roi": 19.197850972158662,
+      "quality_gate": "PASS",
+      "quality_gate_passed": true,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": -4,
+        "total_tokens": -15506641,
+        "non_cached_tokens": -229841,
+        "wall_seconds": -859,
+        "estimated_api_cost_usd": 1.18177972
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "monolith_sol_medium_opencode",
+        "quality_score": 0,
+        "total_tokens": 446149,
+        "non_cached_tokens": 34501,
+        "wall_seconds": 358,
+        "estimated_api_cost_usd": 0.655254,
+        "gate_adjusted_roi": -13.01212355240979
+      },
+      "dominated_by": [
+        "monolith_opencode",
+        "monolith_sol_medium_opencode",
+        "monolith_luna_xhigh_opencode"
+      ],
+      "pareto_frontier": false,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [
+            "monolith_opencode",
+            "monolith_sol_medium_opencode",
+            "monolith_luna_xhigh_opencode"
+          ],
+          "pareto_frontier": false
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [
+            "monolith_opencode",
+            "monolith_sol_medium_opencode",
+            "monolith_luna_xhigh_opencode"
+          ],
+          "pareto_frontier": false
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [
+            "monolith_opencode",
+            "monolith_sol_medium_opencode",
+            "monolith_luna_xhigh_opencode"
+          ],
+          "pareto_frontier": false
+        }
+      },
+      "strict_dominated_by": [
+        "monolith_opencode",
+        "monolith_sol_medium_opencode",
+        "monolith_luna_xhigh_opencode"
+      ],
+      "strict_pareto_frontier": false,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 56.72125786026899,
+        "usd_per_hour_3": 39.486501847394194,
+        "usd_per_hour_10": 23.105257584976755,
+        "luna_max_sol_medium_break_even": 20.8838327439906,
+        "luna_xhigh_sol_medium_break_even": 16.798513777466304,
+        "usd_per_hour_25": 12.231612434622502,
+        "usd_per_hour_60": 5.829857349799359
+      }
+    },
+    {
+      "treatment": "monolith_sol_low_opencode",
+      "label": "Monolith Sol Low OpenCode",
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "low",
+      "runtime": "opencode",
+      "quality_score": 89,
+      "original_quality_score": 93,
+      "posthoc_adjustment": -4,
+      "automated_points": 54,
+      "manual_points": 39,
+      "wall_seconds": 329,
+      "wall_minutes": 5.483333333333333,
+      "total_tokens": 310317,
+      "uncached_input_tokens": 33637,
+      "non_cached_tokens": 46125,
+      "cached_input_tokens": 264192,
+      "output_tokens": 12488,
+      "reasoning_output_tokens": 521,
+      "agents_started": 1,
+      "coordination_events": 0,
+      "successful_a2a_messages": null,
+      "failed_a2a_messages": null,
+      "captured_web_search_calls": 0,
+      "estimated_api_cost_usd": 0.674921,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 0.674921,
+        "web_search": 0
+      },
+      "token_efficiency": 286.80349449111714,
+      "non_cached_token_efficiency": 1929.539295392954,
+      "time_efficiency": 973.8601823708206,
+      "cost_efficiency": 131.86728520819474,
+      "cost_per_quality_point_usd": 0.00758338202247191,
+      "square_root_roi": 46.26379045243294,
+      "gate_quality_factor": 0.4,
+      "gate_adjusted_roi": 18.505516180973178,
+      "quality_gate": "BORDERLINE",
+      "quality_gate_passed": false,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": -9,
+        "total_tokens": -16259503,
+        "non_cached_tokens": -278191,
+        "wall_seconds": -1398,
+        "estimated_api_cost_usd": 0.19947371999999997
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "monolith",
+        "quality_score": -9,
+        "total_tokens": -16259503,
+        "non_cached_tokens": -278191,
+        "wall_seconds": -1398,
+        "estimated_api_cost_usd": 0.19947371999999997,
+        "gate_adjusted_roi": -7.9858495562171505
+      },
+      "dominated_by": [],
+      "pareto_frontier": false,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [],
+          "pareto_frontier": false
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [],
+          "pareto_frontier": false
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [],
+          "pareto_frontier": false
+        }
+      },
+      "strict_dominated_by": [],
+      "strict_pareto_frontier": false,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 131.86728520819474,
+        "usd_per_hour_3": 93.77426672562387,
+        "usd_per_hour_10": 56.01677118351829,
+        "luna_max_sol_medium_break_even": 50.77484061668945,
+        "luna_xhigh_sol_medium_break_even": 41.05654885806855,
+        "usd_per_hour_25": 30.071192139563067,
+        "usd_per_hour_60": 14.45214750522104
+      }
+    },
+    {
+      "treatment": "native_isolated",
+      "label": "Native isolated",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "runtime": "codex",
+      "quality_score": 90,
+      "original_quality_score": 92,
+      "posthoc_adjustment": -2,
+      "automated_points": 54,
+      "manual_points": 38,
+      "wall_seconds": 1545,
+      "wall_minutes": 25.75,
+      "total_tokens": 13449815,
+      "uncached_input_tokens": 426823,
+      "non_cached_tokens": 573783,
+      "cached_input_tokens": 12876032,
+      "output_tokens": 146960,
+      "reasoning_output_tokens": 74821,
+      "agents_started": 5,
+      "coordination_events": 17,
+      "successful_a2a_messages": null,
+      "failed_a2a_messages": null,
+      "captured_web_search_calls": 4,
+      "estimated_api_cost_usd": 0.5592372400000001,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 0.51923724,
+        "web_search": 0.04
+      },
+      "token_efficiency": 6.691541853921411,
+      "non_cached_token_efficiency": 156.85372344597172,
+      "time_efficiency": 209.70873786407768,
+      "cost_efficiency": 160.93348862103673,
+      "cost_per_quality_point_usd": 0.006213747111111112,
+      "square_root_roi": 23.71678687441328,
+      "gate_quality_factor": 0.6,
+      "gate_adjusted_roi": 14.230072124647968,
+      "quality_gate": "BORDERLINE",
+      "quality_gate_passed": false,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": -8,
+        "total_tokens": -3120005,
+        "non_cached_tokens": 249467,
+        "wall_seconds": -182,
+        "estimated_api_cost_usd": 0.08378996000000005
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "monolith",
+        "quality_score": -8,
+        "total_tokens": -3120005,
+        "non_cached_tokens": 249467,
+        "wall_seconds": -182,
+        "estimated_api_cost_usd": 0.08378996000000005,
+        "gate_adjusted_roi": -12.26129361254236
+      },
+      "dominated_by": [],
+      "pareto_frontier": false,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [],
+          "pareto_frontier": false
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [],
+          "pareto_frontier": false
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [],
+          "pareto_frontier": false
+        }
+      },
+      "strict_dominated_by": [],
+      "strict_pareto_frontier": false,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 160.93348862103673,
+        "usd_per_hour_3": 48.734599622846176,
+        "usd_per_hour_10": 18.55324321644709,
+        "luna_max_sol_medium_break_even": 16.01086913934768,
+        "luna_xhigh_sol_medium_break_even": 11.88966918855029,
+        "usd_per_hour_25": 7.972783463820612,
+        "usd_per_hour_60": 3.4208517403600713
+      }
+    },
+    {
+      "treatment": "monolith_sol_medium",
+      "label": "Monolith Sol Medium",
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "medium",
+      "runtime": "codex",
+      "quality_score": 91,
+      "original_quality_score": 93,
+      "posthoc_adjustment": -2,
+      "automated_points": 52,
+      "manual_points": 41,
+      "wall_seconds": 737,
+      "wall_minutes": 12.283333333333333,
+      "total_tokens": 3572666,
+      "uncached_input_tokens": 112150,
+      "non_cached_tokens": 137402,
+      "cached_input_tokens": 3435264,
+      "output_tokens": 25252,
+      "reasoning_output_tokens": 3270,
+      "agents_started": 1,
+      "coordination_events": 0,
+      "successful_a2a_messages": null,
+      "failed_a2a_messages": null,
+      "captured_web_search_calls": 3,
+      "estimated_api_cost_usd": 3.0659419999999997,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 3.035942,
+        "web_search": 0.03
+      },
+      "token_efficiency": 25.47117474737353,
+      "non_cached_token_efficiency": 662.2902141162429,
+      "time_efficiency": 444.5047489823609,
+      "cost_efficiency": 29.680926775522828,
+      "cost_per_quality_point_usd": 0.033691670329670326,
+      "square_root_roi": 14.828639466652366,
+      "gate_quality_factor": 0.8,
+      "gate_adjusted_roi": 11.862911573321893,
+      "quality_gate": "BORDERLINE",
+      "quality_gate_passed": false,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": -7,
+        "total_tokens": -12997154,
+        "non_cached_tokens": -186914,
+        "wall_seconds": -990,
+        "estimated_api_cost_usd": 2.5904947199999997
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "monolith",
+        "quality_score": -7,
+        "total_tokens": -12997154,
+        "non_cached_tokens": -186914,
+        "wall_seconds": -990,
+        "estimated_api_cost_usd": 2.5904947199999997,
+        "gate_adjusted_roi": -14.628454163868435
+      },
+      "dominated_by": [],
+      "pareto_frontier": false,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [],
+          "pareto_frontier": false
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [],
+          "pareto_frontier": false
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [],
+          "pareto_frontier": false
+        }
+      },
+      "strict_dominated_by": [],
+      "strict_pareto_frontier": false,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 29.680926775522828,
+        "usd_per_hour_3": 24.727530690669823,
+        "usd_per_hour_10": 17.797198768720687,
+        "luna_max_sol_medium_break_even": 16.604009211765604,
+        "luna_xhigh_sol_medium_break_even": 14.19647429682321,
+        "usd_per_hour_25": 11.119260408164019,
+        "usd_per_hour_60": 5.9286186496622015
+      }
+    },
+    {
+      "treatment": "monolith_luna_high_opencode",
+      "label": "Monolith Luna High OpenCode",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "high",
+      "runtime": "opencode",
+      "quality_score": 73,
+      "original_quality_score": 75,
+      "posthoc_adjustment": -2,
+      "automated_points": 35,
+      "manual_points": 40,
+      "wall_seconds": 432,
+      "wall_minutes": 7.2,
+      "total_tokens": 655034,
+      "uncached_input_tokens": 43131,
+      "non_cached_tokens": 61114,
+      "cached_input_tokens": 593920,
+      "output_tokens": 17983,
+      "reasoning_output_tokens": 3547,
+      "agents_started": 1,
+      "coordination_events": 0,
+      "successful_a2a_messages": null,
+      "failed_a2a_messages": null,
+      "captured_web_search_calls": 0,
+      "estimated_api_cost_usd": 0.042084199999999995,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 0.042084199999999995,
+        "web_search": 0
+      },
+      "token_efficiency": 111.44459676902268,
+      "non_cached_token_efficiency": 1194.4889877933042,
+      "time_efficiency": 608.3333333333334,
+      "cost_efficiency": 1734.6177425256988,
+      "cost_per_quality_point_usd": 0.0005764958904109588,
+      "square_root_roi": 132.61635101360366,
+      "gate_quality_factor": 0,
+      "gate_adjusted_roi": 0,
+      "quality_gate": "FAIL",
+      "quality_gate_passed": false,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": -25,
+        "total_tokens": -15914786,
+        "non_cached_tokens": -263202,
+        "wall_seconds": -1295,
+        "estimated_api_cost_usd": -0.43336308
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "monolith",
+        "quality_score": -25,
+        "total_tokens": -15914786,
+        "non_cached_tokens": -263202,
+        "wall_seconds": -1295,
+        "estimated_api_cost_usd": -0.43336308,
+        "gate_adjusted_roi": -26.49136573719033
+      },
+      "dominated_by": [],
+      "pareto_frontier": false,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [],
+          "pareto_frontier": false
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [],
+          "pareto_frontier": false
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [],
+          "pareto_frontier": false
+        }
+      },
+      "strict_dominated_by": [],
+      "strict_pareto_frontier": false,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 1734.6177425256988,
+        "usd_per_hour_3": 181.55401281622105,
+        "usd_per_hour_10": 58.77218307744355,
+        "luna_max_sol_medium_break_even": 50.087042886951984,
+        "luna_xhigh_sol_medium_break_even": 36.45875851350135,
+        "usd_per_hour_25": 23.99670594259028,
+        "usd_per_hour_60": 10.079971177358033
+      }
+    },
+    {
+      "treatment": "native_dynamic",
+      "label": "Native dynamic",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "runtime": "codex",
+      "quality_score": 58,
+      "original_quality_score": 58,
+      "posthoc_adjustment": 0,
+      "automated_points": 34,
+      "manual_points": 24,
+      "wall_seconds": 1429,
+      "wall_minutes": 23.816666666666666,
+      "total_tokens": 14209055,
+      "uncached_input_tokens": 543675,
+      "non_cached_tokens": 658207,
+      "cached_input_tokens": 13550848,
+      "output_tokens": 114532,
+      "reasoning_output_tokens": 53120,
+      "agents_started": 4,
+      "coordination_events": 20,
+      "successful_a2a_messages": null,
+      "failed_a2a_messages": null,
+      "captured_web_search_calls": 1,
+      "estimated_api_cost_usd": 0.52719036,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 0.51719036,
+        "web_search": 0.01
+      },
+      "token_efficiency": 4.081904109738473,
+      "non_cached_token_efficiency": 88.11817558913837,
+      "time_efficiency": 146.11616515045486,
+      "cost_efficiency": 110.01718620196318,
+      "cost_per_quality_point_usd": 0.00908948896551724,
+      "square_root_roi": 16.368307461104216,
+      "gate_quality_factor": 0,
+      "gate_adjusted_roi": 0,
+      "quality_gate": "FAIL",
+      "quality_gate_passed": false,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": -40,
+        "total_tokens": -2360765,
+        "non_cached_tokens": 333891,
+        "wall_seconds": -298,
+        "estimated_api_cost_usd": 0.05174307999999994
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "monolith",
+        "quality_score": -40,
+        "total_tokens": -2360765,
+        "non_cached_tokens": 333891,
+        "wall_seconds": -298,
+        "estimated_api_cost_usd": 0.05174307999999994,
+        "gate_adjusted_roi": -26.49136573719033
+      },
+      "dominated_by": [],
+      "pareto_frontier": false,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [],
+          "pareto_frontier": false
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [],
+          "pareto_frontier": false
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [],
+          "pareto_frontier": false
+        }
+      },
+      "strict_dominated_by": [],
+      "strict_pareto_frontier": false,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 110.01718620196318,
+        "usd_per_hour_3": 33.759720675020255,
+        "usd_per_hour_10": 12.898534687022657,
+        "luna_max_sol_medium_break_even": 11.134405531211408,
+        "luna_xhigh_sol_medium_break_even": 8.27247167941857,
+        "usd_per_hour_25": 5.549813587056261,
+        "usd_per_hour_60": 2.382531245417102
+      }
+    },
+    {
+      "treatment": "dynamic_luna_max_opencode_superpowers",
+      "label": "Dynamic Luna Max OpenCode + Superpowers",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "runtime": "opencode",
+      "quality_score": 9,
+      "original_quality_score": 9,
+      "posthoc_adjustment": 0,
+      "automated_points": 0,
+      "manual_points": 9,
+      "wall_seconds": 2700,
+      "wall_minutes": 45,
+      "total_tokens": 6369228,
+      "uncached_input_tokens": 598816,
+      "non_cached_tokens": 725964,
+      "cached_input_tokens": 5643264,
+      "output_tokens": 127148,
+      "reasoning_output_tokens": 82235,
+      "agents_started": 6,
+      "coordination_events": 6,
+      "successful_a2a_messages": null,
+      "failed_a2a_messages": null,
+      "captured_web_search_calls": 0,
+      "estimated_api_cost_usd": 0.38520608,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 0.38520608,
+        "web_search": 0
+      },
+      "token_efficiency": 1.4130440926278665,
+      "non_cached_token_efficiency": 12.397308957468965,
+      "time_efficiency": 12,
+      "cost_efficiency": 23.3641172018884,
+      "cost_per_quality_point_usd": 0.042800675555555556,
+      "square_root_roi": 2.161671445982872,
+      "gate_quality_factor": 0,
+      "gate_adjusted_roi": 0,
+      "quality_gate": "FAIL",
+      "quality_gate_passed": false,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": -89,
+        "total_tokens": -10200592,
+        "non_cached_tokens": 401648,
+        "wall_seconds": 973,
+        "estimated_api_cost_usd": -0.09024120000000002
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "monolith_luna_max_opencode_retest",
+        "quality_score": -85,
+        "total_tokens": 3855398,
+        "non_cached_tokens": 582694,
+        "wall_seconds": 1624,
+        "estimated_api_cost_usd": 0.26284388,
+        "gate_adjusted_roi": -63.45614790007737
+      },
+      "dominated_by": [],
+      "pareto_frontier": false,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [],
+          "pareto_frontier": false
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [],
+          "pareto_frontier": false
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [],
+          "pareto_frontier": false
+        }
+      },
+      "strict_dominated_by": [],
+      "strict_pareto_frontier": false,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 23.3641172018884,
+        "usd_per_hour_3": 3.4152926665985834,
+        "usd_per_hour_10": 1.141377905496669,
+        "luna_max_sol_medium_break_even": 0.974941605716739,
+        "luna_xhigh_sol_medium_break_even": 0.7122326976938022,
+        "usd_per_hour_25": 0.4703372392423171,
+        "usd_per_hour_60": 0.19830250377481595
+      }
+    },
+    {
+      "treatment": "monolith_luna_max_opencode_speckit",
+      "label": "Monolith Luna Max OpenCode + Spec Kit",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "runtime": "opencode",
+      "quality_score": 4,
+      "original_quality_score": 4,
+      "posthoc_adjustment": 0,
+      "automated_points": 0,
+      "manual_points": 4,
+      "wall_seconds": 2700,
+      "wall_minutes": 45,
+      "total_tokens": 13824267,
+      "uncached_input_tokens": 334338,
+      "non_cached_tokens": 455435,
+      "cached_input_tokens": 13368832,
+      "output_tokens": 121097,
+      "reasoning_output_tokens": 57443,
+      "agents_started": 1,
+      "coordination_events": 0,
+      "successful_a2a_messages": null,
+      "failed_a2a_messages": null,
+      "captured_web_search_calls": 0,
+      "estimated_api_cost_usd": 0.47956064000000004,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 0.47956064000000004,
+        "web_search": 0
+      },
+      "token_efficiency": 0.2893462633498036,
+      "non_cached_token_efficiency": 8.782812036843897,
+      "time_efficiency": 5.333333333333333,
+      "cost_efficiency": 8.340968099467045,
+      "cost_per_quality_point_usd": 0.11989016000000001,
+      "square_root_roi": 0.86105713319111,
+      "gate_quality_factor": 0,
+      "gate_adjusted_roi": 0,
+      "quality_gate": "FAIL",
+      "quality_gate_passed": false,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": -94,
+        "total_tokens": -2745553,
+        "non_cached_tokens": 131119,
+        "wall_seconds": 973,
+        "estimated_api_cost_usd": 0.00411336000000001
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "monolith_luna_max_opencode_retest",
+        "quality_score": -90,
+        "total_tokens": 11310437,
+        "non_cached_tokens": 312165,
+        "wall_seconds": 1624,
+        "estimated_api_cost_usd": 0.35719844,
+        "gate_adjusted_roi": -63.45614790007737
+      },
+      "dominated_by": [],
+      "pareto_frontier": false,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [],
+          "pareto_frontier": false
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [],
+          "pareto_frontier": false
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [],
+          "pareto_frontier": false
+        }
+      },
+      "strict_dominated_by": [],
+      "strict_pareto_frontier": false,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 8.340968099467045,
+        "usd_per_hour_3": 1.4654373093539332,
+        "usd_per_hour_10": 0.5012807321682312,
+        "luna_max_sol_medium_break_even": 0.4289232987483754,
+        "luna_xhigh_sol_medium_break_even": 0.3142017420822953,
+        "usd_per_hour_25": 0.20801307293935137,
+        "usd_per_hour_60": 0.08795159723864913
+      }
+    }
+  ],
+  "winners": {
+    "gate_adjusted_roi": "monolith_luna_xhigh_opencode",
+    "quality": "monolith",
+    "total_token_efficiency": "monolith_sol_low_opencode",
+    "non_cached_token_efficiency": "monolith_sol_low_opencode",
+    "time_efficiency": "monolith_sol_low_opencode",
+    "cost_efficiency": "monolith_luna_high_opencode",
+    "quality_adjusted_efficiency_by_scenario": {
+      "usd_per_hour_0": {
+        "maximum": 1261.434572442727,
+        "treatments": [
+          "monolith_luna_xhigh_opencode"
+        ]
+      },
+      "usd_per_hour_3": {
+        "maximum": 140.32957577670058,
+        "treatments": [
+          "monolith_luna_xhigh_opencode"
+        ]
+      },
+      "usd_per_hour_10": {
+        "maximum": 45.65405508298548,
+        "treatments": [
+          "monolith_luna_xhigh_opencode"
+        ]
+      },
+      "luna_max_sol_medium_break_even": {
+        "maximum": 38.92121801134446,
+        "treatments": [
+          "monolith_luna_xhigh_opencode"
+        ]
+      },
+      "luna_xhigh_sol_medium_break_even": {
+        "maximum": 28.346789132830565,
+        "treatments": [
+          "monolith_sol_medium_opencode",
+          "monolith_luna_xhigh_opencode"
+        ]
+      },
+      "usd_per_hour_25": {
+        "maximum": 20.688260270639123,
+        "treatments": [
+          "monolith_sol_medium_opencode"
+        ]
+      },
+      "usd_per_hour_60": {
+        "maximum": 9.892682288194253,
+        "treatments": [
+          "monolith_sol_medium_opencode"
+        ]
+      }
+    }
+  }
+}

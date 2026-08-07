@@ -1,0 +1,16 @@
+
+> neon-barrage@1.0.0 test
+> node --test
+
+✔ leaderboard validation matches the database contract (4.467869ms)
+✔ the simulation fires, collides, and awards points (1.972501ms)
+✔ an unblocked enemy costs one life and difficulty escalates (0.325795ms)
+✔ the test adapter's game-over path can safely set a plausible score (0.280777ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 386.716292

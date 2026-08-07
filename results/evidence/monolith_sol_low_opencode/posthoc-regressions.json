@@ -1,0 +1,70 @@
+{
+  "treatment": "monolith_sol_low_opencode",
+  "evaluated_at": "2026-08-06T04:41:54.008Z",
+  "live_url": "https://shootemup-bench-monolith-sol-low-opencode.pages.dev",
+  "methodology": "Live production build with Supabase REST requests mocked in-browser; no leaderboard rows were written.",
+  "checks": {
+    "progression_start_consistency": {
+      "passed": true,
+      "applicable": true,
+      "before": 1,
+      "after": 1
+    },
+    "physical_name_entry": {
+      "passed": false,
+      "expected": "WASD wasd",
+      "actual": "WASDwasd"
+    },
+    "advertised_keyboard_restart": {
+      "passed": true,
+      "advertised": false,
+      "applicable": false
+    },
+    "immediate_click_restart": {
+      "passed": false,
+      "button_found": false,
+      "state": {
+        "phase": "gameover",
+        "score": 7317,
+        "lives": 3,
+        "playerX": 360,
+        "playerY": 670,
+        "enemyCount": 1,
+        "projectileCount": 0
+      }
+    }
+  },
+  "requests": [],
+  "console_errors": [
+    "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+    "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+  ],
+  "page_errors": [],
+  "http_status": 200,
+  "progress_before_start": [
+    {
+      "selector": "#threat",
+      "text": "01"
+    }
+  ],
+  "progress_after_start": [
+    {
+      "selector": "#threat",
+      "text": "01"
+    }
+  ],
+  "state_after_submit": {
+    "phase": "gameover",
+    "score": 7317,
+    "lives": 3,
+    "playerX": 360,
+    "playerY": 670,
+    "enemyCount": 1,
+    "projectileCount": 0
+  },
+  "active_element_after_submit": {
+    "tag": "BODY",
+    "id": null,
+    "testid": null
+  }
+}

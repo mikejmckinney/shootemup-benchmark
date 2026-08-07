@@ -1,0 +1,46 @@
+{
+  "audited_at": "2026-08-06T21:55:54Z",
+  "production_source_matches_preserved_snapshot": {
+    "app_js": true,
+    "engine_js": true
+  },
+  "database": {
+    "current_management_status": "INACTIVE",
+    "current_live_behavior": "Supabase hostname does not resolve while the project is paused",
+    "timed_evaluation_behavior": {
+      "post_status": 201,
+      "get_status": 200,
+      "reload_persistence": true,
+      "source": "automated.json"
+    },
+    "score_decision": "No deduction: the database passed before the benchmark controller paused it as required by the protocol."
+  },
+  "audio": {
+    "audio_context_created_after_user_gesture": true,
+    "audio_context_state": "running",
+    "launch_tones_hz": [
+      220,
+      440
+    ],
+    "oscillator_count_after_launch": 2,
+    "oscillator_count_after_four_fire_inputs": 2,
+    "mute_suppressed_launch_tones": true,
+    "unmute_tone_hz": 520,
+    "implemented_event_coverage": [
+      "launch",
+      "game over",
+      "successful score submission",
+      "unmute"
+    ],
+    "missing_gameplay_event_coverage": [
+      "player fire",
+      "enemy fire",
+      "hit",
+      "collision",
+      "life loss"
+    ],
+    "original_evaluator_limitation": "The automated check verified only that the mute control changed state.",
+    "score_decision": "No deduction under the written three-point criterion requiring a user-gesture audio path and working mute. Combat-event sound coverage was not a preregistered requirement."
+  },
+  "corrected_quality_score": 94
+}

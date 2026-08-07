@@ -1,0 +1,20 @@
+{
+  "treatment": "monolith_luna_high_opencode",
+  "started_at": "2026-08-06T04:24:06Z",
+  "ended_at": "2026-08-06T04:31:18Z",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 432,
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "high",
+  "runtime": "opencode",
+  "agents_started": 1,
+  "turns": 32,
+  "usage": {
+    "input_tokens": 637051,
+    "cached_input_tokens": 593920,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 17983,
+    "reasoning_output_tokens": 3547
+  }
+}

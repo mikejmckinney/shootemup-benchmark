@@ -1,0 +1,19 @@
+
+> neon-barrage@1.0.0 test
+> node --test tests/*.test.mjs
+
+✔ player movement is bounded by all four arena edges (4.455291ms)
+✔ firing creates upward projectiles and respects the cooldown (2.728564ms)
+✔ a projectile collision removes an enemy and awards its points (1.129208ms)
+✔ enemy contact consumes lives and the last life enters game over (0.688433ms)
+✔ difficulty escalates with time and seeded spawns are reproducible (2.298866ms)
+✔ reset restores a playing state and forceGameOver validates score input (0.925085ms)
+✔ input aliases and renderer-compatible count fields stay in sync (0.339665ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 162.213512

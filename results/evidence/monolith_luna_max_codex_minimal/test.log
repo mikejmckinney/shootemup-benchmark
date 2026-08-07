@@ -1,0 +1,16 @@
+
+> neon-barrage@1.0.0 test
+> node --test test/*.test.js
+
+✔ leaderboard names are bounded and use the public tag character set (1.496709ms)
+✔ scores are non-negative, integral, and bounded to the database range (0.24296ms)
+✔ collision helper detects touching circles without false positives (0.262279ms)
+✔ scores render as readable fixed-width HUD values (0.356799ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 126.271139
