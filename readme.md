@@ -7,6 +7,18 @@ Eighteen candidate runs received the same brief: build a playable browser shoot-
 > [!NOTE]
 > Sixteen candidates deployed within their timed runs; Spec Kit and Superpowers timed out before deployment. Exploratory post-timeout continuations later deployed both methodology candidates, but do not replace their primary results. The sixteen timed gallery games use one shared Supabase project; every dedicated evaluation or continuation database is paused.
 
+## Explore the benchmark
+
+- [Purpose](#purpose)
+- [Results and decision framework](#results)
+- [Time-value sensitivity](#time-value-sensitivity)
+- [Headline takeaways](#headline-takeaways)
+- [Candidate gallery](#candidate-gallery--ranked-by-roi)
+- [Regression review and detailed findings](#uniform-post-hoc-regression-review)
+- [Limitations and recommended improvements](#limitations)
+- [FAQ](#faq)
+- [Reproduce or inspect](#reproduce-or-inspect)
+
 ## Purpose
 
 This benchmark is designed to answer three practical questions:
@@ -19,7 +31,7 @@ The current results test Spec Kit and Superpowers as complete methodologies. AI 
 
 ## Results
 
-Quality is an open-ended score using the original cold monolith as the comparison baseline. It initially scored 100; the uniform post-hoc review corrects it to **98**. It is not a percentage and 100 is not a ceiling. Cost is a PAYG-equivalent estimate using [official Standard API list prices](https://developers.openai.com/api/docs/pricing) current on August 6, 2026, plus captured paid web searches. Supabase and Cloudflare free-tier use contributes $0 marginal infrastructure cost.
+Quality is an open-ended score using the original cold monolith as the comparison baseline. It initially scored 100; the uniform post-hoc review corrects it to **98**. It is not a percentage and 100 is not a ceiling. Cost is a PAYG-equivalent estimate using [official Standard API list prices](https://developers.openai.com/api/docs/pricing) current on August 6, 2026, plus captured paid web searches. Supabase and Cloudflare free-tier use contribute $0 marginal infrastructure cost.
 
 Scores include a uniform [post-hoc regression review](results/posthoc-review.md). The interaction audit ran against all sixteen timed-run deployments; it is explicitly not applicable to the two candidates that did not produce a live artifact within the time ceiling because those interaction categories already scored zero. Original automated/manual evidence, implementations, time, tokens, and cost are unchanged. Shared-database gallery retrofits occurred after scoring and are identified separately from each preserved submission.
 
@@ -59,9 +71,9 @@ Strict Pareto uses observed scores exactly. The ε analysis treats a candidate u
 
 | Quality tolerance ε | Frontier among gate survivors | Drops from strict frontier |
 |---:|---|---|
-| 0 | Monolith (cold), Monolith Sol Medium OpenCode, Monolith Luna Xhigh OpenCode, Monolith Luna Max Codex Minimal Context | — |
-| 2 | Monolith Sol Medium OpenCode, Monolith Luna Xhigh OpenCode | Monolith (cold), Monolith Luna Max Codex Minimal Context |
-| 3 | Monolith Sol Medium OpenCode, Monolith Luna Xhigh OpenCode | Monolith (cold), Monolith Luna Max Codex Minimal Context |
+| 0 | Monolith · Luna Max · cold cache, Monolith · Sol Medium · OpenCode, Monolith · Luna Xhigh · OpenCode, Monolith · Luna Max · Codex Minimal Context | — |
+| 2 | Monolith · Sol Medium · OpenCode, Monolith · Luna Xhigh · OpenCode | Monolith · Luna Max · cold cache, Monolith · Luna Max · Codex Minimal Context |
+| 3 | Monolith · Sol Medium · OpenCode, Monolith · Luna Xhigh · OpenCode | Monolith · Luna Max · cold cache, Monolith · Luna Max · Codex Minimal Context |
 
 At ε=2, A2A asynchronous is dominated because Luna Xhigh OpenCode is within one quality point, 7.7× cheaper, and exactly 12:00 faster. ε=2 is the headline frontier; ε=0 and ε=3 are sensitivities. None was preregistered.
 
@@ -69,29 +81,33 @@ At ε=2, A2A asynchronous is dominated because Luna Xhigh OpenCode is within one
 
 Gate-adjusted ROI is a comparative index, not a percentage or conventional financial return. Higher is better. Total tokens are cached input + uncached input + output; reasoning tokens are included in output and are not counted twice. The table is sorted by gate-adjusted ROI descending.
 
+For example, Luna Xhigh OpenCode scored 95, so its gate factor is `clamp((95 - 87) / 5, 0, 1) = 1`. Its 12:02 runtime is 12.033 minutes, giving `95 × 1 / sqrt($0.0753 × 12.033) = 99.7933` after calculation with the compiler's unrounded inputs.
+
 ## Time-value sensitivity
+
+For a stated value of unattended agent time `r` in USD per minute, this secondary analysis uses `quality-adjusted efficiency(r) = score / (API cost + elapsed minutes × r)`. For example, at $3/hour, `r = $0.05/minute`, so Luna Xhigh OpenCode yields `95 / ($0.0753 + 12.033 × $0.05) = 140.33` after calculation with unrounded inputs.
 
 <!-- GENERATED_SENSITIVITY_TABLE_START -->
 | Candidate | $0/h | $3/h | $10/h | $11.79/h Max/Medium tie | $16.33/h Xhigh/Medium tie | $25/h | $60/h |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| Monolith Luna Xhigh OpenCode | 1261.43 | 140.33 | 45.65 | 38.92 | 28.35 | 18.67 | 7.85 |
-| Monolith OpenCode | 1054.40 | 125.95 | 41.23 | 35.17 | 25.63 | 16.89 | 7.10 |
-| Monolith Luna Max Codex Minimal Context | 836.93 | 106.49 | 35.07 | 29.92 | 21.82 | 14.39 | 6.06 |
-| Monolith Luna Max OpenCode Fresh Control | 768.21 | 92.24 | 30.21 | 25.77 | 18.78 | 12.38 | 5.21 |
-| Monolith warm-cache | 608.25 | 89.14 | 29.80 | 25.45 | 18.60 | 12.28 | 5.18 |
-| A2A async streaming OpenCode | 272.66 | 74.54 | 27.65 | 23.81 | 17.62 | 11.78 | 5.03 |
-| Monolith Sol Medium OpenCode | 93.81 | 65.87 | 38.86 | 35.17 | 28.35 | 20.69 | 9.89 |
-| Monolith (cold) | 206.12 | 51.19 | 18.59 | 15.98 | 11.79 | 7.86 | 3.35 |
-| A2A asynchronous | 164.81 | 53.81 | 20.92 | 18.09 | 13.47 | 9.06 | 3.90 |
-| A2A synchronous | 135.71 | 50.33 | 20.39 | 17.69 | 13.26 | 8.97 | 3.89 |
-| Monolith Sol High OpenCode | 56.72 | 39.49 | 23.11 | 20.88 | 16.80 | 12.23 | 5.83 |
-| Monolith Sol Low OpenCode † | 131.87 | 93.77 | 56.02 | 50.77 | 41.06 | 30.07 | 14.45 |
-| Native isolated † | 160.93 | 48.73 | 18.55 | 16.01 | 11.89 | 7.97 | 3.42 |
-| Monolith Sol Medium † | 29.68 | 24.73 | 17.80 | 16.60 | 14.20 | 11.12 | 5.93 |
-| Monolith Luna High OpenCode † | 1734.62 | 181.55 | 58.77 | 50.09 | 36.46 | 24.00 | 10.08 |
-| Native dynamic † | 110.02 | 33.76 | 12.90 | 11.13 | 8.27 | 5.55 | 2.38 |
-| Dynamic Luna Max OpenCode + Superpowers † | 23.36 | 3.42 | 1.14 | 0.97 | 0.71 | 0.47 | 0.20 |
-| Monolith Luna Max OpenCode + Spec Kit † | 8.34 | 1.47 | 0.50 | 0.43 | 0.31 | 0.21 | 0.09 |
+| Monolith · Luna Xhigh · OpenCode | 1261.43 | 140.33 | 45.65 | 38.92 | 28.35 | 18.67 | 7.85 |
+| Monolith · Luna Max · OpenCode | 1054.40 | 125.95 | 41.23 | 35.17 | 25.63 | 16.89 | 7.10 |
+| Monolith · Luna Max · Codex Minimal Context | 836.93 | 106.49 | 35.07 | 29.92 | 21.82 | 14.39 | 6.06 |
+| Monolith · Luna Max · OpenCode fresh control | 768.21 | 92.24 | 30.21 | 25.77 | 18.78 | 12.38 | 5.21 |
+| Monolith · Luna Max · warm cache | 608.25 | 89.14 | 29.80 | 25.45 | 18.60 | 12.28 | 5.18 |
+| A2A · async streaming · Luna Max · OpenCode | 272.66 | 74.54 | 27.65 | 23.81 | 17.62 | 11.78 | 5.03 |
+| Monolith · Sol Medium · OpenCode | 93.81 | 65.87 | 38.86 | 35.17 | 28.35 | 20.69 | 9.89 |
+| Monolith · Luna Max · cold cache | 206.12 | 51.19 | 18.59 | 15.98 | 11.79 | 7.86 | 3.35 |
+| A2A · asynchronous | 164.81 | 53.81 | 20.92 | 18.09 | 13.47 | 9.06 | 3.90 |
+| A2A · synchronous | 135.71 | 50.33 | 20.39 | 17.69 | 13.26 | 8.97 | 3.89 |
+| Monolith · Sol High · OpenCode | 56.72 | 39.49 | 23.11 | 20.88 | 16.80 | 12.23 | 5.83 |
+| Monolith · Sol Low · OpenCode † | 131.87 | 93.77 | 56.02 | 50.77 | 41.06 | 30.07 | 14.45 |
+| Native isolated subagents † | 160.93 | 48.73 | 18.55 | 16.01 | 11.89 | 7.97 | 3.42 |
+| Monolith · Sol Medium · Codex † | 29.68 | 24.73 | 17.80 | 16.60 | 14.20 | 11.12 | 5.93 |
+| Monolith · Luna High · OpenCode † | 1734.62 | 181.55 | 58.77 | 50.09 | 36.46 | 24.00 | 10.08 |
+| Native dynamic subagents † | 110.02 | 33.76 | 12.90 | 11.13 | 8.27 | 5.55 | 2.38 |
+| Dynamic · Luna Max · OpenCode + Superpowers † | 23.36 | 3.42 | 1.14 | 0.97 | 0.71 | 0.47 | 0.20 |
+| Monolith · Luna Max · OpenCode + Spec Kit † | 8.34 | 1.47 | 0.50 | 0.43 | 0.31 | 0.21 | 0.09 |
 
 <!-- GENERATED_SENSITIVITY_TABLE_END -->
 
@@ -105,13 +121,15 @@ Across the current quality-eligible frontier, Luna Xhigh OpenCode and Sol Medium
 
 ## Headline takeaways
 
-- **Monolithic workflows led this benchmark.** Monolithic candidates occupy all five highest gate-adjusted ROI positions. The multi-agent treatments did not add enough quality to offset their additional time, token use, and coordination overhead. Unrestricted parallel work also produced overlapping changes, conflicts, and integration work that had to be reconciled before delivery.
-- **OpenCode recorded higher ROI than comparable Codex treatments.** The matched Sol Medium comparison favored OpenCode, and Luna Max OpenCode remained ahead after the Codex minimal-context ablation reduced optional context, skills, apps, MCP servers, and project instructions. Different telemetry formats, sequential run order, and one replicate per treatment mean this is a measured result from this benchmark rather than a general causal platform ranking.
+- **Monolithic workflows led this benchmark.** Monolithic candidates occupy all five highest gate-adjusted ROI positions. The multi-agent treatments did not add enough quality to offset their additional time, token use, and coordination overhead. In the native-dynamic and Superpowers treatments, parallel work also created integration and reconciliation work before delivery. Because the benchmark includes more monolithic variants than multi-agent variants, top-five occupancy is descriptive rather than a balanced architecture win rate.
+- **OpenCode recorded higher ROI than comparable Codex treatments.** The model-and-effort-matched Sol Medium comparison favored OpenCode, and Luna Max OpenCode remained ahead after the Codex minimal-context ablation reduced optional context, skills, apps, MCP servers, and project instructions. Different telemetry formats, sequential run order, and one replicate per treatment mean this is a measured result from this benchmark rather than a general causal platform ranking.
 - **The two tested frameworks substantially reduced ROI.** Spec Kit and Superpowers both exhausted the 45-minute budget without producing a timed production artifact, recorded the two lowest quality scores, and received zero gate-adjusted ROI. This measures their complete default methodologies, not the isolated value of specifications, TDD, reviews, worktrees, or subagents. AI Repo Template has not yet been tested.
 
 These conclusions apply to this task and these runs. The [limitations](#limitations) and [recommended improvements](#recommended-improvements) describe the replication needed before generalizing them.
 
-## Monolith with Luna Xhigh in OpenCode
+## Candidate gallery — ranked by ROI
+
+### Monolith with Luna Xhigh in OpenCode
 
 [![OpenCode Luna Xhigh monolith gameplay preview](assets/gallery/monolith_luna_xhigh_opencode.webp)](https://shootemup-bench-monolith-luna-xhigh-opencode-neon-barrage.pages.dev)
 
@@ -136,7 +154,7 @@ Tokens: 1.308M total · 1.209M cached input · 0.068M uncached input · 0.031M o
 | Absolute post-hoc adjustment | −4 | [Regression checks](results/evidence/monolith_luna_xhigh_opencode/posthoc-regressions.json) · [Adjustment](results/evidence/monolith_luna_xhigh_opencode/posthoc-score.json) |
 | **Corrected quality score** | **95** | [Post-hoc methodology](results/posthoc-review.md) |
 
-## Monolith with Luna Max in OpenCode
+### Monolith with Luna Max in OpenCode
 
 [![OpenCode monolith gameplay preview](assets/gallery/monolith_opencode.webp)](https://shootemup-bench-monolith-opencode-neon-barrage.pages.dev)
 
@@ -161,7 +179,7 @@ Tokens: 1.588M total · 1.469M cached input · 0.081M uncached input · 0.037M o
 | Absolute post-hoc adjustment | −1 | [Regression checks](results/evidence/monolith_opencode/posthoc-regressions.json) · [Adjustment](results/evidence/monolith_opencode/posthoc-score.json) |
 | **Corrected quality score** | **95** | [Post-hoc methodology](results/posthoc-review.md) |
 
-## Monolith with Luna Max in Codex Minimal Context
+### Monolith with Luna Max in Codex Minimal Context
 
 [![Codex minimal-context Luna Max gameplay preview](assets/gallery/monolith_luna_max_codex_minimal.webp)](https://shootemup-bench-monolith-luna-max-codex-minimal-pages.pages.dev)
 
@@ -186,7 +204,7 @@ Tokens: 2.242M total · 2.093M cached input · 0.104M uncached input · 0.044M o
 | Absolute post-hoc adjustment | −2 | [Regression checks](results/evidence/monolith_luna_max_codex_minimal/posthoc-regressions.json) · [Adjustment](results/evidence/monolith_luna_max_codex_minimal/posthoc-score.json) |
 | **Corrected quality score** | **97** | [Post-hoc methodology](results/posthoc-review.md) |
 
-## Fresh Luna Max OpenCode control
+### Fresh Luna Max OpenCode control
 
 [![Fresh Luna Max OpenCode gameplay preview](assets/gallery/monolith_luna_max_opencode_retest.webp)](https://shootemup-bench-monolith-luna-max-opencode-retest.mikejmckinney.workers.dev)
 
@@ -213,7 +231,7 @@ Tokens: 2.514M total · 2.371M cached input · 0.097M uncached input · 0.046M o
 | Absolute post-hoc adjustment | −4 | [Regression checks](results/evidence/monolith_luna_max_opencode_retest/posthoc-regressions.json) · [Adjustment](results/evidence/monolith_luna_max_opencode_retest/posthoc-score.json) |
 | **Corrected quality score** | **94** | [Post-hoc methodology](results/posthoc-review.md) |
 
-## Warm-cache Luna Max monolith
+### Warm-cache Luna Max monolith
 
 [![Warm-cache monolith gameplay preview](assets/gallery/monolith_warm.webp)](https://shootemup-bench-monolith-warm-neon-barrage.pages.dev)
 
@@ -238,7 +256,7 @@ Tokens: 3.656M total · 3.482M cached input · 0.127M uncached input · 0.047M o
 | Absolute post-hoc adjustment | −2 | [Regression checks](results/evidence/monolith_warm/posthoc-regressions.json) · [Adjustment](results/evidence/monolith_warm/posthoc-score.json) |
 | **Corrected quality score** | **92** | [Post-hoc methodology](results/posthoc-review.md) |
 
-## Asynchronous-streaming A2A with Luna Max in OpenCode
+### Asynchronous-streaming A2A with Luna Max in OpenCode
 
 [![OpenCode asynchronous-streaming A2A gameplay preview](assets/gallery/a2a_async_streaming_opencode.webp)](https://shootemup-bench-a2a-async-streaming-opencode-neon-barrage.pages.dev)
 
@@ -263,11 +281,11 @@ Tokens: 8.050M total · 7.594M cached input · 0.347M uncached input · 0.109M o
 | Absolute post-hoc adjustment | 0 | [Regression checks](results/evidence/a2a_async_streaming_opencode/posthoc-regressions.json) · [Adjustment](results/evidence/a2a_async_streaming_opencode/posthoc-score.json) |
 | **Corrected quality score** | **96** | [Post-hoc methodology](results/posthoc-review.md) |
 
-## Monolith with Sol Medium in OpenCode
+### Monolith with Sol Medium in OpenCode
 
 [![OpenCode Sol Medium monolith gameplay preview](assets/gallery/monolith_sol_medium_opencode.webp)](https://shootemup-bench-monolith-sol-medium-opencode-neon.pages.dev)
 
-Candidate 10 was the fastest run at 8:30. The single OpenCode agent originally scored 97 through flawless automated production checks, a polished responsive neon presentation, strong database controls, and complete handoff artifacts. The uniform regression review deducts two points for broken physical callsign entry and one for the inconsistent threat display, correcting it to 94. It remains on the Pareto frontier.
+Candidate 10 was the fastest PASS run at 8:30. The single OpenCode agent originally scored 97 through flawless automated production checks, a polished responsive neon presentation, strong database controls, and complete handoff artifacts. The uniform regression review deducts two points for broken physical callsign entry and one for the inconsistent threat display, correcting it to 94. It remains on the Pareto frontier.
 
 <!-- GENERATED_METRICS:monolith_sol_medium_opencode -->
 **Score 94 · Cost $1.0020 · Time 8:30 · Gate PASS · Gate-adjusted ROI 32.2100 · Pareto ε=2 FRONTIER**<br>
@@ -288,11 +306,11 @@ Tokens: 0.617M total · 0.557M cached input · 0.043M uncached input · 0.017M o
 | Absolute post-hoc adjustment | −3 | [Regression checks](results/evidence/monolith_sol_medium_opencode/posthoc-regressions.json) · [Adjustment](results/evidence/monolith_sol_medium_opencode/posthoc-score.json) |
 | **Corrected quality score** | **94** | [Post-hoc methodology](results/posthoc-review.md) |
 
-## Cold-cache Luna Max monolith
+### Cold-cache Luna Max monolith
 
 [![Cold-cache monolith gameplay preview](assets/gallery/monolith.webp)](https://shootemup-bench-monolith-neon-barrage-pages.pages.dev)
 
-The original baseline agent owned planning, implementation, infrastructure, and verification end to end. It achieved the highest observed quality with a complete combat loop, polished responsive design, full security controls, and the strongest reproducible handoff. Installation and sequential repair work made it the slowest run at 28:47.
+The original baseline agent owned planning, implementation, infrastructure, and verification end to end. It achieved the highest observed quality with a complete combat loop, polished responsive design, full security controls, and a complete reproducible handoff. Installation and sequential repair work made it the slowest successful timed deployment at 28:47.
 
 <!-- GENERATED_METRICS:monolith -->
 **Score 98 baseline · Cost $0.4754 · Time 28:47 · Gate PASS · Gate-adjusted ROI 26.4914 · Pareto ε=2 DOMINATED**<br>
@@ -313,7 +331,7 @@ Tokens: 16.570M total · 16.246M cached input · 0.269M uncached input · 0.056M
 | Absolute post-hoc adjustment | −2 | [Regression checks](results/evidence/monolith/posthoc-regressions.json) · [Adjustment](results/evidence/monolith/posthoc-score.json) |
 | **Corrected quality score** | **98 baseline** | [Post-hoc methodology](results/posthoc-review.md) |
 
-## Asynchronous A2A
+### Asynchronous A2A
 
 [![Asynchronous A2A gameplay preview](assets/gallery/a2a_async.webp)](https://shootemup-bench-a2a-async-neon-barrage.pages.dev)
 
@@ -338,7 +356,7 @@ Tokens: 14.666M total · 14.071M cached input · 0.433M uncached input · 0.162M
 | Absolute post-hoc adjustment | −2 | [Regression checks](results/evidence/a2a_async/posthoc-regressions.json) · [Adjustment](results/evidence/a2a_async/posthoc-score.json) |
 | **Corrected quality score** | **96** | [Post-hoc methodology](results/posthoc-review.md) |
 
-## Synchronous A2A
+### Synchronous A2A
 
 [![Synchronous A2A gameplay preview](assets/gallery/a2a.webp)](https://shootemup-bench-a2a-neon.pages.dev)
 
@@ -363,7 +381,7 @@ Tokens: 15.604M total · 14.802M cached input · 0.623M uncached input · 0.179M
 | Absolute post-hoc adjustment | 0 | [Regression checks](results/evidence/a2a/posthoc-regressions.json) · [Adjustment](results/evidence/a2a/posthoc-score.json) |
 | **Corrected quality score** | **93** | [Post-hoc methodology](results/posthoc-review.md) |
 
-## Monolith with Sol High in OpenCode
+### Monolith with Sol High in OpenCode
 
 [![OpenCode Sol High monolith gameplay preview](assets/gallery/monolith_sol_high_opencode.webp)](https://shootemup-bench-monolith_sol_high_opencode-neon.mikejmckinney.workers.dev)
 
@@ -388,7 +406,7 @@ Tokens: 1.063M total · 0.969M cached input · 0.066M uncached input · 0.028M o
 | Absolute post-hoc adjustment | −4 | [Regression checks](results/evidence/monolith_sol_high_opencode/posthoc-regressions.json) · [Adjustment](results/evidence/monolith_sol_high_opencode/posthoc-score.json) |
 | **Corrected quality score** | **94** | [Post-hoc methodology](results/posthoc-review.md) |
 
-## Monolith with Sol Low in OpenCode
+### Monolith with Sol Low in OpenCode
 
 [![OpenCode Sol Low monolith gameplay preview](assets/gallery/monolith_sol_low_opencode.webp)](https://shootemup-bench-monolith-sol-low-opencode.pages.dev)
 
@@ -413,7 +431,7 @@ Tokens: 0.310M total · 0.264M cached input · 0.034M uncached input · 0.012M o
 | Absolute post-hoc adjustment | −4 | [Regression checks](results/evidence/monolith_sol_low_opencode/posthoc-regressions.json) · [Adjustment](results/evidence/monolith_sol_low_opencode/posthoc-score.json) |
 | **Corrected quality score** | **89** | [Post-hoc methodology](results/posthoc-review.md) |
 
-## Native subagents with isolated issues
+### Native subagents with isolated issues
 
 [![Isolated-subagent gameplay preview](assets/gallery/native_isolated.webp)](https://shootemup-bench-native-isolated-neon-barrage-pages.pages.dev)
 
@@ -438,7 +456,7 @@ Tokens: 13.450M total · 12.876M cached input · 0.427M uncached input · 0.147M
 | Absolute post-hoc adjustment | −2 | [Regression checks](results/evidence/native_isolated/posthoc-regressions.json) · [Adjustment](results/evidence/native_isolated/posthoc-score.json) |
 | **Corrected quality score** | **90** | [Post-hoc methodology](results/posthoc-review.md) |
 
-## Monolith with Sol Medium in Codex
+### Monolith with Sol Medium in Codex
 
 [![Sol Medium monolith gameplay preview](assets/gallery/monolith_sol_medium.webp)](https://shootemup-bench-monolith-sol-medium-neon-barrage.pages.dev)
 
@@ -463,7 +481,7 @@ Tokens: 3.573M total · 3.435M cached input · 0.112M uncached input · 0.025M o
 | Absolute post-hoc adjustment | −2 | [Regression checks](results/evidence/monolith_sol_medium/posthoc-regressions.json) · [Adjustment](results/evidence/monolith_sol_medium/posthoc-score.json) |
 | **Corrected quality score** | **91** | [Post-hoc methodology](results/posthoc-review.md) |
 
-## Monolith with Luna High in OpenCode
+### Monolith with Luna High in OpenCode
 
 [![OpenCode Luna High monolith gameplay preview](assets/gallery/monolith_luna_high_opencode.webp)](https://shootemup-bench-monolith-luna-high-opencode-neon-barrage.pages.dev)
 
@@ -488,7 +506,7 @@ Tokens: 0.655M total · 0.594M cached input · 0.043M uncached input · 0.018M o
 | Absolute post-hoc adjustment | −2 | [Regression checks](results/evidence/monolith_luna_high_opencode/posthoc-regressions.json) · [Adjustment](results/evidence/monolith_luna_high_opencode/posthoc-score.json) |
 | **Corrected quality score** | **73** | [Post-hoc methodology](results/posthoc-review.md) |
 
-## Native dynamic subagents
+### Native dynamic subagents
 
 [![Dynamic-subagent gameplay preview](assets/gallery/native_dynamic.webp)](https://shootemup-bench-native-dynamic-neon-barrage-pages.pages.dev)
 
@@ -513,7 +531,7 @@ Tokens: 14.209M total · 13.551M cached input · 0.544M uncached input · 0.115M
 | Absolute post-hoc adjustment | 0 | [Regression checks](results/evidence/native_dynamic/posthoc-regressions.json) · [Adjustment](results/evidence/native_dynamic/posthoc-score.json) |
 | **Corrected quality score** | **58** | [Post-hoc methodology](results/posthoc-review.md) |
 
-## Luna Max OpenCode with full Superpowers methodology
+### Luna Max OpenCode with full Superpowers methodology
 
 > **No gameplay clip or live link:** Candidate 17 reached the 45:00 ceiling with its work still isolated in a feature worktree. It produced no playable browser UI, result artifact, Supabase project, or Cloudflare deployment.
 
@@ -528,17 +546,17 @@ Tokens: 6.369M total · 5.643M cached input · 0.599M uncached input · 0.127M o
 | Score component | Result | Evidence |
 |---|---:|---|
 | Automated production behavior | 0 / 54 | [Automated checks](results/evidence/dynamic_luna_max_opencode_superpowers/automated.json) · [Browser log](results/evidence/dynamic_luna_max_opencode_superpowers/browser-evaluator.log) |
-| Combat and progression | 4 / 5 | [Engine](submissions/dynamic_luna_max_opencode_superpowers/.worktrees/neon-barrage/src/game-engine.ts) · [Judge findings](results/evidence/dynamic_luna_max_opencode_superpowers/manual-score.json) |
+| Combat and progression | 4 / 5 | [Judge findings](results/evidence/dynamic_luna_max_opencode_superpowers/manual-score.json) · [Implementation plan](submissions/dynamic_luna_max_opencode_superpowers/docs/superpowers/plans/2026-08-06-neon-barrage.md) |
 | Visual design and feedback | 0 / 12 | [Judge findings](results/evidence/dynamic_luna_max_opencode_superpowers/manual-score.json) |
 | Resilience and accessibility | 0 / 2 | [Judge findings](results/evidence/dynamic_luna_max_opencode_superpowers/manual-score.json) |
 | Supabase/data security | 0 / 10 | [Judge findings](results/evidence/dynamic_luna_max_opencode_superpowers/manual-score.json) |
-| Engineering quality | 4 / 10 | [Engine tests](submissions/dynamic_luna_max_opencode_superpowers/.worktrees/neon-barrage/tests/game-engine.test.ts) · [Judge findings](results/evidence/dynamic_luna_max_opencode_superpowers/manual-score.json) |
-| Reproducibility and handoff | 1 / 7 | [Lockfile](submissions/dynamic_luna_max_opencode_superpowers/.worktrees/neon-barrage/package-lock.json) · [Progress record](submissions/dynamic_luna_max_opencode_superpowers/.worktrees/neon-barrage/.superpowers/sdd/2026-08-06-neon-barrage/progress.md) |
+| Engineering quality | 4 / 10 | [Design specification](submissions/dynamic_luna_max_opencode_superpowers/docs/superpowers/specs/2026-08-06-neon-barrage-design.md) · [Judge findings](results/evidence/dynamic_luna_max_opencode_superpowers/manual-score.json) |
+| Reproducibility and handoff | 1 / 7 | [Source manifest](results/evidence/dynamic_luna_max_opencode_superpowers/source-manifest.txt) · [Run metrics](results/raw/dynamic_luna_max_opencode_superpowers/run-metrics.json) |
 | Original quality score | 9 | [Automated](results/evidence/dynamic_luna_max_opencode_superpowers/automated.json) + [manual](results/evidence/dynamic_luna_max_opencode_superpowers/manual-score.json) |
 | Absolute post-hoc adjustment | 0 (not applicable) | [Regression record](results/evidence/dynamic_luna_max_opencode_superpowers/posthoc-regressions.json) · [Adjustment](results/evidence/dynamic_luna_max_opencode_superpowers/posthoc-score.json) |
 | **Corrected quality score** | **9** | [Post-hoc methodology](results/posthoc-review.md) |
 
-## Monolithic Luna Max OpenCode with Spec Kit
+### Monolithic Luna Max OpenCode with Spec Kit
 
 > **No gameplay clip or live link:** Candidate 16 reached the 45:00 ceiling before producing a playable game, result artifact, Supabase project, or Cloudflare deployment. The absence of a preview is part of the measured outcome.
 
@@ -587,13 +605,15 @@ Both dedicated continuation Supabase projects are confirmed inactive. Their fron
 
 ## Uniform post-hoc regression review
 
-All fourteen preserved live builds were tested with real keyboard events and browser-mocked Supabase responses, so the review created no leaderboard records. The two methodology candidates that timed out before producing a live build are marked N/A and received no separate post-hoc deduction because the corresponding rubric categories already scored zero. The audit itself did not repair any candidate implementation or deployment.
+All sixteen preserved timed-run deployments were tested with real keyboard events and browser-mocked Supabase responses, so the review created no leaderboard records. The two methodology candidates that timed out before producing a live build are marked N/A and received no separate post-hoc deduction because the corresponding rubric categories already scored zero. The audit itself did not repair any candidate implementation or deployment.
 
 | Candidate | Physical callsign entry | Progression start | Advertised `R` | Click/touch restart | Absolute deductions | Post-hoc adjustment | Corrected score | Evidence |
 |---|---:|---:|---:|---:|---:|---:|---:|---|
 | Luna Xhigh · OpenCode | Fail | N/A | N/A | Fail | 4 | −4 | **95** | [Audit](results/evidence/monolith_luna_xhigh_opencode/posthoc-regressions.json) |
 | Sol Medium · OpenCode | Fail | Fail | N/A | Pass | 3 | −3 | **94** | [Audit](results/evidence/monolith_sol_medium_opencode/posthoc-regressions.json) |
 | Luna Max · OpenCode | Pass | Pass | Fail | Pass | 1 | −1 | **95** | [Audit](results/evidence/monolith_opencode/posthoc-regressions.json) |
+| A2A · async streaming · Luna Max · OpenCode | Pass | Pass | N/A | Pass | 0 | 0 | **96** | [Audit](results/evidence/a2a_async_streaming_opencode/posthoc-regressions.json) |
+| Sol High · OpenCode | Fail | N/A | N/A | Fail | 4 | −4 | **94** | [Audit](results/evidence/monolith_sol_high_opencode/posthoc-regressions.json) |
 | Sol Low · OpenCode | Fail | Pass | N/A | Fail | 4 | −4 | **89** | [Audit](results/evidence/monolith_sol_low_opencode/posthoc-regressions.json) |
 | Luna High · OpenCode | Fail | Pass | N/A | Pass | 2 | −2 | **73** | [Audit](results/evidence/monolith_luna_high_opencode/posthoc-regressions.json) |
 | Luna Max · Codex minimal context | Fail | Pass | N/A | Pass | 2 | −2 | **97** | [Audit](results/evidence/monolith_luna_max_codex_minimal/posthoc-regressions.json) |
@@ -654,7 +674,8 @@ Supabase Free Plan projects may pause after seven days of low activity. A browse
 - Gate-adjusted ROI is a comparative index, not accounting ROI. The square-root cost/time denominator and piecewise quality factor are modeling choices; their thresholds were selected after these runs and should be preregistered and sensitivity-tested in replication.
 - Quality-adjusted efficiency remains a secondary time-value sensitivity analysis. Its result depends explicitly on the chosen economic value of unattended agent time; no single scenario is universal.
 - The rubric score is interval-like rather than proven ratio-scale. The quality gate reduces the risk of rewarding cheap failures, but efficiency ratios are scenario comparisons rather than literal ratios of value.
-- The ε=2 PASS/BORDERLINE/FAIL gate and ε=3 frontier sensitivity were selected after these runs and should be preregistered for a replication. BORDERLINE means the decision is unresolved; it does not prove statistical equivalence.
+- The PASS/BORDERLINE/FAIL thresholds and the ε=2 headline Pareto frontier were selected after these runs and should be preregistered for a replication; ε=3 is reported as a sensitivity. BORDERLINE means the decision is unresolved; it does not prove statistical equivalence.
+- Treatment coverage is unbalanced: the benchmark includes more monolithic variants than multi-agent variants. The concentration of monolithic candidates near the top is descriptive and should not be interpreted as a balanced architecture win rate.
 - API costs are list-price estimates, not invoices. Subscription plans, contract rates, service tiers, regional pricing, local execution, and unpriced MCP/tool activity may differ.
 - OpenCode and Codex expose different event schemas. The compiler normalizes both to cached input, uncached input, and output, but provider billing-dashboard reconciliation has not verified that their counters are semantically identical. Runtime cost-efficiency conclusions remain provisional.
 - The minimal-context Codex ablation disables multiple surfaces at once and has one replicate. It does not independently identify the token contribution of skills, MCP, apps, project instructions, or a shorter action trajectory.
@@ -713,24 +734,19 @@ node scripts/compile_results.mjs
 ./scripts/build_gallery_clips.sh
 ```
 
-Run, evaluate, and clean up a treatment with the matching runner:
+Run a treatment with the matching controller:
+
+| Runner | Accepted treatment argument |
+|---|---|
+| `./scripts/run_candidate.sh <treatment>` | `monolith`, `monolith_warm`, `native_dynamic`, `native_isolated`, `monolith_sol_medium`, `monolith_luna_max_codex_minimal` |
+| `./scripts/run_opencode_candidate.sh <treatment>` | `monolith_opencode`, `monolith_sol_medium_opencode`, `monolith_sol_low_opencode`, `monolith_sol_high_opencode`, `monolith_luna_xhigh_opencode`, `monolith_luna_high_opencode`, `monolith_luna_max_opencode_retest`, `monolith_luna_max_opencode_speckit`, `dynamic_luna_max_opencode_superpowers` |
+| `./scripts/run_a2a_candidate.sh` | `a2a` |
+| `./scripts/run_a2a_async_candidate.sh` | `a2a_async` |
+| `./scripts/run_a2a_async_streaming_opencode_candidate.sh` | `a2a_async_streaming_opencode` |
+
+The OpenCode runner defaults to `monolith_opencode` when its argument is omitted, but explicit treatment names are recommended for auditable runs. After the runner finishes, evaluate, judge, and pause the candidate using the same treatment identifier:
 
 ```bash
-./scripts/run_candidate.sh monolith_warm
-./scripts/run_a2a_async_candidate.sh
-./scripts/run_a2a_async_streaming_opencode_candidate.sh
-./scripts/run_candidate.sh monolith_sol_medium
-./scripts/run_opencode_candidate.sh
-./scripts/run_opencode_candidate.sh monolith_sol_medium_opencode
-./scripts/run_opencode_candidate.sh monolith_sol_low_opencode
-./scripts/run_opencode_candidate.sh monolith_sol_high_opencode
-./scripts/run_opencode_candidate.sh monolith_luna_xhigh_opencode
-./scripts/run_opencode_candidate.sh monolith_luna_high_opencode
-./scripts/run_candidate.sh monolith_luna_max_codex_minimal
-./scripts/run_opencode_candidate.sh monolith_luna_max_opencode_retest
-./scripts/run_opencode_candidate.sh monolith_luna_max_opencode_speckit
-./scripts/run_opencode_candidate.sh dynamic_luna_max_opencode_superpowers
-
 ./scripts/evaluate_candidate.sh <treatment>
 ./scripts/judge_candidate.sh <treatment>
 ./scripts/pause_candidate.sh <treatment>
