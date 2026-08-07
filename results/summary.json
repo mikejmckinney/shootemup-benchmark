@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-07T04:38:07.687Z",
+  "generated_at": "2026-08-07T13:28:55.322Z",
   "replicate_count_per_treatment": 1,
   "models": [
     "gpt-5.6-luna",
@@ -246,7 +246,7 @@
   "rows": [
     {
       "treatment": "monolith_luna_xhigh_opencode",
-      "label": "Monolith Luna Xhigh OpenCode",
+      "label": "Monolith · Luna Xhigh · OpenCode",
       "model": "gpt-5.6-luna",
       "reasoning_effort": "xhigh",
       "runtime": "opencode",
@@ -333,7 +333,7 @@
     },
     {
       "treatment": "monolith_opencode",
-      "label": "Monolith OpenCode",
+      "label": "Monolith · Luna Max · OpenCode",
       "model": "gpt-5.6-luna",
       "reasoning_effort": "max",
       "runtime": "opencode",
@@ -430,7 +430,7 @@
     },
     {
       "treatment": "monolith_luna_max_codex_minimal",
-      "label": "Monolith Luna Max Codex Minimal Context",
+      "label": "Monolith · Luna Max · Codex Minimal Context",
       "model": "gpt-5.6-luna",
       "reasoning_effort": "max",
       "runtime": "codex",
@@ -526,7 +526,7 @@
     },
     {
       "treatment": "monolith_luna_max_opencode_retest",
-      "label": "Monolith Luna Max OpenCode Fresh Control",
+      "label": "Monolith · Luna Max · OpenCode fresh control",
       "model": "gpt-5.6-luna",
       "reasoning_effort": "max",
       "runtime": "opencode",
@@ -633,7 +633,7 @@
     },
     {
       "treatment": "monolith_warm",
-      "label": "Monolith warm-cache",
+      "label": "Monolith · Luna Max · warm cache",
       "model": "gpt-5.6-luna",
       "reasoning_effort": "max",
       "runtime": "codex",
@@ -740,7 +740,7 @@
     },
     {
       "treatment": "a2a_async_streaming_opencode",
-      "label": "A2A async streaming OpenCode",
+      "label": "A2A · async streaming · Luna Max · OpenCode",
       "model": "gpt-5.6-luna",
       "reasoning_effort": "max",
       "runtime": "opencode-a2a-async-streaming",
@@ -846,7 +846,7 @@
     },
     {
       "treatment": "monolith_sol_medium_opencode",
-      "label": "Monolith Sol Medium OpenCode",
+      "label": "Monolith · Sol Medium · OpenCode",
       "model": "gpt-5.6-sol",
       "reasoning_effort": "medium",
       "runtime": "opencode",
@@ -933,7 +933,7 @@
     },
     {
       "treatment": "monolith",
-      "label": "Monolith (cold)",
+      "label": "Monolith · Luna Max · cold cache",
       "model": "gpt-5.6-luna",
       "reasoning_effort": "max",
       "runtime": "codex",
@@ -1031,7 +1031,7 @@
     },
     {
       "treatment": "a2a_async",
-      "label": "A2A asynchronous",
+      "label": "A2A · asynchronous",
       "model": "gpt-5.6-luna",
       "reasoning_effort": "max",
       "runtime": "codex-a2a-async",
@@ -1142,7 +1142,7 @@
     },
     {
       "treatment": "a2a",
-      "label": "A2A synchronous",
+      "label": "A2A · synchronous",
       "model": "gpt-5.6-luna",
       "reasoning_effort": "max",
       "runtime": "codex",
@@ -1262,7 +1262,7 @@
     },
     {
       "treatment": "monolith_sol_high_opencode",
-      "label": "Monolith Sol High OpenCode",
+      "label": "Monolith · Sol High · OpenCode",
       "model": "gpt-5.6-sol",
       "reasoning_effort": "high",
       "runtime": "opencode",
@@ -1369,7 +1369,7 @@
     },
     {
       "treatment": "monolith_sol_low_opencode",
-      "label": "Monolith Sol Low OpenCode",
+      "label": "Monolith · Sol Low · OpenCode",
       "model": "gpt-5.6-sol",
       "reasoning_effort": "low",
       "runtime": "opencode",
@@ -1456,7 +1456,7 @@
     },
     {
       "treatment": "native_isolated",
-      "label": "Native isolated",
+      "label": "Native isolated subagents",
       "model": "gpt-5.6-luna",
       "reasoning_effort": "max",
       "runtime": "codex",
@@ -1543,7 +1543,7 @@
     },
     {
       "treatment": "monolith_sol_medium",
-      "label": "Monolith Sol Medium",
+      "label": "Monolith · Sol Medium · Codex",
       "model": "gpt-5.6-sol",
       "reasoning_effort": "medium",
       "runtime": "codex",
@@ -1630,7 +1630,7 @@
     },
     {
       "treatment": "monolith_luna_high_opencode",
-      "label": "Monolith Luna High OpenCode",
+      "label": "Monolith · Luna High · OpenCode",
       "model": "gpt-5.6-luna",
       "reasoning_effort": "high",
       "runtime": "opencode",
@@ -1717,7 +1717,7 @@
     },
     {
       "treatment": "native_dynamic",
-      "label": "Native dynamic",
+      "label": "Native dynamic subagents",
       "model": "gpt-5.6-luna",
       "reasoning_effort": "max",
       "runtime": "codex",
@@ -1804,7 +1804,7 @@
     },
     {
       "treatment": "dynamic_luna_max_opencode_superpowers",
-      "label": "Dynamic Luna Max OpenCode + Superpowers",
+      "label": "Dynamic · Luna Max · OpenCode + Superpowers",
       "model": "gpt-5.6-luna",
       "reasoning_effort": "max",
       "runtime": "opencode",
@@ -1891,7 +1891,7 @@
     },
     {
       "treatment": "monolith_luna_max_opencode_speckit",
-      "label": "Monolith Luna Max OpenCode + Spec Kit",
+      "label": "Monolith · Luna Max · OpenCode + Spec Kit",
       "model": "gpt-5.6-luna",
       "reasoning_effort": "max",
       "runtime": "opencode",

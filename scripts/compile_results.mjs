@@ -12,19 +12,19 @@ const treatmentArtifactsExist = treatment => [
 ].every(file => fs.existsSync(file));
 const treatments = plannedTreatments.filter(treatmentArtifactsExist);
 const labels = {
-  monolith: "Monolith (cold)", native_dynamic: "Native dynamic", native_isolated: "Native isolated",
-  a2a: "A2A synchronous", monolith_warm: "Monolith warm-cache", a2a_async: "A2A asynchronous",
-  a2a_async_streaming_opencode: "A2A async streaming OpenCode",
-  monolith_sol_medium: "Monolith Sol Medium", monolith_opencode: "Monolith OpenCode",
-  monolith_sol_medium_opencode: "Monolith Sol Medium OpenCode",
-  monolith_sol_low_opencode: "Monolith Sol Low OpenCode",
-  monolith_sol_high_opencode: "Monolith Sol High OpenCode",
-  monolith_luna_xhigh_opencode: "Monolith Luna Xhigh OpenCode",
-  monolith_luna_high_opencode: "Monolith Luna High OpenCode",
-  monolith_luna_max_codex_minimal: "Monolith Luna Max Codex Minimal Context",
-  monolith_luna_max_opencode_retest: "Monolith Luna Max OpenCode Fresh Control",
-  monolith_luna_max_opencode_speckit: "Monolith Luna Max OpenCode + Spec Kit",
-  dynamic_luna_max_opencode_superpowers: "Dynamic Luna Max OpenCode + Superpowers",
+  monolith: "Monolith · Luna Max · cold cache", native_dynamic: "Native dynamic subagents", native_isolated: "Native isolated subagents",
+  a2a: "A2A · synchronous", monolith_warm: "Monolith · Luna Max · warm cache", a2a_async: "A2A · asynchronous",
+  a2a_async_streaming_opencode: "A2A · async streaming · Luna Max · OpenCode",
+  monolith_sol_medium: "Monolith · Sol Medium · Codex", monolith_opencode: "Monolith · Luna Max · OpenCode",
+  monolith_sol_medium_opencode: "Monolith · Sol Medium · OpenCode",
+  monolith_sol_low_opencode: "Monolith · Sol Low · OpenCode",
+  monolith_sol_high_opencode: "Monolith · Sol High · OpenCode",
+  monolith_luna_xhigh_opencode: "Monolith · Luna Xhigh · OpenCode",
+  monolith_luna_high_opencode: "Monolith · Luna High · OpenCode",
+  monolith_luna_max_codex_minimal: "Monolith · Luna Max · Codex Minimal Context",
+  monolith_luna_max_opencode_retest: "Monolith · Luna Max · OpenCode fresh control",
+  monolith_luna_max_opencode_speckit: "Monolith · Luna Max · OpenCode + Spec Kit",
+  dynamic_luna_max_opencode_superpowers: "Dynamic · Luna Max · OpenCode + Superpowers",
 };
 const pricing = {
   as_of: "2026-08-06",
@@ -522,7 +522,7 @@ ${continuationSection}
 - The supplemental regression weights refine existing categories post hoc; they were applied uniformly, but were defined after user-reported defects and should be preregistered in future runs.
 - Quality-adjusted efficiency is reported as a sensitivity across explicit time values, not as one universal ROI. The appropriate scenario depends on the economic value of delivery latency.
 - The rubric score is interval-like rather than proven ratio-scale. The quality gate reduces the risk of rewarding cheap failures, but efficiency ratios should be treated as scenario comparisons rather than literal ratios of value.
-- The ε=${primaryQualityTolerance} quality gate and its PASS/BORDERLINE/FAIL thresholds were chosen after these runs and should be preregistered for a replication. BORDERLINE means the decision is unresolved, not that candidates are proven statistically equivalent.
+- The PASS/BORDERLINE/FAIL thresholds and the ε=${primaryQualityTolerance} headline Pareto frontier were chosen after these runs and should be preregistered for a replication; ε=3 is reported as a sensitivity. BORDERLINE means the decision is unresolved, not that candidates are proven statistically equivalent.
 - OpenCode and Codex token telemetry come from different runtime event formats. The compiler converts both to cached input, uncached input, and output, but provider billing-dashboard reconciliation has not verified that the counters are semantically identical.
 - The minimal-context treatment disables several optional Codex surfaces together and has one replicate. It shows that the default integration surface was not necessary for this successful run, but cannot estimate the marginal token contribution of skills, MCP, apps, project instructions, or workflow variation individually.
 - The asynchronous-streaming A2A extension changes transport and runtime together. Its improvement over asynchronous-polling A2A cannot be attributed specifically to streaming, OpenCode, cache/order conditions, or their interaction.
@@ -618,7 +618,7 @@ for (const row of rows) {
 // Keep the candidate gallery in the same descending gate-adjusted-ROI order as
 // the generated results table. Non-candidate sections (such as exploratory
 // continuations) retain their relative order after the ranked gallery.
-const headingStarts = [...readme.matchAll(/^## /gm)].map(match => match.index);
+const headingStarts = [...readme.matchAll(/^#{2,3} /gm)].map(match => match.index);
 const candidateSections = [];
 for (let index = 0; index < headingStarts.length; index += 1) {
   const start = headingStarts[index];
