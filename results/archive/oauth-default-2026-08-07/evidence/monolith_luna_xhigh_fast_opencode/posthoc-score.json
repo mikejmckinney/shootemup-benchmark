@@ -1,0 +1,47 @@
+{
+  "treatment": "monolith_luna_xhigh_fast_opencode",
+  "scored_at": "2026-08-07T14:25:45.088Z",
+  "original_quality_score": 99,
+  "absolute_supplemental_deductions": 4,
+  "posthoc_adjustment": -4,
+  "corrected_quality_score": 95,
+  "corrected_score_relative_to_baseline": -3,
+  "weights": {
+    "physical_name_entry": 2,
+    "progression_start_consistency": 1,
+    "advertised_keyboard_restart": 1,
+    "immediate_click_restart": 2
+  },
+  "checks": {
+    "progression_start_consistency": {
+      "passed": true,
+      "applicable": true,
+      "before": 1,
+      "after": 1
+    },
+    "physical_name_entry": {
+      "passed": false,
+      "expected": "WASD wasd",
+      "actual": "WASDwasd"
+    },
+    "advertised_keyboard_restart": {
+      "passed": true,
+      "advertised": false,
+      "applicable": false
+    },
+    "immediate_click_restart": {
+      "passed": false,
+      "button_found": false,
+      "state": {
+        "phase": "gameover",
+        "score": 7317,
+        "lives": 3,
+        "playerX": 383,
+        "playerY": 455,
+        "enemyCount": 1,
+        "projectileCount": 0
+      }
+    }
+  },
+  "rationale": "The corrected quality score applies the candidate's absolute supplemental deductions directly. The monolith remains the comparison baseline, but its score is not normalized back to 100 and 100 is not a ceiling."
+}

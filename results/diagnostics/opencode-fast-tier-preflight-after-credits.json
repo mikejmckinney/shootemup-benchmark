@@ -1,0 +1,25 @@
+{
+  "checked_at": "2026-08-07T16:06:48.494Z",
+  "valid": false,
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "xhigh",
+  "requested_tier": "priority",
+  "expected_tier": "priority",
+  "response_created_tier": "auto",
+  "response_completed_tier": "default",
+  "http_status": 200,
+  "duration_ms": 1272,
+  "usage": {
+    "input_tokens": 30,
+    "input_tokens_details": {
+      "cache_write_tokens": 0,
+      "cached_tokens": 0
+    },
+    "output_tokens": 5,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 35
+  },
+  "response_error": null
+}

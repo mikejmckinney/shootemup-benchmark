@@ -1,0 +1,61 @@
+{
+  "source": "OpenCode SQLite session ledger",
+  "database": "/workspaces/shootemup-benchmark/results/raw/monolith_luna_max_fast_opencode/opencode-data/opencode/opencode.db",
+  "selection": {
+    "candidate_directory": "/workspaces/shootemup-benchmark/candidates/monolith_luna_max_fast_opencode",
+    "started_ms": 1786124593762,
+    "ended_ms": 1786125203448,
+    "rule": "sessions rooted in candidate directory during run, plus recursive parent_id descendants"
+  },
+  "agents_started": 1,
+  "root_sessions": 1,
+  "child_sessions": 0,
+  "peak_concurrent_agents": 1,
+  "turns": 45,
+  "tool_calls": 64,
+  "coordination_events": 0,
+  "coordination_tool_calls": 0,
+  "tool_counts": {
+    "todowrite": 4,
+    "glob": 3,
+    "read": 2,
+    "bash": 39,
+    "apply_patch": 4,
+    "webfetch": 11,
+    "grep": 1
+  },
+  "usage": {
+    "input_tokens": 1787940,
+    "cached_input_tokens": 1787805,
+    "cache_write_input_tokens": 59518,
+    "output_tokens": 39796,
+    "reasoning_output_tokens": 13896
+  },
+  "provider_reported_cost_usd": 0.19683559999999994,
+  "sessions": [
+    {
+      "id": "ses_022ad8735ffeGhPs78jqSd7tNi",
+      "project_id": "dc117ee7bcd658404bec586d6f11c7873c628435",
+      "workspace_id": null,
+      "parent_id": null,
+      "slug": "stellar-eagle",
+      "directory": "/workspaces/shootemup-benchmark/candidates/monolith_luna_max_fast_opencode",
+      "title": "Autonomous benchmark task execution planning verification",
+      "version": "1.18.15",
+      "cost": 0.19683559999999994,
+      "tokens_input": 135,
+      "tokens_output": 25900,
+      "tokens_reasoning": 13896,
+      "tokens_cache_read": 1787805,
+      "tokens_cache_write": 59518,
+      "agent": "build",
+      "model": {
+        "id": "gpt-5.6-luna-fast",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786124597450,
+      "time_updated": 1786125203328
+    }
+  ]
+}

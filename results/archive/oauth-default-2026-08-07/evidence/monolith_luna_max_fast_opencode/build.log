@@ -1,0 +1,6 @@
+
+> neon-barrage@1.0.0 build
+> node scripts/build.mjs
+
+Built Neon Barrage to /workspaces/shootemup-benchmark/candidates/monolith_luna_max_fast_opencode/dist
+No Supabase configuration supplied; leaderboard will show offline state.

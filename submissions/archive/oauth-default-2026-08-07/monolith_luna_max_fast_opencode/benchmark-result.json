@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_luna_max_fast_opencode",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-luna-max-fast-opencode.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-luna-max-fast-opencode",
+  "supabase_url": "https://qmzobksplnrjwlorxqru.supabase.co",
+  "supabase_project_ref": "qmzobksplnrjwlorxqru",
+  "supabase_public_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtem9ia3NwbG5yandsb3J4cXJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMDc0OTYsImV4cCI6MjEwMTY4MzQ5Nn0.8rkBPtKpYQSlvfAoEK4tlWtBd9HfY8edvEtz2LCBKwc",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Static Pages deployment verified at HTTP 200; Supabase RLS migration applied and anon insert/read round trip verified with score 4242."
+}

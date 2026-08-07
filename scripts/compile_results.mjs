@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
-const plannedTreatments = ["monolith", "native_dynamic", "native_isolated", "a2a", "monolith_warm", "a2a_async", "a2a_async_streaming_opencode", "monolith_sol_medium", "monolith_opencode", "monolith_sol_medium_opencode", "monolith_sol_low_opencode", "monolith_sol_high_opencode", "monolith_luna_xhigh_opencode", "monolith_luna_high_opencode", "monolith_luna_max_codex_minimal", "monolith_luna_max_opencode_retest", "monolith_luna_max_opencode_speckit", "dynamic_luna_max_opencode_superpowers"];
+const plannedTreatments = ["monolith", "native_dynamic", "native_isolated", "a2a", "monolith_warm", "a2a_async", "a2a_async_streaming_opencode", "monolith_sol_medium", "monolith_opencode", "monolith_sol_medium_opencode", "monolith_sol_medium_opencode_api", "monolith_sol_low_opencode", "monolith_sol_high_opencode", "monolith_luna_xhigh_opencode", "monolith_luna_high_opencode", "monolith_luna_max_codex_minimal", "monolith_luna_max_opencode_retest", "monolith_luna_max_opencode_speckit", "dynamic_luna_max_opencode_superpowers", "monolith_luna_xhigh_fast_opencode", "monolith_luna_max_fast_opencode", "monolith_sol_low_fast_opencode", "monolith_sol_medium_fast_opencode", "monolith_grok_4_5_medium_cursor", "monolith_grok_4_5_high_cursor", "monolith_grok_4_5_medium_fast_cursor", "monolith_grok_4_5_high_fast_cursor", "monolith_auto_cursor", "monolith_luna_xhigh_opencode_control"];
 const treatmentArtifactsExist = treatment => [
   path.join(root, "results/raw", treatment, "run-metrics.json"),
   path.join(root, "results/raw", treatment, "cleanup.json"),
@@ -17,6 +17,7 @@ const labels = {
   a2a_async_streaming_opencode: "A2A · async streaming · Luna Max · OpenCode",
   monolith_sol_medium: "Monolith · Sol Medium · Codex", monolith_opencode: "Monolith · Luna Max · OpenCode",
   monolith_sol_medium_opencode: "Monolith · Sol Medium · OpenCode",
+  monolith_sol_medium_opencode_api: "Monolith · Sol Medium · OpenCode API",
   monolith_sol_low_opencode: "Monolith · Sol Low · OpenCode",
   monolith_sol_high_opencode: "Monolith · Sol High · OpenCode",
   monolith_luna_xhigh_opencode: "Monolith · Luna Xhigh · OpenCode",
@@ -25,14 +26,35 @@ const labels = {
   monolith_luna_max_opencode_retest: "Monolith · Luna Max · OpenCode fresh control",
   monolith_luna_max_opencode_speckit: "Monolith · Luna Max · OpenCode + Spec Kit",
   dynamic_luna_max_opencode_superpowers: "Dynamic · Luna Max · OpenCode + Superpowers",
+  monolith_luna_xhigh_fast_opencode: "Monolith · Luna Xhigh Fast · OpenCode",
+  monolith_luna_max_fast_opencode: "Monolith · Luna Max Fast · OpenCode",
+  monolith_sol_low_fast_opencode: "Monolith · Sol Low Fast · OpenCode",
+  monolith_sol_medium_fast_opencode: "Monolith · Sol Medium Fast · OpenCode",
+  monolith_grok_4_5_medium_cursor: "Monolith · Grok 4.5 Medium · Cursor",
+  monolith_grok_4_5_high_cursor: "Monolith · Grok 4.5 High · Cursor",
+  monolith_grok_4_5_medium_fast_cursor: "Monolith · Grok 4.5 Medium Fast · Cursor",
+  monolith_grok_4_5_high_fast_cursor: "Monolith · Grok 4.5 High Fast · Cursor",
+  monolith_auto_cursor: "Monolith · Auto Cost · Cursor",
+  monolith_luna_xhigh_opencode_control: "Monolith · Luna Xhigh · OpenCode control",
 };
 const pricing = {
-  as_of: "2026-08-06",
+  as_of: "2026-08-07",
   source: "https://developers.openai.com/api/docs/pricing",
-  service_tier: "standard",
+  priority_source: "https://openai.com/api-priority-processing/",
+  grok_source: "https://cursor.com/docs/models-and-pricing",
+  cursor_auto_source: "https://cursor.com/docs/models-and-pricing#auto-modes",
+  cursor_grok_cache_accounting: "Cursor publishes separate cache-read rates for Grok 4.5 ($0.50/M Standard and $1/M Fast) and no cache-write rate; cache writes are therefore costed at zero.",
+  service_tiers: ["standard", "priority"],
   models: {
     "gpt-5.6-luna": { uncached_input: 0.2, cached_input: 0.02, cache_write: 0.25, output: 1.2 },
     "gpt-5.6-sol": { uncached_input: 5, cached_input: 0.5, cache_write: 6.25, output: 30 },
+    "grok-4.5": { uncached_input: 2, cached_input: 0.5, cache_write: 0, output: 6 },
+    "grok-4.5-fast": { uncached_input: 4, cached_input: 1, cache_write: 0, output: 18 },
+    "cursor-auto-cost": { uncached_input: 1.25, cached_input: 0.25, cache_write: 1.25, output: 6 },
+  },
+  priority_models: {
+    "gpt-5.6-luna": { uncached_input: 0.4, cached_input: 0.04, cache_write: 0.5, output: 2.4 },
+    "gpt-5.6-sol": { uncached_input: 10, cached_input: 1, cache_write: 12.5, output: 60 },
   },
   web_search_usd_per_call: 0.01,
   long_context_threshold_input_tokens: 272000,
@@ -40,6 +62,7 @@ const pricing = {
     monolith: 3, native_dynamic: 1, native_isolated: 4, a2a: 5,
     monolith_warm: 0, a2a_async: 2, a2a_async_streaming_opencode: 0, monolith_sol_medium: 3, monolith_opencode: 0,
     monolith_sol_medium_opencode: 0,
+    monolith_sol_medium_opencode_api: 0,
     monolith_sol_low_opencode: 0, monolith_luna_xhigh_opencode: 0,
     monolith_sol_high_opencode: 0,
     monolith_luna_high_opencode: 0,
@@ -47,6 +70,16 @@ const pricing = {
     monolith_luna_max_opencode_retest: 0,
     monolith_luna_max_opencode_speckit: 0,
     dynamic_luna_max_opencode_superpowers: 0,
+    monolith_luna_xhigh_fast_opencode: 0,
+    monolith_luna_max_fast_opencode: 0,
+    monolith_sol_low_fast_opencode: 0,
+    monolith_sol_medium_fast_opencode: 0,
+    monolith_grok_4_5_medium_cursor: 0,
+    monolith_grok_4_5_high_cursor: 0,
+    monolith_grok_4_5_medium_fast_cursor: 0,
+    monolith_grok_4_5_high_fast_cursor: 0,
+    monolith_auto_cursor: 0,
+    monolith_luna_xhigh_opencode_control: 0,
   },
 };
 const qualityGateCenter = 90;
@@ -71,8 +104,10 @@ const rows = treatments.map(treatment => {
   const manual = read(path.join(root, "results/evidence", treatment, "manual-score.json"));
   const posthoc = read(path.join(root, "results/evidence", treatment, "posthoc-score.json"));
   const cleanup = read(path.join(root, "results/raw", treatment, "cleanup.json"));
-  const rates = pricing.models[metrics.model];
-  if (!rates) throw new Error(`No pricing configured for ${metrics.model}`);
+  const serviceTier = metrics.service_tier ?? "standard";
+  const rateTable = serviceTier === "priority" ? pricing.priority_models : pricing.models;
+  const rates = rateTable[metrics.model];
+  if (!rates) throw new Error(`No ${serviceTier} pricing configured for ${metrics.model}`);
   const totalTokens = metrics.usage.input_tokens + metrics.usage.output_tokens;
   const uncachedInputTokens = metrics.usage.input_tokens - metrics.usage.cached_input_tokens;
   const nonCachedTokens = uncachedInputTokens + metrics.usage.output_tokens;
@@ -87,12 +122,23 @@ const rows = treatments.map(treatment => {
   ) / 1_000_000;
   const webSearchCalls = pricing.captured_web_search_calls[treatment] ?? 0;
   const apiCost = tokenCost + webSearchCalls * pricing.web_search_usd_per_call;
+  const providerReportedCost = metrics.provider_reported_cost_usd;
+  if (providerReportedCost != null) {
+    const difference = Math.abs(tokenCost - providerReportedCost);
+    const tolerance = Math.max(1e-9, providerReportedCost * 0.01);
+    if (difference > tolerance) {
+      throw new Error(
+        `Calculated token cost does not match provider-reported cost for ${treatment}: `
+        + `${tokenCost} vs ${providerReportedCost}`,
+      );
+    }
+  }
   const wallMinutes = metrics.wall_seconds / 60;
   const squareRootRoi = quality / Math.sqrt(apiCost * wallMinutes);
   const qualityFactor = gateQualityFactor(quality);
   return {
     treatment, label: labels[treatment], model: metrics.model,
-    reasoning_effort: metrics.reasoning_effort, runtime: metrics.runtime ?? "codex",
+    reasoning_effort: metrics.reasoning_effort, runtime: metrics.runtime ?? "codex", service_tier: serviceTier,
     quality_score: quality, original_quality_score: originalQuality,
     posthoc_adjustment: posthoc.posthoc_adjustment,
     automated_points: automated.automated_points, manual_points: manual.manual_points,
@@ -105,6 +151,7 @@ const rows = treatments.map(treatment => {
     successful_a2a_messages: metrics.a2a_messages_succeeded ?? null,
     failed_a2a_messages: metrics.a2a_messages_failed ?? null,
     captured_web_search_calls: webSearchCalls,
+    provider_reported_cost_usd: providerReportedCost ?? null,
     estimated_api_cost_usd: apiCost,
     api_cost_breakdown_usd: { model_tokens: tokenCost, web_search: webSearchCalls * pricing.web_search_usd_per_call },
     token_efficiency: quality / (totalTokens / 1_000_000),
@@ -126,6 +173,17 @@ const warmCacheBaseline = rows.find(row => row.treatment === "monolith_warm");
 const methodologyControl = rows.find(row => row.treatment === "monolith_luna_max_opencode_retest");
 const asyncA2aComparator = rows.find(row => row.treatment === "a2a_async");
 const solMediumOpenCodeComparator = rows.find(row => row.treatment === "monolith_sol_medium_opencode");
+const requestedComparators = {
+  monolith_luna_xhigh_fast_opencode: rows.find(row => row.treatment === "monolith_luna_xhigh_opencode"),
+  monolith_luna_max_fast_opencode: rows.find(row => row.treatment === "monolith_opencode"),
+  monolith_sol_low_fast_opencode: rows.find(row => row.treatment === "monolith_sol_low_opencode"),
+  monolith_sol_medium_fast_opencode: rows.find(row => row.treatment === "monolith_sol_medium_opencode"),
+  monolith_sol_medium_opencode_api: rows.find(row => row.treatment === "monolith_sol_medium_opencode"),
+  monolith_grok_4_5_high_cursor: rows.find(row => row.treatment === "monolith_grok_4_5_medium_cursor"),
+  monolith_grok_4_5_medium_fast_cursor: rows.find(row => row.treatment === "monolith_grok_4_5_medium_cursor"),
+  monolith_grok_4_5_high_fast_cursor: rows.find(row => row.treatment === "monolith_grok_4_5_high_cursor"),
+  monolith_luna_xhigh_opencode_control: rows.find(row => row.treatment === "monolith_luna_xhigh_opencode"),
+};
 const continuationDefinitions = [
   {
     treatment: "monolith_luna_max_opencode_speckit",
@@ -205,7 +263,8 @@ const dominatesAtTolerance = (other, row, epsilon) => (
   )
 );
 for (const row of rows) {
-  const comparisonBaseline = row.treatment === "a2a_async_streaming_opencode" && asyncA2aComparator
+  const comparisonBaseline = requestedComparators[row.treatment]
+    ?? (row.treatment === "a2a_async_streaming_opencode" && asyncA2aComparator
     ? asyncA2aComparator
     : row.treatment === "monolith_sol_high_opencode" && solMediumOpenCodeComparator
       ? solMediumOpenCodeComparator
@@ -213,7 +272,7 @@ for (const row of rows) {
     ? warmCacheBaseline
     : ["monolith_luna_max_opencode_speckit", "dynamic_luna_max_opencode_superpowers"].includes(row.treatment) && methodologyControl
       ? methodologyControl
-      : baseline;
+      : baseline);
   row.marginal_vs_monolith = {
     quality_score: row.quality_score - baseline.quality_score,
     total_tokens: row.total_tokens - baseline.total_tokens,
@@ -261,8 +320,20 @@ for (const row of rows) {
 
 const lunaOpenCode = rows.find(row => row.treatment === "monolith_opencode");
 const lunaXhighOpenCode = rows.find(row => row.treatment === "monolith_luna_xhigh_opencode");
+const lunaXhighFastOpenCode = rows.find(row => row.treatment === "monolith_luna_xhigh_fast_opencode");
+const lunaMaxFastOpenCode = rows.find(row => row.treatment === "monolith_luna_max_fast_opencode");
+const lunaXhighOpenCodeControl = rows.find(row => row.treatment === "monolith_luna_xhigh_opencode_control");
 const solOpenCode = rows.find(row => row.treatment === "monolith_sol_medium_opencode");
+const solOpenCodeApi = rows.find(row => row.treatment === "monolith_sol_medium_opencode_api");
 const solHighOpenCode = rows.find(row => row.treatment === "monolith_sol_high_opencode");
+const solLowOpenCode = rows.find(row => row.treatment === "monolith_sol_low_opencode");
+const solLowFastOpenCode = rows.find(row => row.treatment === "monolith_sol_low_fast_opencode");
+const solMediumFastOpenCode = rows.find(row => row.treatment === "monolith_sol_medium_fast_opencode");
+const grokMediumCursor = rows.find(row => row.treatment === "monolith_grok_4_5_medium_cursor");
+const grokHighCursor = rows.find(row => row.treatment === "monolith_grok_4_5_high_cursor");
+const grokMediumFastCursor = rows.find(row => row.treatment === "monolith_grok_4_5_medium_fast_cursor");
+const grokHighFastCursor = rows.find(row => row.treatment === "monolith_grok_4_5_high_fast_cursor");
+const autoCostCursor = rows.find(row => row.treatment === "monolith_auto_cursor");
 const asyncA2a = rows.find(row => row.treatment === "a2a_async");
 const asyncStreamingOpenCode = rows.find(row => row.treatment === "a2a_async_streaming_opencode");
 const minimalCodex = rows.find(row => row.treatment === "monolith_luna_max_codex_minimal");
@@ -340,6 +411,11 @@ const summary = {
     ordering: "gate_adjusted_roi_desc_then_quality_desc_then_cost_asc",
   },
   comparisons: {
+    sol_medium_opencode_api_vs_oauth: {
+      candidate: "monolith_sol_medium_opencode_api",
+      comparator: "monolith_sol_medium_opencode",
+      delta: solOpenCodeApi.marginal_vs_comparator,
+    },
     minimal_context_vs_warm_cache: {
       candidate: "monolith_luna_max_codex_minimal",
       comparator: "monolith_warm",
@@ -465,7 +541,7 @@ At ε=${primaryQualityTolerance}, A2A asynchronous is dominated because Luna Xhi
 
 ## Quality-adjusted efficiency sensitivity
 
-PAYG-equivalent costs use [official Standard API rates](${pricing.source}) current on ${pricing.as_of}: Luna costs **$0.20/M uncached input, $0.02/M cached input, $0.25/M cache writes, and $1.20/M output**; Sol costs **$5.00/M, $0.50/M, $6.25/M, and $30.00/M**, respectively. Captured web searches add $0.01 each. Supabase and Cloudflare free-tier usage adds $0 marginal infrastructure cost.
+PAYG-equivalent costs use [official OpenAI API rates](${pricing.source}) and [Cursor model rates](${pricing.grok_source}) current on ${pricing.as_of}. Standard Luna costs **$0.20/M uncached input, $0.02/M cached input, $0.25/M cache writes, and $1.20/M output**; Fast Luna doubles those rates. Standard Sol costs **$5.00/M, $0.50/M, $6.25/M, and $30.00/M**; Priority Sol doubles them. Cursor Grok 4.5 Standard costs **$2.00/M uncached input, $0.50/M cache reads, $0 cache writes, and $6.00/M output**; Fast costs **$4.00/M, $1.00/M, $0, and $18.00/M**. Cursor Auto Cost uses **$1.25/M uncached/cache-write input, $0.25/M cache reads, and $6.00/M output**. Captured web searches add $0.01 each. Supabase and Cloudflare free-tier usage adds $0 marginal infrastructure cost.
 
 For a stated value of unattended agent time \`r\` in USD per minute:
 
@@ -501,7 +577,17 @@ ${continuationSection}
 - Asynchronous-streaming A2A in OpenCode also scored ${asyncStreamingOpenCode.quality_score}. It finished ${mmss(asyncA2a.wall_seconds - asyncStreamingOpenCode.wall_seconds)} faster, cost ${f((1 - asyncStreamingOpenCode.estimated_api_cost_usd / asyncA2a.estimated_api_cost_usd) * 100, 0)}% less, and used ${f((1 - asyncStreamingOpenCode.total_tokens / asyncA2a.total_tokens) * 100, 0)}% fewer tokens than asynchronous-polling A2A. Runtime changed from Codex to OpenCode, and retained resubscriptions yielded task snapshots rather than incremental status/artifact events, so this does not isolate or validate streaming's causal contribution.
 - Sol Medium in Codex was the fastest Codex treatment at 12:17 and has a corrected score of 91; its higher per-token price partly offsets that speed.
 - The original Luna Max and Sol Medium OpenCode runs have effectively tied observed quality. Luna is about 11× cheaper; Sol is 4:47 faster. Luna is preferred whenever unattended agent time is valued below $${f(lunaSolBreakEvenUsdPerHour, 2)}/hour.
+- The API-authenticated Sol Medium OpenCode run finished ${mmss(solOpenCode.wall_seconds - solOpenCodeApi.wall_seconds)} faster than its OAuth comparator (${f((1 - solOpenCodeApi.wall_seconds / solOpenCode.wall_seconds) * 100, 1)}%), but scored ${signed(solOpenCodeApi.quality_score - solOpenCode.quality_score)}, cost ${f((solOpenCodeApi.estimated_api_cost_usd / solOpenCode.estimated_api_cost_usd - 1) * 100, 1)}% more, and used ${f((solOpenCodeApi.total_tokens / solOpenCode.total_tokens - 1) * 100, 1)}% more tokens. Its gate-adjusted ROI was ${f(solOpenCodeApi.gate_adjusted_roi, 4)} versus ${f(solOpenCode.gate_adjusted_roi, 4)}. With one run per authentication mode, this is evidence of no substantial overall API-key improvement—not proof that authentication caused the quality difference.
 - The requested reasoning-effort extension produced corrected scores of ${rows.find(row => row.treatment === "monolith_sol_low_opencode").quality_score} for Sol Low, ${rows.find(row => row.treatment === "monolith_luna_xhigh_opencode").quality_score} for Luna Xhigh, and ${rows.find(row => row.treatment === "monolith_luna_high_opencode").quality_score} for Luna High.
+- Luna Xhigh Fast finished ${f((1 - lunaXhighFastOpenCode.wall_seconds / lunaXhighOpenCodeControl.wall_seconds) * 100, 1)}% faster than its contemporaneous standard-tier control, scored ${signed(lunaXhighFastOpenCode.quality_score - lunaXhighOpenCodeControl.quality_score)}, and cost ${f(lunaXhighFastOpenCode.estimated_api_cost_usd / lunaXhighOpenCodeControl.estimated_api_cost_usd, 1)}× as much. Its gate-adjusted ROI was ${f((1 - lunaXhighFastOpenCode.gate_adjusted_roi / lunaXhighOpenCodeControl.gate_adjusted_roi) * 100, 1)}% lower.
+- Luna Max Fast finished ${f((1 - lunaMaxFastOpenCode.wall_seconds / lunaOpenCode.wall_seconds) * 100, 1)}% faster than the original standard-tier Luna Max OpenCode run, scored ${signed(lunaMaxFastOpenCode.quality_score - lunaOpenCode.quality_score)}, and cost ${f(lunaMaxFastOpenCode.estimated_api_cost_usd / lunaOpenCode.estimated_api_cost_usd, 1)}× as much. Its gate-adjusted ROI was ${f((1 - lunaMaxFastOpenCode.gate_adjusted_roi / lunaOpenCode.gate_adjusted_roi) * 100, 1)}% lower.
+- The corrected Fast harness isolated OpenCode's credential store, confirmed Priority service in both request and response events, and rejects API-key runs with zero provider-reported cost. The two valid Fast ledgers reported $${f(lunaXhighFastOpenCode.provider_reported_cost_usd, 6)} and $${f(lunaMaxFastOpenCode.provider_reported_cost_usd, 6)}; both match the compiler's token calculation within 1%.
+- Sol Low Fast completed ${f((1 - solLowFastOpenCode.wall_seconds / solLowOpenCode.wall_seconds) * 100, 1)}% faster than standard Sol Low, scored ${signed(solLowFastOpenCode.quality_score - solLowOpenCode.quality_score)}, and cost ${f(solLowFastOpenCode.estimated_api_cost_usd / solLowOpenCode.estimated_api_cost_usd, 1)}× as much. Its gate-adjusted ROI increased from ${f(solLowOpenCode.gate_adjusted_roi, 4)} to ${f(solLowFastOpenCode.gate_adjusted_roi, 4)} because the quality improvement moved it from BORDERLINE to PASS.
+- Sol Medium Fast completed ${f((1 - solMediumFastOpenCode.wall_seconds / solOpenCode.wall_seconds) * 100, 1)}% faster than standard Sol Medium, but scored ${signed(solMediumFastOpenCode.quality_score - solOpenCode.quality_score)} and cost ${f(solMediumFastOpenCode.estimated_api_cost_usd / solOpenCode.estimated_api_cost_usd, 1)}× as much; its gate-adjusted ROI fell from ${f(solOpenCode.gate_adjusted_roi, 4)} to ${f(solMediumFastOpenCode.gate_adjusted_roi, 4)}.
+- Cursor Grok Medium Fast completed ${f((1 - grokMediumFastCursor.wall_seconds / grokMediumCursor.wall_seconds) * 100, 1)}% faster than standard Medium and scored ${signed(grokMediumFastCursor.quality_score - grokMediumCursor.quality_score)}, but cost ${f(grokMediumFastCursor.estimated_api_cost_usd / grokMediumCursor.estimated_api_cost_usd, 1)}× as much. Its gate-adjusted ROI was ${f((1 - grokMediumFastCursor.gate_adjusted_roi / grokMediumCursor.gate_adjusted_roi) * 100, 1)}% lower.
+- Cursor Grok High Fast completed ${f((1 - grokHighFastCursor.wall_seconds / grokHighCursor.wall_seconds) * 100, 1)}% faster than standard High and scored ${signed(grokHighFastCursor.quality_score - grokHighCursor.quality_score)}, but cost ${f(grokHighFastCursor.estimated_api_cost_usd / grokHighCursor.estimated_api_cost_usd, 1)}× as much. Its gate-adjusted ROI was ${f((1 - grokHighFastCursor.gate_adjusted_roi / grokHighCursor.gate_adjusted_roi) * 100, 1)}% lower.
+- Standard Cursor Grok High beat Medium by ${signed(grokHighCursor.quality_score - grokMediumCursor.quality_score)} quality points and ${mmss(grokMediumCursor.wall_seconds - grokHighCursor.wall_seconds)} while costing ${f((grokHighCursor.estimated_api_cost_usd / grokMediumCursor.estimated_api_cost_usd - 1) * 100, 0)}% more; its gate-adjusted ROI was ${f((grokHighCursor.gate_adjusted_roi / grokMediumCursor.gate_adjusted_roi - 1) * 100, 1)}% higher.
+- Cursor Auto Cost delivered the best ROI in the seven-candidate extension: score ${autoCostCursor.quality_score}, time ${mmss(autoCostCursor.wall_seconds)}, cost $${f(autoCostCursor.estimated_api_cost_usd, 4)}, and gate-adjusted ROI ${f(autoCostCursor.gate_adjusted_roi, 4)}. Cursor confirmed the Auto router selection but did not expose its downstream model or tier, so the result is attributed only to Auto Cost.
 - Sol High OpenCode tied Sol Medium OpenCode at ${solHighOpenCode.quality_score}, but took ${mmss(solHighOpenCode.wall_seconds - solOpenCode.wall_seconds)} longer, cost ${f((solHighOpenCode.estimated_api_cost_usd / solOpenCode.estimated_api_cost_usd - 1) * 100, 0)}% more, used ${f((solHighOpenCode.total_tokens / solOpenCode.total_tokens - 1) * 100, 0)}% more tokens, and achieved lower gate-adjusted ROI (${f(solHighOpenCode.gate_adjusted_roi, 4)} vs ${f(solOpenCode.gate_adjusted_roi, 4)}).
 - Sol OpenCode used about ${f(lunaOpenCode.total_tokens / solOpenCode.total_tokens, 1)}× fewer total tokens, but Sol's per-token Standard price is 25× Luna's, so its estimated run cost remained much higher.
 - Sol Medium Codex reported ${f(rows.find(row => row.treatment === "monolith_sol_medium").total_tokens / solOpenCode.total_tokens, 1)}× as many total tokens as Sol Medium OpenCode. The local compiler is internally consistent, but provider-side reconciliation is required before treating this as a causal runtime-efficiency result.
@@ -523,7 +609,8 @@ ${continuationSection}
 - Quality-adjusted efficiency is reported as a sensitivity across explicit time values, not as one universal ROI. The appropriate scenario depends on the economic value of delivery latency.
 - The rubric score is interval-like rather than proven ratio-scale. The quality gate reduces the risk of rewarding cheap failures, but efficiency ratios should be treated as scenario comparisons rather than literal ratios of value.
 - The PASS/BORDERLINE/FAIL thresholds and the ε=${primaryQualityTolerance} headline Pareto frontier were chosen after these runs and should be preregistered for a replication; ε=3 is reported as a sensitivity. BORDERLINE means the decision is unresolved, not that candidates are proven statistically equivalent.
-- OpenCode and Codex token telemetry come from different runtime event formats. The compiler converts both to cached input, uncached input, and output, but provider billing-dashboard reconciliation has not verified that the counters are semantically identical.
+- OpenCode and Codex token telemetry come from different runtime event formats. The compiler converts both to cached input, uncached input, and output. The two API-key Fast runs now reconcile locally against provider-reported per-turn cost, but this does not reconcile the older OAuth OpenCode runs or Codex runs against provider billing records.
+- The Sol Medium OpenCode API-versus-OAuth comparison has one run per authentication mode. The API run has request-level transport and provider-cost telemetry, while the older OAuth run does not; stochastic generation, provider load, and sequential execution remain confounders, so the comparison cannot establish an authentication-mode effect.
 - The minimal-context treatment disables several optional Codex surfaces together and has one replicate. It shows that the default integration surface was not necessary for this successful run, but cannot estimate the marginal token contribution of skills, MCP, apps, project instructions, or workflow variation individually.
 - The asynchronous-streaming A2A extension changes transport and runtime together. Its improvement over asynchronous-polling A2A cannot be attributed specifically to streaming, OpenCode, cache/order conditions, or their interaction.
 - The streaming harness retained task snapshots but no incremental status or artifact updates; terminal completion was recovered from final task snapshots. Sustained end-to-end stream behavior therefore remains unverified.
@@ -532,7 +619,7 @@ ${continuationSection}
 - The first Spec Kit controller launch was excluded as a harness failure because initialization ran from the wrong working directory. It stopped after 26 seconds with zero model tokens and no external resources; all artifacts are retained under \`results/harness-failures/\`. The corrected run used a fresh repository and a new ephemeral no-cache installation, though transient OS/network caches cannot be perfectly reset.
 - The results cover one full-stack game task and may not transfer to other work.
 
-Every temporary candidate Supabase project that was actually created was confirmed **INACTIVE** after evaluation. All sixteen timed-run gallery games now use one active shared project with an allowlisted \`candidate_id\` partition; candidates 15, 18, and 19 were added in documented post-benchmark retrofits while their benchmark-specific databases remain paused. Spec Kit and Superpowers created dedicated projects only during exploratory post-timeout continuations, and both are paused. These post-benchmark infrastructure states do not alter retained scores or timed metrics.
+Every candidate Supabase project that was actually created was confirmed **INACTIVE** after evaluation. The former baseline project was later resumed as the shared gallery service; all ${rows.filter(row => row.automated_points > 0).length} timed-run gallery games now use it with an allowlisted \`candidate_id\` partition, while the other benchmark-specific databases remain paused. Spec Kit and Superpowers created dedicated projects only during exploratory post-timeout continuations, and both are paused. These post-benchmark infrastructure states do not alter retained scores or timed metrics.
 `;
 fs.writeFileSync(path.join(root, "results/report.md"), report);
 
@@ -547,6 +634,7 @@ const galleryLabels = {
   monolith_sol_medium: "Monolith · Sol Medium · Codex",
   monolith_opencode: "Monolith · Luna Max · OpenCode",
   monolith_sol_medium_opencode: "Monolith · Sol Medium · OpenCode",
+  monolith_sol_medium_opencode_api: "Monolith · Sol Medium · OpenCode API",
   monolith_sol_low_opencode: "Monolith · Sol Low · OpenCode",
   monolith_sol_high_opencode: "Monolith · Sol High · OpenCode",
   monolith_luna_xhigh_opencode: "Monolith · Luna Xhigh · OpenCode",
@@ -555,9 +643,51 @@ const galleryLabels = {
   monolith_luna_max_opencode_retest: "Monolith · Luna Max · OpenCode fresh control",
   monolith_luna_max_opencode_speckit: "Monolith · Luna Max · OpenCode + Spec Kit",
   dynamic_luna_max_opencode_superpowers: "Dynamic · Luna Max · OpenCode + Superpowers",
+  monolith_luna_xhigh_fast_opencode: "Monolith · Luna Xhigh Fast · OpenCode",
+  monolith_luna_max_fast_opencode: "Monolith · Luna Max Fast · OpenCode",
+  monolith_sol_low_fast_opencode: "Monolith · Sol Low Fast · OpenCode",
+  monolith_sol_medium_fast_opencode: "Monolith · Sol Medium Fast · OpenCode",
+  monolith_grok_4_5_medium_cursor: "Monolith · Grok 4.5 Medium · Cursor",
+  monolith_grok_4_5_high_cursor: "Monolith · Grok 4.5 High · Cursor",
+  monolith_grok_4_5_medium_fast_cursor: "Monolith · Grok 4.5 Medium Fast · Cursor",
+  monolith_grok_4_5_high_fast_cursor: "Monolith · Grok 4.5 High Fast · Cursor",
+  monolith_auto_cursor: "Monolith · Auto Cost · Cursor",
+  monolith_luna_xhigh_opencode_control: "Monolith · Luna Xhigh · OpenCode control",
 };
+const galleryAnchors = {
+  monolith: "cold-cache-luna-max-monolith",
+  native_dynamic: "native-dynamic-subagents",
+  native_isolated: "native-subagents-with-isolated-issues",
+  a2a: "synchronous-a2a",
+  monolith_warm: "warm-cache-luna-max-monolith",
+  a2a_async: "asynchronous-a2a",
+  a2a_async_streaming_opencode: "asynchronous-streaming-a2a-with-luna-max-in-opencode",
+  monolith_sol_medium: "monolith-with-sol-medium-in-codex",
+  monolith_opencode: "monolith-with-luna-max-in-opencode",
+  monolith_sol_medium_opencode: "monolith-with-sol-medium-in-opencode",
+  monolith_sol_medium_opencode_api: "monolith-with-sol-medium-in-opencode-api",
+  monolith_sol_low_opencode: "monolith-with-sol-low-in-opencode",
+  monolith_sol_high_opencode: "monolith-with-sol-high-in-opencode",
+  monolith_luna_xhigh_opencode: "monolith-with-luna-xhigh-in-opencode",
+  monolith_luna_high_opencode: "monolith-with-luna-high-in-opencode",
+  monolith_luna_max_codex_minimal: "monolith-with-luna-max-in-codex-minimal-context",
+  monolith_luna_max_opencode_retest: "fresh-luna-max-opencode-control",
+  monolith_luna_max_opencode_speckit: "monolithic-luna-max-opencode-with-spec-kit",
+  dynamic_luna_max_opencode_superpowers: "luna-max-opencode-with-full-superpowers-methodology",
+  monolith_luna_xhigh_fast_opencode: "monolith-with-luna-xhigh-fast-in-opencode",
+  monolith_luna_max_fast_opencode: "monolith-with-luna-max-fast-in-opencode",
+  monolith_sol_low_fast_opencode: "monolith-with-sol-low-fast-in-opencode",
+  monolith_sol_medium_fast_opencode: "monolith-with-sol-medium-fast-in-opencode",
+  monolith_grok_4_5_medium_cursor: "monolith-with-grok-45-medium-in-cursor",
+  monolith_grok_4_5_high_cursor: "monolith-with-grok-45-high-in-cursor",
+  monolith_grok_4_5_medium_fast_cursor: "monolith-with-grok-45-medium-fast-in-cursor",
+  monolith_grok_4_5_high_fast_cursor: "monolith-with-grok-45-high-fast-in-cursor",
+  monolith_auto_cursor: "monolith-with-auto-cost-in-cursor",
+  monolith_luna_xhigh_opencode_control: "monolith-with-luna-xhigh-in-opencode-control",
+};
+const galleryLink = row => `[${galleryLabels[row.treatment]}](#${galleryAnchors[row.treatment]})`;
 const galleryRows = decisionRows.map(row =>
-  `| **${galleryLabels[row.treatment]}** | ${row.quality_score} | ${row.quality_gate} | $${f(row.estimated_api_cost_usd, 4)} | ${mmss(row.wall_seconds)} | ${f(row.total_tokens / 1e6, 3)}M | ${f(row.cached_input_tokens / 1e6, 3)}M | ${f(row.uncached_input_tokens / 1e6, 3)}M | ${f(row.output_tokens / 1e6, 3)}M | ${f(row.gate_adjusted_roi, 4)} |`
+  `| **${galleryLink(row)}** | ${row.quality_score} | ${row.quality_gate} | $${f(row.estimated_api_cost_usd, 4)} | ${mmss(row.wall_seconds)} | ${f(row.total_tokens / 1e6, 3)}M | ${f(row.cached_input_tokens / 1e6, 3)}M | ${f(row.uncached_input_tokens / 1e6, 3)}M | ${f(row.output_tokens / 1e6, 3)}M | ${f(row.gate_adjusted_roi, 4)} |`
 ).join("\n");
 const galleryTable = `| Candidate | Score | Gate | Cost | Time | Total tokens | Cached input | Uncached input | Output | Gate-adjusted ROI |
 |---|---:|---|---:|---:|---:|---:|---:|---:|---:|
@@ -594,7 +724,10 @@ readme = readme.replace(
   /<!-- GENERATED_CONTINUATION_RESULTS_START -->[\s\S]*?<!-- GENERATED_CONTINUATION_RESULTS_END -->/,
   `<!-- GENERATED_CONTINUATION_RESULTS_START -->\n${readmeContinuationSection}\n<!-- GENERATED_CONTINUATION_RESULTS_END -->`,
 );
-const readmeSensitivityTable = `${sensitivityHeader}\n${sensitivity}`;
+const readmeSensitivity = sensitivityRows.map(row =>
+  `| ${galleryLink(row)}${row.quality_gate_passed ? "" : " †"} | ${timeValueScenarios.map(scenario => f(row.quality_adjusted_efficiency[scenario.key], 2)).join(" | ")} |`
+).join("\n");
+const readmeSensitivityTable = `${sensitivityHeader}\n${readmeSensitivity}`;
 readme = readme.replace(
   /<!-- GENERATED_SENSITIVITY_TABLE_START -->[\s\S]*?<!-- GENERATED_SENSITIVITY_TABLE_END -->/,
   `<!-- GENERATED_SENSITIVITY_TABLE_START -->\n${readmeSensitivityTable}\n\n<!-- GENERATED_SENSITIVITY_TABLE_END -->`,
@@ -609,10 +742,20 @@ for (const row of rows) {
   const baselineSuffix = row.treatment === "monolith" ? " baseline" : "";
   const paretoStatus = !row.quality_gate_passed ? "INELIGIBLE" : row.pareto_frontier ? "FRONTIER" : "DOMINATED";
   const metrics = `${marker}\n**Score ${row.quality_score}${baselineSuffix} · Cost $${f(row.estimated_api_cost_usd, 4)} · Time ${mmss(row.wall_seconds)} · Gate ${row.quality_gate} · Gate-adjusted ROI ${f(row.gate_adjusted_roi, 4)} · Pareto ε=${primaryQualityTolerance} ${paretoStatus}**<br>\nTokens: ${f(row.total_tokens / 1e6, 3)}M total · ${f(row.cached_input_tokens / 1e6, 3)}M cached input · ${f(row.uncached_input_tokens / 1e6, 3)}M uncached input · ${f(row.output_tokens / 1e6, 3)}M output`;
-  const escapedMarker = marker.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const pattern = new RegExp(`${escapedMarker}\\n\\*\\*Score[^\\n]*\\nTokens:[^\\n]*`);
-  if (!pattern.test(readme)) throw new Error(`README metrics marker missing or malformed: ${row.treatment}`);
-  readme = readme.replace(pattern, metrics);
+  const markerIndex = readme.indexOf(marker);
+  const scoreLineStart = markerIndex + marker.length + 1;
+  const tokensLineStart = readme.indexOf("Tokens:", scoreLineStart);
+  const metricsEnd = readme.indexOf("\n", tokensLineStart);
+  const existingMetrics = readme.slice(scoreLineStart, metricsEnd < 0 ? readme.length : metricsEnd);
+  if (
+    markerIndex < 0
+    || tokensLineStart < 0
+    || !existingMetrics.startsWith("**Score ")
+    || !existingMetrics.includes("\nTokens:")
+  ) {
+    throw new Error(`README metrics marker missing or malformed: ${row.treatment}`);
+  }
+  readme = `${readme.slice(0, markerIndex)}${metrics}${readme.slice(metricsEnd < 0 ? readme.length : metricsEnd)}`;
 }
 
 // Keep the candidate gallery in the same descending gate-adjusted-ROI order as

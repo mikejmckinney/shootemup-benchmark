@@ -10,19 +10,30 @@ Scores include the uniform [post-hoc regression review](posthoc-review.md). Orig
 
 | Candidate | Score | Gate | Cost | Time | Total tokens | Cached input | Uncached input | Output | Gate-adjusted ROI |
 |---|---:|---|---:|---:|---:|---:|---:|---:|---:|
+| Monolith · Luna Xhigh · OpenCode control | 92 | PASS | $0.0568 | 10:04 | 0.667M | 0.579M | 0.061M | 0.027M | 121.6679 |
+| Monolith · Luna Xhigh Fast · OpenCode | 96 | PASS | $0.1198 | 6:11 | 0.907M | 0.879M | 0.000M | 0.027M | 111.5295 |
 | Monolith · Luna Xhigh · OpenCode | 95 | PASS | $0.0753 | 12:02 | 1.308M | 1.209M | 0.068M | 0.031M | 99.7933 |
 | Monolith · Luna Max · OpenCode | 95 | PASS | $0.0901 | 13:17 | 1.588M | 1.469M | 0.081M | 0.037M | 86.8382 |
 | Monolith · Luna Max · Codex Minimal Context | 97 | PASS | $0.1159 | 15:54 | 2.242M | 2.093M | 0.104M | 0.044M | 71.4548 |
+| Monolith · Luna Max Fast · OpenCode | 93 | PASS | $0.1968 | 10:10 | 1.828M | 1.788M | 0.000M | 0.040M | 65.7418 |
 | Monolith · Luna Max · OpenCode fresh control | 94 | PASS | $0.1224 | 17:56 | 2.514M | 2.371M | 0.097M | 0.046M | 63.4561 |
+| Monolith · Auto Cost · Cursor | 95 | PASS | $0.3919 | 5:58 | 0.627M | 0.500M | 0.104M | 0.023M | 62.1225 |
 | Monolith · Luna Max · warm cache | 92 | PASS | $0.1513 | 17:37 | 3.656M | 3.482M | 0.127M | 0.047M | 56.3601 |
+| Monolith · Sol Low Fast · OpenCode | 94 | PASS | $1.0582 | 3:51 | 0.249M | 0.239M | 0.000M | 0.010M | 46.5718 |
+| Monolith · Grok 4.5 High · Cursor | 94 | PASS | $0.7349 | 6:38 | 0.851M | 0.708M | 0.120M | 0.024M | 42.5742 |
 | A2A · async streaming · Luna Max · OpenCode | 96 | PASS | $0.3521 | 18:43 | 8.050M | 7.594M | 0.347M | 0.109M | 37.3969 |
+| Monolith · Grok 4.5 Medium · Cursor | 91 | BORDERLINE | $0.5657 | 7:21 | 0.749M | 0.683M | 0.043M | 0.023M | 35.7020 |
+| Monolith · Grok 4.5 Medium Fast · Cursor | 97 | PASS | $1.6384 | 4:43 | 1.019M | 0.935M | 0.058M | 0.026M | 34.8938 |
+| Monolith · Grok 4.5 High Fast · Cursor | 96 | PASS | $1.5381 | 5:20 | 0.957M | 0.881M | 0.050M | 0.025M | 33.5177 |
 | Monolith · Sol Medium · OpenCode | 94 | PASS | $1.0020 | 8:30 | 0.617M | 0.557M | 0.043M | 0.017M | 32.2100 |
+| Monolith · Sol Medium Fast · OpenCode | 91 | BORDERLINE | $1.5558 | 3:54 | 0.365M | 0.350M | 0.000M | 0.014M | 29.5544 |
 | Monolith · Luna Max · cold cache | 98 | PASS | $0.4754 | 28:47 | 16.570M | 16.246M | 0.269M | 0.056M | 26.4914 |
 | A2A · asynchronous | 96 | PASS | $0.5825 | 24:02 | 14.666M | 14.071M | 0.433M | 0.162M | 25.6578 |
 | A2A · synchronous | 93 | PASS | $0.6853 | 23:15 | 15.604M | 14.802M | 0.623M | 0.179M | 23.2986 |
 | Monolith · Sol High · OpenCode | 94 | PASS | $1.6572 | 14:28 | 1.063M | 0.969M | 0.066M | 0.028M | 19.1979 |
 | Monolith · Sol Low · OpenCode | 89 | BORDERLINE | $0.6749 | 5:29 | 0.310M | 0.264M | 0.034M | 0.012M | 18.5055 |
 | Native isolated subagents | 90 | BORDERLINE | $0.5592 | 25:45 | 13.450M | 12.876M | 0.427M | 0.147M | 14.2301 |
+| Monolith · Sol Medium · OpenCode API | 89 | BORDERLINE | $1.1060 | 7:47 | 0.754M | 0.736M | 0.000M | 0.018M | 12.1337 |
 | Monolith · Sol Medium · Codex | 91 | BORDERLINE | $3.0659 | 12:17 | 3.573M | 3.435M | 0.112M | 0.025M | 11.8629 |
 | Monolith · Luna High · OpenCode | 73 | FAIL | $0.0421 | 7:12 | 0.655M | 0.594M | 0.043M | 0.018M | 0.0000 |
 | Native dynamic subagents | 58 | FAIL | $0.5272 | 23:49 | 14.209M | 13.551M | 0.544M | 0.115M | 0.0000 |
@@ -32,10 +43,10 @@ Scores include the uniform [post-hoc regression review](posthoc-review.md). Orig
 Gate-adjusted ROI uses `score × clamp((score - 87) / 5, 0, 1) / sqrt(API cost × elapsed minutes)`. The gate factor is 1 for PASS, 0.2–0.8 for BORDERLINE, and 0 for FAIL. It is a comparative index, not conventional financial ROI. Total tokens are cached input + uncached input + output. Reasoning tokens are included in output and are not counted twice. Rows are ranked by gate-adjusted ROI descending; Pareto analysis remains separate below.
 
 - Highest observed quality: **Monolith · Luna Max · cold cache**.
-- Quality-gate borderline: **Native isolated subagents, Monolith · Sol Medium · Codex, Monolith · Sol Low · OpenCode**.
+- Quality-gate borderline: **Native isolated subagents, Monolith · Sol Medium · Codex, Monolith · Sol Medium · OpenCode API, Monolith · Sol Low · OpenCode, Monolith · Sol Medium Fast · OpenCode, Monolith · Grok 4.5 Medium · Cursor**.
 - Quality-gate failures: **Native dynamic subagents, Monolith · Luna High · OpenCode, Monolith · Luna Max · OpenCode + Spec Kit, Dynamic · Luna Max · OpenCode + Superpowers**.
-- Pareto frontier at ε=2: **Monolith · Luna Xhigh · OpenCode, Monolith · Sol Medium · OpenCode**.
-- Highest gate-adjusted ROI: **Monolith · Luna Xhigh · OpenCode (99.7933)**.
+- Pareto frontier at ε=2: **Monolith · Luna Xhigh · OpenCode control, Monolith · Luna Xhigh Fast · OpenCode, Monolith · Luna Xhigh · OpenCode, Monolith · Auto Cost · Cursor, Monolith · Sol Low Fast · OpenCode, Monolith · Grok 4.5 Medium Fast · Cursor**.
+- Highest gate-adjusted ROI: **Monolith · Luna Xhigh · OpenCode control (121.6679)**.
 
 ## Quality-tolerance frontier sensitivity
 
@@ -43,15 +54,15 @@ Strict Pareto dominance uses the observed scores exactly. The ε analysis treats
 
 | Quality tolerance ε | Frontier among gate survivors | Drops from strict frontier |
 |---:|---|---|
-| 0 | Monolith · Luna Max · cold cache, Monolith · Sol Medium · OpenCode, Monolith · Luna Xhigh · OpenCode, Monolith · Luna Max · Codex Minimal Context | — |
-| 2 | Monolith · Sol Medium · OpenCode, Monolith · Luna Xhigh · OpenCode | Monolith · Luna Max · cold cache, Monolith · Luna Max · Codex Minimal Context |
-| 3 | Monolith · Sol Medium · OpenCode, Monolith · Luna Xhigh · OpenCode | Monolith · Luna Max · cold cache, Monolith · Luna Max · Codex Minimal Context |
+| 0 | Monolith · Luna Max · cold cache, Monolith · Luna Xhigh · OpenCode, Monolith · Luna Max · Codex Minimal Context, Monolith · Luna Xhigh Fast · OpenCode, Monolith · Sol Low Fast · OpenCode, Monolith · Grok 4.5 Medium Fast · Cursor, Monolith · Grok 4.5 High Fast · Cursor, Monolith · Auto Cost · Cursor, Monolith · Luna Xhigh · OpenCode control | — |
+| 2 | Monolith · Luna Xhigh · OpenCode, Monolith · Luna Xhigh Fast · OpenCode, Monolith · Sol Low Fast · OpenCode, Monolith · Grok 4.5 Medium Fast · Cursor, Monolith · Auto Cost · Cursor, Monolith · Luna Xhigh · OpenCode control | Monolith · Luna Max · cold cache, Monolith · Luna Max · Codex Minimal Context, Monolith · Grok 4.5 High Fast · Cursor |
+| 3 | Monolith · Luna Xhigh Fast · OpenCode, Monolith · Sol Low Fast · OpenCode, Monolith · Auto Cost · Cursor, Monolith · Luna Xhigh · OpenCode control | Monolith · Luna Max · cold cache, Monolith · Luna Xhigh · OpenCode, Monolith · Luna Max · Codex Minimal Context, Monolith · Grok 4.5 Medium Fast · Cursor, Monolith · Grok 4.5 High Fast · Cursor |
 
 At ε=2, A2A asynchronous is dominated because Luna Xhigh OpenCode is within one quality point while being 7.7× cheaper and exactly 12:00 faster. ε=2 is the headline frontier and ε=0 and ε=3 are reported as sensitivities; none was preregistered for these runs.
 
 ## Quality-adjusted efficiency sensitivity
 
-PAYG-equivalent costs use [official Standard API rates](https://developers.openai.com/api/docs/pricing) current on 2026-08-06: Luna costs **$0.20/M uncached input, $0.02/M cached input, $0.25/M cache writes, and $1.20/M output**; Sol costs **$5.00/M, $0.50/M, $6.25/M, and $30.00/M**, respectively. Captured web searches add $0.01 each. Supabase and Cloudflare free-tier usage adds $0 marginal infrastructure cost.
+PAYG-equivalent costs use [official OpenAI API rates](https://developers.openai.com/api/docs/pricing) and [Cursor model rates](https://cursor.com/docs/models-and-pricing) current on 2026-08-07. Standard Luna costs **$0.20/M uncached input, $0.02/M cached input, $0.25/M cache writes, and $1.20/M output**; Fast Luna doubles those rates. Standard Sol costs **$5.00/M, $0.50/M, $6.25/M, and $30.00/M**; Priority Sol doubles them. Cursor Grok 4.5 Standard costs **$2.00/M uncached input, $0.50/M cache reads, $0 cache writes, and $6.00/M output**; Fast costs **$4.00/M, $1.00/M, $0, and $18.00/M**. Cursor Auto Cost uses **$1.25/M uncached/cache-write input, $0.25/M cache reads, and $6.00/M output**. Captured web searches add $0.01 each. Supabase and Cloudflare free-tier usage adds $0 marginal infrastructure cost.
 
 For a stated value of unattended agent time `r` in USD per minute:
 
@@ -59,19 +70,30 @@ For a stated value of unattended agent time `r` in USD per minute:
 
 | Candidate | $0/h | $3/h | $10/h | $11.79/h Max/Medium tie | $16.33/h Xhigh/Medium tie | $25/h | $60/h |
 |---|---:|---:|---:|---:|---:|---:|---:|
+| Monolith · Luna Xhigh · OpenCode control | 1619.76 | 164.25 | 53.04 | 45.19 | 32.89 | 21.64 | 9.09 |
+| Monolith · Luna Xhigh Fast · OpenCode | 801.18 | 223.78 | 83.45 | 71.89 | 53.24 | 35.61 | 15.23 |
 | Monolith · Luna Xhigh · OpenCode | 1261.43 | 140.33 | 45.65 | 38.92 | 28.35 | 18.67 | 7.85 |
 | Monolith · Luna Max · OpenCode | 1054.40 | 125.95 | 41.23 | 35.17 | 25.63 | 16.89 | 7.10 |
 | Monolith · Luna Max · Codex Minimal Context | 836.93 | 106.49 | 35.07 | 29.92 | 21.82 | 14.39 | 6.06 |
+| Monolith · Luna Max Fast · OpenCode | 472.48 | 131.88 | 49.17 | 42.36 | 31.37 | 20.98 | 8.97 |
 | Monolith · Luna Max · OpenCode fresh control | 768.21 | 92.24 | 30.21 | 25.77 | 18.78 | 12.38 | 5.21 |
+| Monolith · Auto Cost · Cursor | 242.39 | 137.63 | 68.52 | 60.71 | 47.11 | 33.01 | 14.94 |
 | Monolith · Luna Max · warm cache | 608.25 | 89.14 | 29.80 | 25.45 | 18.60 | 12.28 | 5.18 |
+| Monolith · Sol Low Fast · OpenCode | 88.83 | 75.16 | 55.30 | 51.79 | 44.63 | 35.31 | 19.15 |
+| Monolith · Grok 4.5 High · Cursor | 127.91 | 88.13 | 51.07 | 46.10 | 37.00 | 26.87 | 12.76 |
 | A2A · async streaming · Luna Max · OpenCode | 272.66 | 74.54 | 27.65 | 23.81 | 17.62 | 11.78 | 5.03 |
+| Monolith · Grok 4.5 Medium · Cursor † | 160.86 | 97.51 | 50.82 | 45.26 | 35.45 | 25.08 | 11.50 |
+| Monolith · Grok 4.5 Medium Fast · Cursor | 59.21 | 51.76 | 40.01 | 37.81 | 33.19 | 26.92 | 15.26 |
+| Monolith · Grok 4.5 High Fast · Cursor | 62.41 | 53.19 | 39.55 | 37.11 | 32.11 | 25.53 | 13.97 |
 | Monolith · Sol Medium · OpenCode | 93.81 | 65.87 | 38.86 | 35.17 | 28.35 | 20.69 | 9.89 |
+| Monolith · Sol Medium Fast · OpenCode † | 58.49 | 51.98 | 41.25 | 39.18 | 34.77 | 28.61 | 16.68 |
 | Monolith · Luna Max · cold cache | 206.12 | 51.19 | 18.59 | 15.98 | 11.79 | 7.86 | 3.35 |
 | A2A · asynchronous | 164.81 | 53.81 | 20.92 | 18.09 | 13.47 | 9.06 | 3.90 |
 | A2A · synchronous | 135.71 | 50.33 | 20.39 | 17.69 | 13.26 | 8.97 | 3.89 |
 | Monolith · Sol High · OpenCode | 56.72 | 39.49 | 23.11 | 20.88 | 16.80 | 12.23 | 5.83 |
 | Monolith · Sol Low · OpenCode † | 131.87 | 93.77 | 56.02 | 50.77 | 41.06 | 30.07 | 14.45 |
 | Native isolated subagents † | 160.93 | 48.73 | 18.55 | 16.01 | 11.89 | 7.97 | 3.42 |
+| Monolith · Sol Medium · OpenCode API † | 80.47 | 59.53 | 37.03 | 33.76 | 27.60 | 20.46 | 10.01 |
 | Monolith · Sol Medium · Codex † | 29.68 | 24.73 | 17.80 | 16.60 | 14.20 | 11.12 | 5.93 |
 | Monolith · Luna High · OpenCode † | 1734.62 | 181.55 | 58.77 | 50.09 | 36.46 | 24.00 | 10.08 |
 | Native dynamic subagents † | 110.02 | 33.76 | 12.90 | 11.13 | 8.27 | 5.55 | 2.38 |
@@ -101,6 +123,7 @@ The original cold monolith remains the architectural comparator for the original
 | Monolith · Sol Medium · Codex | Monolith · Luna Max · cold cache | -7 | +2.5905 | -12.997M | -16:30 |
 | Monolith · Luna Max · OpenCode | Monolith · Luna Max · cold cache | -3 | -0.3853 | -14.982M | -15:30 |
 | Monolith · Sol Medium · OpenCode | Monolith · Luna Max · cold cache | -4 | +0.5265 | -15.953M | -20:17 |
+| Monolith · Sol Medium · OpenCode API | Monolith · Sol Medium · OpenCode | -5 | +0.1040 | +0.137M | -0:43 |
 | Monolith · Sol Low · OpenCode | Monolith · Luna Max · cold cache | -9 | +0.1995 | -16.260M | -23:18 |
 | Monolith · Sol High · OpenCode | Monolith · Sol Medium · OpenCode | 0 | +0.6553 | +0.446M | +5:58 |
 | Monolith · Luna Xhigh · OpenCode | Monolith · Luna Max · cold cache | -3 | -0.4001 | -15.261M | -16:45 |
@@ -109,6 +132,16 @@ The original cold monolith remains the architectural comparator for the original
 | Monolith · Luna Max · OpenCode fresh control | Monolith · Luna Max · cold cache | -4 | -0.3531 | -14.056M | -10:51 |
 | Monolith · Luna Max · OpenCode + Spec Kit | Monolith · Luna Max · OpenCode fresh control | -90 | +0.3572 | +11.310M | +27:04 |
 | Dynamic · Luna Max · OpenCode + Superpowers | Monolith · Luna Max · OpenCode fresh control | -85 | +0.2628 | +3.855M | +27:04 |
+| Monolith · Luna Xhigh Fast · OpenCode | Monolith · Luna Xhigh · OpenCode | +1 | +0.0445 | -0.402M | -5:51 |
+| Monolith · Luna Max Fast · OpenCode | Monolith · Luna Max · OpenCode | -2 | +0.1067 | +0.240M | -3:07 |
+| Monolith · Sol Low Fast · OpenCode | Monolith · Sol Low · OpenCode | +5 | +0.3832 | -0.061M | -1:38 |
+| Monolith · Sol Medium Fast · OpenCode | Monolith · Sol Medium · OpenCode | -3 | +0.5538 | -0.252M | -4:36 |
+| Monolith · Grok 4.5 Medium · Cursor | Monolith · Luna Max · cold cache | -7 | +0.0903 | -15.821M | -21:26 |
+| Monolith · Grok 4.5 High · Cursor | Monolith · Grok 4.5 Medium · Cursor | +3 | +0.1692 | +0.102M | -0:43 |
+| Monolith · Grok 4.5 Medium Fast · Cursor | Monolith · Grok 4.5 Medium · Cursor | +6 | +1.0727 | +0.270M | -2:38 |
+| Monolith · Grok 4.5 High Fast · Cursor | Monolith · Grok 4.5 High · Cursor | +2 | +0.8032 | +0.106M | -1:18 |
+| Monolith · Auto Cost · Cursor | Monolith · Luna Max · cold cache | -3 | -0.0835 | -15.943M | -22:49 |
+| Monolith · Luna Xhigh · OpenCode control | Monolith · Luna Xhigh · OpenCode | -3 | -0.0185 | -0.641M | -1:58 |
 
 Negative cost/time values are savings; a negative score is a quality regression.
 
@@ -139,7 +172,17 @@ Both dedicated continuation Supabase projects are confirmed inactive. Their fron
 - Asynchronous-streaming A2A in OpenCode also scored 96. It finished 5:19 faster, cost 40% less, and used 45% fewer tokens than asynchronous-polling A2A. Runtime changed from Codex to OpenCode, and retained resubscriptions yielded task snapshots rather than incremental status/artifact events, so this does not isolate or validate streaming's causal contribution.
 - Sol Medium in Codex was the fastest Codex treatment at 12:17 and has a corrected score of 91; its higher per-token price partly offsets that speed.
 - The original Luna Max and Sol Medium OpenCode runs have effectively tied observed quality. Luna is about 11× cheaper; Sol is 4:47 faster. Luna is preferred whenever unattended agent time is valued below $11.79/hour.
+- The API-authenticated Sol Medium OpenCode run finished 0:43 faster than its OAuth comparator (8.4%), but scored -5, cost 10.4% more, and used 22.2% more tokens. Its gate-adjusted ROI was 12.1337 versus 32.2100. With one run per authentication mode, this is evidence of no substantial overall API-key improvement—not proof that authentication caused the quality difference.
 - The requested reasoning-effort extension produced corrected scores of 89 for Sol Low, 95 for Luna Xhigh, and 73 for Luna High.
+- Luna Xhigh Fast finished 38.6% faster than its contemporaneous standard-tier control, scored +4, and cost 2.1× as much. Its gate-adjusted ROI was 8.3% lower.
+- Luna Max Fast finished 23.5% faster than the original standard-tier Luna Max OpenCode run, scored -2, and cost 2.2× as much. Its gate-adjusted ROI was 24.3% lower.
+- The corrected Fast harness isolated OpenCode's credential store, confirmed Priority service in both request and response events, and rejects API-key runs with zero provider-reported cost. The two valid Fast ledgers reported $0.119823 and $0.196836; both match the compiler's token calculation within 1%.
+- Sol Low Fast completed 29.8% faster than standard Sol Low, scored +5, and cost 1.6× as much. Its gate-adjusted ROI increased from 18.5055 to 46.5718 because the quality improvement moved it from BORDERLINE to PASS.
+- Sol Medium Fast completed 54.1% faster than standard Sol Medium, but scored -3 and cost 1.6× as much; its gate-adjusted ROI fell from 32.2100 to 29.5544.
+- Cursor Grok Medium Fast completed 35.8% faster than standard Medium and scored +6, but cost 2.9× as much. Its gate-adjusted ROI was 2.3% lower.
+- Cursor Grok High Fast completed 19.6% faster than standard High and scored +2, but cost 2.1× as much. Its gate-adjusted ROI was 21.3% lower.
+- Standard Cursor Grok High beat Medium by +3 quality points and 0:43 while costing 30% more; its gate-adjusted ROI was 19.2% higher.
+- Cursor Auto Cost delivered the best ROI in the seven-candidate extension: score 95, time 5:58, cost $0.3919, and gate-adjusted ROI 62.1225. Cursor confirmed the Auto router selection but did not expose its downstream model or tier, so the result is attributed only to Auto Cost.
 - Sol High OpenCode tied Sol Medium OpenCode at 94, but took 5:58 longer, cost 65% more, used 72% more tokens, and achieved lower gate-adjusted ROI (19.1979 vs 32.2100).
 - Sol OpenCode used about 2.6× fewer total tokens, but Sol's per-token Standard price is 25× Luna's, so its estimated run cost remained much higher.
 - Sol Medium Codex reported 5.8× as many total tokens as Sol Medium OpenCode. The local compiler is internally consistent, but provider-side reconciliation is required before treating this as a causal runtime-efficiency result.
@@ -161,7 +204,8 @@ Both dedicated continuation Supabase projects are confirmed inactive. Their fron
 - Quality-adjusted efficiency is reported as a sensitivity across explicit time values, not as one universal ROI. The appropriate scenario depends on the economic value of delivery latency.
 - The rubric score is interval-like rather than proven ratio-scale. The quality gate reduces the risk of rewarding cheap failures, but efficiency ratios should be treated as scenario comparisons rather than literal ratios of value.
 - The PASS/BORDERLINE/FAIL thresholds and the ε=2 headline Pareto frontier were chosen after these runs and should be preregistered for a replication; ε=3 is reported as a sensitivity. BORDERLINE means the decision is unresolved, not that candidates are proven statistically equivalent.
-- OpenCode and Codex token telemetry come from different runtime event formats. The compiler converts both to cached input, uncached input, and output, but provider billing-dashboard reconciliation has not verified that the counters are semantically identical.
+- OpenCode and Codex token telemetry come from different runtime event formats. The compiler converts both to cached input, uncached input, and output. The two API-key Fast runs now reconcile locally against provider-reported per-turn cost, but this does not reconcile the older OAuth OpenCode runs or Codex runs against provider billing records.
+- The Sol Medium OpenCode API-versus-OAuth comparison has one run per authentication mode. The API run has request-level transport and provider-cost telemetry, while the older OAuth run does not; stochastic generation, provider load, and sequential execution remain confounders, so the comparison cannot establish an authentication-mode effect.
 - The minimal-context treatment disables several optional Codex surfaces together and has one replicate. It shows that the default integration surface was not necessary for this successful run, but cannot estimate the marginal token contribution of skills, MCP, apps, project instructions, or workflow variation individually.
 - The asynchronous-streaming A2A extension changes transport and runtime together. Its improvement over asynchronous-polling A2A cannot be attributed specifically to streaming, OpenCode, cache/order conditions, or their interaction.
 - The streaming harness retained task snapshots but no incremental status or artifact updates; terminal completion was recovered from final task snapshots. Sustained end-to-end stream behavior therefore remains unverified.
@@ -170,4 +214,4 @@ Both dedicated continuation Supabase projects are confirmed inactive. Their fron
 - The first Spec Kit controller launch was excluded as a harness failure because initialization ran from the wrong working directory. It stopped after 26 seconds with zero model tokens and no external resources; all artifacts are retained under `results/harness-failures/`. The corrected run used a fresh repository and a new ephemeral no-cache installation, though transient OS/network caches cannot be perfectly reset.
 - The results cover one full-stack game task and may not transfer to other work.
 
-Every temporary candidate Supabase project that was actually created was confirmed **INACTIVE** after evaluation. All sixteen timed-run gallery games now use one active shared project with an allowlisted `candidate_id` partition; candidates 15, 18, and 19 were added in documented post-benchmark retrofits while their benchmark-specific databases remain paused. Spec Kit and Superpowers created dedicated projects only during exploratory post-timeout continuations, and both are paused. These post-benchmark infrastructure states do not alter retained scores or timed metrics.
+Every candidate Supabase project that was actually created was confirmed **INACTIVE** after evaluation. The former baseline project was later resumed as the shared gallery service; all 27 timed-run gallery games now use it with an allowlisted `candidate_id` partition, while the other benchmark-specific databases remain paused. Spec Kit and Superpowers created dedicated projects only during exploratory post-timeout continuations, and both are paused. These post-benchmark infrastructure states do not alter retained scores or timed metrics.

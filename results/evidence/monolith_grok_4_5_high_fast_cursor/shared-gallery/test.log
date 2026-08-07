@@ -1,0 +1,13 @@
+
+> neon-barrage@1.0.0 test
+> vitest run
+
+
+ RUN  v4.1.10 /tmp/shootemup-shared-build-test.5VHfSR/monolith_grok_4_5_high_fast_cursor
+
+
+ Test Files  2 passed (2)
+      Tests  8 passed (8)
+   Start at  21:12:23
+   Duration  2.20s (transform 87ms, setup 0ms, import 120ms, tests 14ms, environment 1.72s)
+

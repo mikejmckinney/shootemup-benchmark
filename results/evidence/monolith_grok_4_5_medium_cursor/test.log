@@ -1,0 +1,14 @@
+
+> neon-barrage@1.0.0 test
+> vitest run
+
+
+ RUN  v3.0.5 /workspaces/shootemup-benchmark/candidates/monolith_grok_4_5_medium_cursor
+
+ ✓ src/game.test.ts (7 tests) 13ms
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  19:57:46
+   Duration  703ms (transform 148ms, setup 0ms, collect 183ms, tests 13ms, environment 0ms, prepare 252ms)
+

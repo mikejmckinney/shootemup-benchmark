@@ -1,0 +1,4 @@
+
+> neon-barrage@1.0.0 lint
+> node --check app.js && node --check game-core.js
+

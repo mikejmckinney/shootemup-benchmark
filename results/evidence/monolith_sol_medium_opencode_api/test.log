@@ -1,0 +1,14 @@
+
+> neon-barrage@1.0.0 test
+> vitest run
+
+
+ RUN  v3.2.4 /workspaces/shootemup-benchmark/candidates/monolith_sol_medium_opencode_api
+
+ ✓ src/rules.test.ts (2 tests) 9ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  21:55:39
+   Duration  502ms (transform 71ms, setup 0ms, collect 63ms, tests 9ms, environment 0ms, prepare 135ms)
+

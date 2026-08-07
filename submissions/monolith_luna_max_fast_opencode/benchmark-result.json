@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_luna_max_fast_opencode",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-luna-max-fast-opencode-neon.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-luna-max-fast-opencode-neon",
+  "supabase_url": "https://pnviggncosaknssxgvii.supabase.co",
+  "supabase_project_ref": "pnviggncosaknssxgvii",
+  "supabase_public_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBudmlnZ25jb3Nha25zc3hndmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMTk1MTIsImV4cCI6MjEwMTY5NTUxMn0.7qG1VOwRvtpVqHjyX_-46CuAbrD6G_Ii0bjKG4c4xeQ",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Neon Barrage is deployed as a responsive Canvas game; production-configured Supabase insert/read and database validation were verified."
+}

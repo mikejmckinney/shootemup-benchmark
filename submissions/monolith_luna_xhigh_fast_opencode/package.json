@@ -1,0 +1,11 @@
+{
+  "name": "neon-barrage",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/game-logic.test.js",
+    "check": "node --check src/app.js && node --check src/game-logic.js"
+  }
+}

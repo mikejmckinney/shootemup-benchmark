@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "telemetry_enabled": true,
+  "classification": "not_rate_limited",
+  "runtime": "opencode",
+  "auth_mode": "api_key",
+  "evidence_level": "api_transport_and_runtime_logs",
+  "run_exit_code": 0,
+  "observed_api_responses": 35,
+  "temporary_rate_limit_events": 0,
+  "quota_or_billing_events": 0,
+  "observer_errors": 0,
+  "retry_after_seconds": [],
+  "observed_retry_delay_seconds": [],
+  "minimum_remaining_requests": 499,
+  "minimum_remaining_tokens": 199249,
+  "oauth_limits_reached_before": [],
+  "oauth_limits_reached_after": [],
+  "sources": {
+    "transport_events": "/workspaces/shootemup-benchmark/results/raw/monolith_sol_medium_opencode_api/rate-limit-events.jsonl",
+    "session_log": "/workspaces/shootemup-benchmark/results/raw/monolith_sol_medium_opencode_api/session.jsonl",
+    "stderr_log": "/workspaces/shootemup-benchmark/results/raw/monolith_sol_medium_opencode_api/session.stderr.log",
+    "before_snapshot": null,
+    "after_snapshot": null
+  }
+}

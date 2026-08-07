@@ -1,0 +1,13 @@
+
+> neon-barrage@1.0.0 build
+> tsc && vite build
+
+vite v8.2.1 building client environment for production...
+[2Ktransforming...✓ 53 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.76 kB │ gzip:  0.41 kB
+dist/assets/index-CtiPXFBo.css    4.06 kB │ gzip:  1.52 kB
+dist/assets/index-BKnFevgd.js   222.66 kB │ gzip: 59.05 kB │ map: 1,177.61 kB
+
+✓ built in 257ms

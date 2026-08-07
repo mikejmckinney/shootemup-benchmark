@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_luna_xhigh_fast_opencode",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-luna-xhigh-fast-opencode-nb.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-luna-xhigh-fast-opencode-nb",
+  "supabase_url": "https://emifmfcclvhelbixxyah.supabase.co",
+  "supabase_project_ref": "emifmfcclvhelbixxyah",
+  "supabase_public_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtaWZtZmNjbHZoZWxiaXh4eWFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMDUwNjksImV4cCI6MjEwMTY4MTA2OX0._mCBAMH51C4mYxpQQZ6s-kVDGx0-Aa3ZbDWqIXHFunw",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Cloudflare Pages deployed; Supabase RLS leaderboard migration applied. Chromium smoke-tested selectors, gameplay, adapter, score submission, reload persistence, and mobile touch layout."
+}

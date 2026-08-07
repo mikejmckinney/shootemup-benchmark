@@ -1,0 +1,61 @@
+{
+  "treatment": "monolith_grok_4_5_medium_fast_cursor",
+  "evaluated_at": "2026-08-07T20:32:21.569Z",
+  "live_url": "https://shootemup-bench-monolith-grok-4-5-medium-fast-cursor-web.pages.dev",
+  "methodology": "Live production build with Supabase REST requests mocked in-browser; no leaderboard rows were written.",
+  "checks": {
+    "progression_start_consistency": {
+      "passed": true,
+      "applicable": false,
+      "before": null,
+      "after": null
+    },
+    "physical_name_entry": {
+      "passed": false,
+      "expected": "WASD wasd",
+      "actual": ""
+    },
+    "advertised_keyboard_restart": {
+      "passed": true,
+      "advertised": false,
+      "applicable": false
+    },
+    "immediate_click_restart": {
+      "passed": true,
+      "button_found": true,
+      "state": {
+        "phase": "playing",
+        "score": 0,
+        "lives": 3,
+        "playerX": 240,
+        "playerY": 640,
+        "enemyCount": 0,
+        "projectileCount": 0
+      }
+    }
+  },
+  "requests": [
+    "GET",
+    "POST",
+    "GET"
+  ],
+  "console_errors": [],
+  "page_errors": [],
+  "http_status": 200,
+  "progress_before_start": [],
+  "progress_after_start": [],
+  "state_after_submit": {
+    "phase": "gameover",
+    "score": 7317,
+    "lives": 0,
+    "playerX": 240,
+    "playerY": 640,
+    "enemyCount": 0,
+    "projectileCount": 0
+  },
+  "active_element_after_submit": {
+    "tag": "BODY",
+    "id": null,
+    "testid": null
+  }
+}

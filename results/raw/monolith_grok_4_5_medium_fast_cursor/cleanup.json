@@ -1,0 +1,8 @@
+{
+  "treatment": "monolith_grok_4_5_medium_fast_cursor",
+  "project_ref": "pufzodrhbagyyohzgbxq",
+  "requested_at": "2026-08-07T20:33:56Z",
+  "pause_http_status": 200,
+  "final_status": "INACTIVE",
+  "confirmed_inactive": true
+}

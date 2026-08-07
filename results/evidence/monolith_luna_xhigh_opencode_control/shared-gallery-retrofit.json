@@ -1,0 +1,21 @@
+{
+  "classification": "post-benchmark shared-gallery infrastructure retrofit",
+  "verified_at": "2026-08-07T18:09:45Z",
+  "timed_score_affected": false,
+  "migration": "supabase/migrations/20260807181000_allow_fast_and_control_candidates.sql",
+  "shared_project_ref": "lyyyxbxacrxqflxmtlqq",
+  "candidate_id": "monolith_luna_xhigh_opencode_control",
+  "gallery_url": "https://shootemup-bench-monolith-luna-xhigh-opencode-control.pages.dev",
+  "verification": {
+    "automated_points": 54,
+    "production_http_status": 200,
+    "ui_submission_persisted_after_reload": true,
+    "get_partition_filter_observed": true,
+    "post_candidate_id_observed": true,
+    "browser_console_errors": [],
+    "browser_page_errors": [],
+    "shared_get_http_status": 200,
+    "shared_post_http_status": 201,
+    "verification_row_removed": true
+  }
+}

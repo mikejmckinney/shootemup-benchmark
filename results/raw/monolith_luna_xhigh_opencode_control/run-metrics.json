@@ -1,0 +1,28 @@
+{
+  "treatment": "monolith_luna_xhigh_opencode_control",
+  "started_at": "2026-08-07T15:02:23Z",
+  "ended_at": "2026-08-07T15:12:27Z",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 604,
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "xhigh",
+  "runtime": "opencode",
+  "service_tier": "standard",
+  "methodology": "plain",
+  "methodology_version": "none",
+  "usage_source": "OpenCode SQLite session ledger",
+  "agents_started": 1,
+  "peak_concurrent_agents": 1,
+  "child_sessions": 0,
+  "turns": 28,
+  "tool_calls": 44,
+  "native_coordination_calls": 0,
+  "usage": {
+    "input_tokens": 639763,
+    "cached_input_tokens": 578560,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 27489,
+    "reasoning_output_tokens": 8741
+  }
+}

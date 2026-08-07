@@ -1,0 +1,60 @@
+{
+  "source": "OpenCode SQLite session ledger",
+  "database": "/home/codespace/.local/share/opencode/opencode.db",
+  "selection": {
+    "candidate_directory": "/workspaces/shootemup-benchmark/candidates/monolith_luna_xhigh_opencode_control",
+    "started_ms": 1786114943061,
+    "ended_ms": 1786115547713,
+    "rule": "sessions rooted in candidate directory during run, plus recursive parent_id descendants"
+  },
+  "agents_started": 1,
+  "root_sessions": 1,
+  "child_sessions": 0,
+  "peak_concurrent_agents": 1,
+  "turns": 28,
+  "tool_calls": 44,
+  "coordination_events": 0,
+  "coordination_tool_calls": 0,
+  "tool_counts": {
+    "todowrite": 3,
+    "glob": 5,
+    "read": 1,
+    "bash": 28,
+    "apply_patch": 6,
+    "grep": 1
+  },
+  "usage": {
+    "input_tokens": 639763,
+    "cached_input_tokens": 578560,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 27489,
+    "reasoning_output_tokens": 8741
+  },
+  "provider_reported_cost_usd": 0,
+  "sessions": [
+    {
+      "id": "ses_02340b659ffeSoB1f6HwcrGu7h",
+      "project_id": "5756a3ee0e5c6ae96dd3977dc76972eaefe845d5",
+      "workspace_id": null,
+      "parent_id": null,
+      "slug": "silent-moon",
+      "directory": "/workspaces/shootemup-benchmark/candidates/monolith_luna_xhigh_opencode_control",
+      "title": "Autonomous Benchmark Task Implementation and Verification",
+      "version": "1.18.15",
+      "cost": 0,
+      "tokens_input": 61203,
+      "tokens_output": 18748,
+      "tokens_reasoning": 8741,
+      "tokens_cache_read": 578560,
+      "tokens_cache_write": 0,
+      "agent": "build",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "xhigh"
+      },
+      "time_created": 1786114951590,
+      "time_updated": 1786115547527
+    }
+  ]
+}

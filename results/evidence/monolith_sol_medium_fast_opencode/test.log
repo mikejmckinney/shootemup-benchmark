@@ -1,0 +1,15 @@
+
+> neon-barrage@1.0.0 test
+> node --test
+
+✔ collision uses rectangular bounds (1.37726ms)
+✔ difficulty escalates while respecting playability caps (0.348516ms)
+✔ leaderboard values are bounded (0.264601ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 204.842294

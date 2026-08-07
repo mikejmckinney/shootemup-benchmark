@@ -1,0 +1,13 @@
+
+> neon-barrage@1.0.0 test
+> vitest run
+
+
+ RUN  v4.1.10 /workspaces/shootemup-benchmark/candidates/monolith_grok_4_5_high_fast_cursor
+
+
+ Test Files  2 passed (2)
+      Tests  8 passed (8)
+   Start at  20:40:04
+   Duration  2.44s (transform 98ms, setup 0ms, import 143ms, tests 17ms, environment 1.88s)
+

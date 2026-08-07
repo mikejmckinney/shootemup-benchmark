@@ -3,10 +3,25 @@ set -uo pipefail
 
 ROOT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 TREATMENT=${1:-monolith_opencode}
+RATE_LIMIT_TELEMETRY=${RATE_LIMIT_TELEMETRY:-true}
+for option in "${@:2}"; do
+  case "$option" in
+    --rate-limit-telemetry) RATE_LIMIT_TELEMETRY=true ;;
+    --no-rate-limit-telemetry) RATE_LIMIT_TELEMETRY=false ;;
+    *) echo "unknown option: $option" >&2; exit 64 ;;
+  esac
+done
+case "${RATE_LIMIT_TELEMETRY,,}" in
+  1|true|yes|on) RATE_LIMIT_TELEMETRY=true ;;
+  0|false|no|off) RATE_LIMIT_TELEMETRY=false ;;
+  *) echo "RATE_LIMIT_TELEMETRY must be true or false" >&2; exit 64 ;;
+esac
 METHODOLOGY=plain
 METHODOLOGY_VERSION=none
 METHODOLOGY_REPOSITORY=none
 FRESH_REQUIRED=false
+SERVICE_TIER=standard
+AUTH_MODE=oauth
 case "$TREATMENT" in
   monolith_opencode)
     MODEL=openai/gpt-5.6-luna
@@ -17,6 +32,13 @@ case "$TREATMENT" in
     MODEL=openai/gpt-5.6-sol
     METRICS_MODEL=gpt-5.6-sol
     EFFORT=medium
+    ;;
+  monolith_sol_medium_opencode_api)
+    MODEL=openai/gpt-5.6-sol
+    METRICS_MODEL=gpt-5.6-sol
+    EFFORT=medium
+    AUTH_MODE=api_key
+    FRESH_REQUIRED=true
     ;;
   monolith_sol_low_opencode)
     MODEL=openai/gpt-5.6-sol
@@ -33,10 +55,48 @@ case "$TREATMENT" in
     METRICS_MODEL=gpt-5.6-luna
     EFFORT=xhigh
     ;;
+  monolith_luna_xhigh_opencode_control)
+    MODEL=openai/gpt-5.6-luna
+    METRICS_MODEL=gpt-5.6-luna
+    EFFORT=xhigh
+    FRESH_REQUIRED=true
+    ;;
   monolith_luna_high_opencode)
     MODEL=openai/gpt-5.6-luna
     METRICS_MODEL=gpt-5.6-luna
     EFFORT=high
+    ;;
+  monolith_luna_xhigh_fast_opencode)
+    MODEL=openai/gpt-5.6-luna-fast
+    METRICS_MODEL=gpt-5.6-luna
+    EFFORT=xhigh
+    SERVICE_TIER=priority
+    AUTH_MODE=api_key
+    FRESH_REQUIRED=true
+    ;;
+  monolith_luna_max_fast_opencode)
+    MODEL=openai/gpt-5.6-luna-fast
+    METRICS_MODEL=gpt-5.6-luna
+    EFFORT=max
+    SERVICE_TIER=priority
+    AUTH_MODE=api_key
+    FRESH_REQUIRED=true
+    ;;
+  monolith_sol_low_fast_opencode)
+    MODEL=openai/gpt-5.6-sol-fast
+    METRICS_MODEL=gpt-5.6-sol
+    EFFORT=low
+    SERVICE_TIER=priority
+    AUTH_MODE=api_key
+    FRESH_REQUIRED=true
+    ;;
+  monolith_sol_medium_fast_opencode)
+    MODEL=openai/gpt-5.6-sol-fast
+    METRICS_MODEL=gpt-5.6-sol
+    EFFORT=medium
+    SERVICE_TIER=priority
+    AUTH_MODE=api_key
+    FRESH_REQUIRED=true
     ;;
   monolith_luna_max_opencode_retest)
     MODEL=openai/gpt-5.6-luna
@@ -63,7 +123,7 @@ case "$TREATMENT" in
     FRESH_REQUIRED=true
     ;;
   *)
-    echo "usage: $0 {monolith_opencode|monolith_sol_medium_opencode|monolith_sol_low_opencode|monolith_sol_high_opencode|monolith_luna_xhigh_opencode|monolith_luna_high_opencode|monolith_luna_max_opencode_retest|monolith_luna_max_opencode_speckit|dynamic_luna_max_opencode_superpowers}" >&2
+    echo "usage: $0 {monolith_opencode|monolith_sol_medium_opencode|monolith_sol_medium_opencode_api|monolith_sol_low_opencode|monolith_sol_high_opencode|monolith_luna_xhigh_opencode|monolith_luna_xhigh_opencode_control|monolith_luna_high_opencode|monolith_luna_xhigh_fast_opencode|monolith_luna_max_fast_opencode|monolith_sol_low_fast_opencode|monolith_sol_medium_fast_opencode|monolith_luna_max_opencode_retest|monolith_luna_max_opencode_speckit|dynamic_luna_max_opencode_superpowers}" >&2
     exit 64
     ;;
 esac
@@ -71,21 +131,62 @@ CANDIDATE_DIR="$ROOT_DIR/candidates/$TREATMENT"
 RAW_DIR="$ROOT_DIR/results/raw/$TREATMENT"
 OPENCODE=/home/codespace/.opencode/bin/opencode
 OPENCODE_DB=${OPENCODE_DB:-/home/codespace/.local/share/opencode/opencode.db}
+FAST_TIER_PREFLIGHT=${FAST_TIER_PREFLIGHT:-true}
 if [ "$FRESH_REQUIRED" = true ] && { [ -n "$(find "$CANDIDATE_DIR" -mindepth 1 -maxdepth 1 -print -quit 2>/dev/null)" ] || [ -n "$(find "$RAW_DIR" -mindepth 1 -maxdepth 1 -print -quit 2>/dev/null)" ]; }; then
   echo "refusing to reuse a non-fresh methodology-block candidate; archive the candidate and raw evidence first" >&2
   exit 65
 fi
-mkdir -p "$CANDIDATE_DIR" "$RAW_DIR"
 
 if [ -e "$CANDIDATE_DIR/benchmark-result.json" ]; then
   echo "refusing to overwrite completed candidate: $CANDIDATE_DIR" >&2
   exit 65
 fi
 if [ ! -x "$OPENCODE" ]; then echo "OpenCode executable not found" >&2; exit 69; fi
-if [ ! -r "$OPENCODE_DB" ]; then echo "OpenCode session database not found" >&2; exit 69; fi
+if [ "$AUTH_MODE" = oauth ] && [ ! -r "$OPENCODE_DB" ]; then
+  echo "OpenCode session database not found" >&2
+  exit 69
+fi
+if [ "$AUTH_MODE" = api_key ] && [ -z "${OPENAI_API_KEY:-}" ]; then
+  echo "OPENAI_API_KEY is required for API-key candidates" >&2
+  exit 69
+fi
+if [ "$AUTH_MODE" = api_key ] && [ "$FAST_TIER_PREFLIGHT" = true ]; then
+  PREFLIGHT_TIER=$SERVICE_TIER
+  PREFLIGHT_EXPECT=$SERVICE_TIER
+  if [ "$SERVICE_TIER" = standard ]; then
+    # OpenCode omits service_tier for its ordinary model slug. The Responses
+    # API reports the completed request as the default tier.
+    PREFLIGHT_TIER=default
+    PREFLIGHT_EXPECT=default
+  fi
+  PREFLIGHT_OUTPUT="$ROOT_DIR/results/diagnostics/api-tier-preflight-$TREATMENT.json"
+  if ! node "$ROOT_DIR/scripts/check_opencode_service_tier.mjs" \
+    --auth-mode "$AUTH_MODE" --opencode "$OPENCODE" --opencode-model "$MODEL" \
+    --model "$METRICS_MODEL" --effort "$EFFORT" --tier "$PREFLIGHT_TIER" --expect "$PREFLIGHT_EXPECT" \
+    --output "$PREFLIGHT_OUTPUT"; then
+    echo "refusing to start API-key candidate: model, effort, auth, or service tier was not confirmed" >&2
+    echo "preflight evidence: $PREFLIGHT_OUTPUT" >&2
+    exit 78
+  fi
+fi
+
 if [ "$METHODOLOGY" = speckit ] && ! command -v pipx >/dev/null 2>&1; then
   echo "pipx is required for the pinned Spec Kit bootstrap" >&2
   exit 69
+fi
+mkdir -p "$CANDIDATE_DIR" "$RAW_DIR"
+RATE_LIMIT_EVENTS="$RAW_DIR/rate-limit-events.jsonl"
+RATE_LIMIT_SUMMARY="$RAW_DIR/rate-limit-summary.json"
+if [ "$RATE_LIMIT_TELEMETRY" = true ] && [ "$AUTH_MODE" = api_key ]; then
+  : > "$RATE_LIMIT_EVENTS"
+fi
+if [ "$AUTH_MODE" = api_key ]; then
+  # The shared OpenCode data directory contains a ChatGPT OAuth credential.
+  # Isolate API-key runs so that stored OAuth cannot silently take precedence.
+  export XDG_DATA_HOME="$RAW_DIR/opencode-data"
+  OPENCODE_DB="$XDG_DATA_HOME/opencode/opencode.db"
+  export OPENCODE_CONFIG_CONTENT
+  OPENCODE_CONFIG_CONTENT=$(jq -cn '{provider:{openai:{options:{apiKey:"{env:OPENAI_API_KEY}"}}}}')
 fi
 cp "$ROOT_DIR/benchmark/task.md" "$CANDIDATE_DIR/BENCHMARK_TASK.md"
 if [ ! -d "$CANDIDATE_DIR/.git" ]; then git -C "$CANDIDATE_DIR" init -q; fi
@@ -192,10 +293,18 @@ else
       command_args=()
       if [ -n "$SESSION_ID" ]; then session_args=(--session "$SESSION_ID"); fi
       if [ -n "${PHASE_COMMANDS[$phase_index]}" ]; then command_args=(--command "${PHASE_COMMANDS[$phase_index]}"); fi
-      timeout --signal=INT --kill-after=30s "${REMAINING_SECONDS}s" "$OPENCODE" run --format json --auto \
-        --dir "$CANDIDATE_DIR" --model "$MODEL" --variant "$EFFORT" \
-        "${session_args[@]}" "${command_args[@]}" "${PHASE_PROMPTS[$phase_index]}" </dev/null \
-        > "$phase_file" 2> "$phase_stderr"
+      OPENCODE_COMMAND=("$OPENCODE" run --format json --auto --dir "$CANDIDATE_DIR" \
+        --model "$MODEL" --variant "$EFFORT" "${session_args[@]}" "${command_args[@]}" \
+        "${PHASE_PROMPTS[$phase_index]}")
+      if [ "$RATE_LIMIT_TELEMETRY" = true ] && [ "$AUTH_MODE" = api_key ]; then
+        timeout --signal=INT --kill-after=30s "${REMAINING_SECONDS}s" \
+          node "$ROOT_DIR/scripts/run_with_openai_rate_limit_observer.mjs" \
+          --events "$RATE_LIMIT_EVENTS" -- "${OPENCODE_COMMAND[@]}" </dev/null \
+          > "$phase_file" 2> "$phase_stderr"
+      else
+        timeout --signal=INT --kill-after=30s "${REMAINING_SECONDS}s" \
+          "${OPENCODE_COMMAND[@]}" </dev/null > "$phase_file" 2> "$phase_stderr"
+      fi
       RUN_EXIT=$?
       sed -n '1,$p' "$phase_file" >> "$RAW_DIR/session.jsonl"
       sed -n '1,$p' "$phase_stderr" >> "$RAW_DIR/session.stderr.log"
@@ -213,9 +322,17 @@ else
       : > "$RAW_DIR/session.jsonl"
       printf 'Methodology bootstrap exhausted the 45-minute treatment ceiling.\n' > "$RAW_DIR/session.stderr.log"
     else
-      timeout --signal=INT --kill-after=30s "${REMAINING_SECONDS}s" "$OPENCODE" run --format json --auto \
-        --dir "$CANDIDATE_DIR" --model "$MODEL" --variant "$EFFORT" "$PROMPT" </dev/null \
-        > "$RAW_DIR/session.jsonl" 2> "$RAW_DIR/session.stderr.log"
+      OPENCODE_COMMAND=("$OPENCODE" run --format json --auto --dir "$CANDIDATE_DIR" \
+        --model "$MODEL" --variant "$EFFORT" "$PROMPT")
+      if [ "$RATE_LIMIT_TELEMETRY" = true ] && [ "$AUTH_MODE" = api_key ]; then
+        timeout --signal=INT --kill-after=30s "${REMAINING_SECONDS}s" \
+          node "$ROOT_DIR/scripts/run_with_openai_rate_limit_observer.mjs" \
+          --events "$RATE_LIMIT_EVENTS" -- "${OPENCODE_COMMAND[@]}" </dev/null \
+          > "$RAW_DIR/session.jsonl" 2> "$RAW_DIR/session.stderr.log"
+      else
+        timeout --signal=INT --kill-after=30s "${REMAINING_SECONDS}s" \
+          "${OPENCODE_COMMAND[@]}" </dev/null > "$RAW_DIR/session.jsonl" 2> "$RAW_DIR/session.stderr.log"
+      fi
       RUN_EXIT=$?
     fi
   fi
@@ -232,24 +349,44 @@ NODE_NO_WARNINGS=1 node "$ROOT_DIR/scripts/collect_opencode_usage.mjs" \
   --started-ms "$START_EPOCH_MS" --ended-ms "$END_EPOCH_MS" \
   --output "$RAW_DIR/opencode-usage.json"
 
-jq -n --slurpfile ledger "$RAW_DIR/opencode-usage.json" \
+PROVIDER_COST=$(jq -r '.provider_reported_cost_usd // 0' "$RAW_DIR/opencode-usage.json")
+if [ "$AUTH_MODE" = api_key ] && ! awk -v cost="$PROVIDER_COST" 'BEGIN { exit !(cost > 0) }'; then
+  echo "invalid API-key candidate: OpenCode reported zero provider cost; refusing OAuth fallback" >&2
+  if [ "$RUN_EXIT" -eq 0 ]; then RUN_EXIT=78; fi
+fi
+
+RATE_LIMIT_ARGS=(
+  --enabled "$RATE_LIMIT_TELEMETRY" --runtime opencode --auth-mode "$AUTH_MODE"
+  --session "$RAW_DIR/session.jsonl" --stderr "$RAW_DIR/session.stderr.log"
+  --run-exit "$RUN_EXIT" --output "$RATE_LIMIT_SUMMARY"
+)
+if [ "$RATE_LIMIT_TELEMETRY" = true ] && [ "$AUTH_MODE" = api_key ]; then
+  RATE_LIMIT_ARGS+=(--events "$RATE_LIMIT_EVENTS")
+fi
+node "$ROOT_DIR/scripts/classify_rate_limits.mjs" "${RATE_LIMIT_ARGS[@]}"
+
+jq -n --slurpfile ledger "$RAW_DIR/opencode-usage.json" --slurpfile rate_limit "$RATE_LIMIT_SUMMARY" \
   --arg treatment "$TREATMENT" --arg started_at "$START_ISO" --arg ended_at "$END_ISO" \
   --arg model "$METRICS_MODEL" --arg effort "$EFFORT" \
+  --arg service_tier "$SERVICE_TIER" \
+  --arg auth_mode "$AUTH_MODE" \
   --arg methodology "$METHODOLOGY" --arg methodology_version "$METHODOLOGY_VERSION" \
   --argjson exit_code "$RUN_EXIT" --argjson wall_seconds "$WALL_SECONDS" '
   {
     treatment:$treatment, started_at:$started_at, ended_at:$ended_at, exit_code:$exit_code,
     timed_out:($exit_code == 124), wall_seconds:$wall_seconds, model:$model,
-    reasoning_effort:$effort, runtime:"opencode", methodology:$methodology,
+    reasoning_effort:$effort, runtime:"opencode", service_tier:$service_tier, auth_mode:$auth_mode, methodology:$methodology,
     methodology_version:$methodology_version,
     usage_source:"OpenCode SQLite session ledger",
+    provider_reported_cost_usd:$ledger[0].provider_reported_cost_usd,
     agents_started:$ledger[0].agents_started,
     peak_concurrent_agents:$ledger[0].peak_concurrent_agents,
     child_sessions:$ledger[0].child_sessions,
     turns:$ledger[0].turns,
     tool_calls:$ledger[0].tool_calls,
     native_coordination_calls:$ledger[0].coordination_events,
-    usage:$ledger[0].usage
+    usage:$ledger[0].usage,
+    rate_limit_telemetry:$rate_limit[0]
   }' > "$RAW_DIR/run-metrics.json"
 
 echo "candidate=$TREATMENT exit=$RUN_EXIT wall_seconds=$WALL_SECONDS"

@@ -1,0 +1,23 @@
+{
+  "classification": "post-benchmark shared-gallery infrastructure retrofit",
+  "verified_at": "2026-08-07T21:13:41.316Z",
+  "timed_score_affected": false,
+  "migration": "supabase/migrations/20260807210458_allow_benchmark_batch_20260807.sql",
+  "shared_project_ref": "lyyyxbxacrxqflxmtlqq",
+  "candidate_id": "monolith_grok_4_5_high_cursor",
+  "gallery_url": "https://shootemup-bench-monolith-grok-4-5-high-cursor-web.pages.dev",
+  "verification": {
+    "automated_points": 54,
+    "automated_points_available": 54,
+    "production_http_status": 200,
+    "ui_submission_persisted_after_reload": true,
+    "get_partition_filter_observed": false,
+    "post_candidate_id_observed": true,
+    "browser_console_errors": [],
+    "browser_page_errors": [],
+    "shared_get_http_status": 200,
+    "shared_post_http_status": 201,
+    "verification_rows_removed": 1,
+    "verification_row_remaining": false
+  }
+}

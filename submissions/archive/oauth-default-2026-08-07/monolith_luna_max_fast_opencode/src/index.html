@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080b18" />
+    <meta name="description" content="Neon Barrage: a precision arcade shooter in the outer signal belt." />
+    <title>Neon Barrage | Arcade Signal</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-glow page-glow-left" aria-hidden="true"></div>
+    <div class="page-glow page-glow-right" aria-hidden="true"></div>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Neon Barrage home">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="brand-copy">
+            <span class="brand-eyebrow">ARCADE SIGNAL / 07</span>
+            <span class="brand-name">NEON <strong>BARRAGE</strong></span>
+          </span>
+        </a>
+        <div class="topbar-actions">
+          <span class="connection-pill"><span class="connection-dot"></span>LIVE GRID</span>
+          <button class="mute-button" type="button" data-testid="mute-button" aria-pressed="false" aria-label="Mute sound">
+            <span class="sound-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="mute-label">SOUND ON</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="main-layout">
+        <section class="game-panel" aria-labelledby="game-title">
+          <div class="panel-heading">
+            <div>
+              <span class="section-kicker">LIVE SIMULATION</span>
+              <h1 id="game-title">Hold the line.</h1>
+            </div>
+            <div class="wave-readout" aria-live="polite">
+              <span class="readout-label">WAVE</span>
+              <strong id="wave">01</strong>
+            </div>
+          </div>
+
+          <div class="canvas-frame" id="canvas-frame">
+            <canvas data-testid="game-canvas" width="960" height="600" tabindex="0" aria-label="Neon Barrage game arena"></canvas>
+            <div class="canvas-scanlines" aria-hidden="true"></div>
+            <div class="canvas-corner canvas-corner-tl" aria-hidden="true"></div>
+            <div class="canvas-corner canvas-corner-br" aria-hidden="true"></div>
+
+            <div class="game-overlay" id="game-overlay">
+              <div class="overlay-rule" aria-hidden="true"><span></span><b id="overlay-kicker">SECTOR 07 / READY</b><span></span></div>
+              <h2 id="overlay-title">ENTER THE<br /><em>BARRAGE</em></h2>
+              <p id="overlay-copy">Pilot the last interceptor through the signal belt.<br />Every wave hits harder. Leave a mark.</p>
+              <div class="final-score" id="final-score" hidden>
+                <span>FINAL SCORE</span>
+                <strong id="final-score-value">000000</strong>
+              </div>
+              <label class="name-field" id="name-field" hidden>
+                <span>CALLSIGN <small>1-16 CHARACTERS</small></span>
+                <input data-testid="player-name" id="player-name" name="player-name" type="text" maxlength="16" minlength="1" autocomplete="nickname" placeholder="YOUR CALLSIGN" />
+              </label>
+              <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+              <div class="overlay-actions">
+                <button class="primary-button" type="button" data-testid="start-button" id="start-button">START RUN <span aria-hidden="true">[ ENTER ]</span></button>
+                <button class="submit-button" type="button" data-testid="submit-score" id="submit-score" hidden>SUBMIT SCORE <span aria-hidden="true">[ SEND ]</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="control-ribbon">
+            <div class="control-group"><span class="control-label">MOVE</span><span class="keycap">W</span><span class="keycap">A</span><span class="keycap">S</span><span class="keycap">D</span><span class="control-or">OR</span><span class="keycap keycap-wide">ARROWS</span></div>
+            <div class="control-group"><span class="control-label">FIRE</span><span class="keycap keycap-wide">SPACE</span></div>
+            <span class="control-status"><span class="status-pulse"></span>INPUT LINKED</span>
+          </div>
+
+          <div class="touch-controls" data-testid="touch-controls" aria-label="Touch controls">
+            <div class="touch-dpad">
+              <button type="button" data-control="up" aria-label="Move up">&#9650;</button>
+              <button type="button" data-control="left" aria-label="Move left">&#9664;</button>
+              <button type="button" data-control="down" aria-label="Move down">&#9660;</button>
+              <button type="button" data-control="right" aria-label="Move right">&#9654;</button>
+            </div>
+            <button class="touch-fire" type="button" data-control="fire" aria-label="Fire">FIRE</button>
+          </div>
+        </section>
+
+        <aside class="side-column">
+          <section class="score-panel" aria-label="Run telemetry">
+            <div class="score-main">
+              <span class="section-kicker">CURRENT RUN</span>
+              <strong class="score-value" data-testid="score" id="score">000000</strong>
+              <span class="score-caption">SIGNAL CREDITS</span>
+            </div>
+            <div class="telemetry-grid">
+              <div class="telemetry-item"><span class="readout-label">LIVES</span><strong data-testid="lives" id="lives">03</strong></div>
+              <div class="telemetry-item"><span class="readout-label">THREAT</span><strong id="threat-level">01</strong></div>
+              <div class="telemetry-item"><span class="readout-label">BEST</span><strong id="best-score">------</strong></div>
+            </div>
+          </section>
+
+          <section class="leaderboard-panel" aria-labelledby="leaderboard-title">
+            <div class="card-heading">
+              <div>
+                <span class="section-kicker">GLOBAL FREQUENCY</span>
+                <h2 id="leaderboard-title">Top pilots</h2>
+              </div>
+              <span class="sync-state" id="leaderboard-status">SYNCING</span>
+            </div>
+            <div class="leaderboard-list" id="leaderboard-wrap">
+              <ol data-testid="leaderboard" id="leaderboard" aria-live="polite">
+                <li class="leaderboard-placeholder">Loading the grid...</li>
+              </ol>
+              <div class="empty-state" id="leaderboard-empty" hidden>
+                <span class="empty-orbit" aria-hidden="true"></span>
+                <strong>No signals yet</strong>
+                <span>Be the first pilot on the board.</span>
+              </div>
+              <button class="retry-button" type="button" id="retry-leaderboard" hidden>RETRY SYNC</button>
+            </div>
+            <p class="leaderboard-note">Top 10 runs / live across the signal belt</p>
+          </section>
+
+          <section class="briefing-panel">
+            <div class="briefing-icon" aria-hidden="true"><span></span></div>
+            <div>
+              <span class="section-kicker">FIELD NOTE</span>
+              <p>Stay mobile. The belt accelerates every 500 credits.</p>
+            </div>
+          </section>
+        </aside>
+      </main>
+
+      <footer class="footer-bar">
+        <span>NEON BARRAGE // OUTER SIGNAL BELT</span>
+        <span class="footer-right">BUILT FOR THE NIGHT SHIFT <b>+ + +</b></span>
+      </footer>
+    </div>
+
+    <script type="module" src="./game.js"></script>
+  </body>
+</html>

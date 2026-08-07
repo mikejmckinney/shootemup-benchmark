@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_sol_low_fast_opencode",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-sol-low-fast-opencode-neon.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-sol-low-fast-opencode-neon",
+  "supabase_url": "https://bdeshwfkyayfftvxijzd.supabase.co",
+  "supabase_project_ref": "bdeshwfkyayfftvxijzd",
+  "supabase_public_key": "sb_publishable_PyLL9bcqsG7q-TAsAqkiww_DXuPkTyD",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Production deployment returned HTTP 200; anonymous insert/read round trip and database rejection of invalid input were verified; 4 local tests and syntax checks passed."
+}

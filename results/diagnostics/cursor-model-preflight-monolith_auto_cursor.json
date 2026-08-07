@@ -1,0 +1,25 @@
+{
+  "checked_at": "2026-08-07T20:49:17.580Z",
+  "valid": true,
+  "runtime": "cursor",
+  "cursor_version": "2026.08.04-aaa8809",
+  "requested_model_id": "auto",
+  "requested_model_available": true,
+  "expected_initialization_label": "Auto",
+  "observed_initialization_label": "Auto",
+  "authentication_source": "login",
+  "cursor_exit_code": 0,
+  "result_subtype": "success",
+  "duration_ms": 8083,
+  "duration_api_ms": 4488,
+  "session_id": "336f0b1b-b1c2-4ed8-85bf-09294c7d4cc4",
+  "request_id": "f1e21ca3-859a-44b1-9f4b-6446ede80ad3",
+  "usage": {
+    "inputTokens": 4066,
+    "outputTokens": 17,
+    "cacheReadTokens": 8960,
+    "cacheWriteTokens": 0
+  },
+  "verification_scope": "Cursor confirmed the Auto router selection; the downstream model and tier are not exposed in CLI telemetry.",
+  "error": null
+}

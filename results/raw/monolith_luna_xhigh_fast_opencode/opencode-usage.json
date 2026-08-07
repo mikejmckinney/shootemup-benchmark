@@ -1,0 +1,60 @@
+{
+  "source": "OpenCode SQLite session ledger",
+  "database": "/workspaces/shootemup-benchmark/results/raw/monolith_luna_xhigh_fast_opencode/opencode-data/opencode/opencode.db",
+  "selection": {
+    "candidate_directory": "/workspaces/shootemup-benchmark/candidates/monolith_luna_xhigh_fast_opencode",
+    "started_ms": 1786123707461,
+    "ended_ms": 1786124078236,
+    "rule": "sessions rooted in candidate directory during run, plus recursive parent_id descendants"
+  },
+  "agents_started": 1,
+  "root_sessions": 1,
+  "child_sessions": 0,
+  "peak_concurrent_agents": 1,
+  "turns": 36,
+  "tool_calls": 50,
+  "coordination_events": 0,
+  "coordination_tool_calls": 0,
+  "tool_counts": {
+    "todowrite": 3,
+    "glob": 1,
+    "read": 1,
+    "bash": 39,
+    "apply_patch": 5,
+    "grep": 1
+  },
+  "usage": {
+    "input_tokens": 879283,
+    "cached_input_tokens": 879175,
+    "cache_write_input_tokens": 37845,
+    "output_tokens": 27371,
+    "reasoning_output_tokens": 6470
+  },
+  "provider_reported_cost_usd": 0.11982309999999997,
+  "sessions": [
+    {
+      "id": "ses_022bb0c0dffeAJcVthqDXtzJDW",
+      "project_id": "4ff26c1e45c0c16e4efaf5a447a610a9a032b863",
+      "workspace_id": null,
+      "parent_id": null,
+      "slug": "curious-eagle",
+      "directory": "/workspaces/shootemup-benchmark/candidates/monolith_luna_xhigh_fast_opencode",
+      "title": "Monolith benchmark candidate execution plan",
+      "version": "1.18.15",
+      "cost": 0.11982309999999997,
+      "tokens_input": 108,
+      "tokens_output": 20901,
+      "tokens_reasoning": 6470,
+      "tokens_cache_read": 879175,
+      "tokens_cache_write": 37845,
+      "agent": "build",
+      "model": {
+        "id": "gpt-5.6-luna-fast",
+        "providerID": "openai",
+        "variant": "xhigh"
+      },
+      "time_created": 1786123711474,
+      "time_updated": 1786124078105
+    }
+  ]
+}

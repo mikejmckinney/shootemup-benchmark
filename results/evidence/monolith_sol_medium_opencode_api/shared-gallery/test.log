@@ -1,0 +1,14 @@
+
+> neon-barrage@1.0.0 test
+> vitest run
+
+
+ RUN  v3.2.4 /tmp/sol-medium-api-gallery.gy4rT5/site
+
+ ✓ src/rules.test.ts (2 tests) 3ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  22:07:55
+   Duration  588ms (transform 114ms, setup 0ms, collect 74ms, tests 3ms, environment 0ms, prepare 159ms)
+

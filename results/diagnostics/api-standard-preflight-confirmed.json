@@ -1,0 +1,52 @@
+{
+  "checked_at": "2026-08-07T21:46:44.733Z",
+  "valid": true,
+  "runtime": "opencode",
+  "auth_mode": "api_key",
+  "model": "gpt-5.6-sol",
+  "opencode_model": "openai/gpt-5.6-sol",
+  "reasoning_effort": "medium",
+  "requested_tier": "default",
+  "expected_tier": "default",
+  "opencode_exit_code": 0,
+  "duration_ms": 11135,
+  "request": {
+    "method": "POST",
+    "path": "/v1/responses",
+    "model": "gpt-5.6-sol",
+    "service_tier": null,
+    "stream": true,
+    "reasoning_effort": "medium"
+  },
+  "response": {
+    "http_status": 200,
+    "response_created_tier": "auto",
+    "response_completed_tier": "default",
+    "response_model": "gpt-5.6-sol",
+    "usage": {
+      "input_tokens": 5915,
+      "input_tokens_details": {
+        "cache_write_tokens": 5912,
+        "cached_tokens": 0
+      },
+      "output_tokens": 5,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 5920
+    },
+    "error": null
+  },
+  "opencode_usage": {
+    "total": 5920,
+    "input": 3,
+    "output": 5,
+    "reasoning": 0,
+    "cache": {
+      "write": 5912,
+      "read": 0
+    }
+  },
+  "opencode_reported_cost_usd": 0.037115,
+  "stderr_present": false
+}

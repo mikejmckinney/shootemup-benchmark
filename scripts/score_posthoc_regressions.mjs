@@ -13,6 +13,7 @@ const plannedTreatments = [
   "monolith_sol_medium",
   "monolith_opencode",
   "monolith_sol_medium_opencode",
+  "monolith_sol_medium_opencode_api",
   "monolith_sol_low_opencode",
   "monolith_sol_high_opencode",
   "monolith_luna_xhigh_opencode",
@@ -21,6 +22,16 @@ const plannedTreatments = [
   "monolith_luna_max_opencode_retest",
   "monolith_luna_max_opencode_speckit",
   "dynamic_luna_max_opencode_superpowers",
+  "monolith_luna_xhigh_fast_opencode",
+  "monolith_luna_max_fast_opencode",
+  "monolith_sol_low_fast_opencode",
+  "monolith_sol_medium_fast_opencode",
+  "monolith_grok_4_5_medium_cursor",
+  "monolith_grok_4_5_high_cursor",
+  "monolith_grok_4_5_medium_fast_cursor",
+  "monolith_grok_4_5_high_fast_cursor",
+  "monolith_auto_cursor",
+  "monolith_luna_xhigh_opencode_control",
 ];
 const requestedTreatments = process.argv.slice(2);
 const treatments = requestedTreatments.length

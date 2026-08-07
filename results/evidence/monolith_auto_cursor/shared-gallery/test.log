@@ -1,0 +1,14 @@
+
+> neon-barrage@1.0.0 test
+> vitest run
+
+
+ RUN  v3.2.4 /tmp/shootemup-shared-build-test.5VHfSR/monolith_auto_cursor
+
+ ✓ src/game.test.ts (9 tests) 6ms
+
+ Test Files  1 passed (1)
+      Tests  9 passed (9)
+   Start at  21:12:46
+   Duration  373ms (transform 81ms, setup 0ms, collect 77ms, tests 6ms, environment 0ms, prepare 82ms)
+

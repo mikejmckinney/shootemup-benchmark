@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#090b1d" />
+    <meta name="description" content="Neon Barrage: an arcade shooter for the last city in the sky." />
+    <title>Neon Barrage</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="config.js"></script>
+    <script src="game.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="brand-lockup">
+          <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div>
+            <p class="eyebrow">SKYLINE DEFENSE // 07</p>
+            <h1>NEON <em>BARRAGE</em></h1>
+          </div>
+        </div>
+        <button class="icon-button" id="mute-button" data-testid="mute-button" type="button" aria-pressed="false" aria-label="Mute sound">Sound <strong>ON</strong></button>
+      </header>
+
+      <section class="dashboard" aria-label="Game dashboard">
+        <div class="stat-card score-card"><span class="stat-label">Score</span><strong id="score" data-testid="score">000000</strong></div>
+        <div class="stat-card lives-card"><span class="stat-label">Hull integrity</span><strong id="lives" data-testid="lives">◆ ◆ ◆</strong></div>
+        <div class="stat-card wave-card"><span class="stat-label">Threat level</span><strong id="wave">01</strong></div>
+      </section>
+
+      <div class="play-layout">
+        <section class="game-column" aria-label="Neon Barrage game">
+          <div class="canvas-frame">
+            <div class="frame-corner corner-tl"></div><div class="frame-corner corner-tr"></div>
+            <div class="frame-corner corner-bl"></div><div class="frame-corner corner-br"></div>
+            <canvas id="game-canvas" data-testid="game-canvas" width="960" height="600" aria-label="Neon Barrage playfield"></canvas>
+            <div class="scanline" aria-hidden="true"></div>
+            <div class="game-overlay" id="ready-overlay">
+              <p class="overlay-kicker">INCOMING SIGNAL</p>
+              <h2>Protect the<br /><span>skyline.</span></h2>
+              <p class="overlay-copy">Pilot the last lightship through an endless neon storm.</p>
+              <button class="primary-button" id="start-button" data-testid="start-button" type="button">Launch mission <span>↗</span></button>
+              <p class="control-hint"><kbd>WASD</kbd> move <i>·</i> <kbd>SPACE</kbd> fire</p>
+            </div>
+            <div class="game-overlay gameover-overlay is-hidden" id="gameover-overlay">
+              <p class="overlay-kicker danger">SIGNAL LOST</p>
+              <h2>Run<br /><span>ended.</span></h2>
+              <p class="final-line">Final score <strong id="final-score">000000</strong></p>
+              <form id="score-form" novalidate>
+                <label for="player-name">Enter your callsign</label>
+                <div class="name-row">
+                  <input id="player-name" data-testid="player-name" name="name" type="text" maxlength="16" minlength="1" placeholder="CALLSIGN" autocomplete="nickname" />
+                  <button class="primary-button compact" id="submit-score" data-testid="submit-score" type="submit">Transmit</button>
+                </div>
+                <p class="form-note" id="form-message" role="status">1–16 characters · letters, numbers, spaces</p>
+              </form>
+              <button class="text-button" id="restart-button" type="button">↻ Replay mission</button>
+            </div>
+          </div>
+          <div class="touch-controls" data-testid="touch-controls" aria-label="Touch controls">
+            <div class="touch-pad">
+              <button type="button" data-control="up" aria-label="Move up">▲</button>
+              <div><button type="button" data-control="left" aria-label="Move left">◀</button><button type="button" data-control="down" aria-label="Move down">▼</button><button type="button" data-control="right" aria-label="Move right">▶</button></div>
+            </div>
+            <button class="fire-button" type="button" data-control="fire" aria-label="Fire">FIRE<span>✦</span></button>
+          </div>
+          <div class="status-strip"><span class="live-dot"></span><span id="game-status">Awaiting pilot input</span><span class="status-divider">/</span><span>Sector 07 · Endless</span></div>
+        </section>
+
+        <aside class="leaderboard-panel">
+          <div class="panel-heading"><div><p class="eyebrow">LIVE FEED</p><h2>Top pilots</h2></div><span class="online-pill"><i></i> ONLINE</span></div>
+          <p class="panel-intro">The skyline remembers every run.</p>
+          <div class="leaderboard-wrap" id="leaderboard" data-testid="leaderboard" aria-live="polite"><div class="leaderboard-loading"><span></span><span></span><span></span></div></div>
+          <div class="leaderboard-footer"><span>RANK</span><span>SCORE</span></div>
+          <p class="privacy-note">Public arcade board · no account required</p>
+        </aside>
+      </div>
+      <footer class="footer"><span>NEON BARRAGE <b>///</b> V1.0</span><span>MOVE WITH PURPOSE. FIRE WITH STYLE.</span></footer>
+    </main>
+  </body>
+</html>

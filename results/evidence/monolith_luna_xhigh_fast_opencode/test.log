@@ -1,0 +1,15 @@
+
+> neon-barrage@1.0.0 test
+> node --test tests/game-logic.test.js
+
+✔ sanitizes and validates leaderboard call signs (1.898963ms)
+✔ accepts only plausible integer scores (0.228788ms)
+✔ clamps movement and increases waves as score grows (1.101987ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 245.906111

@@ -1,0 +1,5 @@
+
+> neon-barrage@1.0.0 build
+> node scripts/build.js
+
+Built 4 files into dist/

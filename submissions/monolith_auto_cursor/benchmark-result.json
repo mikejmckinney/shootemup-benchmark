@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_auto_cursor",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-auto-cursor.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-auto-cursor",
+  "supabase_url": "https://nejvinflhaqghnecfrsf.supabase.co",
+  "supabase_project_ref": "nejvinflhaqghnecfrsf",
+  "supabase_public_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5lanZpbmZsaGFxZ2huZWNmcnNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMzA1NTAsImV4cCI6MjEwMTcwNjU1MH0.DMqUWEmn_NsEFfbc1yKbrq9TNROmOv_s2N9ka7nDKsI",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Neon Barrage on Cloudflare Pages with Supabase leaderboard (RLS select+insert, DB CHECK constraints). Verified live HTTP 200, anon insert/read round trip, and vitest suite."
+}

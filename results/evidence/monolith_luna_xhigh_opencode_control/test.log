@@ -1,0 +1,5 @@
+
+> neon-barrage@1.0.0 test
+> node tests/game.test.mjs
+
+Neon Barrage static gameplay and security surface checks passed.

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#070a19" />
+    <meta name="description" content="Neon Barrage, a fast arcade flight through the last lights of the night." />
+    <title>Neon Barrage // Arcade Flight</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Neon Barrage home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>NEON <b>BARRAGE</b></span>
+        </a>
+        <div class="status-pill"><span class="status-dot"></span><span>LIVE CIRCUIT</span></div>
+        <button class="icon-button" id="mute-button" data-testid="mute-button" type="button" aria-label="Turn sound off" aria-pressed="false">
+          <span class="sound-on" aria-hidden="true">◖)))</span><span class="sound-off" aria-hidden="true">◖×</span><span class="sr-only">Sound on</span>
+        </button>
+      </header>
+
+      <section class="hero-copy" aria-labelledby="game-title">
+        <div class="eyebrow"><span>SECTOR 07</span><span class="eyebrow-line"></span><span>FLIGHT PROTOCOL</span></div>
+        <h1 id="game-title">Break the <em>night.</em></h1>
+        <p>One ship. No backup. Burn through the swarm before the city below goes dark.</p>
+      </section>
+
+      <section class="game-layout" aria-label="Neon Barrage game">
+        <div class="game-card">
+          <div class="hud">
+            <div class="hud-block"><span class="hud-label">SCORE</span><strong id="score" data-testid="score">000000</strong></div>
+            <div class="hud-center"><span class="phase-label" id="phase-label">READY TO LAUNCH</span><span class="wave-label" id="wave-label">WAVE 01</span></div>
+            <div class="hud-block hud-right"><span class="hud-label">HULL INTEGRITY</span><strong id="lives" data-testid="lives">♥ ♥ ♥</strong></div>
+          </div>
+          <div class="canvas-wrap" id="canvas-wrap">
+            <canvas id="game-canvas" data-testid="game-canvas" width="960" height="540" aria-label="Neon Barrage game canvas"></canvas>
+            <div class="canvas-overlay" id="start-overlay">
+              <div class="launch-beacon"><span></span><span></span><span></span></div>
+              <span class="overlay-kicker">PILOT LINK ESTABLISHED</span>
+              <h2>Ready when<br /><em>you are.</em></h2>
+              <p>WASD / ARROWS to move <span>•</span> SPACE to fire</p>
+              <button class="primary-button" id="start-button" data-testid="start-button" type="button"><span>Launch mission</span><b>↗</b></button>
+            </div>
+            <div class="canvas-overlay game-over-overlay hidden" id="game-over-overlay">
+              <span class="overlay-kicker danger">SIGNAL LOST</span>
+              <h2>Mission<br /><em>over.</em></h2>
+              <div class="final-score"><span>FINAL SCORE</span><strong id="final-score">000000</strong></div>
+              <button class="secondary-button" id="restart-button" type="button">Run it back <b>↻</b></button>
+            </div>
+          </div>
+          <div class="game-footer">
+            <div class="footer-tip"><span class="keycap">SPACE</span><span>hold to fire</span></div>
+            <div class="footer-tip"><span class="keycap">SHIFT</span><span>focus mode</span></div>
+            <div class="footer-tip footer-right"><span class="live-spark"></span><span id="mission-status">Awaiting pilot input</span></div>
+          </div>
+        </div>
+
+        <aside class="leaderboard-card" aria-labelledby="leaderboard-title">
+          <div class="leaderboard-heading">
+            <div><span class="eyebrow-small">THE HALL OF FLIGHT</span><h2 id="leaderboard-title">Top pilots</h2></div>
+            <span class="rank-mark">01—10</span>
+          </div>
+          <div class="leaderboard-rule"></div>
+          <div class="leaderboard-state" id="leaderboard-state" data-state="loading">Syncing the flight log<span class="loading-dots">...</span></div>
+          <ol id="leaderboard" data-testid="leaderboard" aria-live="polite" aria-label="Top ten pilots"></ol>
+          <p class="leaderboard-note">Scores persist across every run.<br />Will your call sign make the cut?</p>
+        </aside>
+      </section>
+
+      <section class="score-submit hidden" id="score-submit-panel" aria-labelledby="submit-title">
+        <div><span class="eyebrow-small">FLIGHT LOG ENTRY</span><h2 id="submit-title">Claim your signal.</h2><p>Lock in your score with a call sign, pilot.</p></div>
+        <form id="score-form" novalidate>
+          <label for="player-name">CALL SIGN <span>(1—16 CHARACTERS)</span></label>
+          <div class="form-row"><input id="player-name" data-testid="player-name" name="name" maxlength="16" minlength="1" autocomplete="nickname" placeholder="e.g. NIGHTHAWK" required /><button class="primary-button" id="submit-score" data-testid="submit-score" type="submit"><span>Transmit score</span><b>↗</b></button></div>
+          <p class="form-message" id="form-message" role="status"></p>
+        </form>
+      </section>
+
+      <section class="touch-controls" data-testid="touch-controls" aria-label="Touch controls">
+        <div class="touch-dpad"><button type="button" data-control="left" aria-label="Move left">←</button><button type="button" data-control="up" aria-label="Move up">↑</button><button type="button" data-control="down" aria-label="Move down">↓</button><button type="button" data-control="right" aria-label="Move right">→</button></div>
+        <button class="fire-button" type="button" data-control="fire" aria-label="Fire weapon"><span>FIRE</span><i></i></button>
+      </section>
+
+      <footer class="page-footer"><span>NB / 2025</span><span>KEEP YOUR EYES UP</span><span>BUILD 07.24.∞</span></footer>
+    </main>
+    <script src="config.js"></script>
+    <script type="module" src="src/app.js"></script>
+  </body>
+</html>

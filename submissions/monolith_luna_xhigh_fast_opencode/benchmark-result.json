@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_luna_xhigh_fast_opencode",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-luna-xhigh-fast-opencode-neon.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-luna-xhigh-fast-opencode-neon",
+  "supabase_url": "https://lgnceroecmqlifuordui.supabase.co",
+  "supabase_project_ref": "lgnceroecmqlifuordui",
+  "supabase_public_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnbmNlcm9lY21xbGlmdW9yZHVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMTg1MDksImV4cCI6MjEwMTY5NDUwOX0.sKQUmjehKEuzSTLhbqUuOdueHTiMRvZZTZ1s5aDZRPQ",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Canvas shooter deployed to Cloudflare Pages; Supabase RLS migration applied; anon-key leaderboard insert/read round trip verified; local tests and syntax checks pass."
+}

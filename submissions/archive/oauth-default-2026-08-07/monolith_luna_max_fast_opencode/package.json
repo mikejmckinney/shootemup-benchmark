@@ -1,0 +1,13 @@
+{
+  "name": "neon-barrage",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Neon Barrage browser shoot-em-up",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node --check src/game.js && node --check src/game-logic.js && node --check scripts/build.mjs",
+    "test": "node --test",
+    "verify": "npm run check && npm test && npm run build"
+  }
+}

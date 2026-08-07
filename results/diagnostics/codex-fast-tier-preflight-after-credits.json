@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-08-07T16:06:47.158Z",
+  "valid": false,
+  "runtime": "codex",
+  "codex_exit_code": 0,
+  "thread_id": "019fdcfa-0871-72c2-8e97-58f084e9239d",
+  "model": "gpt-5.6-luna",
+  "response_model": "gpt-5.6-luna",
+  "reasoning_effort": "xhigh",
+  "requested_tier": "priority",
+  "expected_tier": "priority",
+  "response_created_tier": "auto",
+  "response_completed_tier": "default",
+  "duration_ms": 7761,
+  "usage": {
+    "input_tokens": 13540,
+    "input_tokens_details": {
+      "cache_write_tokens": 0,
+      "cached_tokens": 0
+    },
+    "output_tokens": 5,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 13545
+  },
+  "error": null
+}
