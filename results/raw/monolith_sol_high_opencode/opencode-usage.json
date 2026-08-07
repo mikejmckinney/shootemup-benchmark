@@ -1,0 +1,60 @@
+{
+  "source": "OpenCode SQLite session ledger",
+  "database": "/home/codespace/.local/share/opencode/opencode.db",
+  "selection": {
+    "candidate_directory": "/workspaces/shootemup-benchmark/candidates/monolith_sol_high_opencode",
+    "started_ms": 1786074744993,
+    "ended_ms": 1786075612542,
+    "rule": "sessions rooted in candidate directory during run, plus recursive parent_id descendants"
+  },
+  "agents_started": 1,
+  "root_sessions": 1,
+  "child_sessions": 0,
+  "peak_concurrent_agents": 1,
+  "turns": 34,
+  "tool_calls": 60,
+  "coordination_events": 0,
+  "coordination_tool_calls": 0,
+  "tool_counts": {
+    "read": 3,
+    "todowrite": 4,
+    "glob": 1,
+    "bash": 44,
+    "apply_patch": 7,
+    "grep": 1
+  },
+  "usage": {
+    "input_tokens": 1035159,
+    "cached_input_tokens": 968704,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 28020,
+    "reasoning_output_tokens": 5151
+  },
+  "provider_reported_cost_usd": 0,
+  "sessions": [
+    {
+      "id": "ses_025a6211afferTcS3oOIjwjcYp",
+      "project_id": "6aed4f2f040fa125d7f0cfccc0d1df2dab67927f",
+      "workspace_id": null,
+      "parent_id": null,
+      "slug": "gentle-circuit",
+      "directory": "/workspaces/shootemup-benchmark/candidates/monolith_sol_high_opencode",
+      "title": "Autonomous benchmark task implementation",
+      "version": "1.18.14",
+      "cost": 0,
+      "tokens_input": 66455,
+      "tokens_output": 22869,
+      "tokens_reasoning": 5151,
+      "tokens_cache_read": 968704,
+      "tokens_cache_write": 0,
+      "agent": "build",
+      "model": {
+        "id": "gpt-5.6-sol",
+        "providerID": "openai",
+        "variant": "high"
+      },
+      "time_created": 1786074750694,
+      "time_updated": 1786075612309
+    }
+  ]
+}

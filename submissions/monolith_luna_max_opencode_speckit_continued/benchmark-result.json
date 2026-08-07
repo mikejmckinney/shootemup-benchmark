@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_luna_max_opencode_speckit",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-luna-max-opencode-speckit-pages.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-luna-max-opencode-speckit-pages",
+  "supabase_url": "https://cjwdmtrkiyobtrxalaij.supabase.co",
+  "supabase_project_ref": "cjwdmtrkiyobtrxalaij",
+  "supabase_public_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNqd2RtdHJraXlvYnRyeGFsYWlqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwNTEwODgsImV4cCI6MjEwMTYyNzA4OH0.vm1YwvqtNWqD2tUlI7fb1CcILSloIFes4w9zrMlz7uw",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Pages deployment, public Supabase submission/readback/reload, RLS checks, and local quality gates verified on 2026-08-06."
+}

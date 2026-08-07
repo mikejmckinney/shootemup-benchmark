@@ -1,0 +1,25 @@
+{
+  "treatment": "dynamic_luna_max_opencode_superpowers",
+  "continuation_attempt": 2,
+  "status": "interrupted_by_codespace_restart",
+  "started_at": "2026-08-07T00:03:34Z",
+  "last_durable_session_update": "2026-08-07T00:04:12Z",
+  "measured_wall_seconds": 38,
+  "wall_time_note": "Measured from the continuation ledger capture to the last durable child-session update; Codespace downtime is excluded.",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "runtime": "opencode",
+  "usage": {
+    "input_tokens": 26523,
+    "cached_input_tokens": 16896,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 761,
+    "reasoning_output_tokens": 437,
+    "total_tokens": 27284
+  },
+  "estimated_api_cost_usd": 0.00317652,
+  "turns": 3,
+  "tool_calls": 6,
+  "new_child_sessions": 1,
+  "coordination_tool_calls": 1
+}

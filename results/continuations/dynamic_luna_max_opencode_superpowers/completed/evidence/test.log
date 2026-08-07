@@ -1,0 +1,16 @@
+
+> neon-barrage@1.0.0 test
+> vitest run
+
+
+ RUN  v3.1.2 /tmp/superpowers-grade-6f5a731
+
+ ✓ tests/game-engine.test.ts (14 tests) 12ms
+ ✓ tests/leaderboard.test.ts (8 tests) 26ms
+ ✓ tests/presentation-contract.test.ts (3 tests) 4ms
+
+ Test Files  3 passed (3)
+      Tests  25 passed (25)
+   Start at  02:41:40
+   Duration  1.45s (transform 217ms, setup 0ms, collect 300ms, tests 42ms, environment 1ms, prepare 341ms)
+

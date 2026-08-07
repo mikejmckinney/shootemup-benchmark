@@ -1,0 +1,6 @@
+name = "shootemup-bench-monolith-luna-max-opencode-retest"
+compatibility_date = "2026-08-06"
+
+[assets]
+directory = "./public"
+not_found_handling = "single-page-application"

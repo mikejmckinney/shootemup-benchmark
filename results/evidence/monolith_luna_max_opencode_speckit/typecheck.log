@@ -1,0 +1,8 @@
+
+> neon-barrage@1.0.0 typecheck
+> tsc --noEmit
+
+tests/e2e/game-flow.spec.ts(18,38): error TS2339: Property '__NEON_BARRAGE__' does not exist on type 'Window & typeof globalThis'.
+tests/unit/collision.test.ts(2,52): error TS2307: Cannot find module '../../src/game/engine' or its corresponding type declarations.
+tests/unit/collision.test.ts(3,35): error TS2307: Cannot find module '../../src/game/collision' or its corresponding type declarations.
+tests/unit/engine.test.ts(8,8): error TS2307: Cannot find module '../../src/game/engine' or its corresponding type declarations.

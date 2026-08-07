@@ -1,0 +1,28 @@
+
+> neon-barrage@1.0.0 test
+> node --test site/test/*.test.mjs
+
+✔ production adapter exposes the narrow state and delegates test game-over transitions (2.020793ms)
+✔ adapter rejects an object that cannot drive the real game transition (0.607974ms)
+✔ the production page keeps the stable black-box selectors (1.141717ms)
+✔ the module entrypoint wires the adapter methods and public Supabase config only (6.721889ms)
+✔ rectangle collision detects overlap and separation (0.930343ms)
+✔ threat level escalates predictably over a run (0.156602ms)
+✔ a fired projectile destroys a target and awards its points (0.684717ms)
+✔ movement is bounded and holding fire emits a projectile on its cooldown (1.188726ms)
+✔ enemy plasma damages the player and removes the projectile (0.339725ms)
+✔ a breached enemy costs one life and gives a brief invulnerability window (0.214669ms)
+✔ game-over is emitted when the final life is lost (0.245925ms)
+✔ name validation trims and enforces the one-to-sixteen character contract (3.103352ms)
+✔ score normalization allows plausible non-negative safe integers only (0.259485ms)
+✔ client sends only anon-key authenticated REST requests and limits leaderboard reads (0.978905ms)
+✔ client validates before any score write and exposes network failures (3.417849ms)
+✔ missing runtime configuration is explicit and does not attempt a request (0.384091ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 496.522301

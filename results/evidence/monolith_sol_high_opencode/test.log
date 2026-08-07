@@ -1,0 +1,14 @@
+
+> neon-barrage@1.0.0 test
+> vitest run src
+
+
+ RUN  v3.2.7 /workspaces/shootemup-benchmark/candidates/monolith_sol_high_opencode
+
+ ✓ src/gameModel.test.ts (3 tests) 10ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  04:07:16
+   Duration  495ms (transform 58ms, setup 0ms, collect 47ms, tests 10ms, environment 0ms, prepare 84ms)
+

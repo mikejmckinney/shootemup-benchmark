@@ -1,0 +1,35 @@
+{
+  "treatment": "dynamic_luna_max_opencode_superpowers",
+  "classification": "exploratory completion after the original timeout; stopped by the user before methodology completion",
+  "graded_commit": "6f5a7315cc9388da624fd6211579e19f0f659f99",
+  "automated_points": 48,
+  "manual_points": 43,
+  "pre_regression_score": 91,
+  "posthoc_deductions": {
+    "immediate_click_restart": 2,
+    "total": 2
+  },
+  "corrected_score": 89,
+  "quality_gate_factor": 0.4,
+  "original_run": {
+    "elapsed_seconds": 2700,
+    "estimated_api_cost_usd": 0.38520608,
+    "total_tokens": 6369228
+  },
+  "continuations": {
+    "elapsed_seconds": 11359,
+    "estimated_api_cost_usd": 1.96310728,
+    "total_tokens": 42311818,
+    "completed_full_windows": 4,
+    "interrupted_or_user_stopped_windows": 2
+  },
+  "cumulative": {
+    "elapsed_seconds": 14059,
+    "elapsed_minutes": 234.31666666666666,
+    "estimated_api_cost_usd": 2.34831336,
+    "total_tokens": 48681046,
+    "gate_adjusted_roi": 1.517645656360469
+  },
+  "roi_formula": "score * clamp((score - 87) / 5, 0, 1) / sqrt(cost_usd * elapsed_minutes)",
+  "outcome": "The last clean deployed commit was graded. The parent never integrated the feature worktree, and a later uncommitted fix wave was excluded."
+}

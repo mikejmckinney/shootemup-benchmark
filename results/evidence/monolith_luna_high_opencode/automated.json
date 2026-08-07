@@ -1,0 +1,253 @@
+{
+  "evaluated_at": "2026-08-06T04:31:34.308Z",
+  "candidate_dir": "/workspaces/shootemup-benchmark/candidates/monolith_luna_high_opencode",
+  "result_artifact_valid": true,
+  "automated_points": 35,
+  "automated_points_available": 54,
+  "checks": {
+    "valid_result_artifact": {
+      "passed": true,
+      "points_awarded": 3,
+      "points_available": 3,
+      "evidence": null
+    },
+    "live_cloudflare_app": {
+      "passed": true,
+      "points_awarded": 5,
+      "points_available": 5,
+      "evidence": {
+        "http_status": 200,
+        "canvas_visible": true
+      }
+    },
+    "required_test_surface": {
+      "passed": true,
+      "points_awarded": 2,
+      "points_available": 2,
+      "evidence": {
+        "selectorPresence": {
+          "start-button": 1,
+          "score": 1,
+          "lives": 1,
+          "mute-button": 1,
+          "leaderboard": 1,
+          "player-name": 1,
+          "submit-score": 1,
+          "touch-controls": 1
+        },
+        "adapterPresent": true
+      }
+    },
+    "game_starts": {
+      "passed": true,
+      "points_awarded": 2,
+      "points_available": 2,
+      "evidence": {
+        "phase": "playing",
+        "score": 0,
+        "lives": 3,
+        "playerX": 450,
+        "playerY": 453,
+        "enemyCount": 1,
+        "projectileCount": 0
+      }
+    },
+    "keyboard_movement": {
+      "passed": true,
+      "points_awarded": 3,
+      "points_available": 3,
+      "evidence": {
+        "initial": {
+          "phase": "playing",
+          "score": 0,
+          "lives": 3,
+          "playerX": 450,
+          "playerY": 453,
+          "enemyCount": 1,
+          "projectileCount": 0
+        },
+        "moved": {
+          "phase": "playing",
+          "score": 0,
+          "lives": 3,
+          "playerX": 554.4810000000002,
+          "playerY": 453,
+          "enemyCount": 1,
+          "projectileCount": 0
+        }
+      }
+    },
+    "keyboard_fire": {
+      "passed": true,
+      "points_awarded": 3,
+      "points_available": 3,
+      "evidence": {
+        "moved": {
+          "phase": "playing",
+          "score": 0,
+          "lives": 3,
+          "playerX": 554.4810000000002,
+          "playerY": 453,
+          "enemyCount": 1,
+          "projectileCount": 0
+        },
+        "fired": {
+          "phase": "playing",
+          "score": 0,
+          "lives": 3,
+          "playerX": 554.4810000000002,
+          "playerY": 453,
+          "enemyCount": 2,
+          "projectileCount": 1
+        }
+      }
+    },
+    "enemies_spawn": {
+      "passed": true,
+      "points_awarded": 3,
+      "points_available": 3,
+      "evidence": {
+        "phase": "playing",
+        "score": 0,
+        "lives": 3,
+        "playerX": 554.4810000000002,
+        "playerY": 453,
+        "enemyCount": 5,
+        "projectileCount": 0
+      }
+    },
+    "hud_state": {
+      "passed": true,
+      "points_awarded": 2,
+      "points_available": 2,
+      "evidence": {
+        "phase": "playing",
+        "score": 0,
+        "lives": 3,
+        "playerX": 554.4810000000002,
+        "playerY": 453,
+        "enemyCount": 5,
+        "projectileCount": 0
+      }
+    },
+    "game_over_adapter_uses_real_state": {
+      "passed": true,
+      "points_awarded": 3,
+      "points_available": 3,
+      "evidence": {
+        "phase": "over",
+        "score": 7317,
+        "lives": 3,
+        "playerX": 554.4810000000002,
+        "playerY": 453,
+        "enemyCount": 5,
+        "projectileCount": 0
+      }
+    },
+    "leaderboard_ui_submission": {
+      "passed": false,
+      "points_awarded": 0,
+      "points_available": 6,
+      "evidence": {
+        "testName": "BMX5990701009",
+        "error": "locator.waitFor: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"leaderboard\"]').getByText('BMX5990701009') to be visible\u001b[22m\n"
+      }
+    },
+    "leaderboard_reload_persistence": {
+      "passed": false,
+      "points_awarded": 0,
+      "points_available": 6,
+      "evidence": {
+        "testName": "BMX5990701009",
+        "error": "locator.waitFor: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"leaderboard\"]').getByText('BMX5990701009') to be visible\u001b[22m\n"
+      }
+    },
+    "leaderboard_score_visible": {
+      "passed": false,
+      "points_awarded": 0,
+      "points_available": 3,
+      "evidence": {
+        "error": "locator.waitFor: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"leaderboard\"]').getByText('BMX5990701009') to be visible\u001b[22m\n"
+      }
+    },
+    "mute_control": {
+      "passed": true,
+      "points_awarded": 3,
+      "points_available": 3,
+      "evidence": {
+        "muteBefore": "◖ Sound on Mute sound",
+        "muteAfter": "◖ Sound off Mute sound"
+      }
+    },
+    "restart": {
+      "passed": false,
+      "points_awarded": 0,
+      "points_available": 2,
+      "evidence": {
+        "phase": "over",
+        "score": 7317,
+        "lives": 3,
+        "playerX": 554.4810000000002,
+        "playerY": 453,
+        "enemyCount": 5,
+        "projectileCount": 0
+      }
+    },
+    "basic_accessible_labels": {
+      "passed": true,
+      "points_awarded": 1,
+      "points_available": 1,
+      "evidence": {
+        "labeledElements": 7
+      }
+    },
+    "mobile_touch_and_fit": {
+      "passed": true,
+      "points_awarded": 5,
+      "points_available": 5,
+      "evidence": {
+        "touchVisible": true,
+        "canvasBox": {
+          "x": 17,
+          "y": 139,
+          "width": 356,
+          "height": 207.65625
+        }
+      }
+    },
+    "browser_error_free": {
+      "passed": false,
+      "points_awarded": 0,
+      "points_available": 2,
+      "evidence": {
+        "console_errors": [
+          "Failed to load resource: the server responded with a status of 401 ()",
+          "Pattern attribute value [A-Za-z0-9 _-]{1,16} is not a valid regular expression: Uncaught SyntaxError: Invalid regular expression: /[A-Za-z0-9 _-]{1,16}/v: Invalid character in character class",
+          "Failed to load resource: the server responded with a status of 401 ()"
+        ],
+        "page_errors": []
+      }
+    }
+  },
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 401 ()",
+    "Pattern attribute value [A-Za-z0-9 _-]{1,16} is not a valid regular expression: Uncaught SyntaxError: Invalid regular expression: /[A-Za-z0-9 _-]{1,16}/v: Invalid character in character class",
+    "Failed to load resource: the server responded with a status of 401 ()"
+  ],
+  "page_errors": [],
+  "supabase_requests": [
+    {
+      "method": "GET",
+      "status": 401,
+      "url": "https://hfzeeoecsynkfyyjnekj.supabase.co/rest/v1/scores"
+    },
+    {
+      "method": "POST",
+      "status": 401,
+      "url": "https://hfzeeoecsynkfyyjnekj.supabase.co/rest/v1/scores"
+    }
+  ],
+  "notes": [
+    "leaderboard flow failed: locator.waitFor: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"leaderboard\"]').getByText('BMX5990701009') to be visible\u001b[22m\n"
+  ]
+}

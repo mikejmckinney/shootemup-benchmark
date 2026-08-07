@@ -1,0 +1,38 @@
+[
+  {
+    "input_tokens": 309512,
+    "cached_input_tokens": 272128,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 14153,
+    "reasoning_output_tokens": 11217,
+    "total_tokens": 323665,
+    "thread_id": "019fd2d5-42c9-7053-a4f2-f950cfc79da1"
+  },
+  {
+    "input_tokens": 531759,
+    "cached_input_tokens": 477696,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 33973,
+    "reasoning_output_tokens": 11911,
+    "total_tokens": 565732,
+    "thread_id": "019fd2d5-43f4-76c3-bd09-84137e617186"
+  },
+  {
+    "input_tokens": 362353,
+    "cached_input_tokens": 329472,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 16305,
+    "reasoning_output_tokens": 10014,
+    "total_tokens": 378658,
+    "thread_id": "019fd2d5-4447-79f3-80b0-91ec921d3100"
+  },
+  {
+    "input_tokens": 669153,
+    "cached_input_tokens": 608256,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 33111,
+    "reasoning_output_tokens": 20312,
+    "total_tokens": 702264,
+    "thread_id": "019fd2d5-44a2-7a10-bb84-354072df5843"
+  }
+]

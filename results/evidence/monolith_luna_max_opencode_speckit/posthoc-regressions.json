@@ -1,0 +1,31 @@
+{
+  "treatment": "monolith_luna_max_opencode_speckit",
+  "evaluated_at": "2026-08-06T20:40:24.694Z",
+  "live_url": null,
+  "methodology": "No browser audit was possible because the candidate did not deploy. No additional deductions are applied to categories already scored zero.",
+  "checks": {
+    "physical_name_entry": {
+      "applicable": false,
+      "passed": null,
+      "reason": "Not applicable: candidate produced no valid live result artifact; affected rubric categories already received zero points."
+    },
+    "progression_start_consistency": {
+      "applicable": false,
+      "passed": null,
+      "reason": "Not applicable: candidate produced no valid live result artifact; affected rubric categories already received zero points."
+    },
+    "advertised_keyboard_restart": {
+      "applicable": false,
+      "passed": null,
+      "reason": "Not applicable: candidate produced no valid live result artifact; affected rubric categories already received zero points."
+    },
+    "immediate_click_restart": {
+      "applicable": false,
+      "passed": null,
+      "reason": "Not applicable: candidate produced no valid live result artifact; affected rubric categories already received zero points."
+    }
+  },
+  "requests": [],
+  "console_errors": [],
+  "page_errors": []
+}

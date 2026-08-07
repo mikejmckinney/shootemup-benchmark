@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#070a1c" />
+    <meta name="description" content="Neon Barrage — survive the signal storm." />
+    <title>Neon Barrage // Signal Storm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./src/style.css" />
+    <script src="./config.js"></script>
+    <script>
+      // Deployment injects the public Supabase values into either object. No credential is bundled here.
+      window.__NEON_BARRAGE_CONFIG__ = window.__NEON_BARRAGE_CONFIG__ || window.NEON_BARRAGE_CONFIG || {};
+    </script>
+  </head>
+  <body>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Neon Barrage home">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="brand-copy">
+            <span class="brand-name">NEON BARRAGE</span>
+            <span class="brand-subtitle">SIGNAL STORM / 01</span>
+          </span>
+        </a>
+        <div class="topbar-meta">
+          <span class="connection-pill"><span class="connection-dot"></span>LIVE ARCADE</span>
+          <button class="icon-button" type="button" data-testid="mute-button" aria-pressed="false" aria-label="Mute sound">
+            <span class="sound-icon" aria-hidden="true">◖)))</span>
+            <span class="mute-label">SOUND ON</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="game-layout">
+        <section class="game-card" aria-labelledby="game-title">
+          <div class="game-toolbar">
+            <div class="mission-label">
+              <span class="section-kicker">MISSION // 07</span>
+              <h1 id="game-title">Hold the line.</h1>
+            </div>
+            <div class="hud" aria-label="Game status">
+              <div class="hud-item">
+                <span class="hud-label">SCORE</span>
+                <strong data-testid="score">000000</strong>
+              </div>
+              <div class="hud-divider" aria-hidden="true"></div>
+              <div class="hud-item">
+                <span class="hud-label">LIVES</span>
+                <strong class="lives-value" data-testid="lives"><span class="life-pip"></span><span class="life-pip"></span><span class="life-pip"></span></strong>
+              </div>
+              <div class="hud-divider" aria-hidden="true"></div>
+              <div class="hud-item level-item">
+                <span class="hud-label">THREAT</span>
+                <strong id="level-value">01</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="canvas-frame">
+            <div class="frame-corner corner-tl" aria-hidden="true"></div>
+            <div class="frame-corner corner-tr" aria-hidden="true"></div>
+            <div class="frame-corner corner-bl" aria-hidden="true"></div>
+            <div class="frame-corner corner-br" aria-hidden="true"></div>
+            <canvas data-testid="game-canvas" width="960" height="600" tabindex="0" aria-label="Neon Barrage game area"></canvas>
+            <div class="game-overlay" id="game-overlay" data-phase="idle">
+              <div class="overlay-card">
+                <span class="overlay-signal"><span></span>INCOMING TRANSMISSION</span>
+                <div class="overlay-title-wrap">
+                  <span class="title-glitch" aria-hidden="true">NEON</span>
+                  <h2 id="overlay-title">Enter the barrage</h2>
+                </div>
+                <p id="overlay-copy">Pilot the last interceptor through a storm of hostile signals. Stay sharp. Stay moving.</p>
+                <div class="final-score" id="final-score" hidden>
+                  <span>MISSION SCORE</span>
+                  <strong id="final-score-value">000000</strong>
+                </div>
+                <button class="primary-button" type="button" data-testid="start-button">
+                  <span class="button-icon" aria-hidden="true">▶</span>
+                  <span id="start-button-label">LAUNCH MISSION</span>
+                </button>
+                <form class="score-form" id="score-form" novalidate hidden>
+                  <label for="player-name">TRANSMIT CALLSIGN <span>(1–16 CHARS)</span></label>
+                  <div class="score-form-row">
+                    <input id="player-name" data-testid="player-name" name="player-name" type="text" maxlength="16" minlength="1" autocomplete="nickname" placeholder="YOUR CALLSIGN" spellcheck="false" />
+                    <button class="secondary-button" data-testid="submit-score" type="submit">SAVE SCORE</button>
+                  </div>
+                  <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-controls-row">
+            <div class="control-hint"><span class="keycap">W</span><span class="keycap">A</span><span class="keycap">S</span><span class="keycap">D</span> MOVE <span class="hint-separator">·</span> <span class="keycap keycap-wide">SPACE</span> FIRE</div>
+            <div class="runtime-status"><span class="status-pulse"></span><span id="runtime-status">SYSTEMS NOMINAL</span></div>
+          </div>
+
+          <div class="touch-controls" data-testid="touch-controls" aria-label="Touch controls">
+            <div class="touch-dpad">
+              <button type="button" class="touch-button touch-up" data-input="up" aria-label="Move up">▲</button>
+              <button type="button" class="touch-button touch-left" data-input="left" aria-label="Move left">◀</button>
+              <button type="button" class="touch-button touch-down" data-input="down" aria-label="Move down">▼</button>
+              <button type="button" class="touch-button touch-right" data-input="right" aria-label="Move right">▶</button>
+            </div>
+            <button type="button" class="touch-button fire-button" data-input="fire" aria-label="Fire weapon"><span>FIRE</span><i>✦</i></button>
+          </div>
+        </section>
+
+        <aside class="side-column">
+          <section class="panel leaderboard-panel" aria-labelledby="leaderboard-title">
+            <div class="panel-heading">
+              <div>
+                <span class="section-kicker">GLOBAL FEED</span>
+                <h2 id="leaderboard-title">Top pilots</h2>
+              </div>
+              <span class="live-badge">TOP 10</span>
+            </div>
+            <div class="leaderboard-status" id="leaderboard-status" data-state="loading" role="status" aria-live="polite">TUNING INTO THE FEED…</div>
+            <ol class="leaderboard-list" data-testid="leaderboard" aria-label="Top pilots leaderboard"></ol>
+            <p class="panel-footnote"><span class="tiny-signal"></span>Scores sync after transmission</p>
+          </section>
+
+          <section class="panel briefing-panel" aria-labelledby="briefing-title">
+            <div class="panel-heading compact-heading">
+              <div>
+                <span class="section-kicker">FIELD BRIEFING</span>
+                <h2 id="briefing-title">Survival notes</h2>
+              </div>
+              <span class="briefing-index">03</span>
+            </div>
+            <div class="briefing-note"><span class="note-number">01</span><p>Targets accelerate as the signal climbs. Keep your vector unpredictable.</p></div>
+            <div class="briefing-note"><span class="note-number">02</span><p>Every clean hit charges the score multiplier. Missiles fade at the edge.</p></div>
+            <div class="briefing-note"><span class="note-number">03</span><p>Three hull pips. No second chances after the core goes dark.</p></div>
+          </section>
+
+          <div class="side-signature"><span>NB//07</span><span>VECTOR ONLINE</span></div>
+        </aside>
+      </main>
+
+      <footer class="footer-line">
+        <span>NEON BARRAGE © 2088</span>
+        <span>BUILT FOR THE AFTERGLOW</span>
+        <span>V 1.0.0</span>
+      </footer>
+    </div>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#070b1b" />
+    <meta name="description" content="Neon Barrage — a fast, glowing arcade survival shooter." />
+    <title>Neon Barrage // Arcade Signal</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+    <header class="topbar page-width">
+      <a class="wordmark" href="./" aria-label="Neon Barrage home">
+        <span class="wordmark-mark" aria-hidden="true">N</span>
+        <span><strong>NEON</strong><em>BARRAGE</em></span>
+      </a>
+      <div class="topbar-meta">
+        <span class="signal-dot" aria-hidden="true"></span>
+        <span class="signal-label">ARCADE UPLINK // ONLINE</span>
+        <button class="icon-button sound-button" data-testid="mute-button" id="mute-button" type="button" aria-pressed="false" aria-label="Mute sound">
+          <span class="sound-icon" aria-hidden="true">)))</span>
+          <span class="sound-label">Sound on</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="page-width app-shell">
+      <section class="intro" aria-labelledby="game-title">
+        <div class="intro-copy">
+          <p class="eyebrow"><span class="eyebrow-line"></span> Sector 09 / Defense protocol</p>
+          <h1 id="game-title">Stay bright.<br /><span>Hit harder.</span></h1>
+          <p class="intro-lede">Pilot the last light through a hostile signal storm. Every wave gets faster. Every miss gets louder.</p>
+        </div>
+        <div class="intro-stats" aria-label="Game facts">
+          <div class="intro-stat"><span class="stat-value">03</span><span class="stat-label">LIVES / RUN</span></div>
+          <div class="intro-stat"><span class="stat-value">∞</span><span class="stat-label">WAVES AHEAD</span></div>
+          <div class="intro-stat"><span class="stat-value pink">TOP 10</span><span class="stat-label">PILOT BOARD</span></div>
+        </div>
+      </section>
+
+      <section class="game-layout" aria-label="Neon Barrage game">
+        <div class="game-column">
+          <div class="game-card">
+            <div class="game-toolbar">
+              <div class="toolbar-left">
+                <span class="live-indicator"><span class="live-dot"></span> LIVE FEED</span>
+                <span class="toolbar-divider" aria-hidden="true"></span>
+                <span id="phase-badge" class="phase-badge">READY TO DEPLOY</span>
+              </div>
+              <div class="toolbar-right"><span>SECTOR</span><strong>09</strong><span class="toolbar-divider" aria-hidden="true"></span><span id="level-display">WAVE 01</span></div>
+            </div>
+
+            <div class="hud" aria-label="Run status">
+              <div class="hud-block score-block"><span class="hud-label">SCORE</span><span class="hud-value" data-testid="score" id="score-display">000000</span></div>
+              <div class="hud-block lives-block"><span class="hud-label">HULL</span><span class="life-pips" data-testid="lives" id="lives-display" aria-label="3 lives"><i></i><i></i><i></i></span></div>
+              <div class="hud-block combo-block"><span class="hud-label">THREAT</span><span class="hud-value threat-value" id="threat-display">LOW</span></div>
+            </div>
+
+            <div class="canvas-frame" id="canvas-frame">
+              <canvas data-testid="game-canvas" id="game-canvas" width="960" height="600" aria-label="Neon Barrage arcade shooter. Use arrow keys or WASD to move, and Space to fire."></canvas>
+              <div class="canvas-vignette" aria-hidden="true"></div>
+              <div class="game-overlay" id="game-overlay" data-phase="idle">
+                <div class="overlay-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
+                <p class="overlay-kicker" id="overlay-kicker">SIGNAL LOCKED // READY</p>
+                <h2 id="overlay-title">Defend the<br /><span>last light.</span></h2>
+                <p class="overlay-copy" id="overlay-copy">Steer the prism ship, cut through the incoming swarm, and make your name visible on the board.</p>
+                <div class="overlay-controls" id="idle-controls">
+                  <span><kbd>WASD</kbd> / <kbd>ARROWS</kbd> MOVE</span>
+                  <span><kbd>SPACE</kbd> FIRE</span>
+                </div>
+                <button class="primary-button" data-testid="start-button" id="start-button" type="button"><span id="start-button-label">Launch mission</span><b aria-hidden="true">↗</b></button>
+                <div class="gameover-panel" id="gameover-panel" hidden>
+                  <div class="final-score"><span>FINAL SIGNAL</span><strong id="final-score">000000</strong></div>
+                  <form class="score-form" id="score-form" novalidate>
+                    <label for="player-name">Transmit your callsign</label>
+                    <div class="score-entry">
+                      <input data-testid="player-name" id="player-name" name="playerName" type="text" maxlength="16" minlength="1" autocomplete="nickname" placeholder="CALLSIGN" spellcheck="false" aria-describedby="name-hint name-error" />
+                      <button data-testid="submit-score" class="submit-button" id="submit-score" type="submit" aria-label="Submit score">SEND</button>
+                    </div>
+                    <div class="form-meta"><span id="name-hint">1–16 characters</span><span class="form-error" id="name-error" role="alert"></span></div>
+                  </form>
+                  <p class="submit-status" id="submit-status" aria-live="polite"></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="game-footer">
+              <div class="control-hint"><span class="hint-key">MOVE</span> <span>WASD / ARROW KEYS</span><span class="hint-separator">·</span><span class="hint-key">FIRE</span><span>SPACE</span></div>
+              <div class="telemetry"><span class="telemetry-pulse"></span><span id="telemetry-text">Awaiting pilot input</span></div>
+            </div>
+          </div>
+
+          <div class="touch-deck" data-testid="touch-controls" id="touch-controls" aria-label="Touch controls">
+            <div class="touch-copy"><span class="eyebrow">MOBILE PILOT</span><p>Press and hold to steer</p></div>
+            <div class="touch-pad" aria-label="Movement controls">
+              <button class="touch-button touch-up" type="button" data-action="up" aria-label="Move up">▲</button>
+              <button class="touch-button touch-left" type="button" data-action="left" aria-label="Move left">◀</button>
+              <button class="touch-button touch-down" type="button" data-action="down" aria-label="Move down">▼</button>
+              <button class="touch-button touch-right" type="button" data-action="right" aria-label="Move right">▶</button>
+            </div>
+            <button class="fire-button" type="button" data-action="fire" aria-label="Fire weapon"><span>FIRE</span><i>✦</i></button>
+          </div>
+        </div>
+
+        <aside class="sidebar">
+          <section class="panel leaderboard-panel" aria-labelledby="leaderboard-title">
+            <div class="panel-heading">
+              <div><p class="eyebrow">LIVE RANKING</p><h2 id="leaderboard-title">Pilot board</h2></div>
+              <span class="panel-icon" aria-hidden="true">↗</span>
+            </div>
+            <p class="panel-intro">The sharpest signals in the sector.</p>
+            <div class="leaderboard-status" id="leaderboard-status" role="status" aria-live="polite">Loading pilot data<span class="loading-dots" aria-hidden="true">...</span></div>
+            <ol class="leaderboard-list" data-testid="leaderboard" id="leaderboard-list" aria-label="Top ten scores"></ol>
+            <div class="leaderboard-foot"><span>RANK</span><span>CALLSIGN</span><span> SCORE</span></div>
+          </section>
+
+          <section class="panel brief-panel" aria-labelledby="brief-title">
+            <div class="panel-heading compact"><div><p class="eyebrow">FIELD NOTES</p><h2 id="brief-title">Read the wave</h2></div><span class="brief-mark" aria-hidden="true">⌁</span></div>
+            <div class="enemy-legend">
+              <div class="legend-row"><span class="legend-shape scout-shape"></span><div><strong>SCOUT</strong><span>Fast / 25 pts</span></div></div>
+              <div class="legend-row"><span class="legend-shape zigzag-shape"></span><div><strong>WEAVER</strong><span>Erratic / 35 pts</span></div></div>
+              <div class="legend-row"><span class="legend-shape brute-shape"></span><div><strong>BRUTE</strong><span>Armored / 80 pts</span></div></div>
+            </div>
+            <div class="brief-callout"><span class="callout-line"></span><p>Difficulty escalates every 22 seconds. Keep moving when the screen turns amber.</p></div>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="site-footer page-width"><span>NEON BARRAGE / 2026</span><span>BUILT FOR THE NIGHT SHIFT</span><span class="footer-signal">◌ SIGNAL STABLE</span></footer>
+
+    <noscript><div class="noscript-message">Neon Barrage needs JavaScript enabled to run the arcade loop.</div></noscript>
+    <script>
+      // Coordinators can inject the public Supabase URL/key before app.js.
+      window.__NEON_BARRAGE_CONFIG__ = window.__NEON_BARRAGE_CONFIG__ || {};
+    </script>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

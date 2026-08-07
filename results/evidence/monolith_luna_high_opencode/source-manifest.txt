@@ -1,0 +1,13 @@
+.wrangler/cache/pages.json
+.wrangler/cache/wrangler-account.json
+BENCHMARK_TASK.md
+README.md
+app.js
+benchmark-result.json
+config.js
+index.html
+package-lock.json
+package.json
+styles.css
+supabase/migrations/001_scores.sql
+test/app.test.js

@@ -1,0 +1,15 @@
+{
+  "treatment": "native_dynamic",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-native-dynamic-neon-barrage-pages.pages.dev",
+  "cloudflare_project": "shootemup-bench-native-dynamic-neon-barrage-pages",
+  "supabase_url": "https://lyyyxbxacrxqflxmtlqq.supabase.co",
+  "supabase_project_ref": "lyyyxbxacrxqflxmtlqq",
+  "supabase_public_key": "sb_publishable_cgwOqQeY8eHfwsHYrnepJw_5kfrA-sD",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Production Pages deployment uses the shared benchmark Supabase project and the native_dynamic leaderboard partition."
+}

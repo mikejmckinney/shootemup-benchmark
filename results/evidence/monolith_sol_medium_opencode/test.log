@@ -1,0 +1,14 @@
+
+> neon-barrage@1.0.0 test
+> vitest run
+
+
+ RUN  v3.1.4 /workspaces/shootemup-benchmark/candidates/monolith_sol_medium_opencode
+
+ ✓ src/game-core.test.js (3 tests) 6ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  00:35:25
+   Duration  389ms (transform 37ms, setup 0ms, collect 33ms, tests 6ms, environment 0ms, prepare 93ms)
+

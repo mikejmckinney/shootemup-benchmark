@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#080b19" />
+  <title>Neon Barrage</title>
+  <meta name="description" content="A fast, luminous arcade shooter." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="scanlines"></div>
+  <main>
+    <header>
+      <div class="brand"><span class="eyebrow">SECTOR 09 // ARCADE</span><h1>NEON<br><i>BARRAGE</i></h1></div>
+      <div class="status"><span class="pulse"></span> SYSTEM ONLINE</div>
+    </header>
+    <section class="game-column">
+      <div class="hud">
+        <div><small>SCORE</small><strong data-testid="score">000000</strong></div>
+        <div class="wave"><small>THREAT</small><strong id="threat">01</strong></div>
+        <div class="lives"><small>HULL</small><strong data-testid="lives">◆ ◆ ◆</strong></div>
+        <button class="icon-button" data-testid="mute-button" aria-label="Mute sound">SOUND: ON</button>
+      </div>
+      <div class="screen-shell">
+        <canvas data-testid="game-canvas" width="720" height="760" aria-label="Neon Barrage game area"></canvas>
+        <div class="overlay" id="overlay">
+          <div class="reticle"></div>
+          <p class="kicker" id="overlay-kicker">PILOT READY</p>
+          <h2 id="overlay-title">ENTER THE<br><em>KILLZONE</em></h2>
+          <p id="overlay-copy">Break the swarm. Chain eliminations.<br>Survive as long as you can.</p>
+          <button class="primary" data-testid="start-button">INITIALIZE RUN <span>→</span></button>
+        </div>
+        <div class="damage-flash"></div>
+      </div>
+      <div class="touch-controls" data-testid="touch-controls">
+        <div class="dpad">
+          <button data-key="ArrowLeft" aria-label="Move left">◀</button>
+          <div><button data-key="ArrowUp" aria-label="Move up">▲</button><button data-key="ArrowDown" aria-label="Move down">▼</button></div>
+          <button data-key="ArrowRight" aria-label="Move right">▶</button>
+        </div>
+        <button class="fire" data-key="Space" aria-label="Fire">FIRE</button>
+      </div>
+      <p class="controls-copy"><span>WASD / ARROWS</span> TO MOVE <b>•</b> <span>SPACE</span> TO FIRE</p>
+    </section>
+    <aside>
+      <div class="panel-heading"><div><small>GLOBAL SIGNAL</small><h2>TOP PILOTS</h2></div><span>LIVE</span></div>
+      <div class="leaderboard" data-testid="leaderboard" aria-live="polite"><p class="board-state">Connecting to relay…</p></div>
+      <div class="submit-panel" id="submit-panel" hidden>
+        <label for="player-name">LOG YOUR CALLSIGN</label>
+        <div class="submit-row"><input id="player-name" data-testid="player-name" maxlength="16" autocomplete="nickname" placeholder="1-16 CHARACTERS" /><button data-testid="submit-score">UPLOAD</button></div>
+        <p id="submit-status"></p>
+      </div>
+      <div class="intel"><span>FIELD INTEL</span><p>Enemies accelerate with every sector. Pulse ships fire back. Keep moving.</p></div>
+    </aside>
+  </main>
+  <footer><span>NB-86 COMBAT SYSTEM</span><span>NO CONTINUES. NO MERCY.</span></footer>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

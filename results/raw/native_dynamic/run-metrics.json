@@ -1,0 +1,56 @@
+{
+  "treatment": "native_dynamic",
+  "started_at": "2026-08-05T16:09:38Z",
+  "ended_at": "2026-08-05T16:33:27Z",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 1429,
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "turns": 1,
+  "usage": {
+    "input_tokens": 14094523,
+    "cached_input_tokens": 13550848,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 114532,
+    "reasoning_output_tokens": 53120
+  },
+  "parent_usage": {
+    "input_tokens": 9278213,
+    "cached_input_tokens": 9034752,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 40091,
+    "reasoning_output_tokens": 15250
+  },
+  "subagent_usage": [
+    {
+      "input_tokens": 1196175,
+      "cached_input_tokens": 1106688,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 24543,
+      "reasoning_output_tokens": 7939,
+      "total_tokens": 1220718,
+      "thread_id": "019fd2b0-db68-73c3-bb68-ffbb107839a2"
+    },
+    {
+      "input_tokens": 2398604,
+      "cached_input_tokens": 2285312,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 22909,
+      "reasoning_output_tokens": 15682,
+      "total_tokens": 2421513,
+      "thread_id": "019fd2b0-dcf9-7b52-b1a5-d3a44503d3cd"
+    },
+    {
+      "input_tokens": 1221531,
+      "cached_input_tokens": 1124096,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 26989,
+      "reasoning_output_tokens": 14249,
+      "total_tokens": 1248520,
+      "thread_id": "019fd2b0-dd70-74d0-9f20-93e0caefa242"
+    }
+  ],
+  "agents_started": 4,
+  "native_coordination_calls": 20
+}

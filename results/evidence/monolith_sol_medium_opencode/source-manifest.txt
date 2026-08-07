@@ -1,0 +1,17 @@
+.env.example
+.gitignore
+BENCHMARK_TASK.md
+README.md
+benchmark-result.json
+dist/assets/index-BBRMCfQz.css
+dist/assets/index-ok6RGaq4.js
+dist/index.html
+index.html
+package-lock.json
+package.json
+src/game-core.js
+src/game-core.test.js
+src/main.js
+src/style.css
+supabase/migrations/20260806000000_leaderboard.sql
+tests/production-smoke.mjs

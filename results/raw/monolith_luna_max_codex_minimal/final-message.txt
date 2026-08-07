@@ -1,0 +1,8 @@
+Complete and verified.
+
+Live: https://shootemup-bench-monolith-luna-max-codex-minimal-pages.pages.dev
+
+- Production/assets: HTTP 200
+- Supabase anon insert/read round trip: passed
+- Tests, lint, and build: passed
+- Result artifact: [benchmark-result.json](/workspaces/shootemup-benchmark/candidates/monolith_luna_max_codex_minimal/benchmark-result.json)

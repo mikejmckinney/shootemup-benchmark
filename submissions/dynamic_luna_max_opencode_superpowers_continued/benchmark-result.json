@@ -1,0 +1,15 @@
+{
+  "treatment": "dynamic_luna_max_opencode_superpowers",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-dynamic-luna-max-opencode-superpowers-avwr.pages.dev/",
+  "cloudflare_project": "shootemup-bench-dynamic-luna-max-opencode-superpowers-avwr",
+  "supabase_url": "https://tqwypstoyzlougnlavwr.supabase.co",
+  "supabase_project_ref": "tqwypstoyzlougnlavwr",
+  "supabase_public_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxd3lwc3RveXpsb3VnbmxhdndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwNTkyNzQsImV4cCI6MjEwMTYzNTI3NH0.4Y6yVExA7Ij0VDZnrgtpE0RifgVKQTrW70r_zL6wrpM",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Neon Barrage deployed to Cloudflare Pages; Supabase leaderboard insert/read verified with the public client."
+}

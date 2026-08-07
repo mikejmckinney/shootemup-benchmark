@@ -1,0 +1,492 @@
+{
+  "source": "OpenCode SQLite recursive session tree",
+  "database": "/home/codespace/.local/share/opencode/opencode.db",
+  "root_session": "ses_027316d9effevgeDyFTBFek7vm",
+  "captured_at": "2026-08-07T01:41:58.711Z",
+  "sessions_count": 23,
+  "child_sessions": 22,
+  "turns": 502,
+  "tool_calls": 970,
+  "coordination_tool_calls": 28,
+  "tool_counts": {
+    "skill": 83,
+    "todowrite": 11,
+    "glob": 51,
+    "read": 258,
+    "bash": 422,
+    "apply_patch": 65,
+    "grep": 42,
+    "task": 28,
+    "webfetch": 10
+  },
+  "usage": {
+    "input_tokens": 36060443,
+    "cached_input_tokens": 33528832,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 511476,
+    "reasoning_output_tokens": 347202
+  },
+  "provider_reported_cost_usd": 0,
+  "sessions": [
+    {
+      "id": "ses_027316d9effevgeDyFTBFek7vm",
+      "parent_id": null,
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Autonomous Superpowers Benchmark Implementation",
+      "cost": 0,
+      "tokens_input": 617297,
+      "tokens_output": 35135,
+      "tokens_reasoning": 15030,
+      "tokens_cache_read": 6690304,
+      "tokens_cache_write": 0,
+      "agent": "build",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786048844385,
+      "time_updated": 1786066823962
+    },
+    {
+      "id": "ses_0272904edffeMrIqyf49oJ67Ex",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Scaffold Neon Barrage (@general subagent)",
+      "cost": 0,
+      "tokens_input": 54634,
+      "tokens_output": 4875,
+      "tokens_reasoning": 7621,
+      "tokens_cache_read": 585728,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786049395474,
+      "time_updated": 1786049709157
+    },
+    {
+      "id": "ses_02723c66fffep1RVMLG5dy6N07",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Review scaffold task (@general subagent)",
+      "cost": 0,
+      "tokens_input": 49550,
+      "tokens_output": 1122,
+      "tokens_reasoning": 8012,
+      "tokens_cache_read": 216576,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786049739152,
+      "time_updated": 1786049919402
+    },
+    {
+      "id": "ses_027209f9bffegcxnbdl5V19mwI",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Build game engine (@general subagent)",
+      "cost": 0,
+      "tokens_input": 190595,
+      "tokens_output": 16170,
+      "tokens_reasoning": 26687,
+      "tokens_cache_read": 2310144,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786049945700,
+      "time_updated": 1786051323539
+    },
+    {
+      "id": "ses_0271938a8ffeVHcZWXus4k2qto",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Review game engine (@general subagent)",
+      "cost": 0,
+      "tokens_input": 64536,
+      "tokens_output": 1984,
+      "tokens_reasoning": 21590,
+      "tokens_cache_read": 261632,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786050430807,
+      "time_updated": 1786050876538
+    },
+    {
+      "id": "ses_0270b3c8effenr0G8Efx3s3fSk",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Re-review engine fixes (@general subagent)",
+      "cost": 0,
+      "tokens_input": 38023,
+      "tokens_output": 982,
+      "tokens_reasoning": 7658,
+      "tokens_cache_read": 62464,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786051347314,
+      "time_updated": 1786051516947
+    },
+    {
+      "id": "ses_026a0c65effev2UAIaRlnXZkN0",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Re-review engine fixes (@general subagent)",
+      "cost": 0,
+      "tokens_input": 29428,
+      "tokens_output": 657,
+      "tokens_reasoning": 19620,
+      "tokens_cache_read": 34304,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786058324385,
+      "time_updated": 1786058697749
+    },
+    {
+      "id": "ses_0269a9270ffeg87G0NShfzxsEd",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Build canvas game UI (@general subagent)",
+      "cost": 0,
+      "tokens_input": 367384,
+      "tokens_output": 31703,
+      "tokens_reasoning": 33779,
+      "tokens_cache_read": 6496256,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786058730895,
+      "time_updated": 1786060969479
+    },
+    {
+      "id": "ses_0268c3b9dffedvNz7dQ5f40QVV",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Review canvas UI task (@general subagent)",
+      "cost": 0,
+      "tokens_input": 95409,
+      "tokens_output": 2512,
+      "tokens_reasoning": 18460,
+      "tokens_cache_read": 740864,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786059670626,
+      "time_updated": 1786060092267
+    },
+    {
+      "id": "ses_0267ff501ffeqI9zS2mq0giBDC",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Re-review canvas fixes (@general subagent)",
+      "cost": 0,
+      "tokens_input": 29396,
+      "tokens_output": 799,
+      "tokens_reasoning": 18538,
+      "tokens_cache_read": 48640,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786060475134,
+      "time_updated": 1786060830858
+    },
+    {
+      "id": "ses_02678089affeFVmWq2xfA58Nmj",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Re-review pointer fix (@general subagent)",
+      "cost": 0,
+      "tokens_input": 0,
+      "tokens_output": 0,
+      "tokens_reasoning": 0,
+      "tokens_cache_read": 0,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786060994405,
+      "time_updated": 1786060994548
+    },
+    {
+      "id": "ses_026777852ffeqf2YV0aH0zjVcg",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Re-review pointer fix (@general subagent)",
+      "cost": 0,
+      "tokens_input": 9627,
+      "tokens_output": 324,
+      "tokens_reasoning": 437,
+      "tokens_cache_read": 16896,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786061031341,
+      "time_updated": 1786061052410
+    },
+    {
+      "id": "ses_0266fbaa3ffe4qg1eaT97AjSMn",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Review pointer activation (@general subagent)",
+      "cost": 0,
+      "tokens_input": 30526,
+      "tokens_output": 1656,
+      "tokens_reasoning": 3672,
+      "tokens_cache_read": 111104,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786061538652,
+      "time_updated": 1786061646271
+    },
+    {
+      "id": "ses_0266da5d2ffeNyAPUO3xyRxnua",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Add secure leaderboard (@general subagent)",
+      "cost": 0,
+      "tokens_input": 401779,
+      "tokens_output": 22195,
+      "tokens_reasoning": 38255,
+      "tokens_cache_read": 8572416,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786061675053,
+      "time_updated": 1786063996101
+    },
+    {
+      "id": "ses_02663c60cffenf92Ct9hqQRbrV",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Review leaderboard task (@general subagent)",
+      "cost": 0,
+      "tokens_input": 62938,
+      "tokens_output": 2540,
+      "tokens_reasoning": 17523,
+      "tokens_cache_read": 450048,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786062322163,
+      "time_updated": 1786062726381
+    },
+    {
+      "id": "ses_0265680b1ffe8Llo63eaZy3l5x",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Re-review leaderboard fixes (@general subagent)",
+      "cost": 0,
+      "tokens_input": 17141,
+      "tokens_output": 533,
+      "tokens_reasoning": 24058,
+      "tokens_cache_read": 15360,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786063191886,
+      "time_updated": 1786063638245
+    },
+    {
+      "id": "ses_02649e744ffesJFd6QIn4PIku2",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Re-review migration fixes (@general subagent)",
+      "cost": 0,
+      "tokens_input": 17058,
+      "tokens_output": 357,
+      "tokens_reasoning": 7967,
+      "tokens_cache_read": 15360,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786064017595,
+      "time_updated": 1786064173954
+    },
+    {
+      "id": "ses_026469ca2ffeCyc2eSuA1cEten",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Review migration fix (@general subagent)",
+      "cost": 0,
+      "tokens_input": 75362,
+      "tokens_output": 1517,
+      "tokens_reasoning": 11160,
+      "tokens_cache_read": 295424,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786064233309,
+      "time_updated": 1786064491396
+    },
+    {
+      "id": "ses_026423507ffe1KmGp0QpfO4fVx",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Document local setup (@general subagent)",
+      "cost": 0,
+      "tokens_input": 83322,
+      "tokens_output": 6738,
+      "tokens_reasoning": 6774,
+      "tokens_cache_read": 810496,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786064521976,
+      "time_updated": 1786064813792
+    },
+    {
+      "id": "ses_0263d58d1ffejfSmyHe8ByV4TR",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Review documentation task (@general subagent)",
+      "cost": 0,
+      "tokens_input": 92635,
+      "tokens_output": 3133,
+      "tokens_reasoning": 15196,
+      "tokens_cache_read": 797696,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786064840494,
+      "time_updated": 1786065211186
+    },
+    {
+      "id": "ses_02636e501ffeXlrsUCl43Ggdj5",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Provision cloud deployment (@general subagent)",
+      "cost": 0,
+      "tokens_input": 169826,
+      "tokens_output": 28121,
+      "tokens_reasoning": 33267,
+      "tokens_cache_read": 4938240,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786065263358,
+      "time_updated": 1786066805767
+    },
+    {
+      "id": "ses_026287f0fffe7vwSxPHHvL6y3Y",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Review cloud provisioning (@general subagent)",
+      "cost": 0,
+      "tokens_input": 17749,
+      "tokens_output": 790,
+      "tokens_reasoning": 8311,
+      "tokens_cache_read": 31744,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786066206960,
+      "time_updated": 1786066375696
+    },
+    {
+      "id": "ses_0261eec97ffeJv87nmb9Z2TYtq",
+      "parent_id": "ses_027316d9effevgeDyFTBFek7vm",
+      "directory": "/workspaces/shootemup-benchmark/candidates/dynamic_luna_max_opencode_superpowers",
+      "title": "Review grant hardening (@general subagent)",
+      "cost": 0,
+      "tokens_input": 17396,
+      "tokens_output": 431,
+      "tokens_reasoning": 3587,
+      "tokens_cache_read": 27136,
+      "tokens_cache_write": 0,
+      "agent": "general",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786066834280,
+      "time_updated": 1786066911765
+    }
+  ]
+}

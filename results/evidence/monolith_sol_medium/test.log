@@ -1,0 +1,16 @@
+
+> neon-barrage@1.0.0 test
+> node --test
+
+✔ starts with the required public state (2.529249ms)
+✔ movement is bounded and firing creates twin projectiles (20.110776ms)
+✔ projectile collision removes enemy and awards score (0.33009ms)
+✔ test ending validates and uses the real gameover phase (1.675ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 228.679456

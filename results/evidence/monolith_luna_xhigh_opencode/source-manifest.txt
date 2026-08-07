@@ -1,0 +1,15 @@
+.gitignore
+.wrangler/cache/pages.json
+.wrangler/cache/wrangler-account.json
+BENCHMARK_TASK.md
+README.md
+benchmark-result.json
+config.js
+game-logic.mjs
+game.js
+index.html
+migration.sql
+package-lock.json
+package.json
+styles.css
+tests/game.test.mjs

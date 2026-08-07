@@ -1,0 +1,1 @@
+{"name":"neon-barrage","version":"1.0.0","private":true,"scripts":{"test":"node --test test/app.test.js","build":"node --check app.js"}}

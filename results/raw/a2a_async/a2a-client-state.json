@@ -1,0 +1,20 @@
+{
+  "requests": {
+    "http://127.0.0.1:9201|a2a_async-frontend-9201-20260805-v1": {
+      "base_url": "http://127.0.0.1:9201",
+      "idempotency_key": "a2a_async-frontend-9201-20260805-v1",
+      "message_sha256": "948af1136694bc44bae8b43b97d6e3dec9f9cd5b42682073a836301ec341c5d0",
+      "retry_owner": "coordinator",
+      "submitted_at": 1785968468.0181525,
+      "task_id": "f495bd23-43a5-4e2b-b94b-36f91fe89e1f"
+    },
+    "http://127.0.0.1:9202|a2a_async-backend-9202-20260805-v1": {
+      "base_url": "http://127.0.0.1:9202",
+      "idempotency_key": "a2a_async-backend-9202-20260805-v1",
+      "message_sha256": "a76a1c6afa6e1d1f9cb27e2c88a3c624395df8de76e4c9271a98be279584946e",
+      "retry_owner": "coordinator",
+      "submitted_at": 1785968467.2121346,
+      "task_id": "c8a58549-68b5-44a3-85d9-65fd7664f149"
+    }
+  }
+}

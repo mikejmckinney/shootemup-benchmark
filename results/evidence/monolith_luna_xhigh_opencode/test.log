@@ -1,0 +1,15 @@
+
+> neon-barrage@1.0.0 test
+> node --test tests/*.test.mjs
+
+✔ leaderboard validation accepts bounded callsigns and scores (3.153003ms)
+✔ spawn cadence escalates but stays playable (0.305603ms)
+✔ circle collision and enemy damage are deterministic (2.18018ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 203.331919

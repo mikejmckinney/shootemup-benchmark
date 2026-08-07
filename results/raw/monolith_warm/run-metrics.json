@@ -1,0 +1,18 @@
+{
+  "treatment": "monolith_warm",
+  "started_at": "2026-08-05T21:56:11Z",
+  "ended_at": "2026-08-05T22:13:48Z",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 1057,
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "max",
+  "turns": 1,
+  "usage": {
+    "input_tokens": 3608945,
+    "cached_input_tokens": 3482368,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 46910,
+    "reasoning_output_tokens": 19988
+  }
+}

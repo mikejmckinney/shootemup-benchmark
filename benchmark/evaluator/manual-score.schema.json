@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["combat_progression", "visual_design", "resilience_accessibility", "data_security", "engineering_quality", "reproducibility", "manual_points", "summary"],
+  "properties": {
+    "combat_progression": {"$ref": "#/$defs/category"},
+    "visual_design": {"$ref": "#/$defs/category"},
+    "resilience_accessibility": {"$ref": "#/$defs/category"},
+    "data_security": {"$ref": "#/$defs/category"},
+    "engineering_quality": {"$ref": "#/$defs/category"},
+    "reproducibility": {"$ref": "#/$defs/category"},
+    "manual_points": {"type": "integer", "minimum": 0, "maximum": 46},
+    "summary": {"type": "string"}
+  },
+  "$defs": {
+    "category": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["awarded", "rationale", "evidence"],
+      "properties": {
+        "awarded": {"type": "integer", "minimum": 0, "maximum": 12},
+        "rationale": {"type": "string"},
+        "evidence": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

@@ -1,0 +1,296 @@
+{
+  "evaluated_at": "2026-08-06T23:06:44.335Z",
+  "candidate_dir": "/workspaces/shootemup-benchmark/candidates/monolith_luna_max_opencode_speckit",
+  "result_artifact_valid": true,
+  "automated_points": 52,
+  "automated_points_available": 54,
+  "checks": {
+    "valid_result_artifact": {
+      "passed": true,
+      "points_awarded": 3,
+      "points_available": 3,
+      "evidence": null
+    },
+    "live_cloudflare_app": {
+      "passed": true,
+      "points_awarded": 5,
+      "points_available": 5,
+      "evidence": {
+        "http_status": 200,
+        "canvas_visible": true
+      }
+    },
+    "required_test_surface": {
+      "passed": false,
+      "points_awarded": 0,
+      "points_available": 2,
+      "evidence": {
+        "selectorPresence": {
+          "start-button": 1,
+          "score": 1,
+          "lives": 1,
+          "mute-button": 1,
+          "leaderboard": 1,
+          "player-name": 0,
+          "submit-score": 0,
+          "touch-controls": 1
+        },
+        "adapterPresent": true
+      }
+    },
+    "game_starts": {
+      "passed": true,
+      "points_awarded": 2,
+      "points_available": 2,
+      "evidence": {
+        "phase": "playing",
+        "score": 0,
+        "lives": 3,
+        "playerX": 463,
+        "playerY": 566,
+        "enemyCount": 1,
+        "projectileCount": 0
+      }
+    },
+    "keyboard_movement": {
+      "passed": true,
+      "points_awarded": 3,
+      "points_available": 3,
+      "evidence": {
+        "initial": {
+          "phase": "playing",
+          "score": 0,
+          "lives": 3,
+          "playerX": 463,
+          "playerY": 566,
+          "enemyCount": 1,
+          "projectileCount": 0
+        },
+        "moved": {
+          "phase": "playing",
+          "score": 0,
+          "lives": 3,
+          "playerX": 589.0000000000002,
+          "playerY": 566,
+          "enemyCount": 2,
+          "projectileCount": 0
+        }
+      }
+    },
+    "keyboard_fire": {
+      "passed": true,
+      "points_awarded": 3,
+      "points_available": 3,
+      "evidence": {
+        "moved": {
+          "phase": "playing",
+          "score": 0,
+          "lives": 3,
+          "playerX": 589.0000000000002,
+          "playerY": 566,
+          "enemyCount": 2,
+          "projectileCount": 0
+        },
+        "fired": {
+          "phase": "playing",
+          "score": 0,
+          "lives": 3,
+          "playerX": 589.0000000000002,
+          "playerY": 566,
+          "enemyCount": 2,
+          "projectileCount": 1
+        }
+      }
+    },
+    "enemies_spawn": {
+      "passed": true,
+      "points_awarded": 3,
+      "points_available": 3,
+      "evidence": {
+        "phase": "playing",
+        "score": 100,
+        "lives": 3,
+        "playerX": 589.0000000000002,
+        "playerY": 566,
+        "enemyCount": 8,
+        "projectileCount": 0
+      }
+    },
+    "hud_state": {
+      "passed": true,
+      "points_awarded": 2,
+      "points_available": 2,
+      "evidence": {
+        "phase": "playing",
+        "score": 100,
+        "lives": 3,
+        "playerX": 589.0000000000002,
+        "playerY": 566,
+        "enemyCount": 8,
+        "projectileCount": 0
+      }
+    },
+    "game_over_adapter_uses_real_state": {
+      "passed": true,
+      "points_awarded": 3,
+      "points_available": 3,
+      "evidence": {
+        "phase": "game-over",
+        "score": 7317,
+        "lives": 3,
+        "playerX": 589.0000000000002,
+        "playerY": 566,
+        "enemyCount": 8,
+        "projectileCount": 0
+      }
+    },
+    "leaderboard_ui_submission": {
+      "passed": true,
+      "points_awarded": 6,
+      "points_available": 6,
+      "evidence": {
+        "testName": "BMX6057610234",
+        "requests": [
+          {
+            "method": "GET",
+            "status": 200,
+            "url": "https://cjwdmtrkiyobtrxalaij.supabase.co/rest/v1/leaderboard_entries"
+          },
+          {
+            "method": "POST",
+            "status": 201,
+            "url": "https://cjwdmtrkiyobtrxalaij.supabase.co/rest/v1/leaderboard_entries"
+          },
+          {
+            "method": "GET",
+            "status": 200,
+            "url": "https://cjwdmtrkiyobtrxalaij.supabase.co/rest/v1/leaderboard_entries"
+          },
+          {
+            "method": "GET",
+            "status": 200,
+            "url": "https://cjwdmtrkiyobtrxalaij.supabase.co/rest/v1/leaderboard_entries"
+          }
+        ]
+      }
+    },
+    "leaderboard_reload_persistence": {
+      "passed": true,
+      "points_awarded": 6,
+      "points_available": 6,
+      "evidence": {
+        "testName": "BMX6057610234",
+        "persisted": true,
+        "requests": [
+          {
+            "method": "GET",
+            "status": 200,
+            "url": "https://cjwdmtrkiyobtrxalaij.supabase.co/rest/v1/leaderboard_entries"
+          },
+          {
+            "method": "POST",
+            "status": 201,
+            "url": "https://cjwdmtrkiyobtrxalaij.supabase.co/rest/v1/leaderboard_entries"
+          },
+          {
+            "method": "GET",
+            "status": 200,
+            "url": "https://cjwdmtrkiyobtrxalaij.supabase.co/rest/v1/leaderboard_entries"
+          },
+          {
+            "method": "GET",
+            "status": 200,
+            "url": "https://cjwdmtrkiyobtrxalaij.supabase.co/rest/v1/leaderboard_entries"
+          }
+        ]
+      }
+    },
+    "leaderboard_score_visible": {
+      "passed": true,
+      "points_awarded": 3,
+      "points_available": 3,
+      "evidence": {
+        "leaderboardText": "PUBLIC SIGNAL\n\nLeaderboard\nTOP 10\n01\nNBmsi4buug\n123456\n02\nNBmsi4c6p0\n123456\n03\nNBmsi4fskv\n123456\n04\nNBmsi4i8co\n123456\n05\nNBmsi4ibmm\n123456\n06\nBMX6057610234\n7317"
+      }
+    },
+    "mute_control": {
+      "passed": true,
+      "points_awarded": 3,
+      "points_available": 3,
+      "evidence": {
+        "muteBefore": "Sound on Sound on. Disable sound",
+        "muteAfter": "Sound off Sound off. Enable sound"
+      }
+    },
+    "restart": {
+      "passed": true,
+      "points_awarded": 2,
+      "points_available": 2,
+      "evidence": {
+        "phase": "playing",
+        "score": 0,
+        "lives": 3,
+        "playerX": 463,
+        "playerY": 566,
+        "enemyCount": 1,
+        "projectileCount": 0
+      }
+    },
+    "basic_accessible_labels": {
+      "passed": true,
+      "points_awarded": 1,
+      "points_available": 1,
+      "evidence": {
+        "labeledElements": 6
+      }
+    },
+    "mobile_touch_and_fit": {
+      "passed": true,
+      "points_awarded": 5,
+      "points_available": 5,
+      "evidence": {
+        "touchVisible": true,
+        "canvasBox": {
+          "x": 13.796875,
+          "y": 201.1875,
+          "width": 362.40625,
+          "height": 240.9375
+        }
+      }
+    },
+    "browser_error_free": {
+      "passed": true,
+      "points_awarded": 2,
+      "points_available": 2,
+      "evidence": {
+        "console_errors": [],
+        "page_errors": []
+      }
+    }
+  },
+  "console_errors": [],
+  "page_errors": [],
+  "supabase_requests": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "https://cjwdmtrkiyobtrxalaij.supabase.co/rest/v1/leaderboard_entries"
+    },
+    {
+      "method": "POST",
+      "status": 201,
+      "url": "https://cjwdmtrkiyobtrxalaij.supabase.co/rest/v1/leaderboard_entries"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "https://cjwdmtrkiyobtrxalaij.supabase.co/rest/v1/leaderboard_entries"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "https://cjwdmtrkiyobtrxalaij.supabase.co/rest/v1/leaderboard_entries"
+    }
+  ],
+  "notes": []
+}

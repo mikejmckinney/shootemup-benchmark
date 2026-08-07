@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#080b17" />
+    <meta name="description" content="Neon Barrage — a precision arcade shooter for the last signal runners." />
+    <title>Neon Barrage // Arcade Signal</title>
+  </head>
+  <body>
+    <div class="site-noise" aria-hidden="true"></div>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand-lockup" href="/" aria-label="Neon Barrage home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand-copy">
+            <span class="brand-kicker">SIGNAL RUNNER // 09</span>
+            <span class="brand-name">NEON <em>BARRAGE</em></span>
+          </span>
+        </a>
+        <div class="topbar-actions">
+          <span class="status-chip"><span class="status-dot" aria-hidden="true"></span>LIVE GRID</span>
+          <button class="icon-button" type="button" data-testid="mute-button" aria-pressed="false" aria-label="Turn sound off">
+            <span class="icon-button-glyph" aria-hidden="true">◖)))</span>
+            <span class="icon-button-label">Sound on</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="game-layout">
+        <section class="game-column" aria-labelledby="game-heading">
+          <div class="section-heading game-heading-row">
+            <div>
+              <p class="eyebrow">DISTRICT 07 // AFTERGLOW SECTOR</p>
+              <h1 id="game-heading">Hold the <span>line.</span></h1>
+            </div>
+            <p class="heading-note">Move clean.<br /><strong>Leave static.</strong></p>
+          </div>
+
+          <div class="game-console">
+            <div class="console-topline">
+              <span class="console-label"><span class="pulse-line" aria-hidden="true"></span>SECTOR FEED</span>
+              <span class="console-readout" id="game-status" role="status" aria-live="polite">SYSTEM READY // PRESS LAUNCH</span>
+            </div>
+
+            <div class="game-stage-wrap">
+              <div class="game-stage" id="game-stage">
+                <canvas data-testid="game-canvas" id="game-canvas" width="960" height="620" tabindex="0" aria-label="Neon Barrage game canvas"></canvas>
+                <div class="scanline-overlay" aria-hidden="true"></div>
+                <div class="stage-vignette" aria-hidden="true"></div>
+                <div class="stage-corner stage-corner-tl" aria-hidden="true"></div>
+                <div class="stage-corner stage-corner-tr" aria-hidden="true"></div>
+                <div class="stage-corner stage-corner-bl" aria-hidden="true"></div>
+                <div class="stage-corner stage-corner-br" aria-hidden="true"></div>
+
+                <div class="game-over-panel" id="game-over-panel" hidden>
+                  <div class="game-over-kicker"><span class="status-dot" aria-hidden="true"></span>CONNECTION LOST</div>
+                  <h2>Signal <span>fractured.</span></h2>
+                  <p class="game-over-copy">You held the line for <strong id="final-wave">0</strong> waves. Archive the run before the grid forgets.</p>
+                  <div class="final-score-line"><span>FINAL SCORE</span><strong id="final-score">000000</strong></div>
+                  <form id="score-form" class="score-form" novalidate>
+                    <label for="player-name">Archive under a callsign</label>
+                    <div class="score-form-row">
+                      <input data-testid="player-name" id="player-name" name="player-name" type="text" maxlength="16" minlength="1" autocomplete="nickname" placeholder="YOUR CALLSIGN" aria-describedby="name-help leaderboard-feedback" />
+                      <button data-testid="submit-score" type="submit" class="primary-button"><span>Submit</span><span aria-hidden="true">↗</span></button>
+                    </div>
+                    <p id="name-help" class="field-help">1–16 characters // spaces allowed</p>
+                    <p id="leaderboard-feedback" class="form-feedback" role="status" aria-live="polite"></p>
+                  </form>
+                  <button type="button" id="restart-button" class="text-button">Run it back <span aria-hidden="true">↻</span></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="console-controls">
+              <button data-testid="start-button" id="start-button" class="primary-button launch-button" type="button"><span class="launch-icon" aria-hidden="true">▷</span><span id="start-button-label">Launch mission</span><span class="button-key">ENTER</span></button>
+              <div class="desktop-hint"><span class="keycap">W</span><span class="keycap">A</span><span class="keycap">S</span><span class="keycap">D</span> MOVE <span class="hint-divider">·</span> <span class="keycap keycap-wide">SPACE</span> FIRE</div>
+              <div class="mobile-hint">Tap the controls to weave through the signal storm.</div>
+            </div>
+
+            <div class="touch-controls" data-testid="touch-controls" aria-label="Touch controls">
+              <div class="touch-pad" aria-label="Movement">
+                <button type="button" class="touch-button touch-up" data-direction="up" aria-label="Move up">▲</button>
+                <button type="button" class="touch-button touch-left" data-direction="left" aria-label="Move left">◀</button>
+                <button type="button" class="touch-button touch-down" data-direction="down" aria-label="Move down">▼</button>
+                <button type="button" class="touch-button touch-right" data-direction="right" aria-label="Move right">▶</button>
+                <span class="touch-pad-core" aria-hidden="true"></span>
+              </div>
+              <button type="button" class="touch-button fire-button" data-action="fire" aria-label="Fire weapon"><span aria-hidden="true">✦</span><span>FIRE</span></button>
+            </div>
+          </div>
+        </section>
+
+        <aside class="side-column" aria-label="Mission data">
+          <div class="hud-grid" aria-label="Current run statistics">
+            <div class="stat-card stat-card-score">
+              <div class="stat-label"><span class="stat-icon" aria-hidden="true">✦</span>SCORE</div>
+              <strong data-testid="score" id="score">000000</strong>
+              <span class="stat-caption">points / active run</span>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label"><span class="stat-icon life-icon" aria-hidden="true">♥</span>LIVES</div>
+              <strong data-testid="lives" id="lives">♥ ♥ ♥</strong>
+              <span class="stat-caption">signal integrity</span>
+            </div>
+          </div>
+
+          <section class="intel-card leaderboard-card" aria-labelledby="leaderboard-heading">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow">ARCHIVE // ALL RUNNERS</p>
+                <h2 id="leaderboard-heading">Signal <span>legends.</span></h2>
+              </div>
+              <span class="card-index">TOP 10</span>
+            </div>
+            <div class="leaderboard-meta"><span id="leaderboard-mode">LOCAL ARCHIVE</span><span class="leaderboard-rule" aria-hidden="true"></span><span>DESCENDING SCORE</span></div>
+            <div id="leaderboard-loading" class="leaderboard-state loading-state" hidden><span class="loader-ring" aria-hidden="true"></span>Syncing the archive...</div>
+            <div id="leaderboard-empty" class="leaderboard-state empty-state" hidden>No archived runs yet.<br /><span>Be the first signal through.</span></div>
+            <div id="leaderboard-error" class="leaderboard-state error-state" hidden><span aria-hidden="true">!</span><span id="leaderboard-error-text">Archive unavailable.</span></div>
+            <ol data-testid="leaderboard" id="leaderboard" class="leaderboard-list" aria-live="polite"></ol>
+            <p class="leaderboard-footnote"><span class="live-indicator" aria-hidden="true"></span> Scores sync through the public archive endpoint.</p>
+          </section>
+
+          <section class="intel-card briefing-card" aria-labelledby="briefing-heading">
+            <div class="card-heading compact-heading">
+              <div>
+                <p class="eyebrow">FIELD BRIEFING</p>
+                <h2 id="briefing-heading">Keep it <span>moving.</span></h2>
+              </div>
+              <span class="briefing-symbol" aria-hidden="true">⌁</span>
+            </div>
+            <p>Threats accelerate every twelve seconds. Thread the gaps, clear the swarm, and protect the last clean signal.</p>
+            <div class="briefing-rule" aria-hidden="true"></div>
+            <div class="briefing-stats"><span><strong>01</strong> MOVE</span><span><strong>02</strong> FIRE</span><span><strong>03</strong> SURVIVE</span></div>
+          </section>
+        </aside>
+      </main>
+
+      <footer class="footer-bar">
+        <span>NEON BARRAGE <span class="footer-dim">/</span> BUILT FOR THE AFTERGLOW</span>
+        <span class="footer-right">NO SIGNAL IS EVER LOST <span class="footer-mark" aria-hidden="true">✦</span></span>
+      </footer>
+    </div>
+
+    <noscript>
+      <div class="noscript-message">Neon Barrage needs JavaScript enabled to render the arcade grid. Please enable it and reload.</div>
+    </noscript>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

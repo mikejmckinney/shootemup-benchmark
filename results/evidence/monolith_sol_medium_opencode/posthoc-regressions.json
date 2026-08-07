@@ -1,0 +1,71 @@
+{
+  "treatment": "monolith_sol_medium_opencode",
+  "evaluated_at": "2026-08-06T01:23:12.692Z",
+  "live_url": "https://shootemup-bench-monolith-sol-medium-opencode-neon.pages.dev",
+  "methodology": "Live production build with Supabase REST requests mocked in-browser; no leaderboard rows were written.",
+  "checks": {
+    "progression_start_consistency": {
+      "passed": false,
+      "applicable": true,
+      "before": 1,
+      "after": 3
+    },
+    "physical_name_entry": {
+      "passed": false,
+      "expected": "WASD wasd",
+      "actual": ""
+    },
+    "advertised_keyboard_restart": {
+      "passed": true,
+      "advertised": false,
+      "applicable": false
+    },
+    "immediate_click_restart": {
+      "passed": true,
+      "button_found": true,
+      "state": {
+        "phase": "playing",
+        "score": 0,
+        "lives": 3,
+        "playerX": 338,
+        "playerY": 795,
+        "enemyCount": 1,
+        "projectileCount": 0
+      }
+    }
+  },
+  "requests": [
+    "GET",
+    "POST",
+    "GET"
+  ],
+  "console_errors": [],
+  "page_errors": [],
+  "http_status": 200,
+  "progress_before_start": [
+    {
+      "selector": "#threat",
+      "text": "01"
+    }
+  ],
+  "progress_after_start": [
+    {
+      "selector": "#threat",
+      "text": "03"
+    }
+  ],
+  "state_after_submit": {
+    "phase": "gameover",
+    "score": 7317,
+    "lives": 3,
+    "playerX": 338,
+    "playerY": 795,
+    "enemyCount": 1,
+    "projectileCount": 0
+  },
+  "active_element_after_submit": {
+    "tag": "BODY",
+    "id": null,
+    "testid": null
+  }
+}

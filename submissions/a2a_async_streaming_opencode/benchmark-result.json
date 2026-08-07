@@ -1,0 +1,15 @@
+{
+  "treatment": "a2a_async_streaming_opencode",
+  "status": "complete",
+  "cloudflare_url": "https://f904f70a.shootemup-bench-a2a-async-streaming-opencode-neon-barrage.pages.dev",
+  "cloudflare_project": "shootemup-bench-a2a-async-streaming-opencode-neon-barrage",
+  "supabase_url": "https://bohmzatpqyqfcustnndm.supabase.co",
+  "supabase_project_ref": "bohmzatpqyqfcustnndm",
+  "supabase_public_key": "sb_publishable_bPwQfSluN0ME4WD9znQVlQ_1GkCHL8E",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Neon Barrage is deployed to Cloudflare Pages with the Supabase leaderboard migration applied; production HTTP, public read, anonymous insert/read, persistence, security, tests, and build checks passed."
+}

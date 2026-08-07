@@ -1,0 +1,14 @@
+
+> neon-barrage@1.0.0 test
+> vitest run
+
+
+ RUN  v2.1.8 /workspaces/shootemup-benchmark/candidates/native_dynamic
+
+ ✓ src/game-math.test.ts (3 tests) 3ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  16:39:32
+   Duration  457ms (transform 56ms, setup 0ms, collect 47ms, tests 3ms, environment 0ms, prepare 99ms)
+

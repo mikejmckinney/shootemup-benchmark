@@ -1,0 +1,1 @@
+window.NEON_CONFIG={supabaseUrl:"https://hfzeeoecsynkfyyjnekj.supabase.co",supabaseAnonKey:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmemVlb2Vjc3lua2Z5ZWpuZWtqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU5ODE5MzQsImV4cCI6MjEwMTU1NzkzNH0.UWanZgHM4SmffJdKh-io2CCf787AIdIXihvaP7LuLhQ"};

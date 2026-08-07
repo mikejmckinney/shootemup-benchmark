@@ -1,0 +1,7 @@
+Complete and verified.
+
+- Live: https://shootemup-bench-monolith-neon-barrage-pages.pages.dev
+- Result: [benchmark-result.json](/workspaces/shootemup-benchmark/candidates/monolith/benchmark-result.json)
+- Tests: 4 passed, lint/build passed.
+- Production leaderboard insert/read/reload verified with Supabase RLS.
+- Migration and setup docs included.

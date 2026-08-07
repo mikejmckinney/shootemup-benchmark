@@ -1,0 +1,10 @@
+{
+  "methodology": "speckit",
+  "version": "v0.16.0",
+  "repository": "https://github.com/github/spec-kit",
+  "opencode_version": "1.18.14",
+  "exit_code": 0,
+  "started_ms": 1786045631020,
+  "ended_ms": 1786045651461,
+  "duration_ms": 20441
+}

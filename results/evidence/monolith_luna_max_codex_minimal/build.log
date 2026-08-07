@@ -1,0 +1,5 @@
+
+> neon-barrage@1.0.0 build
+> node scripts/build.mjs
+
+Built Neon Barrage into /workspaces/shootemup-benchmark/candidates/monolith_luna_max_codex_minimal/dist

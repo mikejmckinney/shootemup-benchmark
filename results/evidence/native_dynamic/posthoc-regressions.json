@@ -1,0 +1,61 @@
+{
+  "treatment": "native_dynamic",
+  "evaluated_at": "2026-08-06T01:22:44.759Z",
+  "live_url": "https://shootemup-bench-native-dynamic-neon-barrage-pages.pages.dev",
+  "methodology": "Live production build with Supabase REST requests mocked in-browser; no leaderboard rows were written.",
+  "checks": {
+    "progression_start_consistency": {
+      "passed": true,
+      "applicable": false,
+      "before": null,
+      "after": null
+    },
+    "physical_name_entry": {
+      "passed": true,
+      "expected": "WASD wasd",
+      "actual": "WASD wasd"
+    },
+    "advertised_keyboard_restart": {
+      "passed": true,
+      "advertised": false,
+      "applicable": false
+    },
+    "immediate_click_restart": {
+      "passed": true,
+      "button_found": true,
+      "state": {
+        "phase": "playing",
+        "score": 0,
+        "lives": 3,
+        "playerX": 480,
+        "playerY": 562,
+        "enemyCount": 0,
+        "projectileCount": 0
+      }
+    }
+  },
+  "requests": [
+    "GET",
+    "POST",
+    "GET"
+  ],
+  "console_errors": [],
+  "page_errors": [],
+  "http_status": 200,
+  "progress_before_start": [],
+  "progress_after_start": [],
+  "state_after_submit": {
+    "phase": "gameover",
+    "score": 7317,
+    "lives": 0,
+    "playerX": 480,
+    "playerY": 562,
+    "enemyCount": 0,
+    "projectileCount": 0
+  },
+  "active_element_after_submit": {
+    "tag": "BODY",
+    "id": null,
+    "testid": null
+  }
+}

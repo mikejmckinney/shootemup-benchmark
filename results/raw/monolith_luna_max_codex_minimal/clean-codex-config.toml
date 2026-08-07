@@ -1,0 +1,20 @@
+# Minimal-context configuration for shoot-em-up benchmark candidates.
+cli_auth_credentials_store = "file"
+web_search = "disabled"
+project_doc_max_bytes = 0
+project_doc_fallback_filenames = []
+
+[features]
+apps = false
+plugins = false
+hooks = false
+multi_agent = false
+goals = false
+memories = false
+browser_use = false
+computer_use = false
+image_generation = false
+in_app_browser = false
+
+[apps._default]
+enabled = false

@@ -1,0 +1,11 @@
+{
+  "name": "neon-barrage",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "build": "node --check engine.js && node --check app.js",
+    "lint": "node --check engine.js && node --check app.js && node --check tests/game-engine.test.mjs"
+  }
+}

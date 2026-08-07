@@ -1,0 +1,74 @@
+{
+  "treatment": "monolith_sol_medium",
+  "evaluated_at": "2026-08-06T01:23:06.277Z",
+  "live_url": "https://shootemup-bench-monolith-sol-medium-neon-barrage.pages.dev",
+  "methodology": "Live production build with Supabase REST requests mocked in-browser; no leaderboard rows were written.",
+  "checks": {
+    "progression_start_consistency": {
+      "passed": true,
+      "applicable": true,
+      "before": 1,
+      "after": 1
+    },
+    "physical_name_entry": {
+      "passed": false,
+      "expected": "WASD wasd",
+      "actual": ""
+    },
+    "advertised_keyboard_restart": {
+      "passed": true,
+      "advertised": false,
+      "applicable": false
+    },
+    "immediate_click_restart": {
+      "passed": true,
+      "button_found": true,
+      "state": {
+        "phase": "playing",
+        "score": 0,
+        "lives": 3,
+        "playerX": 400,
+        "playerY": 795,
+        "enemyCount": 1,
+        "projectileCount": 0
+      }
+    }
+  },
+  "requests": [
+    "GET",
+    "POST",
+    "GET"
+  ],
+  "console_errors": [
+    "Applying inline style violates the following Content Security Policy directive 'style-src 'self' https://fonts.googleapis.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-9BchftstJR9ZPXUm7g+xVmzGWBLskGWn+vLhL5AID8c='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked.",
+    "Applying inline style violates the following Content Security Policy directive 'style-src 'self' https://fonts.googleapis.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-9BchftstJR9ZPXUm7g+xVmzGWBLskGWn+vLhL5AID8c='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked."
+  ],
+  "page_errors": [],
+  "http_status": 200,
+  "progress_before_start": [
+    {
+      "selector": "#level",
+      "text": "01"
+    }
+  ],
+  "progress_after_start": [
+    {
+      "selector": "#level",
+      "text": "01"
+    }
+  ],
+  "state_after_submit": {
+    "phase": "gameover",
+    "score": 7317,
+    "lives": 0,
+    "playerX": 400,
+    "playerY": 795,
+    "enemyCount": 1,
+    "projectileCount": 0
+  },
+  "active_element_after_submit": {
+    "tag": "BODY",
+    "id": null,
+    "testid": null
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "classification": "post-benchmark shared-gallery infrastructure retrofit",
+  "verified_at": "2026-08-07T04:23:17Z",
+  "timed_score_affected": false,
+  "migration": "supabase/migrations/20260807042000_allow_candidates_18_19.sql",
+  "shared_project_ref": "lyyyxbxacrxqflxmtlqq",
+  "candidate_id": "a2a_async_streaming_opencode",
+  "gallery_url": "https://shootemup-bench-a2a-async-streaming-opencode-neon-barrage.pages.dev",
+  "verification": {
+    "production_http_status": 200,
+    "ui_submission_persisted_after_reload": true,
+    "get_partition_filter_observed": true,
+    "post_candidate_id_observed": true,
+    "browser_console_errors": [],
+    "verification_row_removed": true,
+    "shared_security_advisor_findings": 0
+  }
+}

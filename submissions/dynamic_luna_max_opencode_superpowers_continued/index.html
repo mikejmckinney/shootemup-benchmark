@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#050816" />
+    <title>Neon Barrage</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="site-header">
+        <div class="brand-lockup">
+          <div class="brand-mark" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div>
+            <p class="eyebrow">Orbital defense protocol // 07</p>
+            <h1>Neon Barrage</h1>
+          </div>
+        </div>
+        <div class="signal-status" aria-label="Connection status">
+          <span class="signal-dot" aria-hidden="true"></span>
+          <span>Local systems online</span>
+        </div>
+      </header>
+
+      <main class="command-layout">
+        <section class="game-column" aria-labelledby="game-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Sector 09 / live fire range</p>
+              <h2 id="game-title">Hold the line.</h2>
+            </div>
+            <p class="section-note">Move fast. Fire first. Stay luminous.</p>
+          </div>
+
+          <div class="game-panel">
+            <div class="game-toolbar">
+              <div class="toolbar-label">
+                <span class="toolbar-pip" aria-hidden="true"></span>
+                <span>Mission telemetry</span>
+              </div>
+              <div class="hud" aria-label="Mission telemetry">
+                <div class="hud-readout">
+                  <span class="hud-label">Score</span>
+                  <output data-testid="score">0</output>
+                </div>
+                <div class="hud-divider" aria-hidden="true"></div>
+                <div class="hud-readout">
+                  <span class="hud-label">Lives</span>
+                  <output data-testid="lives">3</output>
+                </div>
+                <button
+                  class="mute-button"
+                  data-testid="mute-button"
+                  type="button"
+                  aria-pressed="false"
+                >Sound On</button>
+              </div>
+            </div>
+
+            <div class="canvas-shell">
+              <canvas
+                data-testid="game-canvas"
+                width="960"
+                height="600"
+                aria-label="Neon Barrage game"
+              ></canvas>
+              <div class="canvas-corner canvas-corner-top" aria-hidden="true"></div>
+              <div class="canvas-corner canvas-corner-bottom" aria-hidden="true"></div>
+            </div>
+
+            <div class="game-actions">
+              <div
+                class="mission-status"
+                id="game-status"
+                role="status"
+                aria-live="polite"
+              >Systems nominal. Launch when ready.</div>
+              <button class="launch-button" data-testid="start-button" type="button">
+                Launch Mission
+              </button>
+            </div>
+
+            <div class="touch-controls" data-testid="touch-controls" aria-label="Touch controls">
+              <div class="touch-pad" aria-label="Movement pad">
+                <button type="button" data-control="up" aria-label="Move up">Up</button>
+                <button type="button" data-control="left" aria-label="Move left">Left</button>
+                <button type="button" data-control="down" aria-label="Move down">Down</button>
+                <button type="button" data-control="right" aria-label="Move right">Right</button>
+              </div>
+              <button class="fire-button" type="button" data-control="fire" aria-label="Fire weapon">
+                Fire
+              </button>
+            </div>
+
+            <section
+              class="game-over-panel"
+              id="game-over-panel"
+              aria-labelledby="game-over-title"
+              hidden
+            >
+              <div>
+                <p class="eyebrow">Signal lost / run archived</p>
+                <h3 id="game-over-title">The night got louder.</h3>
+                <p class="game-over-copy">
+                  Final score: <strong id="final-score">0</strong>. Reserve a callsign for the next leaderboard uplink.
+                </p>
+              </div>
+              <form class="score-form" id="score-form">
+                <label for="player-name">Pilot callsign</label>
+                <div class="score-form-row">
+                  <input
+                    id="player-name"
+                    data-testid="player-name"
+                    name="player-name"
+                    type="text"
+                    maxlength="16"
+                    autocomplete="off"
+                    placeholder="NOVA-7"
+                  />
+                  <button data-testid="submit-score" type="submit">Queue score</button>
+                </div>
+                <p class="form-note">Leaderboard uplink will be available in the next mission update.</p>
+              </form>
+            </section>
+          </div>
+
+          <p class="control-note">
+            <span class="key-chip">ARROWS</span>
+            <span class="key-chip">WASD</span>
+            to move
+            <span class="key-chip key-chip-accent">SPACE</span>
+            to fire
+          </p>
+        </section>
+
+        <aside class="mission-sidebar" aria-label="Mission briefings">
+          <section class="side-card mission-card">
+            <div class="card-heading">
+              <p class="eyebrow">Briefing 01</p>
+              <span class="card-index">A-01</span>
+            </div>
+            <h2>Protect the glow.</h2>
+            <p>
+              Hostile signatures are dropping through the upper atmosphere. Pilot the cyan interceptor,
+              clear every wave, and turn the breach into a signal flare.
+            </p>
+            <div class="mission-stats">
+              <div><span>Threat</span><strong>RISING</strong></div>
+              <div><span>Field</span><strong>960 x 600</strong></div>
+            </div>
+          </section>
+
+          <section class="side-card leaderboard-card" aria-labelledby="leaderboard-title">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow">Public channel</p>
+                <h2 id="leaderboard-title">Leaderboard</h2>
+              </div>
+              <span class="uplink-badge">Uplink</span>
+            </div>
+            <div data-testid="leaderboard" class="leaderboard-placeholder" aria-live="polite">
+              <span class="placeholder-glyph" aria-hidden="true">+</span>
+              <p>Top pilots will appear here when the leaderboard uplink is active.</p>
+            </div>
+          </section>
+
+          <section class="side-card protocol-card">
+            <div class="card-heading">
+              <p class="eyebrow">Pilot protocol</p>
+              <span class="card-index">03</span>
+            </div>
+            <ul>
+              <li><span class="protocol-dot cyan-dot"></span>Keep moving through the grid.</li>
+              <li><span class="protocol-dot magenta-dot"></span>Magenta contacts cost a life.</li>
+              <li><span class="protocol-dot lime-dot"></span>Every clear adds to your signal.</li>
+            </ul>
+          </section>
+        </aside>
+      </main>
+
+      <footer class="site-footer">
+        <span>NB // Neon Barrage</span>
+        <span>Generated locally. Built for the night shift.</span>
+      </footer>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

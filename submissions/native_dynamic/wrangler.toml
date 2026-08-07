@@ -1,0 +1,9 @@
+# Neon Barrage Cloudflare Pages configuration.
+#
+# This file deliberately contains no bindings, variables, project IDs, or
+# credentials. The application is a static Pages deployment; Supabase is the
+# browser-facing persistence service and is configured at frontend build time.
+name = "shootemup-bench-native-dynamic-neon-barrage-pages"
+pages_build_output_dir = "./dist"
+compatibility_date = "2026-08-05"
+send_metrics = false

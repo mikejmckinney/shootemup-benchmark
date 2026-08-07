@@ -1,0 +1,11 @@
+{
+  "name": "neon-barrage",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test",
+    "check": "npm test && npm run build"
+  }
+}

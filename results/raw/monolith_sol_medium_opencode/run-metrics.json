@@ -1,0 +1,20 @@
+{
+  "treatment": "monolith_sol_medium_opencode",
+  "started_at": "2026-08-06T00:26:24Z",
+  "ended_at": "2026-08-06T00:34:54Z",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 510,
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "medium",
+  "runtime": "opencode",
+  "agents_started": 1,
+  "turns": 26,
+  "usage": {
+    "input_tokens": 600087,
+    "cached_input_tokens": 557056,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 16943,
+    "reasoning_output_tokens": 1968
+  }
+}

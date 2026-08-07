@@ -1,0 +1,15 @@
+{
+  "name": "neon-barrage",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A neon arcade shooter with a Supabase-backed leaderboard.",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test test/*.test.mjs",
+    "dev": "python3 -m http.server 4173 -d ."
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

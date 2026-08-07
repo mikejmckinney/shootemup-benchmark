@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-neon-barrage-pages.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-neon-barrage-pages",
+  "supabase_url": "https://lyyyxbxacrxqflxmtlqq.supabase.co",
+  "supabase_project_ref": "lyyyxbxacrxqflxmtlqq",
+  "supabase_public_key": "sb_publishable_cgwOqQeY8eHfwsHYrnepJw_5kfrA-sD",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Production deployment uses the shared benchmark Supabase project and the monolith leaderboard partition."
+}

@@ -1,0 +1,29 @@
+{
+  "verified_at": "2026-08-06T22:05:53Z",
+  "scope": "Post-benchmark gallery infrastructure only; retained score, timing, cost, tokens, and preserved submission are unchanged.",
+  "cloudflare": {
+    "url": "https://shootemup-bench-monolith-luna-max-opencode-retest.mikejmckinney.workers.dev",
+    "worker": "shootemup-bench-monolith-luna-max-opencode-retest",
+    "version_id": "9cb3acf6-540a-434b-a2e6-8a579d674ad5"
+  },
+  "supabase": {
+    "shared_project_ref": "lyyyxbxacrxqflxmtlqq",
+    "shared_project_status": "ACTIVE_HEALTHY",
+    "candidate_id": "monolith_luna_max_opencode_retest",
+    "original_timed_project_ref": "tzndzreblsmiktsqxufo",
+    "original_timed_project_status": "INACTIVE",
+    "migration": "supabase/migrations/20260806220157_allow_candidate_15_shared_leaderboard.sql",
+    "security_advisor_findings": 0,
+    "invalid_candidate_insert_http_status": 401
+  },
+  "production_browser_verification": {
+    "initial_leaderboard_status": "LIVE",
+    "get_http_status": 200,
+    "post_http_status": 201,
+    "submission_status": "SIGNAL POSTED / PILOT LOG UPDATED",
+    "persisted_after_reload": true,
+    "console_errors": [],
+    "verification_rows_remaining_after_cleanup": 0
+  },
+  "reproducible_gallery_builder": "scripts/build_candidate15_shared_gallery.mjs"
+}

@@ -1,0 +1,8 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "shootemup-bench-monolith_sol_high_opencode-neon",
+  "compatibility_date": "2026-08-07",
+  "assets": {
+    "directory": "./dist"
+  }
+}

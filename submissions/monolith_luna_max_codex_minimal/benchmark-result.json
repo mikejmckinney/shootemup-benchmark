@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_luna_max_codex_minimal",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-luna-max-codex-minimal-pages.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-luna-max-codex-minimal-pages",
+  "supabase_url": "https://sxthtfpggzpfdesybiub.supabase.co",
+  "supabase_project_ref": "sxthtfpggzpfdesybiub",
+  "supabase_public_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN4dGh0ZnBnZ3pwZmRlc3liaXViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMzIwOTcsImV4cCI6MjEwMTYwODA5N30.52aAEF99AFaAJhDRuR7Ac4ZZknNnW8v0148_k3UXoio",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Cloudflare Pages production assets verified; Supabase anon insert/read round trip and database validation verified. Cloudflare project uses the platform-required dash-normalized treatment name."
+}

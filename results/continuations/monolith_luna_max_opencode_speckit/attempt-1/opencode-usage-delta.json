@@ -1,0 +1,16 @@
+{
+  "source": "OpenCode SQLite recursive session-tree delta",
+  "root_session": "ses_02762193effe5yp6vPjG8s7okm",
+  "resumed_root_agents": 1,
+  "new_child_sessions": 0,
+  "turns": 137,
+  "tool_calls": 213,
+  "coordination_tool_calls": 0,
+  "usage": {
+    "input_tokens": 24166062,
+    "cached_input_tokens": 23422976,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 72335,
+    "reasoning_output_tokens": 25974
+  }
+}

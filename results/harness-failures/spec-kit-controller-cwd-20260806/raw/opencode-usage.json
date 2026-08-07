@@ -1,0 +1,49 @@
+{
+  "source": "OpenCode SQLite session ledger",
+  "database": "/home/codespace/.local/share/opencode/opencode.db",
+  "selection": {
+    "candidate_directory": "/workspaces/shootemup-benchmark/candidates/monolith_luna_max_opencode_speckit",
+    "started_ms": 1786045456542,
+    "ended_ms": 1786045482288,
+    "rule": "sessions rooted in candidate directory during run, plus recursive parent_id descendants"
+  },
+  "agents_started": 1,
+  "root_sessions": 1,
+  "child_sessions": 0,
+  "peak_concurrent_agents": 1,
+  "turns": 0,
+  "tool_calls": 0,
+  "coordination_events": 0,
+  "coordination_tool_calls": 0,
+  "tool_counts": {},
+  "usage": {
+    "input_tokens": 0,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 0,
+    "reasoning_output_tokens": 0
+  },
+  "provider_reported_cost_usd": 0,
+  "sessions": [
+    {
+      "id": "ses_02764bb9cffeBQJVNCaNzVTXQT",
+      "project_id": "a65fd776b07aedec1b45d6da8644679e4168f611",
+      "workspace_id": null,
+      "parent_id": null,
+      "slug": "misty-island",
+      "directory": "/workspaces/shootemup-benchmark/candidates/monolith_luna_max_opencode_speckit",
+      "title": "New session - 2026-08-06T19:44:42.083Z",
+      "version": "1.18.14",
+      "cost": 0,
+      "tokens_input": 0,
+      "tokens_output": 0,
+      "tokens_reasoning": 0,
+      "tokens_cache_read": 0,
+      "tokens_cache_write": 0,
+      "agent": null,
+      "model": null,
+      "time_created": 1786045482083,
+      "time_updated": 1786045482083
+    }
+  ]
+}

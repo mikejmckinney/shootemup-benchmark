@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_sol_medium",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-sol-medium-neon-barrage.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-sol-medium-neon-barrage",
+  "supabase_url": "https://lyyyxbxacrxqflxmtlqq.supabase.co",
+  "supabase_project_ref": "lyyyxbxacrxqflxmtlqq",
+  "supabase_public_key": "sb_publishable_cgwOqQeY8eHfwsHYrnepJw_5kfrA-sD",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Live Pages deployment verified in desktop and mobile browser views; production leaderboard insert/read persistence and database validation were verified."
+}

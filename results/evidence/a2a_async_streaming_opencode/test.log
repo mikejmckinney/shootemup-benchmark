@@ -1,0 +1,16 @@
+
+> neon-barrage@1.0.0 test
+> node --test
+
+✔ migration defines the leaderboard data contract (1.001553ms)
+✔ migration enables RLS and grants only public read/insert operations (0.35791ms)
+✔ client inserts cannot write server-owned columns (1.151816ms)
+✔ migration does not contain credential material (0.529675ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 216.600916
