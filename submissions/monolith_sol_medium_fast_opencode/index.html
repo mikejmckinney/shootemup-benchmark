@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050615">
+  <meta name="description" content="Neon Barrage, a pulse-pounding browser arcade shooter.">
+  <title>Neon Barrage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&amp;family=Oxanium:wght@500;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <main class="shell">
+    <header class="masthead">
+      <div>
+        <p class="eyebrow">SECTOR 07 // LAST SIGNAL</p>
+        <h1>NEON <span>BARRAGE</span></h1>
+      </div>
+      <button class="icon-button" data-testid="mute-button" id="muteButton" aria-label="Mute sound" aria-pressed="false"><span id="soundIcon">◖))</span> AUDIO</button>
+    </header>
+
+    <section class="game-column" aria-label="Game area">
+      <div class="hud">
+        <div><span>SCORE</span><strong data-testid="score" id="score">000000</strong></div>
+        <div class="level"><span>THREAT</span><strong id="level">01</strong></div>
+        <div class="lives"><span>SHIELDS</span><strong data-testid="lives" id="lives">◆ ◆ ◆</strong></div>
+      </div>
+      <div class="cabinet">
+        <canvas width="720" height="820" data-testid="game-canvas" id="gameCanvas" aria-label="Neon Barrage game canvas"></canvas>
+        <div class="scanlines"></div>
+        <div class="game-overlay" id="gameOverlay">
+          <p class="overlay-kicker" id="overlayKicker">OUTER RIM DEFENSE</p>
+          <h2 id="overlayTitle">THE SWARM<br>IS INBOUND</h2>
+          <p id="overlayCopy">Pilot the Vanta interceptor. Break the siege. Leave your signal in the all-time registry.</p>
+          <button class="primary" data-testid="start-button" id="startButton">ENGAGE <span>→</span></button>
+          <small>WASD / ARROWS TO MOVE · SPACE TO FIRE</small>
+        </div>
+      </div>
+      <div class="touch-controls" data-testid="touch-controls" id="touchControls" aria-label="Touch game controls">
+        <div class="dpad">
+          <button data-key="up" aria-label="Move up">▲</button>
+          <button data-key="left" aria-label="Move left">◀</button>
+          <button data-key="down" aria-label="Move down">▼</button>
+          <button data-key="right" aria-label="Move right">▶</button>
+        </div>
+        <button class="fire" data-key="fire" aria-label="Fire weapon"><span>FIRE</span></button>
+      </div>
+    </section>
+
+    <aside class="leader-panel">
+      <div class="panel-heading"><div><p class="eyebrow">GLOBAL SIGNAL</p><h2>ACE REGISTRY</h2></div><span class="live-dot">LIVE</span></div>
+      <div class="submission" id="submission">
+        <label for="playerName">CALLSIGN <span>1–16 CHARACTERS</span></label>
+        <div class="submit-row">
+          <input data-testid="player-name" id="playerName" maxlength="16" autocomplete="nickname" placeholder="YOUR NAME" disabled>
+          <button data-testid="submit-score" id="submitScore" disabled>TRANSMIT</button>
+        </div>
+        <p class="form-status" id="formStatus">Finish a run to transmit your score.</p>
+      </div>
+      <div class="board-head"><span>RANK / PILOT</span><span>SCORE</span></div>
+      <ol data-testid="leaderboard" id="leaderboard" aria-live="polite"><li class="board-message">Contacting registry…</li></ol>
+      <button class="refresh" id="refreshBoard">↻ REFRESH SIGNAL</button>
+      <div class="intel"><span>FIELD INTEL</span><p>Chain eliminations and survive longer to escalate your threat multiplier.</p></div>
+    </aside>
+  </main>
+  <footer>VANTA DEFENSE NETWORK <span>•</span> BUILD 07.26 <span>•</span> SIGNAL SECURE</footer>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

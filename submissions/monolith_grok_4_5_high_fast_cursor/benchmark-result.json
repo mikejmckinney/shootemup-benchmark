@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_grok_4_5_high_fast_cursor",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-grok-4-5-high-fast-cursor-web.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-grok-4-5-high-fast-cursor-web",
+  "supabase_url": "https://lobakobspfstwlqbtoau.supabase.co",
+  "supabase_project_ref": "lobakobspfstwlqbtoau",
+  "supabase_public_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxvYmFrb2JzcGZzdHdscWJ0b2F1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMjkzNDYsImV4cCI6MjEwMTcwNTM0Nn0.jdXidayZWJPZxBtI3LXcQ14ciaToGNlvTCTkumYFEYQ",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Cloudflare Pages forbids underscores in project names, so CF project uses hyphens while Supabase DB project keeps treatment underscores. Live Pages URL returns 200; anon-key leaderboard insert/select verified; vitest passed."
+}

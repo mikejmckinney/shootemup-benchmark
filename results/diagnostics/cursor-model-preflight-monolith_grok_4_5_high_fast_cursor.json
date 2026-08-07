@@ -1,0 +1,25 @@
+{
+  "checked_at": "2026-08-07T20:34:16.997Z",
+  "valid": true,
+  "runtime": "cursor",
+  "cursor_version": "2026.08.04-aaa8809",
+  "requested_model_id": "cursor-grok-4.5-high-fast",
+  "requested_model_available": true,
+  "expected_initialization_label": "Cursor Grok 4.5 High Fast",
+  "observed_initialization_label": "Cursor Grok 4.5 High Fast",
+  "authentication_source": "login",
+  "cursor_exit_code": 0,
+  "result_subtype": "success",
+  "duration_ms": 7895,
+  "duration_api_ms": 4150,
+  "session_id": "70099bfc-c6d5-405c-a28c-8a6ea35abff1",
+  "request_id": "e55fba34-b241-45a1-a0a1-fb83ac126789",
+  "usage": {
+    "inputTokens": 13060,
+    "outputTokens": 20,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0
+  },
+  "verification_scope": "Cursor confirmed the exact requested model variant through its server initialization event.",
+  "error": null
+}

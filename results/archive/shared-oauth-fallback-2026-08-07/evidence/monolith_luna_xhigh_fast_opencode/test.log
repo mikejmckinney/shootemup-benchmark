@@ -1,0 +1,14 @@
+
+> neon-barrage@1.0.0 test
+> vitest run
+
+
+ RUN  v3.2.7 /workspaces/shootemup-benchmark/candidates/monolith_luna_xhigh_fast_opencode
+
+ ✓ src/gameLogic.test.js (5 tests) 7ms
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  17:22:00
+   Duration  345ms (transform 35ms, setup 0ms, collect 24ms, tests 7ms, environment 0ms, prepare 80ms)
+

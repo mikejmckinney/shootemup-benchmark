@@ -1,0 +1,16 @@
+{
+  "name": "neon-barrage",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "lint": "node --check app.js && node --check game-core.js",
+    "build": "node scripts/build.js",
+    "check": "npm run lint && npm test && npm run build",
+    "deploy": "wrangler pages deploy dist"
+  },
+  "devDependencies": {
+    "wrangler": "4.120.0"
+  }
+}

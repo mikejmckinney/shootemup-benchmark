@@ -14,10 +14,15 @@ This initial experiment uses one replicate per treatment. It is useful as a cont
 - Runs are sequential to respect Supabase's two-active-project limit.
 - External evaluator is architecture-blind and runs before project pause.
 - Session JSONL, token use, wall time, subprocess count, A2A/native delegation events, source tree, test output, screenshots, and live endpoint results are retained.
+- Rate-limit telemetry is enabled by default. API-key OpenCode runs retain sanitized transport metadata (status, request ID, `Retry-After`, rate-limit headers, and structured error code/type) through a streaming loopback observer; this observer is inside the measured request path and adds a small local-proxy overhead, while classification runs after timing ends. Codex OAuth runs take read-only account-limit snapshots before and after the timed interval. Prompts, authorization headers, and model response content are not retained by the observer. Runtime logs are classified for explicit limit errors, but latency alone is not evidence of throttling. The controller supports `--no-rate-limit-telemetry` and `RATE_LIMIT_TELEMETRY=false`; disabled runs are explicitly marked `not_observed`.
 
 There is unavoidable order risk from shared provider state and changing network conditions. Treatment order for this run is fixed as monolith, native-dynamic, native-isolated, A2A because project provisioning is sequential; follow-up replicated experiments should randomize order.
 
 The first extension order is fixed as monolith-warm, asynchronous A2A, monolith-Sol-Medium, and monolith-OpenCode. Candidate 10, monolith-Sol-Medium-OpenCode, runs afterward as a requested second extension. Candidates 11–13 then run sequentially as monolith-Sol-Low-OpenCode, monolith-Luna-Xhigh-OpenCode, and monolith-Luna-High-OpenCode. Candidate 14, monolith-Luna-Max-Codex-Minimal-Context, runs afterward to isolate the effect of Codex's optional context surfaces. Candidates 15–17 form a contemporaneous OpenCode methodology block, in fixed order: fresh plain control, Spec Kit, then Superpowers. The next requested extension runs asynchronous-streaming A2A in OpenCode followed by a Sol High OpenCode monolith. These extensions are not randomized.
+
+The next preregistered batch runs sequentially in this fixed requested order: Sol Low Fast OpenCode, Sol Medium Fast OpenCode, Grok 4.5 Medium Cursor, Grok 4.5 High Cursor, Grok 4.5 Medium Fast Cursor, Grok 4.5 High Fast Cursor, and Cursor Auto Cost. All are monolithic treatments with delegation prohibited. OpenCode Fast acceptance requires the outgoing base model, reasoning effort, and `service_tier: priority` plus a completed response reporting `priority`. Cursor acceptance requires the requested model ID to be present in the live account model list and the server initialization event to report the matching Standard, Fast, or Auto label. On the authenticated individual Pro account, the CLI exposes the bare `auto` selector without a Balance or Intelligence optimization parameter; this is classified as Auto Cost, the continuation of Cursor's previous Auto routing behavior. Auto Cost does not expose its downstream routed model in terminal result telemetry and is therefore a router treatment rather than a controlled model treatment.
+
+The subsequent authentication-mode comparison reruns Sol Medium OpenCode with an isolated API-key credential instead of the earlier OAuth session. It retains the model, medium reasoning effort, monolithic constraint, task, and Standard service tier. A preflight must confirm the exact model and effort, API-key isolation, and a completed `default` tier response before timing begins. This single sequential pair is exploratory and cannot by itself attribute output differences to authentication mode.
 
 ## Treatments
 
@@ -60,6 +65,10 @@ One OpenCode session using `gpt-5.6-luna` at max reasoning effort. Delegation is
 ### `monolith_sol_medium_opencode`
 
 One OpenCode session using `gpt-5.6-sol` at medium reasoning effort. Delegation is prohibited. This pairs with `monolith_sol_medium` to compare the Codex and OpenCode runtimes while holding the model and reasoning effort fixed, subject to sequential-run and cache effects.
+
+### `monolith_sol_medium_opencode_api`
+
+One isolated OpenCode session using `gpt-5.6-sol` at medium reasoning effort through `OPENAI_API_KEY` rather than stored OAuth. Delegation is prohibited. The controller uses a fresh OpenCode data directory, explicitly configures the API key, rejects zero provider-reported cost, and records sanitized request-level rate-limit telemetry. This pairs with `monolith_sol_medium_opencode`, subject to one-replicate, sequential-run, provider-load, and cache effects.
 
 ### `monolith_sol_low_opencode`
 
@@ -150,6 +159,8 @@ Hard evidence rules:
 - Deployment/provisioning failures and repair iterations.
 
 Dollar cost uses the official Standard API list price for the model used by each treatment, current when results are compiled. It is reported as a PAYG-equivalent estimate rather than an invoice because the runs execute through Codex/OpenCode and actual subscription, OAuth, contract, regional, service-tier, and tool billing can differ. Captured separately priced built-in tool calls are added when authoritative rates and counts are available. Supabase and Cloudflare free-tier usage contributes zero marginal infrastructure cost.
+
+For the Cursor batch, Grok 4.5 Standard uses Cursor's published $2/M uncached input, $0.50/M cache read, and $6/M output rates, while Fast uses $4/M uncached input, $1/M cache read, and $18/M output. Cursor's live model-pricing data provides no cache-write rate for either Grok variant, so Grok cache writes are costed at zero. Cursor Auto Cost uses $1.25/M uncached input, $1.25/M cache write, $0.25/M cache read, and $6/M output.
 
 ## Decision model and marginal utility
 

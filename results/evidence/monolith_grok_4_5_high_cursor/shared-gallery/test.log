@@ -1,0 +1,14 @@
+
+> neon-barrage@1.0.0 test
+> vitest run
+
+
+ RUN  v2.1.8 /tmp/shootemup-shared-build-test.5VHfSR/monolith_grok_4_5_high_cursor
+
+ ✓ src/validation.test.ts (9 tests) 31ms
+
+ Test Files  1 passed (1)
+      Tests  9 passed (9)
+   Start at  21:11:36
+   Duration  1.89s (transform 222ms, setup 0ms, collect 186ms, tests 31ms, environment 915ms, prepare 236ms)
+

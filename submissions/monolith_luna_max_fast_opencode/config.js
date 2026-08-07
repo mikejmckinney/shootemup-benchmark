@@ -1,0 +1,4 @@
+window.NEON_BARRAGE_CONFIG = {
+  supabaseUrl: "https://pnviggncosaknssxgvii.supabase.co",
+  supabaseAnonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBudmlnZ25jb3Nha25zc3hndmlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMTk1MTIsImV4cCI6MjEwMTY5NTUxMn0.7qG1VOwRvtpVqHjyX_-46CuAbrD6G_Ii0bjKG4c4xeQ"
+};

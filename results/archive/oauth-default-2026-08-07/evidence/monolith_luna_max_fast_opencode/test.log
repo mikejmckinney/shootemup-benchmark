@@ -1,0 +1,16 @@
+
+> neon-barrage@1.0.0 test
+> node --test
+
+✔ collision detection identifies touching circles without false positives (1.394525ms)
+✔ difficulty escalates while staying within playable limits (0.447573ms)
+✔ leaderboard names use trimmed 1-16 character validation (0.35069ms)
+✔ leaderboard scores accept only plausible non-negative integers (0.44564ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 213.903025

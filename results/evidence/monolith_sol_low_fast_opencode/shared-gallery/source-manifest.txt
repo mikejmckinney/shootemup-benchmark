@@ -1,0 +1,13 @@
+.gitignore
+BENCHMARK_TASK.md
+README.md
+benchmark-result.json
+package-lock.json
+package.json
+public/game.js
+public/index.html
+public/logic.js
+public/styles.css
+supabase/migrations/001_leaderboard.sql
+test/logic.test.js
+wrangler.toml

@@ -1,0 +1,59 @@
+{
+  "source": "OpenCode SQLite session ledger",
+  "database": "/home/codespace/.local/share/opencode/opencode.db",
+  "selection": {
+    "candidate_directory": "/workspaces/shootemup-benchmark/candidates/monolith_luna_max_fast_opencode",
+    "started_ms": 1786113163463,
+    "ended_ms": 1786114288881,
+    "rule": "sessions rooted in candidate directory during run, plus recursive parent_id descendants"
+  },
+  "agents_started": 1,
+  "root_sessions": 1,
+  "child_sessions": 0,
+  "peak_concurrent_agents": 1,
+  "turns": 41,
+  "tool_calls": 54,
+  "coordination_events": 0,
+  "coordination_tool_calls": 0,
+  "tool_counts": {
+    "todowrite": 3,
+    "read": 3,
+    "bash": 39,
+    "glob": 2,
+    "apply_patch": 7
+  },
+  "usage": {
+    "input_tokens": 1953744,
+    "cached_input_tokens": 1869824,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 51648,
+    "reasoning_output_tokens": 18619
+  },
+  "provider_reported_cost_usd": 0,
+  "sessions": [
+    {
+      "id": "ses_0235bea82ffe4mJ3Oewrkwjwx2",
+      "project_id": "6550f67cc25ec6cadce3e0542e2d6101af834140",
+      "workspace_id": null,
+      "parent_id": null,
+      "slug": "glowing-forest",
+      "directory": "/workspaces/shootemup-benchmark/candidates/monolith_luna_max_fast_opencode",
+      "title": "Autonomous Benchmark Task Implementation and Verification",
+      "version": "1.18.15",
+      "cost": 0,
+      "tokens_input": 83920,
+      "tokens_output": 33029,
+      "tokens_reasoning": 18619,
+      "tokens_cache_read": 1869824,
+      "tokens_cache_write": 0,
+      "agent": "build",
+      "model": {
+        "id": "gpt-5.6-luna-fast",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786113168765,
+      "time_updated": 1786114288709
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+.gitignore
+.wrangler/cache/pages.json
+.wrangler/cache/wrangler-account.json
+BENCHMARK_TASK.md
+README.md
+benchmark-result.json
+index.html
+package-lock.json
+package.json
+src/app.js
+src/config.js
+src/game-state.js
+src/styles.css
+supabase/migrations/001_leaderboard.sql
+tests/game-state.test.js

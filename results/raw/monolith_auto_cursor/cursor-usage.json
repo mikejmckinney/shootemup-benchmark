@@ -1,0 +1,28 @@
+{
+  "source": "Cursor Agent CLI terminal result event",
+  "session_id": "919c3d87-efdf-4681-8523-5fefb9af94a6",
+  "request_id": "82b77cc6-ed71-425e-9411-cf27e1bf2e66",
+  "model": "Auto",
+  "duration_ms": 354149,
+  "duration_api_ms": 354149,
+  "turns": 9,
+  "tool_events": 88,
+  "tool_counts": {
+    "started": 44,
+    "completed": 44
+  },
+  "subagent_events": 0,
+  "usage": {
+    "input_tokens": 604509,
+    "cached_input_tokens": 500096,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 22733,
+    "reasoning_output_tokens": 0
+  },
+  "raw_usage": {
+    "inputTokens": 104413,
+    "outputTokens": 22733,
+    "cacheReadTokens": 500096,
+    "cacheWriteTokens": 0
+  }
+}

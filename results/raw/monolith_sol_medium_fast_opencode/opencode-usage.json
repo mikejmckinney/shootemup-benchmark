@@ -1,0 +1,60 @@
+{
+  "source": "OpenCode SQLite session ledger",
+  "database": "/workspaces/shootemup-benchmark/results/raw/monolith_sol_medium_fast_opencode/opencode-data/opencode/opencode.db",
+  "selection": {
+    "candidate_directory": "/workspaces/shootemup-benchmark/candidates/monolith_sol_medium_fast_opencode",
+    "started_ms": 1786131455111,
+    "ended_ms": 1786131689102,
+    "rule": "sessions rooted in candidate directory during run, plus recursive parent_id descendants"
+  },
+  "agents_started": 1,
+  "root_sessions": 1,
+  "child_sessions": 0,
+  "peak_concurrent_agents": 1,
+  "turns": 21,
+  "tool_calls": 32,
+  "coordination_events": 0,
+  "coordination_tool_calls": 0,
+  "tool_counts": {
+    "read": 2,
+    "todowrite": 6,
+    "bash": 19,
+    "apply_patch": 3,
+    "webfetch": 1,
+    "grep": 1
+  },
+  "usage": {
+    "input_tokens": 350411,
+    "cached_input_tokens": 350348,
+    "cache_write_input_tokens": 26983,
+    "output_tokens": 14459,
+    "reasoning_output_tokens": 1255
+  },
+  "provider_reported_cost_usd": 1.5558055000000002,
+  "sessions": [
+    {
+      "id": "ses_02244d181ffebbzAWAXqxWxCT8",
+      "project_id": "412c147e300326030cfa1d79e22c9e6cd0e3445f",
+      "workspace_id": null,
+      "parent_id": null,
+      "slug": "mighty-harbor",
+      "directory": "/workspaces/shootemup-benchmark/candidates/monolith_sol_medium_fast_opencode",
+      "title": "Autonomous benchmark implementation for monolith_sol_medium_fast_opencode",
+      "version": "1.18.15",
+      "cost": 1.5558055000000002,
+      "tokens_input": 63,
+      "tokens_output": 13204,
+      "tokens_reasoning": 1255,
+      "tokens_cache_read": 350348,
+      "tokens_cache_write": 26983,
+      "agent": "build",
+      "model": {
+        "id": "gpt-5.6-sol-fast",
+        "providerID": "openai",
+        "variant": "medium"
+      },
+      "time_created": 1786131459710,
+      "time_updated": 1786131688773
+    }
+  ]
+}

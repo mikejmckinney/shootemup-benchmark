@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_grok_4_5_medium_cursor",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-grok-4-5-medium-cursor-web.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-grok-4-5-medium-cursor-web",
+  "supabase_url": "https://taeutokxkinbmlgmgihf.supabase.co",
+  "supabase_project_ref": "taeutokxkinbmlgmgihf",
+  "supabase_public_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRhZXV0b2t4a2luYm1sZ21naWhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMjY0MTYsImV4cCI6MjEwMTcwMjQxNn0.FFcJkk3x6d6_fqSEEGrmuKGZvqoDqVDyuDgC2oMS8Hc",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Neon Barrage on Cloudflare Pages; Supabase project shootemup-bench-monolith_grok_4_5_medium_cursor-lb (ref taeutokxkinbmlgmgihf) with RLS leaderboard. CF project name hyphenates underscores (Pages name rules). Anon key only in client; migration in supabase/migrations/001_leaderboard.sql."
+}

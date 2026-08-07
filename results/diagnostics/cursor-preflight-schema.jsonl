@@ -1,0 +1,8 @@
+{"type":"system","subtype":"init","apiKeySource":"login","cwd":"/tmp/cursor-preflight-inspect-SHLbVd","session_id":"b7f60ac2-5ef1-4488-ac6b-d02167cc6df0","model":"Cursor Grok 4.5 Medium","permissionMode":"default"}
+{"type":"user","message":{"role":"user","content":[{"type":"text","text":"Reply with exactly the word OK."}]},"session_id":"b7f60ac2-5ef1-4488-ac6b-d02167cc6df0"}
+{"type":"thinking","subtype":"delta","text":"The user requested a","session_id":"b7f60ac2-5ef1-4488-ac6b-d02167cc6df0","timestamp_ms":1786129216238}
+{"type":"thinking","subtype":"delta","text":" reply containing exactly","session_id":"b7f60ac2-5ef1-4488-ac6b-d02167cc6df0","timestamp_ms":1786129216251}
+{"type":"thinking","subtype":"delta","text":" the word \"OK\".","session_id":"b7f60ac2-5ef1-4488-ac6b-d02167cc6df0","timestamp_ms":1786129216253}
+{"type":"thinking","subtype":"completed","session_id":"b7f60ac2-5ef1-4488-ac6b-d02167cc6df0","timestamp_ms":1786129216258}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"OK"}]},"session_id":"b7f60ac2-5ef1-4488-ac6b-d02167cc6df0"}
+{"type":"result","subtype":"success","duration_ms":4969,"duration_api_ms":4969,"is_error":false,"result":"OK","session_id":"b7f60ac2-5ef1-4488-ac6b-d02167cc6df0","request_id":"bd5e2ccc-72f7-4596-8920-f97d3e048798","usage":{"inputTokens":7664,"outputTokens":14,"cacheReadTokens":5376,"cacheWriteTokens":0}}

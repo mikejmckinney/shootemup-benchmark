@@ -1,0 +1,8 @@
+{
+  "treatment": "monolith_grok_4_5_high_fast_cursor",
+  "project_ref": "lobakobspfstwlqbtoau",
+  "requested_at": "2026-08-07T20:48:59Z",
+  "pause_http_status": 200,
+  "final_status": "INACTIVE",
+  "confirmed_inactive": true
+}

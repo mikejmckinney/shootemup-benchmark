@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_luna_xhigh_opencode_control",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-luna-xhigh-opencode-control.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-luna-xhigh-opencode-control",
+  "supabase_url": "https://iwlujptedtmiqonesvnl.supabase.co",
+  "supabase_project_ref": "iwlujptedtmiqonesvnl",
+  "supabase_public_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3bHVqcHRlZHRtaXFvbmVzdm5sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMDg4ODgsImV4cCI6MjEwMTY4NDg4OH0.3zTWsTtE26GbFtVPWoE8XDNdlZOtqvbeSTE6RctT6mo",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Cloudflare Pages production deployment and Supabase anon-key leaderboard insert/read round trip verified; RLS migration applied."
+}

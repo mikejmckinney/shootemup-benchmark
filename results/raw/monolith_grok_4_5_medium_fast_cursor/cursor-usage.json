@@ -1,0 +1,28 @@
+{
+  "source": "Cursor Agent CLI terminal result event",
+  "session_id": "1d5612bf-1a51-4a2f-be2b-e8a5dfe40165",
+  "request_id": "612783b3-7e47-4052-8df1-f712ddba6c65",
+  "model": "Cursor Grok 4.5 Medium Fast",
+  "duration_ms": 279867,
+  "duration_api_ms": 279867,
+  "turns": 17,
+  "tool_events": 100,
+  "tool_counts": {
+    "started": 50,
+    "completed": 50
+  },
+  "subagent_events": 0,
+  "usage": {
+    "input_tokens": 992817,
+    "cached_input_tokens": 934976,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 26224,
+    "reasoning_output_tokens": 0
+  },
+  "raw_usage": {
+    "inputTokens": 57841,
+    "outputTokens": 26224,
+    "cacheReadTokens": 934976,
+    "cacheWriteTokens": 0
+  }
+}

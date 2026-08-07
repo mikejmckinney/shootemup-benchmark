@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_sol_medium_fast_opencode",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-sol-medium-fast-opencode-neon.pages.dev/",
+  "cloudflare_project": "shootemup-bench-monolith-sol-medium-fast-opencode-neon",
+  "supabase_url": "https://etugimyzwawgrrrzkcui.supabase.co",
+  "supabase_project_ref": "etugimyzwawgrrrzkcui",
+  "supabase_public_key": "sb_publishable_-wCVi9TzD1bBXp2GLoGzmQ_DFqEY468",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Live game and anonymous leaderboard insert/read verified; invalid database values are rejected by RLS and constraints. Cloudflare project treatment is dash-normalized because Pages forbids underscores."
+}

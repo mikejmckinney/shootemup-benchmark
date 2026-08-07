@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#070919" />
+    <meta name="description" content="Neon Barrage, a high-intensity browser arcade shooter." />
+    <title>Neon Barrage</title>
+  </head>
+  <body>
+    <div class="scanlines" aria-hidden="true"></div>
+    <header class="masthead">
+      <div class="brand"><span class="brand-mark">NB//</span><h1>NEON <b>BARRAGE</b></h1></div>
+      <div class="status-chip"><i></i> SECTOR LIVE</div>
+      <button class="icon-button" data-testid="mute-button" id="mute-button" aria-label="Mute sound">SOUND: ON</button>
+    </header>
+    <main>
+      <section class="game-column" aria-label="Game area">
+        <div class="hud">
+          <div><small>SCORE</small><strong data-testid="score" id="score">000000</strong></div>
+          <div class="wave"><small>THREAT</small><span id="threat-bars"></span></div>
+          <div class="lives"><small>SHIELDS</small><strong data-testid="lives" id="lives">◆ ◆ ◆</strong></div>
+        </div>
+        <div class="canvas-frame">
+          <canvas width="720" height="760" data-testid="game-canvas" id="game-canvas" aria-label="Neon Barrage game canvas"></canvas>
+          <div class="game-overlay" id="game-overlay">
+            <p class="eyebrow" id="overlay-eyebrow">TRANSMISSION 01</p>
+            <h2 id="overlay-title">THE VOID<br><em>IS LISTENING</em></h2>
+            <p id="overlay-copy">Pilot the Lancer. Break the swarm.<br>Protect what remains.</p>
+            <button class="primary" data-testid="start-button" id="start-button"><span>INITIATE LAUNCH</span><b>→</b></button>
+            <p class="key-hint"><kbd>WASD</kbd> / <kbd>ARROWS</kbd> MOVE &nbsp; <kbd>SPACE</kbd> FIRE</p>
+          </div>
+          <div class="damage-flash" id="damage-flash"></div>
+        </div>
+        <div class="touch-controls" data-testid="touch-controls" id="touch-controls" aria-label="Touch game controls">
+          <div class="dpad">
+            <button data-control="up" aria-label="Move up">▲</button>
+            <button data-control="left" aria-label="Move left">◀</button>
+            <button data-control="down" aria-label="Move down">▼</button>
+            <button data-control="right" aria-label="Move right">▶</button>
+          </div>
+          <button class="fire-button" data-control="fire" aria-label="Fire weapon">FIRE</button>
+        </div>
+      </section>
+      <aside class="leaderboard-panel">
+        <div class="panel-heading"><div><p class="eyebrow">GLOBAL SIGNAL</p><h2>TOP PILOTS</h2></div><span>ALL TIME</span></div>
+        <div class="leaderboard" data-testid="leaderboard" id="leaderboard" aria-live="polite"><p class="board-state">CONTACTING RELAY...</p></div>
+        <form id="score-form" class="score-form" hidden>
+          <p>TRANSMIT YOUR CALLSIGN</p>
+          <div class="submit-row">
+            <input data-testid="player-name" id="player-name" name="name" maxlength="16" minlength="1" autocomplete="nickname" placeholder="CALLSIGN" aria-label="Player name" />
+            <button data-testid="submit-score" id="submit-score" type="submit">SEND</button>
+          </div>
+          <span id="form-message" role="status"></span>
+        </form>
+        <div class="intel">
+          <p class="eyebrow">FIELD INTEL</p>
+          <div><b>01</b><p><strong>CHAIN KILLS</strong><br>Fast eliminations increase your yield.</p></div>
+          <div><b>02</b><p><strong>HOLD THE LINE</strong><br>The barrage accelerates over time.</p></div>
+        </div>
+      </aside>
+    </main>
+    <footer><span>NEON DEFENSE NETWORK // 2088</span><span>BUILD 1.0.7</span></footer>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

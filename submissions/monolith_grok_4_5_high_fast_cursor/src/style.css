@@ -1,0 +1,289 @@
+:root {
+  --bg-0: #050814;
+  --bg-1: #101935;
+  --ink: #e8f1ff;
+  --muted: #93a4c7;
+  --cyan: #39ffc4;
+  --cyan-2: #7cf9ff;
+  --magenta: #ff4d6d;
+  --panel: rgba(10, 16, 36, 0.72);
+  --line: rgba(124, 249, 255, 0.22);
+  --danger: #ff6b9d;
+  --ok: #39ffc4;
+  --font-display: "Orbitron", "Segoe UI", sans-serif;
+  --font-body: "Rajdhani", "Trebuchet MS", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(1200px 600px at 20% -10%, rgba(57, 255, 196, 0.12), transparent 55%),
+    radial-gradient(900px 500px at 90% 10%, rgba(199, 125, 255, 0.14), transparent 50%),
+    linear-gradient(180deg, var(--bg-0), var(--bg-1) 55%, #160d28);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+body {
+  min-height: 100vh;
+}
+
+#app {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding: 1.25rem 1rem 2rem;
+}
+
+.shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.brand {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.brand h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  letter-spacing: 0.08em;
+  color: var(--cyan-2);
+  text-shadow: 0 0 24px rgba(57, 255, 196, 0.35);
+}
+
+.brand p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+}
+
+.stage {
+  position: relative;
+  border: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 0 1px rgba(57, 255, 196, 0.08), 0 20px 60px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+.hud {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.65rem 0.8rem;
+  pointer-events: none;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, rgba(5, 8, 20, 0.75), transparent);
+}
+
+.hud span strong {
+  color: var(--cyan);
+  font-weight: 700;
+}
+
+canvas[data-testid="game-canvas"] {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 480 / 720;
+  background: #070b1a;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.85rem;
+}
+
+button,
+.btn {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(57, 255, 196, 0.16), rgba(57, 255, 196, 0.05));
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+button:hover,
+.btn:hover {
+  border-color: var(--cyan);
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 1rem;
+  backdrop-filter: blur(8px);
+}
+
+.panel h2 {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cyan-2);
+}
+
+.hint {
+  margin: 0 0 0.85rem;
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.35;
+}
+
+.leaderboard {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-height: 12rem;
+}
+
+.leaderboard li {
+  display: grid;
+  grid-template-columns: 2rem 1fr auto;
+  gap: 0.5rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 1.05rem;
+}
+
+.leaderboard .rank {
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  padding-top: 0.2rem;
+}
+
+.leaderboard .score {
+  color: var(--cyan);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+}
+
+.status {
+  min-height: 1.3rem;
+  margin: 0.5rem 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.status.error {
+  color: var(--danger);
+}
+
+.status.ok {
+  color: var(--ok);
+}
+
+.form-row {
+  display: grid;
+  gap: 0.5rem;
+}
+
+label {
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+input[data-testid="player-name"] {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  padding: 0.65rem 0.7rem;
+}
+
+input[data-testid="player-name"]:focus {
+  outline: 1px solid var(--cyan);
+}
+
+.touch {
+  display: none;
+  margin-top: 0.85rem;
+  gap: 0.55rem;
+  user-select: none;
+  touch-action: none;
+}
+
+.touch .pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4rem;
+  flex: 1;
+}
+
+.touch button {
+  min-height: 3rem;
+  font-size: 0.7rem;
+}
+
+.touch .fire {
+  flex: 0.7;
+  min-height: 100%;
+  background: linear-gradient(180deg, rgba(255, 77, 109, 0.28), rgba(255, 77, 109, 0.08));
+  border-color: rgba(255, 77, 109, 0.45);
+}
+
+@media (max-width: 860px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .touch {
+    display: flex;
+  }
+}
+
+@media (max-width: 560px) {
+  #app {
+    padding: 0.75rem 0.65rem 1.5rem;
+  }
+
+  .brand h1 {
+    letter-spacing: 0.05em;
+  }
+}

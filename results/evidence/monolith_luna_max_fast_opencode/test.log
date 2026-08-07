@@ -1,0 +1,17 @@
+
+> neon-barrage@1.0.0 test
+> node --test test/game-logic.test.js
+
+✔ pilot tags trim whitespace and enforce the 1-16 character contract (1.974925ms)
+✔ scores accept only plausible non-negative safe integers (0.495244ms)
+✔ collision detection uses the sum of both radii (0.254507ms)
+✔ difficulty escalates and spawn interval contracts (0.288277ms)
+✔ leaderboard ranks valid entries by score and caps at ten (0.730542ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 180.086968

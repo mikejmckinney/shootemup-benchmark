@@ -1,0 +1,8 @@
+{
+  "treatment": "monolith_sol_medium_opencode_api",
+  "project_ref": "phxbpshtsmcbfismexzv",
+  "requested_at": "2026-08-07T22:01:13Z",
+  "pause_http_status": 200,
+  "final_status": "INACTIVE",
+  "confirmed_inactive": true
+}

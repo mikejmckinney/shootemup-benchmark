@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#070b1c" />
+    <meta name="description" content="Neon Barrage - a precision arcade defense run." />
+    <title>Neon Barrage // Arcade Defense</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Neon Barrage home">
+          <span class="brand-mark" aria-hidden="true">NB</span>
+          <span>
+            <strong>NEON BARRAGE</strong>
+            <small>ARCADE DEFENSE SYSTEM</small>
+          </span>
+        </a>
+        <div class="topbar-meta">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>SECTOR 07 // ONLINE</span>
+        </div>
+      </header>
+
+      <main class="page-grid">
+        <section class="game-card" aria-labelledby="game-title">
+          <div class="game-heading">
+            <div>
+              <p class="eyebrow">LIVE FIRE SIMULATION <span>///</span> 01</p>
+              <h1 id="game-title">Neon <em>Barrage</em></h1>
+              <p class="lede">Hold the line. Break the swarm. Leave a signal in the city lights.</p>
+            </div>
+            <div class="heading-stamp" aria-label="Difficulty escalates continuously">
+              <span>THREAT</span>
+              <strong>RISING</strong>
+            </div>
+          </div>
+
+          <div class="game-frame">
+            <canvas
+              data-testid="game-canvas"
+              id="game-canvas"
+              width="960"
+              height="600"
+              tabindex="0"
+              aria-label="Neon Barrage game canvas"
+            ></canvas>
+            <div class="scanlines" aria-hidden="true"></div>
+
+            <section class="game-overlay ready-overlay" id="ready-overlay" aria-label="Game introduction">
+              <div class="overlay-orbit" aria-hidden="true"><span></span></div>
+              <p class="overlay-kicker">PILOT LINK ESTABLISHED</p>
+              <h2>Defend the <span>night</span>.</h2>
+              <p class="overlay-copy">Pilot the interceptor through an incoming neon storm. Every hit makes the next wave faster.</p>
+              <button class="primary-button" data-testid="start-button" id="start-button" type="button">
+                <span>Engage thrusters</span><b aria-hidden="true">-&gt;</b>
+              </button>
+              <p class="control-hint"><kbd>WASD</kbd> or <kbd>ARROWS</kbd> to move <span class="hint-separator">/</span> <kbd>SPACE</kbd> to fire</p>
+            </section>
+
+            <section class="game-overlay gameover-overlay" id="gameover-overlay" aria-label="Game over" hidden>
+              <p class="overlay-kicker">SIGNAL LOST // RUN COMPLETE</p>
+              <h2>City lights <span>remember</span>.</h2>
+              <p class="score-callout">FINAL SCORE <strong id="final-score">000000</strong></p>
+              <form class="score-form" id="score-form" novalidate>
+                <label for="player-name">Pilot tag <span>1-16 characters</span></label>
+                <div class="score-form-row">
+                  <input data-testid="player-name" id="player-name" name="player-name" type="text" maxlength="16" autocomplete="nickname" placeholder="YOUR CALLSIGN" />
+                  <button class="primary-button compact" data-testid="submit-score" id="submit-score" type="submit">Log score</button>
+                </div>
+                <p class="form-feedback" id="submit-feedback" aria-live="polite"></p>
+              </form>
+              <button class="text-button" id="retry-button" type="button">Run it again <span aria-hidden="true">-&gt;</span></button>
+            </section>
+          </div>
+
+          <div class="hud-row" aria-label="Game status">
+            <div class="hud-stat">
+              <span class="hud-label">SCORE</span>
+              <strong data-testid="score" id="score">000000</strong>
+            </div>
+            <div class="hud-stat lives-stat">
+              <span class="hud-label">LIVES</span>
+              <strong data-testid="lives" id="lives">03</strong>
+              <span class="life-pips" id="life-pips" aria-hidden="true"><i></i><i></i><i></i></span>
+            </div>
+            <div class="hud-stat threat-stat">
+              <span class="hud-label">THREAT LEVEL</span>
+              <strong id="threat-level">01</strong>
+            </div>
+            <button class="mute-button" data-testid="mute-button" id="mute-button" type="button" aria-pressed="false">
+              <span class="speaker-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span id="mute-label">Sound on</span>
+            </button>
+          </div>
+
+          <div class="touch-controls" data-testid="touch-controls" aria-label="Touch controls">
+            <button type="button" class="touch-button" data-control="left" aria-label="Move left">&lt;</button>
+            <button type="button" class="touch-button fire-touch" data-control="fire" aria-label="Fire">FIRE</button>
+            <button type="button" class="touch-button" data-control="right" aria-label="Move right">&gt;</button>
+          </div>
+          <p class="mobile-hint">Touch controls are active on mobile. Hold FIRE to clear a path.</p>
+        </section>
+
+        <aside class="leaderboard-card" aria-labelledby="leaderboard-title">
+          <div class="leaderboard-heading">
+            <div>
+              <p class="eyebrow">PUBLIC CHANNEL <span>///</span> 02</p>
+              <h2 id="leaderboard-title">Top pilots</h2>
+            </div>
+            <span class="live-badge"><i></i> LIVE</span>
+          </div>
+          <p class="leaderboard-intro">The best signals from the last 24 hours, preserved in the grid.</p>
+          <div class="leaderboard-status" id="leaderboard-status" aria-live="polite">Connecting to the public channel...</div>
+          <ol class="leaderboard-list" data-testid="leaderboard" id="leaderboard" aria-label="Top pilot scores"></ol>
+          <div class="leaderboard-footer">
+            <span>MAXIMUM SIGNAL</span>
+            <strong>10 ENTRIES</strong>
+          </div>
+        </aside>
+      </main>
+
+      <footer class="site-footer">
+        <span>NB-07 / BUILT FOR THE NIGHT SHIFT</span>
+        <span>NO SIGNAL IS EVER LOST</span>
+      </footer>
+    </div>
+
+    <script src="./config.js"></script>
+    <script type="module" src="./game.js"></script>
+  </body>
+</html>

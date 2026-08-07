@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_sol_medium_opencode_api",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-sol-medium-opencode-api.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-sol-medium-opencode-api",
+  "supabase_url": "https://phxbpshtsmcbfismexzv.supabase.co",
+  "supabase_project_ref": "phxbpshtsmcbfismexzv",
+  "supabase_public_key": "sb_publishable_RK903g6E6mbp-eKytnrDjA_BHA8rEKJ",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Production game and RLS-protected persistent leaderboard verified with public-key insert/read round trips."
+}

@@ -1,0 +1,59 @@
+{
+  "source": "OpenCode SQLite session ledger",
+  "database": "/workspaces/shootemup-benchmark/results/raw/monolith_sol_low_fast_opencode/opencode-data/opencode/opencode.db",
+  "selection": {
+    "candidate_directory": "/workspaces/shootemup-benchmark/candidates/monolith_sol_low_fast_opencode",
+    "started_ms": 1786130782739,
+    "ended_ms": 1786131013562,
+    "rule": "sessions rooted in candidate directory during run, plus recursive parent_id descendants"
+  },
+  "agents_started": 1,
+  "root_sessions": 1,
+  "child_sessions": 0,
+  "peak_concurrent_agents": 1,
+  "turns": 18,
+  "tool_calls": 23,
+  "coordination_events": 0,
+  "coordination_tool_calls": 0,
+  "tool_counts": {
+    "read": 2,
+    "glob": 1,
+    "bash": 13,
+    "todowrite": 4,
+    "apply_patch": 3
+  },
+  "usage": {
+    "input_tokens": 239479,
+    "cached_input_tokens": 239425,
+    "cache_write_input_tokens": 19644,
+    "output_tokens": 9544,
+    "reasoning_output_tokens": 332
+  },
+  "provider_reported_cost_usd": 1.058155,
+  "sessions": [
+    {
+      "id": "ses_0224f09ebffe9lpvDyVwR683K5",
+      "project_id": "7840e37db8fb3101ae674037084e4f7fe12f5710",
+      "workspace_id": null,
+      "parent_id": null,
+      "slug": "tidy-panda",
+      "directory": "/workspaces/shootemup-benchmark/candidates/monolith_sol_low_fast_opencode",
+      "title": "Controlled benchmark monolith_sol_low_fast_opencode task",
+      "version": "1.18.15",
+      "cost": 1.058155,
+      "tokens_input": 54,
+      "tokens_output": 9212,
+      "tokens_reasoning": 332,
+      "tokens_cache_read": 239425,
+      "tokens_cache_write": 19644,
+      "agent": "build",
+      "model": {
+        "id": "gpt-5.6-sol-fast",
+        "providerID": "openai",
+        "variant": "low"
+      },
+      "time_created": 1786130789908,
+      "time_updated": 1786131013279
+    }
+  ]
+}

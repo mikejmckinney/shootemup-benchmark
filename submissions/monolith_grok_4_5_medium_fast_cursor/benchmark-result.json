@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_grok_4_5_medium_fast_cursor",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-grok-4-5-medium-fast-cursor-web.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-grok-4-5-medium-fast-cursor-web",
+  "supabase_url": "https://pufzodrhbagyyohzgbxq.supabase.co",
+  "supabase_project_ref": "pufzodrhbagyyohzgbxq",
+  "supabase_public_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB1ZnpvZHJoYmFneXlvaHpnYnhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMjg0MzEsImV4cCI6MjEwMTcwNDQzMX0.DrUmPr8_jWiEINJ_hQq4FXWES5RGj1xBV_lKc32RGMc",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Neon Barrage Vite+TS canvas shooter on Cloudflare Pages; Supabase project shootemup-bench-monolith_grok_4_5_medium_fast_cursor-lb (pufzodrhbagyyohzgbxq) with RLS leaderboard. CF project uses hyphens (Pages disallows underscores). Verified prod HTML/JS 200, anon insert/read, DB rejection of invalid name/score, 9 vitest tests passed."
+}
