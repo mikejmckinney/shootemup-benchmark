@@ -122,8 +122,17 @@ case "$TREATMENT" in
     METHODOLOGY_REPOSITORY=https://github.com/obra/superpowers
     FRESH_REQUIRED=true
     ;;
+  monolith_luna_max_opencode_ai_repo_template)
+    MODEL=openai/gpt-5.6-luna
+    METRICS_MODEL=gpt-5.6-luna
+    EFFORT=max
+    METHODOLOGY=ai-repo-template
+    METHODOLOGY_VERSION=9fa3f87d4ea2c800829fa1fe1c215790199f838c
+    METHODOLOGY_REPOSITORY=https://github.com/mikejmckinney/ai-repo-template
+    FRESH_REQUIRED=true
+    ;;
   *)
-    echo "usage: $0 {monolith_opencode|monolith_sol_medium_opencode|monolith_sol_medium_opencode_api|monolith_sol_low_opencode|monolith_sol_high_opencode|monolith_luna_xhigh_opencode|monolith_luna_xhigh_opencode_control|monolith_luna_high_opencode|monolith_luna_xhigh_fast_opencode|monolith_luna_max_fast_opencode|monolith_sol_low_fast_opencode|monolith_sol_medium_fast_opencode|monolith_luna_max_opencode_retest|monolith_luna_max_opencode_speckit|dynamic_luna_max_opencode_superpowers}" >&2
+    echo "usage: $0 {monolith_opencode|monolith_sol_medium_opencode|monolith_sol_medium_opencode_api|monolith_sol_low_opencode|monolith_sol_high_opencode|monolith_luna_xhigh_opencode|monolith_luna_xhigh_opencode_control|monolith_luna_high_opencode|monolith_luna_xhigh_fast_opencode|monolith_luna_max_fast_opencode|monolith_sol_low_fast_opencode|monolith_sol_medium_fast_opencode|monolith_luna_max_opencode_retest|monolith_luna_max_opencode_speckit|dynamic_luna_max_opencode_superpowers|monolith_luna_max_opencode_ai_repo_template}" >&2
     exit 64
     ;;
 esac
@@ -174,6 +183,10 @@ if [ "$METHODOLOGY" = speckit ] && ! command -v pipx >/dev/null 2>&1; then
   echo "pipx is required for the pinned Spec Kit bootstrap" >&2
   exit 69
 fi
+if [ "$METHODOLOGY" = ai-repo-template ] && [ -z "${GH_PAT:-}" ]; then
+  echo "GH_PAT is required to fetch the pinned private AI Repo Template" >&2
+  exit 69
+fi
 mkdir -p "$CANDIDATE_DIR" "$RAW_DIR"
 RATE_LIMIT_EVENTS="$RAW_DIR/rate-limit-events.jsonl"
 RATE_LIMIT_SUMMARY="$RAW_DIR/rate-limit-summary.json"
@@ -188,8 +201,10 @@ if [ "$AUTH_MODE" = api_key ]; then
   export OPENCODE_CONFIG_CONTENT
   OPENCODE_CONFIG_CONTENT=$(jq -cn '{provider:{openai:{options:{apiKey:"{env:OPENAI_API_KEY}"}}}}')
 fi
-cp "$ROOT_DIR/benchmark/task.md" "$CANDIDATE_DIR/BENCHMARK_TASK.md"
-if [ ! -d "$CANDIDATE_DIR/.git" ]; then git -C "$CANDIDATE_DIR" init -q; fi
+if [ "$METHODOLOGY" != ai-repo-template ]; then
+  cp "$ROOT_DIR/benchmark/task.md" "$CANDIDATE_DIR/BENCHMARK_TASK.md"
+  if [ ! -d "$CANDIDATE_DIR/.git" ]; then git -C "$CANDIDATE_DIR" init -q; fi
+fi
 
 # Superpowers is project-local and pinned. Its download and activation happen
 # when OpenCode starts, inside the measured interval.
@@ -199,7 +214,7 @@ if [ "$METHODOLOGY" = superpowers ]; then
 fi
 
 # Give every methodology-block treatment an equivalent usable Git baseline.
-if ! git -C "$CANDIDATE_DIR" rev-parse --verify HEAD >/dev/null 2>&1; then
+if [ "$METHODOLOGY" != ai-repo-template ] && ! git -C "$CANDIDATE_DIR" rev-parse --verify HEAD >/dev/null 2>&1; then
   git -C "$CANDIDATE_DIR" add BENCHMARK_TASK.md
   if [ -f "$CANDIDATE_DIR/opencode.json" ]; then git -C "$CANDIDATE_DIR" add opencode.json; fi
   git -C "$CANDIDATE_DIR" -c user.name="Benchmark Controller" -c user.email="benchmark@localhost" \
@@ -247,6 +262,34 @@ case "$METHODOLOGY" in
     ;;
   superpowers)
     PROMPT="You are candidate treatment '$TREATMENT' in a controlled benchmark. Use the installed Superpowers $METHODOLOGY_VERSION plugin and follow its complete methodology as designed, including brainstorming, planning, worktrees, test-driven development, task-specific subagents, review, verification, and branch finishing whenever its skills call for them. Every subagent must inherit the same gpt-5.6-luna model and max reasoning treatment. BENCHMARK_TASK.md is the approved product objective and no human will answer during the timed run, so proceed autonomously with reasonable decisions. All child-agent work, review, and coordination are part of this treatment. Integrate the final working implementation into the candidate root, then deploy and verify the complete task until complete or the time limit stops you."
+    ;;
+  ai-repo-template)
+    : > "$RAW_DIR/bootstrap.stdout.log"
+    : > "$RAW_DIR/bootstrap.stderr.log"
+    TEMPLATE_ARCHIVE=$(mktemp /tmp/shootemup-ai-repo-template-XXXXXX.tar.gz)
+    printf 'Fetching AI Repo Template at pinned commit %s\n' "$METHODOLOGY_VERSION" \
+      >> "$RAW_DIR/bootstrap.stdout.log"
+    curl -fsSL --retry 2 \
+      -H "Authorization: Bearer $GH_PAT" \
+      -H "Accept: application/vnd.github+json" \
+      "https://api.github.com/repos/mikejmckinney/ai-repo-template/tarball/$METHODOLOGY_VERSION" \
+      -o "$TEMPLATE_ARCHIVE" 2>> "$RAW_DIR/bootstrap.stderr.log"
+    BOOTSTRAP_EXIT=$?
+    if [ "$BOOTSTRAP_EXIT" -eq 0 ]; then
+      tar -xzf "$TEMPLATE_ARCHIVE" --strip-components=1 -C "$CANDIDATE_DIR" \
+        >> "$RAW_DIR/bootstrap.stdout.log" 2>> "$RAW_DIR/bootstrap.stderr.log"
+      BOOTSTRAP_EXIT=$?
+    fi
+    rm -f -- "$TEMPLATE_ARCHIVE"
+    if [ "$BOOTSTRAP_EXIT" -eq 0 ]; then
+      cp "$ROOT_DIR/benchmark/task.md" "$CANDIDATE_DIR/BENCHMARK_TASK.md"
+      git -C "$CANDIDATE_DIR" init -q
+      git -C "$CANDIDATE_DIR" add -A
+      git -C "$CANDIDATE_DIR" -c user.name="Benchmark Controller" -c user.email="benchmark@localhost" \
+        commit -q -m "Initialize AI Repo Template benchmark candidate"
+      BOOTSTRAP_EXIT=$?
+    fi
+    PROMPT="Onboarding is complete. Continue the controlled benchmark autonomously as the sole implementation agent, consistent with the repository's current monolithic execution model. Do not delegate or launch other agents. BENCHMARK_TASK.md is the approved product objective. Plan, build, deploy, and verify every requirement. No human will answer during the timed run, so resolve reasonable ambiguities autonomously. Do not create a remote GitHub repository or pull request; the local candidate directory is the project. Continue until the live system and required evidence are verified or the time limit stops you."
     ;;
 esac
 BOOTSTRAP_ENDED_MS=$(date +%s%3N)
@@ -305,6 +348,43 @@ else
         timeout --signal=INT --kill-after=30s "${REMAINING_SECONDS}s" \
           "${OPENCODE_COMMAND[@]}" </dev/null > "$phase_file" 2> "$phase_stderr"
       fi
+      RUN_EXIT=$?
+      sed -n '1,$p' "$phase_file" >> "$RAW_DIR/session.jsonl"
+      sed -n '1,$p' "$phase_stderr" >> "$RAW_DIR/session.stderr.log"
+      if [ -z "$SESSION_ID" ]; then
+        SESSION_ID=$(jq -r 'select(.sessionID != null) | .sessionID' "$phase_file" | sed -n '1p')
+        if [ -z "$SESSION_ID" ] || [ "$SESSION_ID" = null ]; then RUN_EXIT=70; break; fi
+      fi
+      if [ "$RUN_EXIT" -ne 0 ]; then break; fi
+    done
+  elif [ "$METHODOLOGY" = ai-repo-template ]; then
+    : > "$RAW_DIR/session.jsonl"
+    : > "$RAW_DIR/session.stderr.log"
+    SESSION_ID=
+    RUN_EXIT=0
+    PHASES=(onboarding delivery)
+    PHASE_PROMPTS=(
+      "This is a fresh derived repository and you have explicit authorization to perform all non-destructive template-seed onboarding changes required for BENCHMARK_TASK.md. Run the repo-onboarding command and skill exactly as documented: classify first, inspect and adapt the template to this project, create any required design contract, run setup and validation, and mark onboarding complete only if its gates pass. You are the sole agent and must not delegate. Do not create a remote GitHub repository or pull request. Stop this phase after returning the required onboarding receipt; application delivery follows in the next phase."
+      "$PROMPT"
+    )
+    PHASE_COMMANDS=(repo-onboarding "")
+    for phase_index in "${!PHASES[@]}"; do
+      ELAPSED_BEFORE_AGENT=$(( $(date +%s) - START_EPOCH ))
+      REMAINING_SECONDS=$((2700 - ELAPSED_BEFORE_AGENT))
+      if [ "$REMAINING_SECONDS" -le 0 ]; then RUN_EXIT=124; break; fi
+      phase=${PHASES[$phase_index]}
+      phase_file="$RAW_DIR/phase-$phase.jsonl"
+      phase_stderr="$RAW_DIR/phase-$phase.stderr.log"
+      session_args=()
+      command_args=()
+      if [ -n "$SESSION_ID" ]; then session_args=(--session "$SESSION_ID"); fi
+      if [ -n "${PHASE_COMMANDS[$phase_index]}" ]; then command_args=(--command "${PHASE_COMMANDS[$phase_index]}"); fi
+      OPENCODE_COMMAND=(env -u GITHUB_REPOSITORY -u GH_REPO -u GITHUB_ACTIONS \
+        "$OPENCODE" run --format json --auto --dir "$CANDIDATE_DIR" \
+        --model "$MODEL" --variant "$EFFORT" "${session_args[@]}" "${command_args[@]}" \
+        "${PHASE_PROMPTS[$phase_index]}")
+      timeout --signal=INT --kill-after=30s "${REMAINING_SECONDS}s" \
+        "${OPENCODE_COMMAND[@]}" </dev/null > "$phase_file" 2> "$phase_stderr"
       RUN_EXIT=$?
       sed -n '1,$p' "$phase_file" >> "$RAW_DIR/session.jsonl"
       sed -n '1,$p' "$phase_stderr" >> "$RAW_DIR/session.stderr.log"
@@ -378,7 +458,7 @@ jq -n --slurpfile ledger "$RAW_DIR/opencode-usage.json" --slurpfile rate_limit "
     reasoning_effort:$effort, runtime:"opencode", service_tier:$service_tier, auth_mode:$auth_mode, methodology:$methodology,
     methodology_version:$methodology_version,
     usage_source:"OpenCode SQLite session ledger",
-    provider_reported_cost_usd:$ledger[0].provider_reported_cost_usd,
+    provider_reported_cost_usd:(if $auth_mode == "api_key" then $ledger[0].provider_reported_cost_usd else null end),
     agents_started:$ledger[0].agents_started,
     peak_concurrent_agents:$ledger[0].peak_concurrent_agents,
     child_sessions:$ledger[0].child_sessions,

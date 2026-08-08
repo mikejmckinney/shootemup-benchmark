@@ -37,6 +37,7 @@ const allTreatments = [
   "monolith_grok_4_5_high_fast_cursor",
   "monolith_auto_cursor",
   "monolith_luna_xhigh_opencode_control",
+  "monolith_luna_max_opencode_ai_repo_template",
 ];
 const requested = process.argv.slice(3);
 const treatments = requested.length

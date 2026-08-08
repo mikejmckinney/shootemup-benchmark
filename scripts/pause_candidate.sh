@@ -2,9 +2,9 @@
 set -euo pipefail
 
 ROOT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
-TREATMENT=${1:?usage: pause_candidate.sh <treatment>}
+TREATMENT=${1:?usage: pause_candidate.sh <treatment> [evidence-dir]}
 RESULT_FILE="$ROOT_DIR/candidates/$TREATMENT/benchmark-result.json"
-RAW_DIR="$ROOT_DIR/results/raw/$TREATMENT"
+RAW_DIR=${2:-"$ROOT_DIR/results/raw/$TREATMENT"}
 
 mkdir -p "$RAW_DIR"
 
@@ -16,8 +16,15 @@ elif [ -f "$RAW_DIR/projects-before.json" ] && [ -f "$RAW_DIR/projects-after.jso
     --slurpfile after "$RAW_DIR/projects-after.json" \
     --arg prefix "shootemup-bench-$TREATMENT-" '
       ($before[0] | map(.ref)) as $old |
-      [$after[0][] | select((.ref as $ref | $old | index($ref) | not) and (.name | startswith($prefix)))] |
-      if length == 1 then .[0].ref else empty end' | jq -er 'select(test("^[a-z]{20}$"))')
+      [$after[0][] |
+        select(.ref as $ref | $old | index($ref) | not) |
+        select(.name | startswith("shootemup-bench-"))
+      ] as $new |
+      [$new[] | select(.name | startswith($prefix))] as $named |
+      if ($named | length) == 1 then $named[0].ref
+      elif ($new | length) == 1 then $new[0].ref
+      else empty end |
+      select(test("^[a-z]{20}$"))')
 else
   echo "cannot identify the candidate Supabase project from result or before/after snapshots" >&2
   exit 66

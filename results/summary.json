@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-07T22:12:17.652Z",
+  "generated_at": "2026-08-08T00:56:46.568Z",
   "replicate_count_per_treatment": 1,
   "models": [
     "gpt-5.6-luna",
@@ -87,6 +87,7 @@
       "monolith_luna_max_opencode_retest": 0,
       "monolith_luna_max_opencode_speckit": 0,
       "dynamic_luna_max_opencode_superpowers": 0,
+      "monolith_luna_max_opencode_ai_repo_template": 0,
       "monolith_luna_xhigh_fast_opencode": 0,
       "monolith_luna_max_fast_opencode": 0,
       "monolith_sol_low_fast_opencode": 0,
@@ -251,6 +252,15 @@
         "wall_seconds": 1624,
         "estimated_api_cost_usd": 0.26284388,
         "gate_adjusted_roi": -63.45614790007737
+      },
+      "monolith_luna_max_opencode_ai_repo_template": {
+        "comparator_treatment": "monolith_luna_max_opencode_retest",
+        "quality_score": -68,
+        "total_tokens": 18527460,
+        "non_cached_tokens": 515812,
+        "wall_seconds": 1624,
+        "estimated_api_cost_usd": 0.49402536,
+        "gate_adjusted_roi": -63.45614790007737
       }
     }
   },
@@ -316,6 +326,36 @@
           "wall_seconds": 12983,
           "total_tokens": 46167216,
           "gate_adjusted_roi": -61.9385022437169
+        }
+      },
+      {
+        "treatment": "monolith_luna_max_opencode_ai_repo_template",
+        "label": "Monolith Luna Max OpenCode + AI Repo Template",
+        "live_url": "https://shootemup-bench-luna-max-opencode-ai-neon-barrage.mikejmckinney.workers.dev",
+        "source_path": "submissions/monolith_luna_max_opencode_ai_repo_template_continued/",
+        "evidence_path": "results/continuations/monolith_luna_max_opencode_ai_repo_template/attempt-1/evidence/",
+        "outcome": "Completed after one additional 20:31 continuation.",
+        "quality_score": 94,
+        "automated_points": 54,
+        "manual_points": 42,
+        "pre_regression_score": 96,
+        "posthoc_adjustment": -2,
+        "quality_gate": "PASS",
+        "gate_quality_factor": 1,
+        "estimated_api_cost_usd": 1.18444368,
+        "wall_seconds": 3931,
+        "wall_minutes": 65.51666666666667,
+        "total_tokens": 42209280,
+        "gate_adjusted_roi": 10.670745190625457,
+        "cleanup_confirmed": true,
+        "score_path": "results/continuations/monolith_luna_max_opencode_ai_repo_template/attempt-1/score.json",
+        "cleanup_path": "results/continuations/monolith_luna_max_opencode_ai_repo_template/attempt-1/cleanup.json",
+        "marginal_vs_control": {
+          "quality_score": 0,
+          "estimated_api_cost_usd": 1.06208148,
+          "wall_seconds": 2855,
+          "total_tokens": 39695450,
+          "gate_adjusted_roi": -52.785402709451915
         }
       }
     ]
@@ -3038,6 +3078,95 @@
         "luna_xhigh_sol_medium_break_even": 8.27247167941857,
         "usd_per_hour_25": 5.549813587056261,
         "usd_per_hour_60": 2.382531245417102
+      }
+    },
+    {
+      "treatment": "monolith_luna_max_opencode_ai_repo_template",
+      "label": "Monolith · Luna Max · OpenCode + AI Repo Template",
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max",
+      "runtime": "opencode",
+      "service_tier": "standard",
+      "quality_score": 26,
+      "original_quality_score": 26,
+      "posthoc_adjustment": 0,
+      "automated_points": 0,
+      "manual_points": 26,
+      "wall_seconds": 2700,
+      "wall_minutes": 45,
+      "total_tokens": 21041290,
+      "uncached_input_tokens": 582155,
+      "non_cached_tokens": 659082,
+      "cached_input_tokens": 20382208,
+      "output_tokens": 76927,
+      "reasoning_output_tokens": 28146,
+      "agents_started": 1,
+      "coordination_events": 0,
+      "successful_a2a_messages": null,
+      "failed_a2a_messages": null,
+      "captured_web_search_calls": 0,
+      "provider_reported_cost_usd": null,
+      "estimated_api_cost_usd": 0.6163875600000001,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 0.6163875600000001,
+        "web_search": 0
+      },
+      "token_efficiency": 1.2356656839956106,
+      "non_cached_token_efficiency": 39.448809101143716,
+      "time_efficiency": 34.666666666666664,
+      "cost_efficiency": 42.18125362555986,
+      "cost_per_quality_point_usd": 0.02370721384615385,
+      "square_root_roi": 4.936738901709996,
+      "gate_quality_factor": 0,
+      "gate_adjusted_roi": 0,
+      "quality_gate": "FAIL",
+      "quality_gate_passed": false,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": -72,
+        "total_tokens": 4471470,
+        "non_cached_tokens": 334766,
+        "wall_seconds": 973,
+        "estimated_api_cost_usd": 0.14094028000000003
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "monolith_luna_max_opencode_retest",
+        "quality_score": -68,
+        "total_tokens": 18527460,
+        "non_cached_tokens": 515812,
+        "wall_seconds": 1624,
+        "estimated_api_cost_usd": 0.49402536,
+        "gate_adjusted_roi": -63.45614790007737
+      },
+      "dominated_by": [],
+      "pareto_frontier": false,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [],
+          "pareto_frontier": false
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [],
+          "pareto_frontier": false
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [],
+          "pareto_frontier": false
+        }
+      },
+      "strict_dominated_by": [],
+      "strict_pareto_frontier": false,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 42.18125362555986,
+        "usd_per_hour_3": 9.070650585714933,
+        "usd_per_hour_10": 3.2033955756543495,
+        "luna_max_sol_medium_break_even": 2.7476872008550544,
+        "luna_xhigh_sol_medium_break_even": 2.0205943509641964,
+        "usd_per_hour_25": 1.3425322569554112,
+        "usd_per_hour_60": 0.56997060466048
       }
     },
     {

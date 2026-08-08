@@ -20,4 +20,5 @@ results/raw/*/coordinator.jsonl
 results/raw/*/coordinator.final.txt
 results/raw/*/projects-*.json
 results/raw/*/pause-response.json
+results/**/pause-response.json
 results/raw/*/opencode-data/

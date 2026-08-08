@@ -1,0 +1,17 @@
+
+> neon-barrage@1.0.0 test
+> node --test tests/*.test.mjs
+
+✔ validates leaderboard names at the product boundary (1.339794ms)
+✔ accepts only plausible integer scores (0.248928ms)
+✔ detects entity collisions using centered game coordinates (1.149673ms)
+✔ difficulty escalates on a predictable eighteen-second cadence (0.227657ms)
+✔ formats scores with a readable arcade counter (0.334876ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 219.956541

@@ -1,0 +1,64 @@
+{
+  "source": "OpenCode SQLite recursive session tree",
+  "database": "/home/codespace/.local/share/opencode/opencode.db",
+  "root_session": "ses_0219389a9ffelAGKWc0KrGQ0L4",
+  "captured_at": "2026-08-07T23:57:40.763Z",
+  "sessions_count": 1,
+  "child_sessions": 0,
+  "turns": 99,
+  "tool_calls": 172,
+  "coordination_tool_calls": 0,
+  "tool_counts": {
+    "skill": 6,
+    "bash": 60,
+    "read": 46,
+    "todowrite": 3,
+    "glob": 4,
+    "grep": 6,
+    "apply_patch": 29,
+    "webfetch": 3,
+    "supabase_search_docs": 1,
+    "supabase_get_organization": 1,
+    "supabase_get_cost": 1,
+    "supabase_confirm_cost": 1,
+    "supabase_create_project": 1,
+    "supabase_get_project_url": 1,
+    "supabase_get_publishable_keys": 1,
+    "supabase_list_tables": 2,
+    "supabase_get_project": 1,
+    "cloudflare-api_docs": 1,
+    "supabase_apply_migration": 1,
+    "supabase_get_advisors": 2,
+    "supabase_execute_sql": 1
+  },
+  "usage": {
+    "input_tokens": 20964363,
+    "cached_input_tokens": 20382208,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 76927,
+    "reasoning_output_tokens": 28146
+  },
+  "provider_reported_cost_usd": 0,
+  "sessions": [
+    {
+      "id": "ses_0219389a9ffelAGKWc0KrGQ0L4",
+      "parent_id": null,
+      "directory": "/workspaces/shootemup-benchmark/candidates/monolith_luna_max_opencode_ai_repo_template",
+      "title": "Template-seed repository onboarding",
+      "cost": 0,
+      "tokens_input": 582155,
+      "tokens_output": 48781,
+      "tokens_reasoning": 28146,
+      "tokens_cache_read": 20382208,
+      "tokens_cache_write": 0,
+      "agent": "build",
+      "model": {
+        "id": "gpt-5.6-luna",
+        "providerID": "openai",
+        "variant": "max"
+      },
+      "time_created": 1786143077974,
+      "time_updated": 1786145739483
+    }
+  ]
+}

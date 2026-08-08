@@ -1,0 +1,38 @@
+{
+  "treatment": "monolith_luna_max_opencode_ai_repo_template",
+  "scored_at": "2026-08-07T23:49:15.431Z",
+  "original_quality_score": 26,
+  "absolute_supplemental_deductions": 0,
+  "posthoc_adjustment": 0,
+  "corrected_quality_score": 26,
+  "corrected_score_relative_to_baseline": -72,
+  "weights": {
+    "physical_name_entry": 2,
+    "progression_start_consistency": 1,
+    "advertised_keyboard_restart": 1,
+    "immediate_click_restart": 2
+  },
+  "checks": {
+    "physical_name_entry": {
+      "applicable": false,
+      "passed": null,
+      "reason": "Not applicable: candidate produced no valid live result artifact; affected rubric categories already received zero points."
+    },
+    "progression_start_consistency": {
+      "applicable": false,
+      "passed": null,
+      "reason": "Not applicable: candidate produced no valid live result artifact; affected rubric categories already received zero points."
+    },
+    "advertised_keyboard_restart": {
+      "applicable": false,
+      "passed": null,
+      "reason": "Not applicable: candidate produced no valid live result artifact; affected rubric categories already received zero points."
+    },
+    "immediate_click_restart": {
+      "applicable": false,
+      "passed": null,
+      "reason": "Not applicable: candidate produced no valid live result artifact; affected rubric categories already received zero points."
+    }
+  },
+  "rationale": "The corrected quality score applies the candidate's absolute supplemental deductions directly. The monolith remains the comparison baseline, but its score is not normalized back to 100 and 100 is not a ceiling."
+}
