@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Neon Barrage is a fast browser shoot-'em-up with a persistent public leaderboard."
+    />
+    <title>Neon Barrage // Arcade Signal</title>
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">SECTOR 07 / LIVE ARCADE SIGNAL</p>
+          <h1>NEON <span>BARRAGE</span></h1>
+        </div>
+        <p class="tagline">Stay luminous. Stay moving.</p>
+      </header>
+
+      <main class="game-layout">
+        <section class="game-panel" aria-labelledby="game-heading">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">MISSION CONTROL</p>
+              <h2 id="game-heading">Hold the line</h2>
+            </div>
+            <p class="signal-readout">SIGNAL: <span>STABLE</span></p>
+          </div>
+
+          <div class="hud" aria-label="Run status">
+            <div class="hud-stat">
+              <span class="hud-label">Score</span>
+              <strong data-testid="score">000000</strong>
+            </div>
+            <div class="hud-stat">
+              <span class="hud-label">Lives</span>
+              <strong data-testid="lives">3</strong>
+            </div>
+            <div class="hud-stat hud-level">
+              <span class="hud-label">Threat level</span>
+              <strong id="level-readout">01</strong>
+            </div>
+            <button
+              class="mute-button"
+              data-testid="mute-button"
+              id="mute-button"
+              type="button"
+              aria-pressed="false"
+              aria-label="Mute sound"
+            >
+              <span class="mute-icon" aria-hidden="true">))</span>
+              <span id="mute-label">Sound on</span>
+            </button>
+          </div>
+
+          <div class="game-stage">
+            <canvas
+              data-testid="game-canvas"
+              id="game-canvas"
+              width="960"
+              height="600"
+              tabindex="0"
+              aria-label="Neon Barrage game canvas. Use Arrow keys or WASD to move and Space to fire."
+            ></canvas>
+
+            <div class="screen-overlay" id="start-screen">
+              <p class="overlay-kicker">TRANSMISSION / INCOMING</p>
+              <h3>Light the fuse.</h3>
+              <p>Thread the neon lanes, break the swarm, and keep your signal alive.</p>
+              <button class="primary-button" data-testid="start-button" id="start-button" type="button">
+                Start run <span aria-hidden="true">-&gt;</span>
+              </button>
+              <p class="control-line"><b>MOVE</b> Arrow keys / WASD <span aria-hidden="true">+</span> <b>FIRE</b> Space</p>
+            </div>
+
+            <div class="screen-overlay hidden" id="game-over-screen" aria-labelledby="game-over-title">
+              <p class="overlay-kicker">SIGNAL LOST / RUN COMPLETE</p>
+              <h3 id="game-over-title">Make it count.</h3>
+              <p class="final-score-label">Final score <strong id="final-score">000000</strong></p>
+              <form id="score-form" novalidate>
+                <label for="player-name">Callsign</label>
+                <div class="score-form-row">
+                  <input
+                    data-testid="player-name"
+                    id="player-name"
+                    name="player-name"
+                    type="text"
+                    maxlength="16"
+                    minlength="1"
+                    autocomplete="nickname"
+                    placeholder="YOUR NAME"
+                    required
+                  />
+                  <button class="primary-button" data-testid="submit-score" id="submit-score" type="submit">
+                    Upload
+                  </button>
+                </div>
+                <p class="form-status" id="score-form-status" role="status" aria-live="polite"></p>
+              </form>
+              <button class="text-button" id="restart-button" type="button">Run it back</button>
+            </div>
+          </div>
+
+          <div class="stage-footer">
+            <p id="game-status" class="sr-only" role="status" aria-live="polite"></p>
+            <p class="stage-note"><span class="status-dot" aria-hidden="true"></span> Local flight systems ready</p>
+            <p class="stage-note stage-note-right">v1.0 / NO ASSIST</p>
+          </div>
+
+          <div class="touch-controls" data-testid="touch-controls" aria-label="Touch controls">
+            <div class="touch-pad" aria-label="Movement controls">
+              <button type="button" data-touch="up" aria-label="Move up">&#9650;</button>
+              <div class="touch-row">
+                <button type="button" data-touch="left" aria-label="Move left">&#9664;</button>
+                <button type="button" data-touch="down" aria-label="Move down">&#9660;</button>
+                <button type="button" data-touch="right" aria-label="Move right">&#9654;</button>
+              </div>
+            </div>
+            <button class="fire-button" type="button" data-touch="fire" aria-label="Fire">FIRE</button>
+          </div>
+        </section>
+
+        <aside class="leaderboard-panel" aria-labelledby="leaderboard-heading">
+          <div class="leaderboard-heading">
+            <div>
+              <p class="panel-kicker">PUBLIC FREQUENCY</p>
+              <h2 id="leaderboard-heading">Top signal</h2>
+            </div>
+            <span class="top-count">TOP 10</span>
+          </div>
+          <p class="leaderboard-intro">Every clean run leaves a trace.</p>
+          <p id="leaderboard-status" class="leaderboard-status" role="status" aria-live="polite">Loading signal data...</p>
+          <ol class="leaderboard-list" data-testid="leaderboard" id="leaderboard"></ol>
+          <div class="leaderboard-footer">
+            <span>OPEN CIRCUIT</span>
+            <span aria-hidden="true">*</span>
+            <span>ALL PILOTS WELCOME</span>
+          </div>
+        </aside>
+      </main>
+
+      <footer class="site-footer">
+        <span>NEON BARRAGE / ARCADE SYSTEMS</span>
+        <span>NO ACCOUNT REQUIRED</span>
+      </footer>
+    </div>
+
+    <script src="./src/config.js"></script>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

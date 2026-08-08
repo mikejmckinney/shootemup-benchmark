@@ -1,0 +1,500 @@
+# Agent Auto-Merge — Opt-in Merge When Ready
+# --------------------------------------------------
+# Monitors PRs carrying the `auto-merge` label. When ALL conditions are
+# met, squash-merges automatically:
+#   1. All CI checks passing
+#   2. No unresolved review threads
+#   3. No outstanding REQUEST_CHANGES reviews
+#   4. PR is not in draft state
+#   5. PR is mergeable (no conflicts)
+#
+# After merge:
+#   - Closes the linked issue (via "closes #N" in PR body)
+#   - Deletes the head branch
+#   - Posts a summary comment
+#   - Drains the Copilot queue if the merged branch was copilot/*
+#
+# Activation model (opt-in):
+#   - PR does NOT auto-merge by default.
+#   - Maintainer (or automation) applies the `auto-merge` label to the PR
+#     to enable auto-merge.
+#   - Optional bypass: add `auto-merge-fast` to skip the bot-review settle
+#     wait window for trivial/low-risk PRs.
+#   - Removing the label re-disables auto-merge for that PR.
+#   - No branch-prefix restriction: any branch with the label is eligible
+#     (the label itself is the allow-list). Fork PRs are still refused.
+#
+# Safety:
+#   - Requires explicit `auto-merge` label (no runaway merging)
+#   - Refuses fork-origin PRs (workflow_run runs in base repo with secrets)
+#   - Requires ALL CI to pass — not just some
+#   - Uses squash merge for clean history
+#   - Branch protection rules still apply
+#
+# Authentication:
+#   - The job-scoped GITHUB_TOKEN performs reads and writes with the explicit
+#     permissions below. Merges performed with it do not trigger new push
+#     workflows. This is intentional: the strict main ruleset already requires
+#     current CI and lint results before merge, and no post-merge automation
+#     consumes duplicate main-branch runs.
+#   - If you have branch protection requiring reviews, either:
+#     (a) Add github-actions[bot] to bypass list, OR
+#     (b) Count the bot reviewers (Gemini/Claude/Copilot) as approvals
+#   - The `auto-merge` label is created idempotently by scripts/setup.sh.
+
+name: Auto-Merge PRs (opt-in via auto-merge label)
+
+on:
+  # Re-evaluate when CI and automation workflow runs complete.
+  # NOTE: check_suite events are NOT fired for GitHub Actions workflows
+  # (GitHub suppresses them to prevent recursive loops). workflow_run is
+  # the correct trigger for re-evaluating after Actions-based CI finishes.
+  # This trigger requires the workflow file to be on the default branch.
+  #
+  # The three names below must match the `name:` fields in:
+  #   - ci-tests.yml              → "CI Tests"
+  #   - lint-and-format.yml       → "Lint and Format"
+  #
+  # If ANY of those names are changed, update here too — an exact string
+  # match is required for `workflow_run` to fire. Without the match,
+  # auto-merge silently stops re-evaluating on that workflow's completion
+  # (the specific failure mode that motivated #175: `Auto-Fix Reviews
+  # (Claude)` was omitted from this list, so when it finished after an
+  # auto-merge run had already deferred on its pending state, no event
+  # ever re-fired auto-merge and the PR stalled indefinitely). See #175
+  # for the full repro.
+  workflow_run:
+    workflows:
+      - "CI Tests"
+      - "Lint and Format"
+      - "Auto-Fix Reviews (Claude)"
+    types: [completed]
+
+  # Re-evaluate when reviews change
+  pull_request_review:
+    types: [submitted, dismissed]
+
+  # Re-evaluate when PR is synchronized or marked ready
+  pull_request:
+    types: [synchronize, ready_for_review]
+
+  # Re-evaluate when labels change (auto-merge add/remove)
+  #
+  # NOTE: `pull_request_review_thread` (resolved / unresolved) is a valid
+  # GitHub webhook event but is NOT a supported GitHub Actions workflow
+  # trigger. Adding it makes Actions reject the whole file with
+  # "Unexpected value 'pull_request_review_thread'" and NO runs fire at
+  # all — invalidating every trigger below it. If you want auto-merge to
+  # re-evaluate after a thread is resolved, the workarounds are:
+  #   - push any commit (fires workflow_run after CI),
+  #   - remove + re-add the `auto-merge` label (fires pull_request_target
+  #     labeled/unlabeled), or
+  #   - submit/dismiss a review (fires pull_request_review).
+  pull_request_target:
+    types: [labeled, unlabeled]
+
+# Prevent race conditions
+concurrency:
+  group: auto-merge-${{ github.event.pull_request.number || github.event.workflow_run.pull_requests[0].number || 'none' }}
+  cancel-in-progress: true
+
+jobs:
+  merge-if-ready:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      # statusCheckRollup aggregates both Check Runs (checks:) and
+      # Commit Statuses (statuses:). Declare both so GITHUB_TOKEN can
+      # read it without needing a PAT. `actions: read` is also required
+      # because the JSON output of `gh pr view --json statusCheckRollup`
+      # includes nested `checkSuite.workflowRun` metadata; without it
+      # gh fails with "Resource not accessible by integration" on the
+      # workflowRun field even when checks/statuses are granted.
+      checks: read
+      statuses: read
+      actions: read
+
+    steps:
+      - name: Find PRs ready to merge
+        id: find
+        env:
+          # statusCheckRollup requires Checks, Statuses, and Actions read.
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          # Pass event data via env vars (not inline interpolation) to
+          # prevent code-injection from untrusted PR metadata.
+          EVENT_PR_NUMBER: ${{ github.event.pull_request.number }}
+          EVENT_WFR_PR_JSON: ${{ toJSON(github.event.workflow_run.pull_requests) }}
+          # Used to exclude this workflow's own check run from status counts.
+          # Belt-and-suspenders: match by workflowName OR by job name.
+          SELF_WORKFLOW: ${{ github.workflow }}
+          SELF_JOB: ${{ github.job }}
+        run: |
+          pr_number=""
+
+          # Determine PR number from event type
+          if [[ -n "$EVENT_PR_NUMBER" ]]; then
+            pr_number="$EVENT_PR_NUMBER"
+          elif [[ -n "$EVENT_WFR_PR_JSON" && "$EVENT_WFR_PR_JSON" != "null" && "$EVENT_WFR_PR_JSON" != "[]" ]]; then
+            pr_number=$(echo "$EVENT_WFR_PR_JSON" | jq -r '.[0].number // empty' 2>/dev/null || echo "")
+          fi
+
+          if [[ -z "$pr_number" ]]; then
+            echo "No PR number found. Skipping."
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "Evaluating PR #$pr_number..."
+
+          # Fetch all PR data in one call. Surface stderr on failure
+          # (captured to a temp file) so the real error is visible in
+          # the workflow log — the old `2>/dev/null` swallowed it and
+          # made permission failures indistinguishable from transient
+          # network errors.
+          set +e
+          pr_json=$(gh pr view "$pr_number" --repo "$REPO" \
+            --json headRefName,headRepositoryOwner,isDraft,state,mergeable,reviewDecision,statusCheckRollup,labels,title,body \
+            2>/tmp/gh-pr-view.err)
+          gh_exit=$?
+          set -e
+
+          if [[ $gh_exit -ne 0 || -z "$pr_json" ]]; then
+            echo "gh pr view failed (exit=$gh_exit):"
+            cat /tmp/gh-pr-view.err 2>/dev/null || true
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          branch=$(echo "$pr_json" | jq -r '.headRefName // ""')
+
+          # Must NOT be from a fork — workflow_run / pull_request_target
+          # triggers execute in the base repo context with access to secrets,
+          # so a fork PR that somehow acquired the auto-merge label must
+          # still be refused. Defense in depth.
+          repo_owner="${REPO%/*}"
+          head_owner=$(echo "$pr_json" | jq -r '.headRepositoryOwner.login // ""')
+          if [[ -n "$head_owner" && "$head_owner" != "$repo_owner" ]]; then
+            echo "PR is from fork ($head_owner). Refusing to auto-merge."
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Must carry the auto-merge label (opt-in).
+          # Absence of the label is the default — we do nothing.
+          has_auto_merge_label=$(echo "$pr_json" | jq -r '[.labels[].name] | any(. == "auto-merge")' 2>/dev/null || echo "false")
+          if [[ "$has_auto_merge_label" != "true" ]]; then
+            echo "PR does not have auto-merge label. Skipping."
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Optional fast-path bypass for trivial/low-risk PRs.
+          # When present, skip the settle window for slow bot reviewers.
+          has_auto_merge_fast_label=$(echo "$pr_json" | jq -r '[.labels[].name] | any(. == "auto-merge-fast")' 2>/dev/null || echo "false")
+
+          # Smoke-test guard: PRs labeled `smoke-test` are exercising
+          # workflow behavior and must not be auto-merged mid-test.
+          # (The auto-fix and relay workflows have parallel guards.)
+          # See docs/guides/agent-best-practices.md
+          # §"Smoke-test PR convention" and #74.
+          has_smoke_test_label=$(echo "$pr_json" | jq -r '[.labels[].name] | any(. == "smoke-test")' 2>/dev/null || echo "false")
+          if [[ "$has_smoke_test_label" == "true" ]]; then
+            echo "PR carries smoke-test label. Skipping auto-merge per #74 convention."
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Must not be draft.
+          # Do NOT use `.isDraft // true` — jq's `//` treats both null
+          # AND false as "absent", so a non-draft PR (isDraft: false)
+          # would incorrectly hit the true fallback and be skipped as
+          # draft. Check for null explicitly and fail closed only when
+          # the field is missing.
+          is_draft=$(echo "$pr_json" | jq -r '.isDraft | if . == null then "true" else tostring end')
+          if [[ "$is_draft" == "true" ]]; then
+            echo "PR is draft. Skipping."
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Must be open
+          state=$(echo "$pr_json" | jq -r '.state // "CLOSED"')
+          if [[ "$state" != "OPEN" ]]; then
+            echo "PR is $state. Skipping."
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # All checks must pass (none failing, none pending).
+          # Exclude this workflow's own check run from the count — it is
+          # always IN_PROGRESS while this step executes, which would
+          # create a deadlock (pending >= 1 forever).
+          # Match by workflowName (primary) and also by .name containing
+          # the job id (fallback), since GitHub formats check names as
+          # "workflow / job" in some contexts.
+          self_check="$SELF_WORKFLOW / $SELF_JOB"
+          failing=$(echo "$pr_json" | jq -r --arg self "$SELF_WORKFLOW" --arg self_job "$SELF_JOB" --arg self_check "$self_check" '[.statusCheckRollup[] | select((.workflowName != $self) and (.name != $self_job) and (.name != $self_check) and .status == "COMPLETED" and .conclusion != "SUCCESS" and .conclusion != "NEUTRAL" and .conclusion != "SKIPPED")] | length' 2>/dev/null || echo "999")
+          pending=$(echo "$pr_json" | jq -r --arg self "$SELF_WORKFLOW" --arg self_job "$SELF_JOB" --arg self_check "$self_check" '[.statusCheckRollup[] | select((.workflowName != $self) and (.name != $self_job) and (.name != $self_check) and .status != "COMPLETED")] | length' 2>/dev/null || echo "999")
+
+          if [[ "$pending" -gt 0 ]]; then
+            echo "Checks still pending ($pending). Will re-evaluate later."
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [[ "$failing" -gt 0 ]]; then
+            echo "Checks failing ($failing). Not ready."
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # No outstanding change requests
+          review_decision=$(echo "$pr_json" | jq -r '.reviewDecision // "NONE"')
+          if [[ "$review_decision" == "CHANGES_REQUESTED" ]]; then
+            echo "Outstanding change requests. Not ready."
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # No merge conflicts
+          mergeable=$(echo "$pr_json" | jq -r '.mergeable // "UNKNOWN"')
+          if [[ "$mergeable" == "CONFLICTING" ]]; then
+            echo "Merge conflicts. Not ready."
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Check for unresolved review threads (ground truth via GraphQL;
+          # REST /reviews only exposes historical review states, which
+          # reviewDecision above already accounts for).
+          owner="${REPO%/*}"
+          name="${REPO#*/}"
+          # Paginate reviewThreads so PRs with > 100 threads are evaluated
+          # correctly; otherwise unresolved threads beyond the first page
+          # would be silently ignored and we could auto-merge prematurely.
+          # Fail closed on GraphQL errors: a permission/config/network
+          # regression must not silently bypass the unresolved-thread
+          # guard. Surface stderr for diagnosis and mark ineligible.
+          unresolved=0
+          cursor=""
+          while :; do
+            if [[ -n "$cursor" ]]; then
+              page=$(gh api graphql \
+                -F owner="$owner" -F name="$name" -F number="$pr_number" -F after="$cursor" \
+                -f query='
+                  query($owner:String!, $name:String!, $number:Int!, $after:String!) {
+                    repository(owner:$owner, name:$name) {
+                      pullRequest(number:$number) {
+                        reviewThreads(first: 100, after: $after) {
+                          nodes { isResolved }
+                          pageInfo { hasNextPage endCursor }
+                        }
+                      }
+                    }
+                  }' 2>/tmp/gh-graphql.err) || {
+                echo "GraphQL reviewThreads query failed (paginated):"
+                cat /tmp/gh-graphql.err 2>/dev/null || true
+                echo "Failing closed — treating as unresolved to block merge."
+                echo "eligible=false" >> "$GITHUB_OUTPUT"
+                exit 0
+              }
+            else
+              page=$(gh api graphql \
+                -F owner="$owner" -F name="$name" -F number="$pr_number" \
+                -f query='
+                  query($owner:String!, $name:String!, $number:Int!) {
+                    repository(owner:$owner, name:$name) {
+                      pullRequest(number:$number) {
+                        reviewThreads(first: 100) {
+                          nodes { isResolved }
+                          pageInfo { hasNextPage endCursor }
+                        }
+                      }
+                    }
+                  }' 2>/tmp/gh-graphql.err) || {
+                echo "GraphQL reviewThreads query failed:"
+                cat /tmp/gh-graphql.err 2>/dev/null || true
+                echo "Failing closed — treating as unresolved to block merge."
+                echo "eligible=false" >> "$GITHUB_OUTPUT"
+                exit 0
+              }
+            fi
+
+            page_unresolved=$(echo "$page" | jq '[.data.repository.pullRequest.reviewThreads.nodes[] | select(.isResolved == false)] | length')
+            unresolved=$((unresolved + page_unresolved))
+
+            has_next=$(echo "$page" | jq -r '.data.repository.pullRequest.reviewThreads.pageInfo.hasNextPage')
+            if [[ "$has_next" != "true" ]]; then
+              break
+            fi
+            cursor=$(echo "$page" | jq -r '.data.repository.pullRequest.reviewThreads.pageInfo.endCursor // empty')
+            if [[ -z "$cursor" ]]; then
+              break
+            fi
+          done
+          if [[ "$unresolved" -gt 0 ]]; then
+            echo "$unresolved unresolved review thread(s). Not ready."
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Slow-bot settle window (issue #182): on fast PRs, CI can finish
+          # before Gemini/Copilot reviewers post. Give them a bounded chance
+          # to finish before merge when formal reviews are configured externally.
+          # Settle is anchored on the PR's head SHA — a review only counts
+          # toward "settled" if it was submitted against the current head
+          # commit. This closes the rebase/cherry-pick gap where an older
+          # `committedDate` could let stale reviews on a previous head pass
+          # the filter (Codex review on PR #194). The 240s budget covers
+          # the recorded 3m06s copilot-pr-reviewer worst case from PR #181
+          # with margin (Gemini review on PR #195).
+          if [[ "$has_auto_merge_fast_label" == "true" ]]; then
+            echo "auto-merge-fast label present — skipping bot-review settle wait."
+          else
+            settle_max_cycles=4
+            settle_sleep_seconds=60
+            settled="false"
+
+            set +e
+            head_page=$(gh api graphql \
+              -F owner="$owner" -F name="$name" -F number="$pr_number" \
+              -f query='query($owner:String!, $name:String!, $number:Int!) { repository(owner:$owner, name:$name) { pullRequest(number:$number) { headRefOid } } }' \
+              2>/tmp/gh-head-commit.err)
+            head_exit=$?
+            set -e
+
+            head_sha=""
+            if [[ $head_exit -eq 0 && -n "$head_page" ]]; then
+              head_sha=$(echo "$head_page" | jq -r '.data.repository.pullRequest.headRefOid // empty')
+            fi
+
+            if [[ -z "$head_sha" ]]; then
+              echo "WARN: Could not determine head SHA for settle window."
+              cat /tmp/gh-head-commit.err 2>/dev/null || true
+              echo "Proceeding with bounded timeout fallback (${settle_max_cycles}x${settle_sleep_seconds}s)."
+            else
+              echo "Bot-review settle window armed (up to ${settle_max_cycles}x${settle_sleep_seconds}s) for head SHA $head_sha"
+            fi
+
+            for cycle in $(seq 1 "$settle_max_cycles"); do
+              set +e
+              reviews_page=$(gh api graphql \
+                -F owner="$owner" -F name="$name" -F number="$pr_number" \
+                -f query='query($owner:String!, $name:String!, $number:Int!) { repository(owner:$owner, name:$name) { pullRequest(number:$number) { reviews(last: 100) { nodes { author { login } submittedAt state commit { oid } } } } } }' \
+                2>/tmp/gh-reviews-settle.err)
+              reviews_exit=$?
+              set -e
+
+              if [[ $reviews_exit -ne 0 || -z "$reviews_page" ]]; then
+                echo "WARN: bot-review settle query failed on cycle $cycle/$settle_max_cycles"
+                cat /tmp/gh-reviews-settle.err 2>/dev/null || true
+              else
+                # Match reviews against the current head SHA (when known).
+                # Reviews without a tied commit (.commit == null) and reviews
+                # tied to a previous head do NOT count toward "settled" —
+                # this is the rebase/cherry-pick safety property. Only when
+                # head SHA lookup failed do we degrade to "any review counts"
+                # so we don't burn the full window on a transient API error.
+                seen_reviewers=$(echo "$reviews_page" | jq -r --arg head "$head_sha" '
+                  [.data.repository.pullRequest.reviews.nodes[]
+                   | select(.author.login != null)
+                   | select(.author.login == "gemini-code-assist[bot]" or .author.login == "copilot-pull-request-reviewer[bot]")
+                   | select(($head == "") or (.commit != null and .commit.oid == $head))
+                   | .author.login] | unique[]?')
+
+                seen_gemini="false"
+                seen_copilot="false"
+                if echo "$seen_reviewers" | grep -Fxq "gemini-code-assist[bot]"; then
+                  seen_gemini="true"
+                fi
+                if echo "$seen_reviewers" | grep -Fxq "copilot-pull-request-reviewer[bot]"; then
+                  seen_copilot="true"
+                fi
+
+                if [[ "$seen_gemini" == "true" && "$seen_copilot" == "true" ]]; then
+                  echo "Bot-review settle complete on cycle $cycle/$settle_max_cycles (Gemini + Copilot reviewer observed)."
+                  settled="true"
+                  break
+                fi
+
+                missing=()
+                [[ "$seen_gemini" != "true" ]] && missing+=("gemini-code-assist[bot]")
+                [[ "$seen_copilot" != "true" ]] && missing+=("copilot-pull-request-reviewer[bot]")
+                echo "Bot-review settle cycle $cycle/$settle_max_cycles: waiting for ${missing[*]}"
+              fi
+
+              if [[ "$cycle" -lt "$settle_max_cycles" ]]; then
+                sleep "$settle_sleep_seconds"
+              fi
+            done
+
+            if [[ "$settled" != "true" ]]; then
+              echo "WARN: Bot-review settle timeout reached (${settle_max_cycles}x${settle_sleep_seconds}s). Proceeding with merge readiness as-is."
+            fi
+          fi
+
+          echo "✅ PR #$pr_number is ready for auto-merge!"
+          echo "eligible=true" >> "$GITHUB_OUTPUT"
+          echo "number=$pr_number" >> "$GITHUB_OUTPUT"
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+
+          title=$(echo "$pr_json" | jq -r '.title // "Copilot implementation"')
+          echo "title=$title" >> "$GITHUB_OUTPUT"
+
+          body=$(echo "$pr_json" | jq -r '.body // ""')
+          echo "body<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$body" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      # Merge
+      - name: Squash and merge
+        if: steps.find.outputs.eligible == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ steps.find.outputs.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          echo "Merging PR #$PR_NUMBER..."
+
+          gh pr merge "$PR_NUMBER" \
+            --repo "$REPO" \
+            --squash \
+            --subject "${{ steps.find.outputs.title }}" \
+            --body "Auto-merged by agent pipeline.
+          Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --delete-branch
+
+          echo "✅ Merged and branch deleted."
+
+      # Update linked issues
+      - name: Close linked issues
+        if: steps.find.outputs.eligible == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ steps.find.outputs.number }}
+          PR_BODY: ${{ steps.find.outputs.body }}
+          REPO: ${{ github.repository }}
+        run: |
+          # Find "closes #N" / "fixes #N" / "resolves #N" in PR body
+          linked=$(echo "$PR_BODY" | grep -oiP '(?:closes|fixes|resolves)\s+#\K\d+' || echo "")
+
+          for issue in $linked; do
+            echo "Updating issue #$issue..."
+            gh issue edit "$issue" --repo "$REPO" --add-label "agent-complete" 2>/dev/null || true
+            gh issue comment "$issue" --repo "$REPO" \
+              --body "✅ **Done.** PR #$PR_NUMBER merged automatically." 2>/dev/null || true
+          done
+
+      - name: Post merge confirmation
+        if: steps.find.outputs.eligible == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ steps.find.outputs.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          gh pr comment "$PR_NUMBER" --repo "$REPO" \
+            --body "🎉 **Auto-merged.** All CI checks passed, all review comments resolved."

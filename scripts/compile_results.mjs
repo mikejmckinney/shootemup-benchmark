@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
-const plannedTreatments = ["monolith", "native_dynamic", "native_isolated", "a2a", "monolith_warm", "a2a_async", "a2a_async_streaming_opencode", "monolith_sol_medium", "monolith_opencode", "monolith_sol_medium_opencode", "monolith_sol_medium_opencode_api", "monolith_sol_low_opencode", "monolith_sol_high_opencode", "monolith_luna_xhigh_opencode", "monolith_luna_high_opencode", "monolith_luna_max_codex_minimal", "monolith_luna_max_opencode_retest", "monolith_luna_max_opencode_speckit", "dynamic_luna_max_opencode_superpowers", "monolith_luna_xhigh_fast_opencode", "monolith_luna_max_fast_opencode", "monolith_sol_low_fast_opencode", "monolith_sol_medium_fast_opencode", "monolith_grok_4_5_medium_cursor", "monolith_grok_4_5_high_cursor", "monolith_grok_4_5_medium_fast_cursor", "monolith_grok_4_5_high_fast_cursor", "monolith_auto_cursor", "monolith_luna_xhigh_opencode_control"];
+const plannedTreatments = ["monolith", "native_dynamic", "native_isolated", "a2a", "monolith_warm", "a2a_async", "a2a_async_streaming_opencode", "monolith_sol_medium", "monolith_opencode", "monolith_sol_medium_opencode", "monolith_sol_medium_opencode_api", "monolith_sol_low_opencode", "monolith_sol_high_opencode", "monolith_luna_xhigh_opencode", "monolith_luna_high_opencode", "monolith_luna_max_codex_minimal", "monolith_luna_max_opencode_retest", "monolith_luna_max_opencode_speckit", "dynamic_luna_max_opencode_superpowers", "monolith_luna_max_opencode_ai_repo_template", "monolith_luna_xhigh_fast_opencode", "monolith_luna_max_fast_opencode", "monolith_sol_low_fast_opencode", "monolith_sol_medium_fast_opencode", "monolith_grok_4_5_medium_cursor", "monolith_grok_4_5_high_cursor", "monolith_grok_4_5_medium_fast_cursor", "monolith_grok_4_5_high_fast_cursor", "monolith_auto_cursor", "monolith_luna_xhigh_opencode_control"];
 const treatmentArtifactsExist = treatment => [
   path.join(root, "results/raw", treatment, "run-metrics.json"),
   path.join(root, "results/raw", treatment, "cleanup.json"),
@@ -26,6 +26,7 @@ const labels = {
   monolith_luna_max_opencode_retest: "Monolith · Luna Max · OpenCode fresh control",
   monolith_luna_max_opencode_speckit: "Monolith · Luna Max · OpenCode + Spec Kit",
   dynamic_luna_max_opencode_superpowers: "Dynamic · Luna Max · OpenCode + Superpowers",
+  monolith_luna_max_opencode_ai_repo_template: "Monolith · Luna Max · OpenCode + AI Repo Template",
   monolith_luna_xhigh_fast_opencode: "Monolith · Luna Xhigh Fast · OpenCode",
   monolith_luna_max_fast_opencode: "Monolith · Luna Max Fast · OpenCode",
   monolith_sol_low_fast_opencode: "Monolith · Sol Low Fast · OpenCode",
@@ -70,6 +71,7 @@ const pricing = {
     monolith_luna_max_opencode_retest: 0,
     monolith_luna_max_opencode_speckit: 0,
     dynamic_luna_max_opencode_superpowers: 0,
+    monolith_luna_max_opencode_ai_repo_template: 0,
     monolith_luna_xhigh_fast_opencode: 0,
     monolith_luna_max_fast_opencode: 0,
     monolith_sol_low_fast_opencode: 0,
@@ -205,6 +207,16 @@ const continuationDefinitions = [
     evidence_path: "results/continuations/dynamic_luna_max_opencode_superpowers/completed/evidence/",
     outcome: "Stopped by the user; the last clean deployed commit was graded and the parent integration remained unfinished.",
   },
+  {
+    treatment: "monolith_luna_max_opencode_ai_repo_template",
+    label: "Monolith Luna Max OpenCode + AI Repo Template",
+    score_file: path.join(root, "results/continuations/monolith_luna_max_opencode_ai_repo_template/attempt-1/score.json"),
+    cleanup_file: path.join(root, "results/continuations/monolith_luna_max_opencode_ai_repo_template/attempt-1/cleanup.json"),
+    live_url: "https://shootemup-bench-luna-max-opencode-ai-neon-barrage.mikejmckinney.workers.dev",
+    source_path: "submissions/monolith_luna_max_opencode_ai_repo_template_continued/",
+    evidence_path: "results/continuations/monolith_luna_max_opencode_ai_repo_template/attempt-1/evidence/",
+    outcome: "Completed after one additional 20:31 continuation.",
+  },
 ];
 const continuationRows = continuationDefinitions
   .filter(definition => fs.existsSync(definition.score_file))
@@ -270,7 +282,7 @@ for (const row of rows) {
       ? solMediumOpenCodeComparator
       : row.treatment === "monolith_luna_max_codex_minimal"
     ? warmCacheBaseline
-    : ["monolith_luna_max_opencode_speckit", "dynamic_luna_max_opencode_superpowers"].includes(row.treatment) && methodologyControl
+    : ["monolith_luna_max_opencode_speckit", "dynamic_luna_max_opencode_superpowers", "monolith_luna_max_opencode_ai_repo_template"].includes(row.treatment) && methodologyControl
       ? methodologyControl
       : baseline);
   row.marginal_vs_monolith = {
@@ -337,6 +349,7 @@ const autoCostCursor = rows.find(row => row.treatment === "monolith_auto_cursor"
 const asyncA2a = rows.find(row => row.treatment === "a2a_async");
 const asyncStreamingOpenCode = rows.find(row => row.treatment === "a2a_async_streaming_opencode");
 const minimalCodex = rows.find(row => row.treatment === "monolith_luna_max_codex_minimal");
+const aiRepoTemplate = rows.find(row => row.treatment === "monolith_luna_max_opencode_ai_repo_template");
 const breakEvenUsdPerMinute = (first, second) => (
   first.quality_score * second.estimated_api_cost_usd
   - second.quality_score * first.estimated_api_cost_usd
@@ -422,7 +435,7 @@ const summary = {
       delta: rows.find(row => row.treatment === "monolith_luna_max_codex_minimal").marginal_vs_comparator,
     },
     methodology_vs_fresh_control: methodologyControl ? Object.fromEntries(
-      ["monolith_luna_max_opencode_speckit", "dynamic_luna_max_opencode_superpowers"]
+      ["monolith_luna_max_opencode_speckit", "dynamic_luna_max_opencode_superpowers", "monolith_luna_max_opencode_ai_repo_template"]
         .map(treatment => rows.find(row => row.treatment === treatment))
         .filter(Boolean)
         .map(row => [row.treatment, row.marginal_vs_comparator])
@@ -491,6 +504,7 @@ const continuationTable = `| Candidate | Score calculation | Score | Gate | Cumu
 ${continuationTableRows}`;
 const specContinuation = continuationRows.find(row => row.treatment === "monolith_luna_max_opencode_speckit");
 const superpowersContinuation = continuationRows.find(row => row.treatment === "dynamic_luna_max_opencode_superpowers");
+const aiRepoContinuation = continuationRows.find(row => row.treatment === "monolith_luna_max_opencode_ai_repo_template");
 const continuationComparison = row => `${f(row.wall_seconds / methodologyControl.wall_seconds, 1)}× the control's wall time, ${f(row.estimated_api_cost_usd / methodologyControl.estimated_api_cost_usd, 1)}× its estimated cost, and ${f(row.total_tokens / methodologyControl.total_tokens, 1)}× its tokens`;
 const continuationSection = `## Exploratory completion after timeout
 
@@ -500,13 +514,16 @@ ${continuationTable}
 
 - **Spec Kit eventually delivered 91:** 52/54 automated + 41/46 manual − 2 post-hoc. It required ${continuationComparison(specContinuation)} and still scored three points below the fresh plain OpenCode control.
 - **Superpowers stopped at 89:** 48/54 automated + 43/46 manual − 2 post-hoc. It required ${continuationComparison(superpowersContinuation)}, equivalent to **${f(superpowersContinuation.wall_seconds / 2700, 1)} full 45-minute candidate budgets**. The standardized evaluator could not move or fire with the keyboard, the immediate visible restart path failed, its handoff remained stale, and its parent branch never integrated the feature worktree. A later uncommitted fix wave is preserved but excluded from grading.
+- **AI Repo Template eventually delivered 94:** 54/54 automated + 42/46 manual − 2 post-hoc. One additional 20:31 continuation brought its cumulative totals to 65:31, $${f(aiRepoContinuation.estimated_api_cost_usd, 4)}, and ${f(aiRepoContinuation.total_tokens / 1e6, 3)}M tokens. It matched the fresh control's corrected quality but required ${continuationComparison(aiRepoContinuation)}; the physical callsign-entry regression remains.
 - The Superpowers deliverable therefore scored no better than Sol Low OpenCode's 89, which finished in 5:29, and scored below Sol Medium OpenCode's 94 at 8:30 and Luna Xhigh OpenCode's 95 at 12:02. Its partial quality-gate factor of ${f(superpowersContinuation.gate_quality_factor, 1)} drives exploratory gate-adjusted ROI down to ${f(superpowersContinuation.gate_adjusted_roi, 4)}.
 
 [Play Spec Kit](${specContinuation.live_url}) · [Spec Kit continued source](../${specContinuation.source_path}) · [Spec Kit continuation evidence](../${specContinuation.evidence_path}) · [Spec Kit score](../${specContinuation.score_path})
 
 [Play Superpowers](${superpowersContinuation.live_url}) · [Superpowers continued source](../${superpowersContinuation.source_path}) · [Superpowers continuation evidence](../${superpowersContinuation.evidence_path}) · [Superpowers score](../${superpowersContinuation.score_path})
 
-Both dedicated continuation Supabase projects are confirmed inactive. Their frontends remain available, but their leaderboards require an owner-authorized database resume. This does not affect the retained evaluation evidence.
+[Play AI Repo Template](${aiRepoContinuation.live_url}) · [AI Repo Template continued source](../${aiRepoContinuation.source_path}) · [AI Repo Template continuation evidence](../${aiRepoContinuation.evidence_path}) · [AI Repo Template score](../${aiRepoContinuation.score_path})
+
+All three methodology continuation databases are confirmed inactive. Their frontends remain available, but their leaderboards require an owner-authorized database resume. This does not affect the retained evaluation evidence.
 `;
 
 const report = `# Shoot-'Em-Up agent architecture benchmark results
@@ -560,7 +577,7 @@ This is a sensitivity analysis, not conventional financial ROI. API cost is a li
 
 ## Marginal utility versus designated comparator
 
-The original cold monolith remains the architectural comparator for the original treatments. Minimal-context Codex instead uses warm-cache Codex to reduce dependency/tool-installation confounding. Spec Kit and Superpowers use the fresh contemporaneous Luna Max OpenCode control.
+The original cold monolith remains the architectural comparator for the original treatments. Minimal-context Codex instead uses warm-cache Codex to reduce dependency/tool-installation confounding. Spec Kit, Superpowers, and AI Repo Template use the fresh Luna Max OpenCode control; AI Repo Template ran later, so its comparison has additional sequential-run drift.
 
 | Candidate | Comparator | Δ score | Δ cost | Δ total tokens | Δ wall time |
 |---|---|---:|---:|---:|---:|
@@ -595,8 +612,8 @@ ${continuationSection}
 - Luna Max OpenCode still leads Minimal Context: OpenCode cost ${f((1 - lunaOpenCode.estimated_api_cost_usd / minimalCodex.estimated_api_cost_usd) * 100, 0)}% less, finished ${mmss(minimalCodex.wall_seconds - lunaOpenCode.wall_seconds)} faster, used ${f((1 - lunaOpenCode.total_tokens / minimalCodex.total_tokens) * 100, 0)}% fewer total tokens, and achieved ${f((lunaOpenCode.gate_adjusted_roi / minimalCodex.gate_adjusted_roi - 1) * 100, 0)}% higher gate-adjusted ROI, while Minimal Context scored two points higher.
 - A2A asynchronous used ${f(rows.find(row => row.treatment === "a2a_async").total_tokens / lunaXhighOpenCode.total_tokens, 1)}× the tokens of Luna Xhigh OpenCode, but that comparison changes architecture, runtime, reasoning effort, and cache/order conditions simultaneously; it does not isolate coordination overhead.
 - Native isolated coordination remained much stronger than unrestricted dynamic delegation in the original architecture set.
-- The fresh Luna Max OpenCode control delivered a corrected score of ${methodologyControl.quality_score} in ${mmss(methodologyControl.wall_seconds)} for $${f(methodologyControl.estimated_api_cost_usd, 4)}. Spec Kit and full-methodology Superpowers both exhausted 45:00 before deployment, scoring ${rows.find(row => row.treatment === "monolith_luna_max_opencode_speckit").quality_score} and ${rows.find(row => row.treatment === "dynamic_luna_max_opencode_superpowers").quality_score}, respectively. Their gate-adjusted ROI is zero because both fail the quality gate.
-- Spec Kit used ${f(rows.find(row => row.treatment === "monolith_luna_max_opencode_speckit").total_tokens / methodologyControl.total_tokens, 1)}× the control's tokens while spending most of the run on specification artifacts. Superpowers used ${f(rows.find(row => row.treatment === "dynamic_luna_max_opencode_superpowers").total_tokens / methodologyControl.total_tokens, 1)}× the control's tokens; its six-agent implement-review-fix loop caught real engine defects but completed only two of seven planned tasks.
+- The fresh Luna Max OpenCode control delivered a corrected score of ${methodologyControl.quality_score} in ${mmss(methodologyControl.wall_seconds)} for $${f(methodologyControl.estimated_api_cost_usd, 4)}. Spec Kit, full-methodology Superpowers, and AI Repo Template all exhausted 45:00 without a timed deployment, scoring ${rows.find(row => row.treatment === "monolith_luna_max_opencode_speckit").quality_score}, ${rows.find(row => row.treatment === "dynamic_luna_max_opencode_superpowers").quality_score}, and ${aiRepoTemplate.quality_score}, respectively. All three receive zero gate-adjusted ROI because they fail the quality gate.
+- Spec Kit used ${f(rows.find(row => row.treatment === "monolith_luna_max_opencode_speckit").total_tokens / methodologyControl.total_tokens, 1)}× the control's tokens while spending most of the run on specification artifacts. Superpowers used ${f(rows.find(row => row.treatment === "dynamic_luna_max_opencode_superpowers").total_tokens / methodologyControl.total_tokens, 1)}× the control's tokens; its six-agent implement-review-fix loop caught real engine defects but completed only two of seven planned tasks. AI Repo Template used ${f(aiRepoTemplate.total_tokens / methodologyControl.total_tokens, 1)}× the control's tokens: template-seed onboarding and its inherited 398-check verification suite consumed about 20 minutes, and repeated local browser-tool recovery consumed the final deployment window despite a locally built and tested game.
 
 ## Interpretation limits
 
@@ -614,12 +631,12 @@ ${continuationSection}
 - The minimal-context treatment disables several optional Codex surfaces together and has one replicate. It shows that the default integration surface was not necessary for this successful run, but cannot estimate the marginal token contribution of skills, MCP, apps, project instructions, or workflow variation individually.
 - The asynchronous-streaming A2A extension changes transport and runtime together. Its improvement over asynchronous-polling A2A cannot be attributed specifically to streaming, OpenCode, cache/order conditions, or their interaction.
 - The streaming harness retained task snapshots but no incremental status or artifact updates; terminal completion was recovered from final task snapshots. Sustained end-to-end stream behavior therefore remains unverified.
-- The methodology extension intentionally measures each complete package, not isolated features. The failed deliveries do not establish that specifications, TDD, reviews, worktrees, or subagents are individually harmful; they show that these default full workflows did not fit this task's 45-minute budget in these single runs.
+- The methodology extension intentionally measures each complete package, not isolated features. The failed deliveries do not establish that specifications, TDD, reviews, worktrees, repository onboarding, or subagents are individually harmful; they show that these three default full workflows did not fit this task's 45-minute budget in these single runs.
 - The post-timeout continuation rows are exploratory, reused warm state, exceeded the preregistered time ceiling, and are excluded from the primary ranking. Superpowers was stopped by the user and graded at its last clean deployed commit, so its continuation row is an observed stopping point rather than a completed-methodology treatment.
 - The first Spec Kit controller launch was excluded as a harness failure because initialization ran from the wrong working directory. It stopped after 26 seconds with zero model tokens and no external resources; all artifacts are retained under \`results/harness-failures/\`. The corrected run used a fresh repository and a new ephemeral no-cache installation, though transient OS/network caches cannot be perfectly reset.
 - The results cover one full-stack game task and may not transfer to other work.
 
-Every candidate Supabase project that was actually created was confirmed **INACTIVE** after evaluation. The former baseline project was later resumed as the shared gallery service; all ${rows.filter(row => row.automated_points > 0).length} timed-run gallery games now use it with an allowlisted \`candidate_id\` partition, while the other benchmark-specific databases remain paused. Spec Kit and Superpowers created dedicated projects only during exploratory post-timeout continuations, and both are paused. These post-benchmark infrastructure states do not alter retained scores or timed metrics.
+Every candidate Supabase project that was actually created was confirmed **INACTIVE** after evaluation. The former baseline project was later resumed as the shared gallery service; all ${rows.filter(row => row.automated_points > 0).length} timed-run gallery games now use it with an allowlisted \`candidate_id\` partition, while the other benchmark-specific databases remain paused. Spec Kit and Superpowers created dedicated projects only during exploratory post-timeout continuations; AI Repo Template restored and reused its timed-run project. All three continuation databases are paused. These post-benchmark infrastructure states do not alter retained scores or timed metrics.
 `;
 fs.writeFileSync(path.join(root, "results/report.md"), report);
 
@@ -643,6 +660,7 @@ const galleryLabels = {
   monolith_luna_max_opencode_retest: "Monolith · Luna Max · OpenCode fresh control",
   monolith_luna_max_opencode_speckit: "Monolith · Luna Max · OpenCode + Spec Kit",
   dynamic_luna_max_opencode_superpowers: "Dynamic · Luna Max · OpenCode + Superpowers",
+  monolith_luna_max_opencode_ai_repo_template: "Monolith · Luna Max · OpenCode + AI Repo Template",
   monolith_luna_xhigh_fast_opencode: "Monolith · Luna Xhigh Fast · OpenCode",
   monolith_luna_max_fast_opencode: "Monolith · Luna Max Fast · OpenCode",
   monolith_sol_low_fast_opencode: "Monolith · Sol Low Fast · OpenCode",
@@ -674,6 +692,7 @@ const galleryAnchors = {
   monolith_luna_max_opencode_retest: "fresh-luna-max-opencode-control",
   monolith_luna_max_opencode_speckit: "monolithic-luna-max-opencode-with-spec-kit",
   dynamic_luna_max_opencode_superpowers: "luna-max-opencode-with-full-superpowers-methodology",
+  monolith_luna_max_opencode_ai_repo_template: "monolithic-luna-max-opencode-with-ai-repo-template",
   monolith_luna_xhigh_fast_opencode: "monolith-with-luna-xhigh-fast-in-opencode",
   monolith_luna_max_fast_opencode: "monolith-with-luna-max-fast-in-opencode",
   monolith_sol_low_fast_opencode: "monolith-with-sol-low-fast-in-opencode",

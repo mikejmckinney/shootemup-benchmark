@@ -1,0 +1,15 @@
+{
+  "treatment": "luna-max-opencode-ai",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-luna-max-opencode-ai-neon-barrage.mikejmckinney.workers.dev",
+  "cloudflare_project": "shootemup-bench-luna-max-opencode-ai-neon-barrage",
+  "supabase_url": "https://kvhesvrqdcpmfiehkxqk.supabase.co",
+  "supabase_project_ref": "kvhesvrqdcpmfiehkxqk",
+  "supabase_public_key": "sb_publishable_v8ykqjfjOpRp8i1bm5_gIw_hBXgMe9V",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Cloudflare Workers Static Assets deployment verified with production gameplay, test-adapter game over, score submission, leaderboard reload persistence, and a direct Supabase public REST insert/read round trip."
+}

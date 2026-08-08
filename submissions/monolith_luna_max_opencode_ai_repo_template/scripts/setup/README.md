@@ -1,0 +1,51 @@
+# scripts/setup/
+
+Modules sourced by [`scripts/setup.sh`](../setup.sh) in lexical order. Each
+module owns one phase of project bootstrap and is independently re-runnable.
+
+## Module ordering
+
+| Module | Phase | Notes |
+|---|---|---|
+| `00-detect-repo.sh` | Resolve `FULL_REPO` from env/git remote. | Honors `GH_REPO` / `GITHUB_REPOSITORY` env overrides. |
+| `10-env-file.sh` | Copy `.env.example` → `.env` if missing. | Idempotent — never overwrites an existing `.env`. |
+| `20-install-dependencies.sh` | `npm ci` / `pip install` for declared manifests. | Does not invent database setup without a verified database stack. |
+| `30-build.sh` | Run `npm run build` if `package.json` declares a build script. | Logs "No build step configured" otherwise. |
+| `40-ensure-labels.sh` | Probe `gh auth`, resolve `FULL_REPO` fallback, `export GH_REPO`, create maintained pipeline labels. | Sets shared gating vars consumed by 60. |
+| `ensure-pipeline-labels.sh` | Standalone wrapper: `ensure-pipeline-labels.sh owner/repo` | Used by `sandbox-bootstrap.sh` and operators; sources `40-ensure-labels.sh`. |
+| `60-check-secrets.sh` | Report required model/runtime secret presence (repo + org tiers). | Cannot read values; presence-only. |
+| `70-verify-env.sh` | Delegate to `scripts/verify-env.sh`. | Final gate. |
+
+**Codespace lifecycle (not part of `setup.sh`):** [`.devcontainer/devcontainer.json`](../../.devcontainer/devcontainer.json) runs [`scripts/codespace-post-create.sh`](../codespace-post-create.sh) when the container is created and [`scripts/codespace-post-start.sh`](../codespace-post-start.sh) whenever it starts. Post-create installs the pinned default tool profile. Post-start upgrades `gh` from the injected `GITHUB_TOKEN` to a user PAT when `GH_PAT` (etc.) is set, exports session tokens, installs a shell hook, and advises when the sandbox git remote is missing. It does **not** invoke `setup.sh` or `sandbox-bootstrap.sh`; project adaptation, repository creation, and mirroring remain explicit maintainer actions.
+
+## How the modules are loaded
+
+`setup.sh` sources each `[0-9][0-9]-*.sh` module in lexical order with
+`source` (not exec), so they share environment. `scripts/lib/logging.sh`
+(providing `log_step`, `log_info`, `log_warn`, `log_error`) is sourced once
+by `setup.sh` before the module loop, so every module can call those
+helpers directly.
+
+## Running a single module
+
+For debugging:
+
+```bash
+# From repo root
+source scripts/lib/logging.sh
+source scripts/setup/40-ensure-labels.sh
+```
+
+`40-ensure-labels.sh` and downstream modules require `FULL_REPO` to be set
+(or detectable) — source `00-detect-repo.sh` first if you're starting from
+a clean shell.
+
+## Adding a new module
+
+1. Choose a two-digit prefix that places the module at the right point in
+   the lexical order (use `05`, `15`, `25`, etc. for insertion).
+2. Document the module in the table above.
+3. Use `log_step` for the section banner and `log_info` / `log_warn` /
+   `log_error` from `scripts/lib/logging.sh` for output.
+4. Make the module re-runnable. `setup.sh` is expected to be safe to run
+   repeatedly.

@@ -19,8 +19,13 @@ case "$TREATMENT" in
     EXPECTED_ACTIVE_PROJECT_REFS="lyyyxbxacrxqflxmtlqq tqwypstoyzlougnlavwr"
     PROMPT="Resume the interrupted full Superpowers methodology from the exact current session, feature worktree, SDD ledger, implementation plan, commits, and review state. Do not restart brainstorming or planning. Continue the remaining task-specific subagent implementation, review, fix, re-review, verification, and branch-finishing workflow exactly as Superpowers prescribes. All child agents must use gpt-5.6-luna at max reasoning. Integrate the completed work into the candidate root, create and verify the independent Supabase project and Cloudflare deployment required by BENCHMARK_TASK.md, write benchmark-result.json in the candidate root, and finish only after real production verification."
     ;;
+  monolith_luna_max_opencode_ai_repo_template)
+    ROOT_SESSION=ses_0219389a9ffelAGKWc0KrGQ0L4
+    EXPECTED_ACTIVE_PROJECT_REFS="lyyyxbxacrxqflxmtlqq kvhesvrqdcpmfiehkxqk"
+    PROMPT="Resume the interrupted AI Repo Template implementation from the exact current workspace and session state. Continue as the sole monolithic agent with no delegation or child agents. Onboarding, design, implementation, migration, build, tests, and local browser inspection are already complete; do not restart or repeat completed methodology work. Restore and reuse the existing dedicated Supabase project kvhesvrqdcpmfiehkxqk rather than creating another project, finish the Cloudflare deployment, verify the live game and leaderboard end to end, write the required benchmark-result.json, update the handoff if needed, and finish only after real production verification. Do not create a remote GitHub repository or pull request."
+    ;;
   *)
-    echo "usage: $0 {monolith_luna_max_opencode_speckit|dynamic_luna_max_opencode_superpowers} [attempt]" >&2
+    echo "usage: $0 {monolith_luna_max_opencode_speckit|dynamic_luna_max_opencode_superpowers|monolith_luna_max_opencode_ai_repo_template} [attempt]" >&2
     exit 64
     ;;
 esac
@@ -58,7 +63,9 @@ START_MS=$(date +%s%3N)
 START_ISO=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 
 set +e
-timeout --signal=INT --kill-after=30s "${LIMIT_SECONDS}s" "$OPENCODE" run --format json --auto \
+timeout --signal=INT --kill-after=30s "${LIMIT_SECONDS}s" env \
+  -u GITHUB_REPOSITORY -u GH_REPO -u GITHUB_ACTIONS \
+  "$OPENCODE" run --format json --auto \
   --dir "$CANDIDATE_DIR" --session "$ROOT_SESSION" \
   --model openai/gpt-5.6-luna --variant max "$PROMPT" </dev/null \
   > "$RAW_DIR/session.jsonl" 2> "$RAW_DIR/session.stderr.log"

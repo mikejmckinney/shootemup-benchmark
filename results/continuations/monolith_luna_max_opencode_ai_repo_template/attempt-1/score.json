@@ -1,0 +1,32 @@
+{
+  "treatment": "monolith_luna_max_opencode_ai_repo_template",
+  "continuation_attempt": 1,
+  "classification": "exploratory completion after the original timeout",
+  "automated_points": 54,
+  "manual_points": 42,
+  "pre_regression_score": 96,
+  "posthoc_deductions": {
+    "physical_name_entry": 2,
+    "total": 2
+  },
+  "corrected_score": 94,
+  "quality_gate_factor": 1,
+  "original_run": {
+    "elapsed_seconds": 2700,
+    "estimated_api_cost_usd": 0.61638756,
+    "total_tokens": 21041290
+  },
+  "continuation": {
+    "elapsed_seconds": 1231,
+    "estimated_api_cost_usd": 0.56805612,
+    "total_tokens": 21167990
+  },
+  "cumulative": {
+    "elapsed_seconds": 3931,
+    "elapsed_minutes": 65.51666666666667,
+    "estimated_api_cost_usd": 1.18444368,
+    "total_tokens": 42209280,
+    "gate_adjusted_roi": 10.670745190625457
+  },
+  "roi_formula": "score * clamp((score - 87) / 5, 0, 1) / sqrt(cost_usd * elapsed_minutes)"
+}

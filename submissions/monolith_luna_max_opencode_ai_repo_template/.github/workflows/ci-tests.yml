@@ -1,0 +1,295 @@
+# Extend with project-specific build/test commands while retaining template checks.
+#
+# Self-Healing CI Pipeline with Retry Budget
+# -------------------------------------------
+# This workflow runs on every push and PR. If tests fail:
+# 1. Error logs are captured and posted as a comment
+# 2. Agent should read logs and fix issues
+# 3. Maximum 3 attempts before hard-failing and tagging human
+#
+# The retry budget prevents infinite loops and runaway costs.
+# Customize the commands below for your tech stack.
+
+name: CI Tests
+
+on:
+  workflow_call:
+    inputs:
+      reusable_call:
+        description: Confirms the event SHA belongs to the caller workflow
+        required: true
+        type: boolean
+      head_sha:
+        description: Exact generated refresh head
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      head_sha:
+        description: Exact generated refresh head
+        required: true
+        type: string
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+# Cancel in-progress runs for the same branch
+concurrency:
+  group: ci-tests-${{ inputs.head_sha || github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Maximum retry attempts before hard-failing
+  MAX_RETRIES: 3
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      actions: read  # Required for gh run list (retry budget calculation)
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.head_sha || '' }}
+
+      - name: Verify dispatched head
+        if: github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call'
+        env:
+          EXPECTED_HEAD: ${{ inputs.head_sha }}
+          DISPATCHED_HEAD: ${{ github.sha }}
+          EVENT_NAME: ${{ github.event_name }}
+          REUSABLE_CALL: ${{ inputs.reusable_call || false }}
+        run: |
+          if [[ "$EVENT_NAME" == "workflow_dispatch" && "$REUSABLE_CALL" != "true" ]]; then
+            test "$EXPECTED_HEAD" = "$DISPATCHED_HEAD"
+          fi
+          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+
+      # =====================================================
+      # RETRY BUDGET TRACKING
+      # =====================================================
+      - name: Check retry count
+        id: retry_check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Count recent failed runs for this workflow on this branch
+          RECENT_FAILURES=$(gh run list \
+            --workflow="CI Tests" \
+            --branch="${{ github.ref_name }}" \
+            --status=failure \
+            --limit=10 \
+            --json conclusion,createdAt \
+            --jq '[.[] | select(.createdAt > (now - 3600 | todate))] | length' \
+            2>/dev/null || echo "0")
+          
+          echo "Recent failures in last hour: $RECENT_FAILURES"
+          echo "failure_count=$RECENT_FAILURES" >> "$GITHUB_OUTPUT"
+          
+          if [[ "$RECENT_FAILURES" -ge "$MAX_RETRIES" ]]; then
+            echo "exceeded=true" >> "$GITHUB_OUTPUT"
+            echo "::warning::Retry budget exceeded ($RECENT_FAILURES failures in last hour)"
+          else
+            echo "exceeded=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install verification prerequisites
+        run: |
+          scripts/install-codespace-tools.sh --profile verification
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install OpenCode test dependencies
+        run: npm ci --prefix .github/agent-runtime
+
+      - name: Verify environment prerequisites
+        run: scripts/verify-env.sh
+
+      - name: Run full Bats suite (issue #255 Phase 4b)
+        id: bats
+        continue-on-error: true
+        run: |
+          if [ -d scripts/tests ]; then
+            set -o pipefail
+            bats --jobs 12 scripts/tests/ 2>&1 | tee bats-output.log
+          else
+            echo "scripts/tests/ not present — skipping bats step"
+          fi
+
+      - name: Run full repository checks
+        id: tests
+        # Always run so the legacy ./test.sh parity gate executes even if
+        # the bats step above failed (PR #274 review feedback). The final
+        # gate step below fails the job if either suite failed.
+        if: always()
+        run: |
+          if [ -f "./test.sh" ]; then
+            set -o pipefail
+            ./test.sh 2>&1 | tee test-output.log
+          else
+            echo "::error::Required repository check entrypoint ./test.sh is missing"
+            exit 1
+          fi
+
+      - name: Gate on combined test results
+        # Fails the job if either the bats or legacy suite failed. Without
+        # this, `continue-on-error: true` on the bats step would let a
+        # failing bats run merge silently.
+        if: always()
+        run: |
+          if [ "${{ steps.bats.outcome }}" = "failure" ]; then
+            echo "::error::bats scripts/tests/ failed"
+            exit 1
+          fi
+          if [ "${{ steps.tests.outcome }}" = "failure" ]; then
+            echo "::error::legacy ./test.sh failed"
+            exit 1
+          fi
+
+      # =====================================================
+      # FAILURE HANDLING
+      # =====================================================
+      - name: Capture failure logs
+        if: failure()
+        id: capture_logs
+        env:
+          CI_WORKFLOW: ${{ github.workflow }}
+          CI_RUN_NUMBER: ${{ github.run_number }}
+          CI_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          CI_BRANCH: ${{ github.ref_name }}
+          CI_COMMIT: ${{ github.sha }}
+          CI_RETRY_COUNT: ${{ steps.retry_check.outputs.failure_count }}
+          CI_MAX_RETRIES: ${{ env.MAX_RETRIES }}
+        run: |
+          scripts/render-ci-failure-report.sh failure-report.md \
+            "${{ steps.bats.outcome }}" "${{ steps.tests.outcome }}" \
+            bats-output.log test-output.log
+
+      - name: Post failure comment on PR
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let body = '';
+            
+            try {
+              body = fs.readFileSync('failure-report.md', 'utf8');
+            } catch (e) {
+              body = '## CI Failure\n\nSee workflow logs for details.';
+            }
+            
+            // Add retry budget warning if applicable
+            const retryCount = parseInt('${{ steps.retry_check.outputs.failure_count }}') || 0;
+            const maxRetries = parseInt('${{ env.MAX_RETRIES }}');
+            
+            if (retryCount >= maxRetries - 1) {
+              body += '\n\n---\n';
+              body += '⚠️ **Warning:** Approaching retry budget limit. ';
+              body += 'If next attempt fails, human review will be required.';
+            }
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: body
+            });
+
+      - name: Tag human on retry budget exceeded
+        if: failure() && steps.retry_check.outputs.exceeded == 'true'
+        uses: actions/github-script@v7
+        env:
+          MAX_RETRIES: ${{ env.MAX_RETRIES }}
+        with:
+          script: |
+            const title = '🚨 CI Retry Budget Exceeded';
+            const body = `The CI pipeline has failed ${process.env.MAX_RETRIES}+ times in the last hour.
+            
+            **Branch:** ${{ github.ref_name }}
+            **Last Run:** [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            
+            ## Action Required
+            
+            The automated retry budget has been exhausted. A human must:
+            1. Review the failure logs
+            2. Fix the underlying issue
+            3. Push a fix to resume CI
+            
+            This safeguard prevents infinite loops and runaway costs.
+            
+            ---
+            *This issue was created automatically by the CI pipeline.*`;
+            
+            // Check if issue already exists
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'ci-failure'
+            });
+            
+            const existingIssue = issues.data.find(i => i.title === title);
+            
+            if (existingIssue) {
+              // Add comment to existing issue
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingIssue.number,
+                body: `Another failure at ${new Date().toISOString()}\n\n[View run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})`
+              });
+            } else {
+              // Create new issue (labels are optional - will be ignored if they don't exist)
+              try {
+                await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: title,
+                  body: body,
+                  labels: ['ci-failure', 'needs-human']
+                });
+              } catch (labelError) {
+                // Retry without labels if they don't exist
+                console.log('Labels not found, creating issue without labels');
+                await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: title,
+                  body: body
+                });
+              }
+            }
+            
+            // Hard fail
+            core.setFailed('Retry budget exceeded. Human intervention required.');
+
+  # Optional: Build job for compiled projects
+  # build:
+  #   runs-on: ubuntu-latest
+  #   needs: test
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Build
+  #       run: echo "Add build commands here"
+
+  # Optional: Deploy preview for PRs
+  # preview:
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   if: github.event_name == 'pull_request'
+  #   steps:
+  #     - name: Deploy preview
+  #       run: echo "Add preview deployment here"

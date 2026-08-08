@@ -37,6 +37,7 @@ Scores include the uniform [post-hoc regression review](posthoc-review.md). Orig
 | Monolith · Sol Medium · Codex | 91 | BORDERLINE | $3.0659 | 12:17 | 3.573M | 3.435M | 0.112M | 0.025M | 11.8629 |
 | Monolith · Luna High · OpenCode | 73 | FAIL | $0.0421 | 7:12 | 0.655M | 0.594M | 0.043M | 0.018M | 0.0000 |
 | Native dynamic subagents | 58 | FAIL | $0.5272 | 23:49 | 14.209M | 13.551M | 0.544M | 0.115M | 0.0000 |
+| Monolith · Luna Max · OpenCode + AI Repo Template | 26 | FAIL | $0.6164 | 45:00 | 21.041M | 20.382M | 0.582M | 0.077M | 0.0000 |
 | Dynamic · Luna Max · OpenCode + Superpowers | 9 | FAIL | $0.3852 | 45:00 | 6.369M | 5.643M | 0.599M | 0.127M | 0.0000 |
 | Monolith · Luna Max · OpenCode + Spec Kit | 4 | FAIL | $0.4796 | 45:00 | 13.824M | 13.369M | 0.334M | 0.121M | 0.0000 |
 
@@ -44,7 +45,7 @@ Gate-adjusted ROI uses `score × clamp((score - 87) / 5, 0, 1) / sqrt(API cost �
 
 - Highest observed quality: **Monolith · Luna Max · cold cache**.
 - Quality-gate borderline: **Native isolated subagents, Monolith · Sol Medium · Codex, Monolith · Sol Medium · OpenCode API, Monolith · Sol Low · OpenCode, Monolith · Sol Medium Fast · OpenCode, Monolith · Grok 4.5 Medium · Cursor**.
-- Quality-gate failures: **Native dynamic subagents, Monolith · Luna High · OpenCode, Monolith · Luna Max · OpenCode + Spec Kit, Dynamic · Luna Max · OpenCode + Superpowers**.
+- Quality-gate failures: **Native dynamic subagents, Monolith · Luna High · OpenCode, Monolith · Luna Max · OpenCode + Spec Kit, Dynamic · Luna Max · OpenCode + Superpowers, Monolith · Luna Max · OpenCode + AI Repo Template**.
 - Pareto frontier at ε=2: **Monolith · Luna Xhigh · OpenCode control, Monolith · Luna Xhigh Fast · OpenCode, Monolith · Luna Xhigh · OpenCode, Monolith · Auto Cost · Cursor, Monolith · Sol Low Fast · OpenCode, Monolith · Grok 4.5 Medium Fast · Cursor**.
 - Highest gate-adjusted ROI: **Monolith · Luna Xhigh · OpenCode control (121.6679)**.
 
@@ -97,6 +98,7 @@ For a stated value of unattended agent time `r` in USD per minute:
 | Monolith · Sol Medium · Codex † | 29.68 | 24.73 | 17.80 | 16.60 | 14.20 | 11.12 | 5.93 |
 | Monolith · Luna High · OpenCode † | 1734.62 | 181.55 | 58.77 | 50.09 | 36.46 | 24.00 | 10.08 |
 | Native dynamic subagents † | 110.02 | 33.76 | 12.90 | 11.13 | 8.27 | 5.55 | 2.38 |
+| Monolith · Luna Max · OpenCode + AI Repo Template † | 42.18 | 9.07 | 3.20 | 2.75 | 2.02 | 1.34 | 0.57 |
 | Dynamic · Luna Max · OpenCode + Superpowers † | 23.36 | 3.42 | 1.14 | 0.97 | 0.71 | 0.47 | 0.20 |
 | Monolith · Luna Max · OpenCode + Spec Kit † | 8.34 | 1.47 | 0.50 | 0.43 | 0.31 | 0.21 | 0.09 |
 
@@ -110,7 +112,7 @@ This is a sensitivity analysis, not conventional financial ROI. API cost is a li
 
 ## Marginal utility versus designated comparator
 
-The original cold monolith remains the architectural comparator for the original treatments. Minimal-context Codex instead uses warm-cache Codex to reduce dependency/tool-installation confounding. Spec Kit and Superpowers use the fresh contemporaneous Luna Max OpenCode control.
+The original cold monolith remains the architectural comparator for the original treatments. Minimal-context Codex instead uses warm-cache Codex to reduce dependency/tool-installation confounding. Spec Kit, Superpowers, and AI Repo Template use the fresh Luna Max OpenCode control; AI Repo Template ran later, so its comparison has additional sequential-run drift.
 
 | Candidate | Comparator | Δ score | Δ cost | Δ total tokens | Δ wall time |
 |---|---|---:|---:|---:|---:|
@@ -132,6 +134,7 @@ The original cold monolith remains the architectural comparator for the original
 | Monolith · Luna Max · OpenCode fresh control | Monolith · Luna Max · cold cache | -4 | -0.3531 | -14.056M | -10:51 |
 | Monolith · Luna Max · OpenCode + Spec Kit | Monolith · Luna Max · OpenCode fresh control | -90 | +0.3572 | +11.310M | +27:04 |
 | Dynamic · Luna Max · OpenCode + Superpowers | Monolith · Luna Max · OpenCode fresh control | -85 | +0.2628 | +3.855M | +27:04 |
+| Monolith · Luna Max · OpenCode + AI Repo Template | Monolith · Luna Max · OpenCode fresh control | -68 | +0.4940 | +18.527M | +27:04 |
 | Monolith · Luna Xhigh Fast · OpenCode | Monolith · Luna Xhigh · OpenCode | +1 | +0.0445 | -0.402M | -5:51 |
 | Monolith · Luna Max Fast · OpenCode | Monolith · Luna Max · OpenCode | -2 | +0.1067 | +0.240M | -3:07 |
 | Monolith · Sol Low Fast · OpenCode | Monolith · Sol Low · OpenCode | +5 | +0.3832 | -0.061M | -1:38 |
@@ -153,16 +156,20 @@ These rows answer **“what did the methodologies eventually produce?”** They 
 |---|---:|---:|---|---:|---:|---:|---:|
 | Monolith Luna Max OpenCode + Spec Kit | 52 + 41 − 2 | **91** | BORDERLINE | $1.1834 | 1:27:57 | 38.063M | 7.1358 |
 | Dynamic Luna Max OpenCode + Superpowers | 48 + 43 − 2 | **89** | BORDERLINE | $2.3483 | 3:54:19 | 48.681M | 1.5176 |
+| Monolith Luna Max OpenCode + AI Repo Template | 54 + 42 − 2 | **94** | PASS | $1.1844 | 1:05:31 | 42.209M | 10.6707 |
 
 - **Spec Kit eventually delivered 91:** 52/54 automated + 41/46 manual − 2 post-hoc. It required 4.9× the control's wall time, 9.7× its estimated cost, and 15.1× its tokens and still scored three points below the fresh plain OpenCode control.
 - **Superpowers stopped at 89:** 48/54 automated + 43/46 manual − 2 post-hoc. It required 13.1× the control's wall time, 19.2× its estimated cost, and 19.4× its tokens, equivalent to **5.2 full 45-minute candidate budgets**. The standardized evaluator could not move or fire with the keyboard, the immediate visible restart path failed, its handoff remained stale, and its parent branch never integrated the feature worktree. A later uncommitted fix wave is preserved but excluded from grading.
+- **AI Repo Template eventually delivered 94:** 54/54 automated + 42/46 manual − 2 post-hoc. One additional 20:31 continuation brought its cumulative totals to 65:31, $1.1844, and 42.209M tokens. It matched the fresh control's corrected quality but required 3.7× the control's wall time, 9.7× its estimated cost, and 16.8× its tokens; the physical callsign-entry regression remains.
 - The Superpowers deliverable therefore scored no better than Sol Low OpenCode's 89, which finished in 5:29, and scored below Sol Medium OpenCode's 94 at 8:30 and Luna Xhigh OpenCode's 95 at 12:02. Its partial quality-gate factor of 0.4 drives exploratory gate-adjusted ROI down to 1.5176.
 
 [Play Spec Kit](https://shootemup-bench-monolith-luna-max-opencode-speckit-pages.pages.dev) · [Spec Kit continued source](../submissions/monolith_luna_max_opencode_speckit_continued/) · [Spec Kit continuation evidence](../results/continuations/monolith_luna_max_opencode_speckit/attempt-1/evidence/) · [Spec Kit score](../results/continuations/monolith_luna_max_opencode_speckit/attempt-1/score.json)
 
 [Play Superpowers](https://shootemup-bench-dynamic-luna-max-opencode-superpowers-avwr.pages.dev/) · [Superpowers continued source](../submissions/dynamic_luna_max_opencode_superpowers_continued/) · [Superpowers continuation evidence](../results/continuations/dynamic_luna_max_opencode_superpowers/completed/evidence/) · [Superpowers score](../results/continuations/dynamic_luna_max_opencode_superpowers/completed/score.json)
 
-Both dedicated continuation Supabase projects are confirmed inactive. Their frontends remain available, but their leaderboards require an owner-authorized database resume. This does not affect the retained evaluation evidence.
+[Play AI Repo Template](https://shootemup-bench-luna-max-opencode-ai-neon-barrage.mikejmckinney.workers.dev) · [AI Repo Template continued source](../submissions/monolith_luna_max_opencode_ai_repo_template_continued/) · [AI Repo Template continuation evidence](../results/continuations/monolith_luna_max_opencode_ai_repo_template/attempt-1/evidence/) · [AI Repo Template score](../results/continuations/monolith_luna_max_opencode_ai_repo_template/attempt-1/score.json)
+
+All three methodology continuation databases are confirmed inactive. Their frontends remain available, but their leaderboards require an owner-authorized database resume. This does not affect the retained evaluation evidence.
 
 
 ## Key observations
@@ -190,8 +197,8 @@ Both dedicated continuation Supabase projects are confirmed inactive. Their fron
 - Luna Max OpenCode still leads Minimal Context: OpenCode cost 22% less, finished 2:37 faster, used 29% fewer total tokens, and achieved 22% higher gate-adjusted ROI, while Minimal Context scored two points higher.
 - A2A asynchronous used 11.2× the tokens of Luna Xhigh OpenCode, but that comparison changes architecture, runtime, reasoning effort, and cache/order conditions simultaneously; it does not isolate coordination overhead.
 - Native isolated coordination remained much stronger than unrestricted dynamic delegation in the original architecture set.
-- The fresh Luna Max OpenCode control delivered a corrected score of 94 in 17:56 for $0.1224. Spec Kit and full-methodology Superpowers both exhausted 45:00 before deployment, scoring 4 and 9, respectively. Their gate-adjusted ROI is zero because both fail the quality gate.
-- Spec Kit used 5.5× the control's tokens while spending most of the run on specification artifacts. Superpowers used 2.5× the control's tokens; its six-agent implement-review-fix loop caught real engine defects but completed only two of seven planned tasks.
+- The fresh Luna Max OpenCode control delivered a corrected score of 94 in 17:56 for $0.1224. Spec Kit, full-methodology Superpowers, and AI Repo Template all exhausted 45:00 without a timed deployment, scoring 4, 9, and 26, respectively. All three receive zero gate-adjusted ROI because they fail the quality gate.
+- Spec Kit used 5.5× the control's tokens while spending most of the run on specification artifacts. Superpowers used 2.5× the control's tokens; its six-agent implement-review-fix loop caught real engine defects but completed only two of seven planned tasks. AI Repo Template used 8.4× the control's tokens: template-seed onboarding and its inherited 398-check verification suite consumed about 20 minutes, and repeated local browser-tool recovery consumed the final deployment window despite a locally built and tested game.
 
 ## Interpretation limits
 
@@ -209,9 +216,9 @@ Both dedicated continuation Supabase projects are confirmed inactive. Their fron
 - The minimal-context treatment disables several optional Codex surfaces together and has one replicate. It shows that the default integration surface was not necessary for this successful run, but cannot estimate the marginal token contribution of skills, MCP, apps, project instructions, or workflow variation individually.
 - The asynchronous-streaming A2A extension changes transport and runtime together. Its improvement over asynchronous-polling A2A cannot be attributed specifically to streaming, OpenCode, cache/order conditions, or their interaction.
 - The streaming harness retained task snapshots but no incremental status or artifact updates; terminal completion was recovered from final task snapshots. Sustained end-to-end stream behavior therefore remains unverified.
-- The methodology extension intentionally measures each complete package, not isolated features. The failed deliveries do not establish that specifications, TDD, reviews, worktrees, or subagents are individually harmful; they show that these default full workflows did not fit this task's 45-minute budget in these single runs.
+- The methodology extension intentionally measures each complete package, not isolated features. The failed deliveries do not establish that specifications, TDD, reviews, worktrees, repository onboarding, or subagents are individually harmful; they show that these three default full workflows did not fit this task's 45-minute budget in these single runs.
 - The post-timeout continuation rows are exploratory, reused warm state, exceeded the preregistered time ceiling, and are excluded from the primary ranking. Superpowers was stopped by the user and graded at its last clean deployed commit, so its continuation row is an observed stopping point rather than a completed-methodology treatment.
 - The first Spec Kit controller launch was excluded as a harness failure because initialization ran from the wrong working directory. It stopped after 26 seconds with zero model tokens and no external resources; all artifacts are retained under `results/harness-failures/`. The corrected run used a fresh repository and a new ephemeral no-cache installation, though transient OS/network caches cannot be perfectly reset.
 - The results cover one full-stack game task and may not transfer to other work.
 
-Every candidate Supabase project that was actually created was confirmed **INACTIVE** after evaluation. The former baseline project was later resumed as the shared gallery service; all 27 timed-run gallery games now use it with an allowlisted `candidate_id` partition, while the other benchmark-specific databases remain paused. Spec Kit and Superpowers created dedicated projects only during exploratory post-timeout continuations, and both are paused. These post-benchmark infrastructure states do not alter retained scores or timed metrics.
+Every candidate Supabase project that was actually created was confirmed **INACTIVE** after evaluation. The former baseline project was later resumed as the shared gallery service; all 27 timed-run gallery games now use it with an allowlisted `candidate_id` partition, while the other benchmark-specific databases remain paused. Spec Kit and Superpowers created dedicated projects only during exploratory post-timeout continuations; AI Repo Template restored and reused its timed-run project. All three continuation databases are paused. These post-benchmark infrastructure states do not alter retained scores or timed metrics.

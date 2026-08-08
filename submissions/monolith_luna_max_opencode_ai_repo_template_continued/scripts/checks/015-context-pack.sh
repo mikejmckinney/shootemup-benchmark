@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# scripts/checks/015-context-pack.sh — extracted from test.sh by issue #255 Phase 4d.
+# Sourced by test.sh; relies on $PASS/$FAIL/$WARN, pass()/fail()/warn() from
+# scripts/lib/{logging,assertions}.sh and CWD == repo root.
+
+# --- Context Pack Check ---
+echo "Checking context pack structure..."
+
+CONTEXT_FILES=(
+  ".context/00_INDEX.md"
+  ".context/roadmap.md"
+  ".context/sessions/README.md"
+  ".context/sessions/feedback_template.md"
+  ".context/state/README.md"
+  ".context/state/agent_state_comment_template.md"
+  ".context/vision/README.md"
+  "docs/benchmarks/agent-roi-benchmark-results.md"
+  "docs/benchmarks/retro-execution-447-results.md"
+  "docs/guides/model-roi-benchmark-runbook.md"
+)
+
+for file in "${CONTEXT_FILES[@]}"; do
+  if [[ -f "$file" ]]; then
+    pass "$file exists"
+  else
+    fail "$file is missing"
+  fi
+done
+
+# Check context directories exist
+CONTEXT_DIRS=(
+  ".context/sessions"
+  ".context/state"
+  ".context/vision/mockups"
+  ".context/vision/architecture"
+)
+
+for dir in "${CONTEXT_DIRS[@]}"; do
+  if [[ -d "$dir" ]]; then
+    pass "$dir directory exists"
+  else
+    fail "$dir directory is missing"
+  fi
+done
