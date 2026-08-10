@@ -47,6 +47,13 @@ case "$TREATMENT" in
     AUTH_MODE=anthropic_api_key
     FRESH_REQUIRED=true
     ;;
+  monolith_opus_5_medium_opencode_oauth)
+    MODEL=anthropic/claude-opus-5
+    METRICS_MODEL=claude-opus-5
+    EFFORT=medium
+    AUTH_MODE=anthropic_oauth
+    FRESH_REQUIRED=true
+    ;;
   monolith_sonnet_5_medium_opencode)
     MODEL=anthropic/claude-sonnet-5
     METRICS_MODEL=claude-sonnet-5
@@ -178,6 +185,18 @@ if [ "$AUTH_MODE" = anthropic_api_key ]; then
     echo "OpenCode Anthropic API credential is not configured" >&2
     exit 69
   fi
+fi
+if [ "$AUTH_MODE" = anthropic_oauth ]; then
+  OAUTH_PREFLIGHT="$ROOT_DIR/results/diagnostics/anthropic-oauth-preflight-$TREATMENT.json"
+  if ! env -u ANTHROPIC_API_KEY -u ANTHROPIC_AUTH_TOKEN -u ANTHROPIC_BASE_URL \
+    OPENCODE="$OPENCODE" OPENCODE_DB="$OPENCODE_DB" \
+    "$ROOT_DIR/scripts/check_opencode_anthropic_oauth.sh" "$MODEL" "$EFFORT" "$OAUTH_PREFLIGHT"; then
+    echo "refusing to start Anthropic OAuth candidate: plugin, model, effort, or OAuth route was not confirmed" >&2
+    echo "preflight evidence: $OAUTH_PREFLIGHT" >&2
+    exit 78
+  fi
+  unset ANTHROPIC_API_KEY ANTHROPIC_AUTH_TOKEN ANTHROPIC_BASE_URL
+  export OPENCODE_CONFIG="$ROOT_DIR/benchmark/opencode-claude-oauth.json"
 fi
 if [ "$AUTH_MODE" = api_key ] && [ "$FAST_TIER_PREFLIGHT" = true ]; then
   PREFLIGHT_TIER=$SERVICE_TIER

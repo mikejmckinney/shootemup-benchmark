@@ -30,6 +30,8 @@ The next runtime/model extension runs two Claude Code monoliths sequentially in 
 
 The following runtime comparison runs the same model/effort pair through OpenCode `1.18.16`, sequentially in the user-requested order: Claude Opus 5 Medium, then Claude Sonnet 5 Medium. Both are plain monoliths using Anthropic API authentication, Standard service tier, the unchanged prompt/task and 45-minute ceiling, and an explicit prohibition on delegation or launching other agents. Excluded minimal preflights must resolve `anthropic/claude-opus-5` and `anthropic/claude-sonnet-5`, produce a successful response, and record nonzero provider-reported cost before either timed run. The fixed order is unrandomized and remains subject to cache and provider drift.
 
+The subsequent authentication-mode extension reruns Claude Opus 5 Medium through OpenCode `1.18.16` using the community `opencode-claude-auth` plugin pinned to `2.1.6` and the user's Claude Pro OAuth subscription rather than an Anthropic API key. An excluded minimal preflight must remove Anthropic API-key environment variables, observe the plugin's OAuth loader, resolve `anthropic/claude-opus-5` with the `medium` variant, and receive a successful response. The task, monolithic restriction, standard tier, prompt, and 45-minute ceiling are unchanged. This one sequential replicate is exploratory; it also changes provider authentication headers and occurs after the API run, so cache and provider drift remain uncontrolled. Anthropic does not officially support this third-party subscription route, creating account-enforcement and reproducibility risk.
+
 ## Treatments
 
 ### `monolith`
@@ -127,6 +129,10 @@ One OpenCode `1.18.16` session using `anthropic/claude-opus-5` at medium effort 
 ### `monolith_sonnet_5_medium_opencode`
 
 One OpenCode `1.18.16` session using `anthropic/claude-sonnet-5` at medium effort and Standard service tier through Anthropic API authentication. It uses the same monolithic restrictions, prompt, task, runtime, credentials, and ceiling as the Opus OpenCode treatment, subject to fixed-order cache and provider drift.
+
+### `monolith_opus_5_medium_opencode_oauth`
+
+One OpenCode `1.18.16` session using `anthropic/claude-opus-5` at medium effort and Standard service tier through the user's Claude Pro OAuth subscription. The controller loads `opencode-claude-auth@2.1.6`, removes Anthropic API-key environment variables, and rejects the run unless the excluded preflight observes the plugin's OAuth loader plus the requested model and variant. Delegation remains prohibited. API-equivalent token cost is retained for cross-candidate ROI; it is not an Anthropic API charge for this subscription-authenticated treatment.
 
 ### Methodology-extension accounting
 

@@ -37,6 +37,7 @@ const plannedTreatments = [
   "monolith_sonnet_5_medium_claude_code",
   "monolith_opus_5_medium_opencode",
   "monolith_sonnet_5_medium_opencode",
+  "monolith_opus_5_medium_opencode_oauth",
 ];
 const requestedTreatments = process.argv.slice(2);
 const treatments = requestedTreatments.length
