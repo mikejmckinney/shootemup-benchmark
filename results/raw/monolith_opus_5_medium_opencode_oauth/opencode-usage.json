@@ -1,0 +1,59 @@
+{
+  "source": "OpenCode SQLite session ledger",
+  "database": "/home/codespace/.local/share/opencode/opencode.db",
+  "selection": {
+    "candidate_directory": "/workspaces/shootemup-benchmark/candidates/monolith_opus_5_medium_opencode_oauth",
+    "started_ms": 1786388172879,
+    "ended_ms": 1786388958132,
+    "rule": "sessions rooted in candidate directory during run, plus recursive parent_id descendants"
+  },
+  "agents_started": 1,
+  "root_sessions": 1,
+  "child_sessions": 0,
+  "peak_concurrent_agents": 1,
+  "turns": 49,
+  "tool_calls": 48,
+  "coordination_events": 0,
+  "coordination_tool_calls": 0,
+  "tool_counts": {
+    "read": 1,
+    "bash": 29,
+    "todowrite": 2,
+    "write": 13,
+    "edit": 3
+  },
+  "usage": {
+    "input_tokens": 2090135,
+    "cached_input_tokens": 2090037,
+    "cache_write_input_tokens": 59974,
+    "output_tokens": 49721,
+    "reasoning_output_tokens": 0
+  },
+  "provider_reported_cost_usd": 2.6633709999999997,
+  "sessions": [
+    {
+      "id": "ses_012f7a281ffe70x9pIvRFmEpA9",
+      "project_id": "c7e8cf2f9209e08639528261231c91e580044f36",
+      "workspace_id": null,
+      "parent_id": null,
+      "slug": "tidy-garden",
+      "directory": "/workspaces/shootemup-benchmark/candidates/monolith_opus_5_medium_opencode_oauth",
+      "title": "BENCHMARK_TASK autonomous execution",
+      "version": "1.18.16",
+      "cost": 2.6633709999999997,
+      "tokens_input": 98,
+      "tokens_output": 49721,
+      "tokens_reasoning": 0,
+      "tokens_cache_read": 2090037,
+      "tokens_cache_write": 59974,
+      "agent": "build",
+      "model": {
+        "id": "claude-opus-5",
+        "providerID": "anthropic",
+        "variant": "medium"
+      },
+      "time_created": 1786388176255,
+      "time_updated": 1786388957918
+    }
+  ]
+}

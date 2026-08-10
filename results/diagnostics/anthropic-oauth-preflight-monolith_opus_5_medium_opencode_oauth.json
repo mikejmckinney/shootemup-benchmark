@@ -1,0 +1,18 @@
+{
+  "checked_at": "2026-08-10T18:56:12Z",
+  "passed": true,
+  "requested_model": "anthropic/claude-opus-5",
+  "requested_effort": "medium",
+  "auth_mode": "anthropic_oauth_subscription",
+  "api_key_environment_removed": true,
+  "plugin": "opencode-claude-auth@2.1.6",
+  "run_exit": 0,
+  "response": "ANTHROPIC_OAUTH_PREFLIGHT_OK",
+  "session_id": "ses_012f7c1a6ffeuYqqWRqe00gNj4",
+  "evidence": {
+    "plugin_observed_oauth": true,
+    "plugin_ready": true,
+    "requested_model_observed": 1,
+    "requested_variant_observed": 1
+  }
+}

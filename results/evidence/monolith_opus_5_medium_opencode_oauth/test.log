@@ -1,0 +1,13 @@
+
+> neon-barrage@1.0.0 test
+> vitest run
+
+
+ RUN  v4.1.10 /workspaces/shootemup-benchmark/candidates/monolith_opus_5_medium_opencode_oauth
+
+
+ Test Files  2 passed (2)
+      Tests  27 passed (27)
+   Start at  19:09:45
+   Duration  608ms (transform 110ms, setup 0ms, import 154ms, tests 96ms, environment 0ms)
+

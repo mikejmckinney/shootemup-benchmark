@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_opus_5_medium_opencode_oauth",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-opus-5-medium.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-opus-5-medium",
+  "supabase_url": "https://ntmdazeomekrnblitjrh.supabase.co",
+  "supabase_project_ref": "ntmdazeomekrnblitjrh",
+  "supabase_public_key": "sb_publishable_ANHQhJSw2VNPxPJrZJi8dw_bH4dV7vL",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Vite + TypeScript canvas shooter deployed to Cloudflare Pages. Leaderboard table public.leaderboard has RLS enabled and forced with select + insert-only policies, CHECK constraints on name (1-16 chars, restricted charset) and score (0..10000000), and a BEFORE INSERT trigger that trims the name and sets id/created_at server-side. Browser uses only the publishable key. 27 vitest unit tests plus a 3-spec Playwright suite executed against the production URL, covering a real Supabase insert, top-10 read, and persistence across reload. Migration in supabase/migrations/0001_leaderboard.sql."
+}
