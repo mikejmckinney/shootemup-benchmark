@@ -76,9 +76,10 @@ printf '%s\n' "$START_ISO" > "$RAW_DIR/started_at.txt"
 
 set +e
 timeout --signal=INT --kill-after=30s 2700s "$CLAUDE" -p \
-  --model "$MODEL_ALIAS" --effort medium --output-format stream-json --verbose \
-  --permission-mode bypassPermissions --no-session-persistence \
+  --model "$MODEL_ALIAS" --effort medium \
   --disallowedTools 'Agent,ListAgents,SendMessage,RemoteTrigger,EnterWorktree,ExitWorktree' \
+  --output-format stream-json --verbose \
+  --permission-mode bypassPermissions --no-session-persistence \
   "$PROMPT" </dev/null > "$RAW_DIR/session.jsonl" 2> "$RAW_DIR/session.stderr.log"
 RUN_EXIT=$?
 set -e

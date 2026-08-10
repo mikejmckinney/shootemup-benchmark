@@ -1,0 +1,9 @@
+{
+  "treatment": "monolith_opus_5_medium_claude_code",
+  "classification": "excluded_controller_harness_failure",
+  "occurred_at": "2026-08-10T12:47:32Z",
+  "model_started": false,
+  "external_resources_created": false,
+  "elapsed_seconds": 6,
+  "reason": "Claude Code --disallowedTools is variadic and consumed the final prompt argument; no system/init or model response occurred."
+}
