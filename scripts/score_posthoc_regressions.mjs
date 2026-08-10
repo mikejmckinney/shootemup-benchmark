@@ -78,9 +78,11 @@ const rows = treatments.map(treatment => {
   const absoluteDeductions = deductionsFor(report);
   const posthocAdjustment = -absoluteDeductions;
   const correctedScore = originalScore + posthocAdjustment;
+  const scorePath = path.join(root, "results", "evidence", treatment, "posthoc-score.json");
+  const previousScoredAt = fs.existsSync(scorePath) ? read(scorePath).scored_at : null;
   const artifact = {
     treatment,
-    scored_at: new Date().toISOString(),
+    scored_at: previousScoredAt ?? new Date().toISOString(),
     original_quality_score: originalScore,
     absolute_supplemental_deductions: absoluteDeductions,
     posthoc_adjustment: posthocAdjustment,
@@ -90,7 +92,7 @@ const rows = treatments.map(treatment => {
     checks: report.checks,
     rationale: "The corrected quality score applies the candidate's absolute supplemental deductions directly. The monolith remains the comparison baseline, but its score is not normalized back to 100 and 100 is not a ceiling.",
   };
-  fs.writeFileSync(path.join(root, "results", "evidence", treatment, "posthoc-score.json"), `${JSON.stringify(artifact, null, 2)}\n`);
+  fs.writeFileSync(scorePath, `${JSON.stringify(artifact, null, 2)}\n`);
   return artifact;
 });
 

@@ -1,0 +1,14 @@
+
+> neon-barrage@1.0.0 test
+> vitest run
+
+
+ RUN  v3.2.4 /tmp/anthropic-opencode-shared-gallery-vwD7bF/monolith_opus_5_medium_opencode
+
+ ✓ tests/game.test.ts (15 tests) 71ms
+
+ Test Files  1 passed (1)
+      Tests  15 passed (15)
+   Start at  17:56:50
+   Duration  427ms (transform 84ms, setup 0ms, collect 82ms, tests 71ms, environment 0ms, prepare 88ms)
+

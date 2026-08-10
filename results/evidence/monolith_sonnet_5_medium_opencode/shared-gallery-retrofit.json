@@ -1,0 +1,19 @@
+{
+  "classification": "post-benchmark shared-gallery infrastructure retrofit",
+  "verified_at": "2026-08-10T17:57:02.219Z",
+  "timed_score_affected": false,
+  "migration": "supabase/migrations/20260810175132_allow_anthropic_opencode_candidates.sql",
+  "shared_project_ref": "lyyyxbxacrxqflxmtlqq",
+  "candidate_id": "monolith_sonnet_5_medium_opencode",
+  "gallery_url": "https://shootemup-bench-monolith-sonnet-5-medium-opencode.pages.dev",
+  "verification": {
+    "production_http_status": 200,
+    "shared_row_persisted": true,
+    "shared_partition_get_http_status": 200,
+    "invalid_candidate_post_rejected_http_status": 401,
+    "browser_console_errors": [],
+    "browser_page_errors": [],
+    "verification_rows_removed": 1,
+    "verification_row_remaining": false
+  }
+}

@@ -2,10 +2,10 @@
 
 # Neon Barrage: an agent benchmark gallery
 
-Thirty-two candidate runs received the same brief: build a playable browser shoot-'em-up, persist a public leaderboard in Supabase, deploy the frontend to Cloudflare, verify production behavior, and provide reproducible source. The experiment compares coordination architectures, a warm-cache repeat, model variants, reasoning efforts, service tiers, alternate agent runtimes, a minimal-context Codex ablation, and three structured-development methodologies.
+Thirty-four candidate runs received the same brief: build a playable browser shoot-'em-up, persist a public leaderboard in Supabase, deploy the frontend to Cloudflare, verify production behavior, and provide reproducible source. The experiment compares coordination architectures, a warm-cache repeat, model variants, reasoning efforts, service tiers, alternate agent runtimes, a minimal-context Codex ablation, and three structured-development methodologies.
 
 > [!NOTE]
-> Twenty-nine candidates deployed within their timed runs; Spec Kit, Superpowers, and AI Repo Template timed out before deployment. Exploratory post-timeout continuations later deployed all three, but do not replace their primary results. The twenty-nine timed gallery games use one shared Supabase project; every other dedicated evaluation or continuation database is paused.
+> Thirty-one candidates deployed within their timed runs; Spec Kit, Superpowers, and AI Repo Template timed out before deployment. Exploratory post-timeout continuations later deployed all three, but do not replace their primary results. The thirty-one timed gallery games use one shared Supabase project; every other dedicated evaluation or continuation database is paused.
 
 ## Explore the benchmark
 
@@ -33,7 +33,7 @@ The current results test Spec Kit, Superpowers, and AI Repo Template as complete
 
 Quality is an open-ended score using the original cold monolith as the comparison baseline. It initially scored 100; the uniform post-hoc review corrects it to **98**. It is not a percentage and 100 is not a ceiling. Cost is a PAYG-equivalent estimate using official [OpenAI](https://developers.openai.com/api/docs/pricing), [Anthropic](https://platform.claude.com/docs/en/about-claude/pricing), and [Cursor](https://cursor.com/docs/models-and-pricing) API list prices current on August 10, 2026, plus captured paid web searches. Supabase and Cloudflare free-tier use contribute $0 marginal infrastructure cost.
 
-Scores include a uniform [post-hoc regression review](results/posthoc-review.md). The interaction audit ran against all 29 timed-run deployments; it is explicitly not applicable to the three candidates that did not produce a live artifact within the time ceiling because those interaction categories already scored zero. Original automated/manual evidence, implementations, time, tokens, and cost are unchanged. Shared-database gallery retrofits occurred after scoring and are identified separately from each preserved submission.
+Scores include a uniform [post-hoc regression review](results/posthoc-review.md). The interaction audit ran against all 31 timed-run deployments; it is explicitly not applicable to the three candidates that did not produce a live artifact within the time ceiling because those interaction categories already scored zero. Original automated/manual evidence, implementations, time, tokens, and cost are unchanged. Shared-database gallery retrofits occurred after scoring and are identified separately from each preserved submission.
 
 Decision framework:
 
@@ -66,6 +66,7 @@ The cost compiler uses Standard Luna rates of $0.20/M uncached input, $0.02/M ca
 | **[Monolith · Luna Max · cold cache](#cold-cache-luna-max-monolith)** | 98 | PASS | $0.4754 | 28:47 | 16.570M | 16.246M | 0.269M | 0.000M | 0.056M | 26.4914 |
 | **[A2A · asynchronous](#asynchronous-a2a)** | 96 | PASS | $0.5825 | 24:02 | 14.666M | 14.071M | 0.433M | 0.000M | 0.162M | 25.6578 |
 | **[A2A · synchronous](#synchronous-a2a)** | 93 | PASS | $0.6853 | 23:15 | 15.604M | 14.802M | 0.623M | 0.000M | 0.179M | 23.2986 |
+| **[Monolith · Opus 5 Medium · OpenCode](#monolith-with-opus-5-medium-in-opencode)** | 100 | PASS | $1.9015 | 9:57 | 1.281M | 1.187M | 0.000M | 0.056M | 0.038M | 22.9900 |
 | **[Monolith · Sol High · OpenCode](#monolith-with-sol-high-in-opencode)** | 94 | PASS | $1.6572 | 14:28 | 1.063M | 0.969M | 0.066M | 0.000M | 0.028M | 19.1979 |
 | **[Monolith · Sol Low · OpenCode](#monolith-with-sol-low-in-opencode)** | 89 | BORDERLINE | $0.6749 | 5:29 | 0.310M | 0.264M | 0.034M | 0.000M | 0.012M | 18.5055 |
 | **[Native isolated subagents](#native-subagents-with-isolated-issues)** | 90 | BORDERLINE | $0.5592 | 25:45 | 13.450M | 12.876M | 0.427M | 0.000M | 0.147M | 14.2301 |
@@ -74,6 +75,7 @@ The cost compiler uses Standard Luna rates of $0.20/M uncached input, $0.02/M ca
 | **[Monolith · Opus 5 Medium · Claude Code](#monolith-with-opus-5-medium-in-claude-code)** | 95 | PASS | $4.0853 | 24:25 | 3.556M | 3.406M | 0.000M | 0.093M | 0.058M | 9.5119 |
 | **[Monolith · Sonnet 5 Medium · Claude Code](#monolith-with-sonnet-5-medium-in-claude-code)** | 78 | FAIL | $1.5907 | 10:08 | 4.513M | 4.391M | 0.000M | 0.084M | 0.038M | 0.0000 |
 | **[Monolith · Luna High · OpenCode](#monolith-with-luna-high-in-opencode)** | 73 | FAIL | $0.0421 | 7:12 | 0.655M | 0.594M | 0.043M | 0.000M | 0.018M | 0.0000 |
+| **[Monolith · Sonnet 5 Medium · OpenCode](#monolith-with-sonnet-5-medium-in-opencode)** | 73 | FAIL | $1.2230 | 11:17 | 3.302M | 3.191M | 0.000M | 0.070M | 0.041M | 0.0000 |
 | **[Native dynamic subagents](#native-dynamic-subagents)** | 58 | FAIL | $0.5272 | 23:49 | 14.209M | 13.551M | 0.544M | 0.000M | 0.115M | 0.0000 |
 | **[Monolith · Luna Max · OpenCode + AI Repo Template](#monolithic-luna-max-opencode-with-ai-repo-template)** | 26 | FAIL | $0.6164 | 45:00 | 21.041M | 20.382M | 0.582M | 0.000M | 0.077M | 0.0000 |
 | **[Dynamic · Luna Max · OpenCode + Superpowers](#luna-max-opencode-with-full-superpowers-methodology)** | 9 | FAIL | $0.3852 | 45:00 | 6.369M | 5.643M | 0.599M | 0.000M | 0.127M | 0.0000 |
@@ -85,9 +87,9 @@ Strict Pareto uses observed scores exactly. The ε analysis treats a candidate u
 
 | Quality tolerance ε | Frontier among gate survivors | Drops from strict frontier |
 |---:|---|---|
-| 0 | Monolith · Luna Max · cold cache, Monolith · Luna Xhigh · OpenCode, Monolith · Luna Max · Codex Minimal Context, Monolith · Luna Xhigh Fast · OpenCode, Monolith · Sol Low Fast · OpenCode, Monolith · Grok 4.5 Medium Fast · Cursor, Monolith · Grok 4.5 High Fast · Cursor, Monolith · Auto Cost · Cursor, Monolith · Luna Xhigh · OpenCode control | — |
-| 2 | Monolith · Luna Xhigh · OpenCode, Monolith · Luna Xhigh Fast · OpenCode, Monolith · Sol Low Fast · OpenCode, Monolith · Grok 4.5 Medium Fast · Cursor, Monolith · Auto Cost · Cursor, Monolith · Luna Xhigh · OpenCode control | Monolith · Luna Max · cold cache, Monolith · Luna Max · Codex Minimal Context, Monolith · Grok 4.5 High Fast · Cursor |
-| 3 | Monolith · Luna Xhigh Fast · OpenCode, Monolith · Sol Low Fast · OpenCode, Monolith · Auto Cost · Cursor, Monolith · Luna Xhigh · OpenCode control | Monolith · Luna Max · cold cache, Monolith · Luna Xhigh · OpenCode, Monolith · Luna Max · Codex Minimal Context, Monolith · Grok 4.5 Medium Fast · Cursor, Monolith · Grok 4.5 High Fast · Cursor |
+| 0 | Monolith · Luna Max · cold cache, Monolith · Luna Xhigh · OpenCode, Monolith · Luna Max · Codex Minimal Context, Monolith · Luna Xhigh Fast · OpenCode, Monolith · Sol Low Fast · OpenCode, Monolith · Grok 4.5 Medium Fast · Cursor, Monolith · Grok 4.5 High Fast · Cursor, Monolith · Auto Cost · Cursor, Monolith · Luna Xhigh · OpenCode control, Monolith · Opus 5 Medium · OpenCode | — |
+| 2 | Monolith · Luna Xhigh · OpenCode, Monolith · Luna Xhigh Fast · OpenCode, Monolith · Sol Low Fast · OpenCode, Monolith · Grok 4.5 Medium Fast · Cursor, Monolith · Auto Cost · Cursor, Monolith · Luna Xhigh · OpenCode control, Monolith · Opus 5 Medium · OpenCode | Monolith · Luna Max · cold cache, Monolith · Luna Max · Codex Minimal Context, Monolith · Grok 4.5 High Fast · Cursor |
+| 3 | Monolith · Luna Xhigh Fast · OpenCode, Monolith · Sol Low Fast · OpenCode, Monolith · Auto Cost · Cursor, Monolith · Luna Xhigh · OpenCode control | Monolith · Luna Max · cold cache, Monolith · Luna Xhigh · OpenCode, Monolith · Luna Max · Codex Minimal Context, Monolith · Grok 4.5 Medium Fast · Cursor, Monolith · Grok 4.5 High Fast · Cursor, Monolith · Opus 5 Medium · OpenCode |
 
 At ε=2, A2A asynchronous is dominated because Luna Xhigh OpenCode is within one quality point, 7.7× cheaper, and exactly 12:00 faster. ε=2 is the headline frontier; ε=0 and ε=3 are sensitivities. None was preregistered.
 
@@ -124,6 +126,7 @@ For a stated value of unattended agent time `r` in USD per minute, this secondar
 | [Monolith · Luna Max · cold cache](#cold-cache-luna-max-monolith) | 206.12 | 51.19 | 18.59 | 15.98 | 11.79 | 7.86 | 3.35 |
 | [A2A · asynchronous](#asynchronous-a2a) | 164.81 | 53.81 | 20.92 | 18.09 | 13.47 | 9.06 | 3.90 |
 | [A2A · synchronous](#synchronous-a2a) | 135.71 | 50.33 | 20.39 | 17.69 | 13.26 | 8.97 | 3.89 |
+| [Monolith · Opus 5 Medium · OpenCode](#monolith-with-opus-5-medium-in-opencode) | 52.59 | 41.68 | 28.09 | 25.92 | 21.69 | 16.54 | 8.44 |
 | [Monolith · Sol High · OpenCode](#monolith-with-sol-high-in-opencode) | 56.72 | 39.49 | 23.11 | 20.88 | 16.80 | 12.23 | 5.83 |
 | [Monolith · Sol Low · OpenCode](#monolith-with-sol-low-in-opencode) † | 131.87 | 93.77 | 56.02 | 50.77 | 41.06 | 30.07 | 14.45 |
 | [Native isolated subagents](#native-subagents-with-isolated-issues) † | 160.93 | 48.73 | 18.55 | 16.01 | 11.89 | 7.97 | 3.42 |
@@ -132,6 +135,7 @@ For a stated value of unattended agent time `r` in USD per minute, this secondar
 | [Monolith · Opus 5 Medium · Claude Code](#monolith-with-opus-5-medium-in-claude-code) | 23.25 | 17.90 | 11.65 | 10.69 | 8.85 | 6.66 | 3.33 |
 | [Monolith · Sonnet 5 Medium · Claude Code](#monolith-with-sonnet-5-medium-in-claude-code) † | 49.03 | 37.19 | 23.78 | 21.77 | 17.93 | 13.42 | 6.65 |
 | [Monolith · Luna High · OpenCode](#monolith-with-luna-high-in-opencode) † | 1734.62 | 181.55 | 58.77 | 50.09 | 36.46 | 24.00 | 10.08 |
+| [Monolith · Sonnet 5 Medium · OpenCode](#monolith-with-sonnet-5-medium-in-opencode) † | 59.69 | 40.85 | 23.52 | 21.21 | 17.00 | 12.32 | 5.84 |
 | [Native dynamic subagents](#native-dynamic-subagents) † | 110.02 | 33.76 | 12.90 | 11.13 | 8.27 | 5.55 | 2.38 |
 | [Monolith · Luna Max · OpenCode + AI Repo Template](#monolithic-luna-max-opencode-with-ai-repo-template) † | 42.18 | 9.07 | 3.20 | 2.75 | 2.02 | 1.34 | 0.57 |
 | [Dynamic · Luna Max · OpenCode + Superpowers](#luna-max-opencode-with-full-superpowers-methodology) † | 23.36 | 3.42 | 1.14 | 0.97 | 0.71 | 0.47 | 0.20 |
@@ -154,7 +158,7 @@ Across the current quality-eligible frontier, Luna Xhigh OpenCode and Sol Medium
 - **API-key authentication did not substantially improve this Sol Medium OpenCode run overall.** It completed 43 seconds (8.4%) faster than the OAuth comparator, but scored five points lower, cost 10.4% more, used 22.2% more tokens, and produced lower gate-adjusted ROI. With one run per mode, this is an observed comparison rather than evidence that authentication caused the difference.
 - **All three tested frameworks substantially reduced ROI.** Spec Kit, Superpowers, and AI Repo Template exhausted the 45-minute budget without a timed production artifact and received zero gate-adjusted ROI. AI Repo Template produced the strongest local implementation of the three, but about 20 minutes of template-seed onboarding and inherited verification plus late browser-tool recovery left no deployment window. This measures complete default methodologies, not the isolated value of specifications, TDD, reviews, repository onboarding, worktrees, or subagents.
 - **Fast tiers reduced latency but did not automatically improve ROI.** Cursor Grok Medium Fast was 35.8% faster and scored six points higher than standard Medium, while High Fast was 19.6% faster and scored two points higher than standard High; their 2.9× and 2.1× costs still produced lower gate-adjusted ROI. Sol Low Fast was the exception because its five-point improvement moved it from BORDERLINE to PASS. Cursor Auto Cost led this seven-candidate extension with a 95 score in 5:58 for $0.3919, although Cursor did not expose the router's downstream model.
-- **Opus 5 delivered a strong but expensive Claude Code result; Sonnet 5 traded too much quality for speed.** Opus scored 95 in 24:25 for $4.0853 and passed every automated production check. Sonnet finished 14:17 faster and cost 61% less, but its hidden leaderboard result and broken primary restart flow reduced the score to 78, below the quality gate, and therefore zero gate-adjusted ROI.
+- **Opus 5 performed substantially better in OpenCode in these single runs.** OpenCode Opus scored 100 in 9:57 for $1.9015, versus 95 in 24:25 for $4.0853 in Claude Code. OpenCode Sonnet cost less than its Claude Code counterpart but scored only 73, so both Sonnet runs failed the quality gate. Runtime context, authentication, tool surfaces, order, and stochastic generation remain confounded.
 
 These conclusions apply to this task and these runs. The [limitations](#limitations) and [recommended improvements](#recommended-improvements) describe the replication needed before generalizing them.
 
@@ -662,6 +666,31 @@ Tokens: 15.604M total · 14.802M cached input · 0.623M uncached input · 0.000M
 | Absolute post-hoc adjustment | 0 | [Regression checks](results/evidence/a2a/posthoc-regressions.json) · [Adjustment](results/evidence/a2a/posthoc-score.json) |
 | **Corrected quality score** | **93** | [Post-hoc methodology](results/posthoc-review.md) |
 
+### Monolith with Opus 5 Medium in OpenCode
+
+[![OpenCode Opus 5 Medium monolith gameplay preview](assets/gallery/monolith_opus_5_medium_opencode.webp)](https://shootemup-bench-monolith-opus-5-medium-opencode.pages.dev)
+
+This Anthropic API run used one Opus 5 agent at medium effort in OpenCode with an explicit prohibition on delegation. It completed in 9:57, passed all 54 automated production checks, and earned all 46 manual points. The post-hoc interaction review found no further regressions. Its original dedicated Supabase project is paused; the live gallery deployment was separately repointed to the shared leaderboard after scoring.
+
+<!-- GENERATED_METRICS:monolith_opus_5_medium_opencode -->
+**Score 100 · Cost $1.9015 · Time 9:57 · Gate PASS · Gate-adjusted ROI 22.9900 · Pareto ε=2 FRONTIER**<br>
+Tokens: 1.281M total · 1.187M cached input · 0.000M uncached input · 0.056M cache writes · 0.038M output
+
+[Play the game](https://shootemup-bench-monolith-opus-5-medium-opencode.pages.dev) · [Browse preserved source](submissions/monolith_opus_5_medium_opencode/) · [Evaluation evidence](results/evidence/monolith_opus_5_medium_opencode/) · [Run metrics](results/raw/monolith_opus_5_medium_opencode/run-metrics.json) · [Shared-gallery verification](results/evidence/monolith_opus_5_medium_opencode/shared-gallery-retrofit.json)
+
+| Score component | Result | Evidence |
+|---|---:|---|
+| Automated production behavior | 54 / 54 | [Automated checks](results/evidence/monolith_opus_5_medium_opencode/automated.json) · [Browser log](results/evidence/monolith_opus_5_medium_opencode/browser-evaluator.log) |
+| Combat and progression | 5 / 5 | [Judge findings](results/evidence/monolith_opus_5_medium_opencode/manual-score.json) · [Tests](results/evidence/monolith_opus_5_medium_opencode/test.log) |
+| Visual design and feedback | 12 / 12 | [Desktop](results/evidence/monolith_opus_5_medium_opencode/desktop-after.png) · [Mobile](results/evidence/monolith_opus_5_medium_opencode/mobile.png) |
+| Resilience and accessibility | 2 / 2 | [Judge findings](results/evidence/monolith_opus_5_medium_opencode/manual-score.json) · [Automated checks](results/evidence/monolith_opus_5_medium_opencode/automated.json) |
+| Supabase/data security | 10 / 10 | [Migration](submissions/monolith_opus_5_medium_opencode/supabase/migrations/0001_leaderboard.sql) · [Judge findings](results/evidence/monolith_opus_5_medium_opencode/manual-score.json) |
+| Engineering quality | 10 / 10 | [Tests](results/evidence/monolith_opus_5_medium_opencode/test.log) · [Build](results/evidence/monolith_opus_5_medium_opencode/build.log) |
+| Reproducibility and handoff | 7 / 7 | [Source manifest](results/evidence/monolith_opus_5_medium_opencode/source-manifest.txt) · [README](submissions/monolith_opus_5_medium_opencode/README.md) |
+| Original quality score | 100 | [Automated](results/evidence/monolith_opus_5_medium_opencode/automated.json) + [manual](results/evidence/monolith_opus_5_medium_opencode/manual-score.json) |
+| Absolute post-hoc adjustment | 0 | [Regression checks](results/evidence/monolith_opus_5_medium_opencode/posthoc-regressions.json) · [Adjustment](results/evidence/monolith_opus_5_medium_opencode/posthoc-score.json) |
+| **Corrected quality score** | **100** | [Post-hoc methodology](results/posthoc-review.md) |
+
 ### Monolith with Sol High in OpenCode
 
 [![OpenCode Sol High monolith gameplay preview](assets/gallery/monolith_sol_high_opencode.webp)](https://shootemup-bench-monolith_sol_high_opencode-neon.mikejmckinney.workers.dev)
@@ -862,6 +891,31 @@ Tokens: 0.655M total · 0.594M cached input · 0.043M uncached input · 0.000M c
 | Absolute post-hoc adjustment | −2 | [Regression checks](results/evidence/monolith_luna_high_opencode/posthoc-regressions.json) · [Adjustment](results/evidence/monolith_luna_high_opencode/posthoc-score.json) |
 | **Corrected quality score** | **73** | [Post-hoc methodology](results/posthoc-review.md) |
 
+### Monolith with Sonnet 5 Medium in OpenCode
+
+[![OpenCode Sonnet 5 Medium monolith gameplay preview](assets/gallery/monolith_sonnet_5_medium_opencode.webp)](https://shootemup-bench-monolith-sonnet-5-medium-opencode.pages.dev)
+
+This Anthropic API run used one Sonnet 5 agent at medium effort in OpenCode with the same monolithic restriction. It completed in 11:17 and earned 41/46 manual points, but the deterministic evaluator awarded 34/54: a submitted row persisted while remaining hidden, mute state did not visibly change, and the primary restart flow stayed in game-over state. The post-hoc callsign-entry check applied a further two-point deduction. Its dedicated database is paused; the shared-gallery retrofit preserves those UI defects.
+
+<!-- GENERATED_METRICS:monolith_sonnet_5_medium_opencode -->
+**Score 73 · Cost $1.2230 · Time 11:17 · Gate FAIL · Gate-adjusted ROI 0.0000 · Pareto ε=2 INELIGIBLE**<br>
+Tokens: 3.302M total · 3.191M cached input · 0.000M uncached input · 0.070M cache writes · 0.041M output
+
+[Play the game](https://shootemup-bench-monolith-sonnet-5-medium-opencode.pages.dev) · [Browse preserved source](submissions/monolith_sonnet_5_medium_opencode/) · [Evaluation evidence](results/evidence/monolith_sonnet_5_medium_opencode/) · [Run metrics](results/raw/monolith_sonnet_5_medium_opencode/run-metrics.json) · [Shared-gallery verification](results/evidence/monolith_sonnet_5_medium_opencode/shared-gallery-retrofit.json)
+
+| Score component | Result | Evidence |
+|---|---:|---|
+| Automated production behavior | 34 / 54 | [Automated checks](results/evidence/monolith_sonnet_5_medium_opencode/automated.json) · [Browser log](results/evidence/monolith_sonnet_5_medium_opencode/browser-evaluator.log) |
+| Combat and progression | 5 / 5 | [Judge findings](results/evidence/monolith_sonnet_5_medium_opencode/manual-score.json) |
+| Visual design and feedback | 10 / 12 | [Desktop](results/evidence/monolith_sonnet_5_medium_opencode/desktop-after.png) · [Mobile](results/evidence/monolith_sonnet_5_medium_opencode/mobile.png) |
+| Resilience and accessibility | 2 / 2 | [Judge findings](results/evidence/monolith_sonnet_5_medium_opencode/manual-score.json) · [Automated checks](results/evidence/monolith_sonnet_5_medium_opencode/automated.json) |
+| Supabase/data security | 9 / 10 | [Migration](submissions/monolith_sonnet_5_medium_opencode/supabase/migration.sql) · [Judge findings](results/evidence/monolith_sonnet_5_medium_opencode/manual-score.json) |
+| Engineering quality | 8 / 10 | [Tests](results/evidence/monolith_sonnet_5_medium_opencode/test.log) · [Build](results/evidence/monolith_sonnet_5_medium_opencode/build.log) |
+| Reproducibility and handoff | 7 / 7 | [Source manifest](results/evidence/monolith_sonnet_5_medium_opencode/source-manifest.txt) · [README](submissions/monolith_sonnet_5_medium_opencode/README.md) |
+| Original quality score | 75 | [Automated](results/evidence/monolith_sonnet_5_medium_opencode/automated.json) + [manual](results/evidence/monolith_sonnet_5_medium_opencode/manual-score.json) |
+| Absolute post-hoc adjustment | −2 | [Regression checks](results/evidence/monolith_sonnet_5_medium_opencode/posthoc-regressions.json) · [Adjustment](results/evidence/monolith_sonnet_5_medium_opencode/posthoc-score.json) |
+| **Corrected quality score** | **73** | [Post-hoc methodology](results/posthoc-review.md) |
+
 ### Native dynamic subagents
 
 [![Dynamic-subagent gameplay preview](assets/gallery/native_dynamic.webp)](https://shootemup-bench-native-dynamic-neon-barrage-pages.pages.dev)
@@ -990,7 +1044,7 @@ All three methodology continuation databases are confirmed inactive. Their front
 
 ## Uniform post-hoc regression review
 
-The full review covers all 32 preserved timed runs. Browser checks used real keyboard events and browser-mocked Supabase responses against the 29 timed-run deployments, so the audit created no leaderboard records; the three methodology candidates that did not deploy within the ceiling are N/A and received no duplicate deductions for categories already scored zero. The compact historical table below covers 23 runs; the [complete generated review](results/posthoc-review.md) covers all 32. The audit itself did not repair any timed candidate implementation or deployment.
+The full review covers all 34 preserved timed runs. Browser checks used real keyboard events and browser-mocked Supabase responses against the 31 timed-run deployments, so the audit created no leaderboard records; the three methodology candidates that did not deploy within the ceiling are N/A and received no duplicate deductions for categories already scored zero. The compact historical table below covers 23 runs; the [complete generated review](results/posthoc-review.md) covers all 34. The audit itself did not repair any timed candidate implementation or deployment.
 
 | Candidate | Physical callsign entry | Progression start | Advertised `R` | Click/touch restart | Absolute deductions | Post-hoc adjustment | Corrected score | Evidence |
 |---|---:|---:|---:|---:|---:|---:|---:|---|
@@ -1039,20 +1093,20 @@ See the [full methodology and derivation](results/posthoc-review.md). Original s
 - **A2A async and Luna Xhigh cannot isolate coordination overhead.** A2A used 11.2× more total tokens, but the comparison also changes runtime, reasoning effort, and cache/order conditions. Against the more comparable cold Luna Max Codex monolith, A2A used fewer total tokens.
 - **Explicit isolation beat unrestricted native delegation.** Bounded issues and exclusive paths avoided the severe integration failures seen in the dynamic treatment.
 - **None of the three structured-development methodologies delivered within the 45-minute budget.** The fresh Luna Max OpenCode control scored 94 in 17:56 for $0.1224; Spec Kit scored 4, Superpowers scored 9, and AI Repo Template scored 26, leaving all three with gate-adjusted ROI 0. The separate exploratory continuation section shows that additional time produced deliverables from all three, but not competitive efficiency.
-- **Opus 5 Medium passed the quality gate; Sonnet 5 Medium did not.** Opus scored 95 in 24:25 for $4.0853 and achieved gate-adjusted ROI 9.5119. Sonnet completed in 10:08 for $1.5907, but its persisted leaderboard entry was hidden from the user and its primary restart flow failed, reducing quality to 78 and gate-adjusted ROI to zero.
+- **Opus 5 Medium passed the quality gate in both runtimes; Sonnet 5 Medium did not.** OpenCode Opus scored 100 in 9:57 for $1.9015 and gate-adjusted ROI 22.9900, while Claude Code Opus scored 95 in 24:25 for $4.0853 and ROI 9.5119. OpenCode and Claude Code Sonnet scored 73 and 78, respectively, leaving both at zero gate-adjusted ROI.
 - **The methodologies spent their extra work differently.** Spec Kit used 5.5× the control's tokens while producing specification artifacts before partial implementation. Superpowers used 2.5× the control's tokens and its six-agent implement-review-fix loop caught real engine defects, but completed only two of seven planned tasks. AI Repo Template used 8.4× the control's tokens; it completed a more substantial local game but spent about 20 minutes on onboarding and inherited verification, then lost its final deployment window to browser-tool recovery.
 
 These are observations from this task and these runs, not general rankings of models, runtimes, or agent architectures.
 
 ## Shared leaderboard infrastructure
 
-The timed benchmark created a fresh Supabase database for every candidate that reached provisioning and paused it after evaluation. All thirty dedicated timed-run projects are recorded as `INACTIVE` in their cleanup evidence. After scoring, the former monolith project was resumed as the shared gallery service; the other twenty-nine remain inactive. All twenty-nine deployed timed-run gallery games use its required `candidate_id` partition for:
+The timed benchmark created a fresh Supabase database for every candidate that reached provisioning and paused it after evaluation. All thirty-two dedicated timed-run projects are recorded as `INACTIVE` in their cleanup evidence. After scoring, the former monolith project was resumed as the shared gallery service; the other thirty-one remain inactive. All thirty-one deployed timed-run gallery games use its required `candidate_id` partition for:
 
-`monolith`, `native_dynamic`, `native_isolated`, `a2a`, `monolith_warm`, `a2a_async`, `a2a_async_streaming_opencode`, `monolith_sol_medium`, `monolith_opencode`, `monolith_sol_medium_opencode`, `monolith_sol_medium_opencode_api`, `monolith_sol_low_opencode`, `monolith_sol_high_opencode`, `monolith_luna_xhigh_opencode`, `monolith_luna_high_opencode`, `monolith_luna_max_codex_minimal`, `monolith_luna_max_opencode_retest`, `monolith_luna_xhigh_fast_opencode`, `monolith_luna_max_fast_opencode`, `monolith_luna_xhigh_opencode_control`, `monolith_sol_low_fast_opencode`, `monolith_sol_medium_fast_opencode`, `monolith_grok_4_5_medium_cursor`, `monolith_grok_4_5_high_cursor`, `monolith_grok_4_5_medium_fast_cursor`, `monolith_grok_4_5_high_fast_cursor`, `monolith_auto_cursor`, `monolith_opus_5_medium_claude_code`, and `monolith_sonnet_5_medium_claude_code`.
+`monolith`, `native_dynamic`, `native_isolated`, `a2a`, `monolith_warm`, `a2a_async`, `a2a_async_streaming_opencode`, `monolith_sol_medium`, `monolith_opencode`, `monolith_sol_medium_opencode`, `monolith_sol_medium_opencode_api`, `monolith_sol_low_opencode`, `monolith_sol_high_opencode`, `monolith_luna_xhigh_opencode`, `monolith_luna_high_opencode`, `monolith_luna_max_codex_minimal`, `monolith_luna_max_opencode_retest`, `monolith_luna_xhigh_fast_opencode`, `monolith_luna_max_fast_opencode`, `monolith_luna_xhigh_opencode_control`, `monolith_sol_low_fast_opencode`, `monolith_sol_medium_fast_opencode`, `monolith_grok_4_5_medium_cursor`, `monolith_grok_4_5_high_cursor`, `monolith_grok_4_5_medium_fast_cursor`, `monolith_grok_4_5_high_fast_cursor`, `monolith_auto_cursor`, `monolith_opus_5_medium_claude_code`, `monolith_sonnet_5_medium_claude_code`, `monolith_opus_5_medium_opencode`, and `monolith_sonnet_5_medium_opencode`.
 
 The fresh OpenCode methodology control was added to the shared service after its isolated evaluation. Its preserved submission and original database evidence remain unchanged. AI Repo Template created and migrated a dedicated project but did not deploy its frontend within the timed run; its exploratory continuation later deployed the frontend, restored the same project, and paused it again after evaluation. It is not part of the shared timed-run gallery. Spec Kit and Superpowers did not create Supabase projects during their timed runs; their later exploratory continuations created dedicated projects. All three continuation databases are confirmed `INACTIVE`.
 
-Clients ship only the publishable key. RLS remains enabled; public roles may select rows and insert validated `candidate_id`, `player_name`, and `score` values, but cannot update or delete them. The initial integration migration is [20260805211711_shared_leaderboard.sql](supabase/migrations/20260805211711_shared_leaderboard.sql); subsequent allowlist migrations add the later treatments, including [20260807210458_allow_benchmark_batch_20260807.sql](supabase/migrations/20260807210458_allow_benchmark_batch_20260807.sql) for the Fast/Cursor batch, [20260807220530_allow_sol_medium_opencode_api.sql](supabase/migrations/20260807220530_allow_sol_medium_opencode_api.sql) for the API-authenticated comparison, and [20260810134036_allow_claude_code_candidates.sql](supabase/migrations/20260810134036_allow_claude_code_candidates.sql) for the two Claude Code treatments. The retained [leaderboard security-advisor result](results/shared-supabase-security-advisors.json) contains no leaderboard finding; a current full-project scan reports warning-level findings on unrelated `nw_*` functions/tables and no error-level finding.
+Clients ship only the publishable key. RLS remains enabled; public roles may select rows and insert validated `candidate_id`, `player_name`, and `score` values, but cannot update or delete them. The initial integration migration is [20260805211711_shared_leaderboard.sql](supabase/migrations/20260805211711_shared_leaderboard.sql); subsequent allowlist migrations add the later treatments, including [20260807210458_allow_benchmark_batch_20260807.sql](supabase/migrations/20260807210458_allow_benchmark_batch_20260807.sql) for the Fast/Cursor batch, [20260807220530_allow_sol_medium_opencode_api.sql](supabase/migrations/20260807220530_allow_sol_medium_opencode_api.sql) for the API-authenticated comparison, [20260810134036_allow_claude_code_candidates.sql](supabase/migrations/20260810134036_allow_claude_code_candidates.sql) for the two Claude Code treatments, and [20260810175132_allow_anthropic_opencode_candidates.sql](supabase/migrations/20260810175132_allow_anthropic_opencode_candidates.sql) for the two Anthropic OpenCode treatments. The retained [leaderboard security-advisor result](results/shared-supabase-security-advisors.json) contains no leaderboard finding; a current full-project scan reports warning-level findings on unrelated `nw_*` functions/tables and no error-level finding.
 
 Supabase Free Plan projects may pause after seven days of low activity. A browser request cannot automatically restore a paused project; restoration requires an owner-authorized management action. The games remain playable when the leaderboard is unavailable and surface a recoverable offline/error state.
 
@@ -1064,7 +1118,7 @@ Supabase Free Plan projects may pause after seven days of low activity. A browse
 - Quality combines a deterministic browser evaluator with one evidence-based model judge. Independent blinded judges could disagree, especially on visual and engineering-quality categories.
 - The original audio check verified only that the mute control changed state; it did not verify audio-node creation, audible output, or combat-event sound coverage. A direct recheck confirmed candidate 15's sparse generated tones, but equivalent instrumentation should be applied uniformly in replication.
 - The supplemental regression checks and weights were defined after user-reported defects. They were applied uniformly to all candidates, but remain post hoc and should be preregistered in a replicated benchmark.
-- The original monolith is the scoring anchor at 100, but the comparative evidence in this run did not justify a score above it. This does not make 100 a ceiling.
+- The original monolith is the scoring anchor and corrects from 100 to 98; OpenCode Opus scored 100 on the same rubric, demonstrating that the anchor is not a ceiling.
 - Gate-adjusted ROI is a comparative index, not accounting ROI. The square-root cost/time denominator and piecewise quality factor are modeling choices; their thresholds were selected after these runs and should be preregistered and sensitivity-tested in replication.
 - Quality-adjusted efficiency remains a secondary time-value sensitivity analysis. Its result depends explicitly on the chosen economic value of unattended agent time; no single scenario is universal.
 - The rubric score is interval-like rather than proven ratio-scale. The quality gate reduces the risk of rewarding cheap failures, but efficiency ratios are scenario comparisons rather than literal ratios of value.
@@ -1073,6 +1127,7 @@ Supabase Free Plan projects may pause after seven days of low activity. A browse
 - API costs are list-price estimates, not invoices. Subscription plans, contract rates, service tiers, regional pricing, local execution, and unpriced MCP/tool activity may differ.
 - OpenCode and Codex expose different event schemas. The compiler normalizes both to cached input, uncached input, and output. The API-key runs reconcile against provider-reported per-turn cost, but the older OAuth OpenCode and Codex runs have not been reconciled against provider billing records. Cross-runtime cost-efficiency conclusions remain provisional.
 - Claude Code exposes cache creation separately from cache reads, so the compiler includes those disjoint cache-write tokens in total-token and cost accounting. Opus's official-rate estimate reconciles within 0.1% of Claude Code's reported terminal cost. Sonnet's $1.5907 estimate uses Anthropic's temporary introductory list price, while Claude Code reported $2.3867; the 33% discrepancy is retained and flagged rather than silently replacing either source.
+- OpenCode exposes Anthropic cache writes as one aggregate rather than separate five-minute and one-hour cache-creation buckets. The compiler applies the five-minute rate, which exactly reconciles to OpenCode's provider-reported cost for both new runs. The OpenCode-versus-Claude Code comparison still changes runtime context, tool surface, API-versus-OAuth authentication, and run order.
 - The Sol Medium OpenCode API-versus-OAuth comparison has one run per authentication mode. The API run has request-level transport and provider-cost telemetry, while the older OAuth run does not; stochastic generation, provider load, and sequential execution remain confounders, so the comparison cannot establish an authentication-mode effect.
 - The minimal-context Codex ablation disables multiple surfaces at once and has one replicate. It does not independently identify the token contribution of skills, MCP, apps, project instructions, or a shorter action trajectory.
 - The methodology extension measures each complete package. Its failed deliveries do not establish that specifications, TDD, reviews, repository onboarding, worktrees, or subagents are individually harmful; only that these three default full workflows did not fit this task's 45-minute budget in these single runs.

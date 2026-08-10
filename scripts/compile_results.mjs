@@ -206,6 +206,8 @@ const requestedComparators = {
   monolith_grok_4_5_high_fast_cursor: rows.find(row => row.treatment === "monolith_grok_4_5_high_cursor"),
   monolith_luna_xhigh_opencode_control: rows.find(row => row.treatment === "monolith_luna_xhigh_opencode"),
   monolith_sonnet_5_medium_claude_code: rows.find(row => row.treatment === "monolith_opus_5_medium_claude_code"),
+  monolith_opus_5_medium_opencode: rows.find(row => row.treatment === "monolith_opus_5_medium_claude_code"),
+  monolith_sonnet_5_medium_opencode: rows.find(row => row.treatment === "monolith_sonnet_5_medium_claude_code"),
 };
 const continuationDefinitions = [
   {
@@ -373,6 +375,8 @@ const minimalCodex = rows.find(row => row.treatment === "monolith_luna_max_codex
 const aiRepoTemplate = rows.find(row => row.treatment === "monolith_luna_max_opencode_ai_repo_template");
 const opusClaudeCode = rows.find(row => row.treatment === "monolith_opus_5_medium_claude_code");
 const sonnetClaudeCode = rows.find(row => row.treatment === "monolith_sonnet_5_medium_claude_code");
+const opusOpenCode = rows.find(row => row.treatment === "monolith_opus_5_medium_opencode");
+const sonnetOpenCode = rows.find(row => row.treatment === "monolith_sonnet_5_medium_opencode");
 const breakEvenUsdPerMinute = (first, second) => (
   first.quality_score * second.estimated_api_cost_usd
   - second.quality_score * first.estimated_api_cost_usd
@@ -636,6 +640,7 @@ ${continuationSection}
 - A2A asynchronous used ${f(rows.find(row => row.treatment === "a2a_async").total_tokens / lunaXhighOpenCode.total_tokens, 1)}× the tokens of Luna Xhigh OpenCode, but that comparison changes architecture, runtime, reasoning effort, and cache/order conditions simultaneously; it does not isolate coordination overhead.
 - Native isolated coordination remained much stronger than unrestricted dynamic delegation in the original architecture set.
 - Opus 5 Medium in Claude Code scored ${opusClaudeCode.quality_score} in ${mmss(opusClaudeCode.wall_seconds)} for $${f(opusClaudeCode.estimated_api_cost_usd, 4)}, passing all automated production checks. Sonnet 5 Medium finished ${mmss(opusClaudeCode.wall_seconds - sonnetClaudeCode.wall_seconds)} faster and cost ${f((1 - sonnetClaudeCode.estimated_api_cost_usd / opusClaudeCode.estimated_api_cost_usd) * 100, 0)}% less, but its hidden leaderboard result and broken primary restart flow reduced quality to ${sonnetClaudeCode.quality_score}, below the gate, and therefore zero gate-adjusted ROI.
+- Opus 5 Medium in OpenCode scored ${opusOpenCode.quality_score} in ${mmss(opusOpenCode.wall_seconds)} for $${f(opusOpenCode.estimated_api_cost_usd, 4)}. Against Opus in Claude Code, it scored ${signed(opusOpenCode.quality_score - opusClaudeCode.quality_score)}, finished ${mmss(opusClaudeCode.wall_seconds - opusOpenCode.wall_seconds)} faster, and cost ${f((1 - opusOpenCode.estimated_api_cost_usd / opusClaudeCode.estimated_api_cost_usd) * 100, 0)}% less. Sonnet in OpenCode also finished with a lower cost than Sonnet in Claude Code, but its corrected score of ${sonnetOpenCode.quality_score} failed the quality gate; neither single run establishes a causal runtime effect.
 - The fresh Luna Max OpenCode control delivered a corrected score of ${methodologyControl.quality_score} in ${mmss(methodologyControl.wall_seconds)} for $${f(methodologyControl.estimated_api_cost_usd, 4)}. Spec Kit, full-methodology Superpowers, and AI Repo Template all exhausted 45:00 without a timed deployment, scoring ${rows.find(row => row.treatment === "monolith_luna_max_opencode_speckit").quality_score}, ${rows.find(row => row.treatment === "dynamic_luna_max_opencode_superpowers").quality_score}, and ${aiRepoTemplate.quality_score}, respectively. All three receive zero gate-adjusted ROI because they fail the quality gate.
 - Spec Kit used ${f(rows.find(row => row.treatment === "monolith_luna_max_opencode_speckit").total_tokens / methodologyControl.total_tokens, 1)}× the control's tokens while spending most of the run on specification artifacts. Superpowers used ${f(rows.find(row => row.treatment === "dynamic_luna_max_opencode_superpowers").total_tokens / methodologyControl.total_tokens, 1)}× the control's tokens; its six-agent implement-review-fix loop caught real engine defects but completed only two of seven planned tasks. AI Repo Template used ${f(aiRepoTemplate.total_tokens / methodologyControl.total_tokens, 1)}× the control's tokens: template-seed onboarding and its inherited 398-check verification suite consumed about 20 minutes, and repeated local browser-tool recovery consumed the final deployment window despite a locally built and tested game.
 
@@ -652,6 +657,7 @@ ${continuationSection}
 - The PASS/BORDERLINE/FAIL thresholds and the ε=${primaryQualityTolerance} headline Pareto frontier were chosen after these runs and should be preregistered for a replication; ε=3 is reported as a sensitivity. BORDERLINE means the decision is unresolved, not that candidates are proven statistically equivalent.
 - OpenCode and Codex token telemetry come from different runtime event formats. The compiler converts both to cached input, uncached input, and output. The two API-key Fast runs now reconcile locally against provider-reported per-turn cost, but this does not reconcile the older OAuth OpenCode runs or Codex runs against provider billing records.
 - Claude Code exposes cache creation separately from cache reads, so total-token accounting includes those disjoint cache-write tokens. Opus's official-rate estimate reconciles within 0.1% of Claude Code's terminal cost. Sonnet's $${f(sonnetClaudeCode.estimated_api_cost_usd, 4)} estimate uses Anthropic's time-limited introductory list price, while Claude Code reported $${f(sonnetClaudeCode.provider_reported_cost_usd, 4)}; the 33% discrepancy is retained and flagged rather than silently substituting one source.
+- OpenCode's Anthropic ledger exposes aggregate cache writes rather than separate 5-minute and 1-hour cache-creation buckets. The compiler prices those writes at the 5-minute rate, matching OpenCode's provider-reported costs for both runs. Runtime, system context, tool surface, API-versus-OAuth authentication, run order, and stochastic generation all differ from the Claude Code treatments.
 - The Sol Medium OpenCode API-versus-OAuth comparison has one run per authentication mode. The API run has request-level transport and provider-cost telemetry, while the older OAuth run does not; stochastic generation, provider load, and sequential execution remain confounders, so the comparison cannot establish an authentication-mode effect.
 - The minimal-context treatment disables several optional Codex surfaces together and has one replicate. It shows that the default integration surface was not necessary for this successful run, but cannot estimate the marginal token contribution of skills, MCP, apps, project instructions, or workflow variation individually.
 - The asynchronous-streaming A2A extension changes transport and runtime together. Its improvement over asynchronous-polling A2A cannot be attributed specifically to streaming, OpenCode, cache/order conditions, or their interaction.
@@ -698,6 +704,8 @@ const galleryLabels = {
   monolith_luna_xhigh_opencode_control: "Monolith · Luna Xhigh · OpenCode control",
   monolith_opus_5_medium_claude_code: "Monolith · Opus 5 Medium · Claude Code",
   monolith_sonnet_5_medium_claude_code: "Monolith · Sonnet 5 Medium · Claude Code",
+  monolith_opus_5_medium_opencode: "Monolith · Opus 5 Medium · OpenCode",
+  monolith_sonnet_5_medium_opencode: "Monolith · Sonnet 5 Medium · OpenCode",
 };
 const galleryAnchors = {
   monolith: "cold-cache-luna-max-monolith",
@@ -732,6 +740,8 @@ const galleryAnchors = {
   monolith_luna_xhigh_opencode_control: "monolith-with-luna-xhigh-in-opencode-control",
   monolith_opus_5_medium_claude_code: "monolith-with-opus-5-medium-in-claude-code",
   monolith_sonnet_5_medium_claude_code: "monolith-with-sonnet-5-medium-in-claude-code",
+  monolith_opus_5_medium_opencode: "monolith-with-opus-5-medium-in-opencode",
+  monolith_sonnet_5_medium_opencode: "monolith-with-sonnet-5-medium-in-opencode",
 };
 const galleryLink = row => `[${galleryLabels[row.treatment]}](#${galleryAnchors[row.treatment]})`;
 const galleryRows = decisionRows.map(row =>
