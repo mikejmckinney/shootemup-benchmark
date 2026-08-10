@@ -21,6 +21,6 @@ The original monolith remains the comparison baseline, but its discovered defect
 
 | Candidate | Original score | Absolute deductions | Post-hoc adjustment | Corrected score | Δ corrected baseline |
 |---|---:|---:|---:|---:|---:|
-| monolith_opus_5_medium_opencode | 100 | 0 | 0 | 100 | +2 |
+| monolith_sonnet_5_medium_opencode | 75 | 2 | -2 | 73 | -25 |
 
 Original automated and manual evidence is retained unchanged. Per-candidate browser evidence is in `results/evidence/<candidate>/posthoc-regressions.json`; the derived adjustment is in `posthoc-score.json`.

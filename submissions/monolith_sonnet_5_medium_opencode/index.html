@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Neon Barrage</title>
+    <meta name="description" content="Neon Barrage — a neon-drenched arcade shoot-'em-up." />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <h1 class="logo">NEON<span>BARRAGE</span></h1>
+        <div class="hud">
+          <div class="hud-item">
+            <span class="hud-label">SCORE</span>
+            <span class="hud-value" id="score" data-testid="score">0</span>
+          </div>
+          <div class="hud-item">
+            <span class="hud-label">LIVES</span>
+            <span class="hud-value" id="lives" data-testid="lives">3</span>
+          </div>
+          <button class="icon-btn" id="mute-button" data-testid="mute-button" aria-label="Mute sound" aria-pressed="false">
+            <span class="icon-unmuted">🔊</span>
+            <span class="icon-muted">🔇</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="stage">
+        <canvas id="game-canvas" data-testid="game-canvas" width="960" height="600"></canvas>
+
+        <div class="overlay" id="start-overlay">
+          <div class="panel">
+            <h2>NEON BARRAGE</h2>
+            <p class="tagline">Survive the barrage. Top the leaderboard.</p>
+            <div class="controls-hint">
+              <div><strong>Move:</strong> Arrow Keys / WASD</div>
+              <div><strong>Fire:</strong> Space</div>
+              <div><strong>Mobile:</strong> Touch joystick + fire button</div>
+            </div>
+            <button class="primary-btn" id="start-button" data-testid="start-button">START GAME</button>
+            <section class="leaderboard-section">
+              <h3>Top Pilots</h3>
+              <div id="leaderboard" data-testid="leaderboard" class="leaderboard" aria-live="polite">
+                <p class="lb-loading">Loading leaderboard…</p>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <div class="overlay hidden" id="gameover-overlay">
+          <div class="panel">
+            <h2>GAME OVER</h2>
+            <p class="final-score">Final score: <span id="final-score">0</span></p>
+            <form id="score-form" class="score-form" autocomplete="off">
+              <label for="player-name">Callsign (1-16 chars)</label>
+              <input
+                id="player-name"
+                data-testid="player-name"
+                type="text"
+                maxlength="16"
+                minlength="1"
+                required
+                placeholder="ACE-01"
+              />
+              <button class="primary-btn" type="submit" id="submit-score" data-testid="submit-score">SUBMIT SCORE</button>
+            </form>
+            <p class="submit-status" id="submit-status" aria-live="polite"></p>
+            <div class="leaderboard-section">
+              <h3>Top Pilots</h3>
+              <div id="leaderboard-2" class="leaderboard" aria-live="polite"></div>
+            </div>
+            <button class="secondary-btn" id="restart-button">RESTART</button>
+          </div>
+        </div>
+
+        <div class="touch-controls" id="touch-controls" data-testid="touch-controls">
+          <div class="stick-zone" id="stick-zone">
+            <div class="stick-base">
+              <div class="stick-nub" id="stick-nub"></div>
+            </div>
+          </div>
+          <button class="fire-btn" id="fire-btn" aria-label="Fire">FIRE</button>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <span>Built for the Neon Barrage benchmark.</span>
+      </footer>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

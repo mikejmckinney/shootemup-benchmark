@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_sonnet_5_medium_opencode",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-sonnet-5-medium-opencode.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-sonnet-5-medium-opencode",
+  "supabase_url": "https://jmapyepldxxrjyrzfcfe.supabase.co",
+  "supabase_project_ref": "jmapyepldxxrjyrzfcfe",
+  "supabase_public_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImptYXB5ZXBsZHh4cmp5cnpmY2ZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYzNzgyNTcsImV4cCI6MjEwMTk1NDI1N30.pcfypmFAE-12wmcweUxmgVWmZNAQ3ODjXo3Ll9XSFfg",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Vite+TS canvas shooter deployed to Cloudflare Pages; Supabase leaderboard table has RLS (anon: select all, insert only rows passing CHECK constraints on name length/charset and score range; no update/delete policy). Verified via headless Chromium: start -> endGameForTest(7777) -> submit via UI form -> entry appears in leaderboard -> persists after full page reload, zero console errors. Direct REST round trip and constraint-rejection also verified via curl. 6 vitest unit tests pass; tsc --noEmit and vite build succeed."
+}
