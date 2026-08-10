@@ -33,6 +33,8 @@ const plannedTreatments = [
   "monolith_auto_cursor",
   "monolith_luna_xhigh_opencode_control",
   "monolith_luna_max_opencode_ai_repo_template",
+  "monolith_opus_5_medium_claude_code",
+  "monolith_sonnet_5_medium_claude_code",
 ];
 const requestedTreatments = process.argv.slice(2);
 const treatments = requestedTreatments.length

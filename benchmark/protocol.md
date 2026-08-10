@@ -26,6 +26,8 @@ The subsequent authentication-mode comparison reruns Sol Medium OpenCode with an
 
 The next methodology extension runs AI Repo Template after the authentication-mode comparison. It uses the same Luna Max OpenCode model, max reasoning effort, OAuth authentication, monolithic constraint, 45-minute ceiling, and standard service tier as the fresh methodology control. The private template archive is pinned to commit `9fa3f87d4ea2c800829fa1fe1c215790199f838c`; authenticated download, repository initialization, template-seed onboarding, setup, adaptation, delivery, deployment, and verification all occur inside the measured interval. This extension is sequential and not randomized.
 
+The next runtime/model extension runs two Claude Code monoliths sequentially in the user-requested order: Claude Opus 5 Medium, then Claude Sonnet 5 Medium. Both use Claude Code `2.1.226`, Claude.ai first-party OAuth, Standard speed/service tier, medium effort, the unchanged 45-minute task, and no native or background agents. Preflight must resolve the aliases to `claude-opus-5` and `claude-sonnet-5` and observe a successful Standard-tier response. Claude Code's `Agent`, `ListAgents`, `SendMessage`, `RemoteTrigger`, and worktree-agent controls are disabled; ordinary coding/deployment tools, skills, and MCPs remain available. This extension is sequential, unrandomized, and changes model, runtime, system context, tool surface, authentication, cache state, and provider conditions relative to earlier candidates.
+
 ## Treatments
 
 ### `monolith`
@@ -108,6 +110,14 @@ One parent OpenCode session using `gpt-5.6-luna` at max reasoning effort and Sup
 
 One monolithic OpenCode session using `gpt-5.6-luna` at max reasoning effort and AI Repo Template pinned to commit `9fa3f87d4ea2c800829fa1fe1c215790199f838c`. The controller downloads the authenticated archive and creates a fresh local Git baseline with no remote inside the measured interval. The first phase invokes the template's `repo-onboarding` command with explicit authorization to complete its documented `template-seed` lifecycle; the second phase resumes the same OpenCode session to deliver and verify the benchmark task. The pinned template's current `AGENTS.md` mandates one monolithic implementing agent because its earlier multi-role pipeline was retired, so delegation remains prohibited. Inherited `GITHUB_REPOSITORY`, `GH_REPO`, and `GITHUB_ACTIONS` variables are removed from the candidate process to prevent the template's setup automation from targeting the benchmark repository; task deployment credentials and the template's normal project-local tools, skills, instructions, and MCP configuration remain available.
 
+### `monolith_opus_5_medium_claude_code`
+
+One Claude Code session using `claude-opus-5` at medium effort and Standard speed through authenticated Claude.ai first-party OAuth. Agent/delegation and worktree-agent tools are disabled. The candidate otherwise retains Claude Code's ordinary tool, skill, and MCP surface, and all visible system/context/tool tokens are included in the terminal usage record.
+
+### `monolith_sonnet_5_medium_claude_code`
+
+One Claude Code session using `claude-sonnet-5` at medium effort and Standard speed through authenticated Claude.ai first-party OAuth. It uses the same monolithic restrictions, candidate task, runtime version, tool surface, credentials, and 45-minute ceiling as the Opus treatment, subject to the fixed sequential order and provider/cache drift.
+
 ### Methodology-extension accounting
 
 - The original three-candidate block begins from a fresh standalone Git repository with the benchmark task committed, so Superpowers can create worktrees without receiving a repository advantage unavailable to its controls. AI Repo Template instead begins with its pinned archive because the repository scaffold is the treatment; archive download and creation of its fresh no-remote Git baseline are charged to that candidate.
@@ -168,6 +178,8 @@ Hard evidence rules:
 Dollar cost uses the official Standard API list price for the model used by each treatment, current when results are compiled. It is reported as a PAYG-equivalent estimate rather than an invoice because the runs execute through Codex/OpenCode and actual subscription, OAuth, contract, regional, service-tier, and tool billing can differ. Captured separately priced built-in tool calls are added when authoritative rates and counts are available. Supabase and Cloudflare free-tier usage contributes zero marginal infrastructure cost.
 
 For the Cursor batch, Grok 4.5 Standard uses Cursor's published $2/M uncached input, $0.50/M cache read, and $6/M output rates, while Fast uses $4/M uncached input, $1/M cache read, and $18/M output. Cursor's live model-pricing data provides no cache-write rate for either Grok variant, so Grok cache writes are costed at zero. Cursor Auto Cost uses $1.25/M uncached input, $1.25/M cache write, $0.25/M cache read, and $6/M output.
+
+For the Claude Code extension, the pricing snapshot dated 2026-08-10 uses Anthropic's first-party Standard API list prices. Claude Opus 5 costs $5/M base input, $6.25/M 5-minute cache writes, $10/M 1-hour cache writes, $0.50/M cache reads, and $25/M output. Claude Sonnet 5 uses the introductory prices effective through 2026-08-31: $2/M base input, $2.50/M 5-minute cache writes, $4/M 1-hour cache writes, $0.20/M cache reads, and $10/M output. Claude Code terminal `total_cost_usd` is retained separately from the canonical calculation; discrepancies are reported rather than silently reconciled.
 
 ## Decision model and marginal utility
 

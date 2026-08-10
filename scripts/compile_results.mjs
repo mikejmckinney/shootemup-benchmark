@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
-const plannedTreatments = ["monolith", "native_dynamic", "native_isolated", "a2a", "monolith_warm", "a2a_async", "a2a_async_streaming_opencode", "monolith_sol_medium", "monolith_opencode", "monolith_sol_medium_opencode", "monolith_sol_medium_opencode_api", "monolith_sol_low_opencode", "monolith_sol_high_opencode", "monolith_luna_xhigh_opencode", "monolith_luna_high_opencode", "monolith_luna_max_codex_minimal", "monolith_luna_max_opencode_retest", "monolith_luna_max_opencode_speckit", "dynamic_luna_max_opencode_superpowers", "monolith_luna_max_opencode_ai_repo_template", "monolith_luna_xhigh_fast_opencode", "monolith_luna_max_fast_opencode", "monolith_sol_low_fast_opencode", "monolith_sol_medium_fast_opencode", "monolith_grok_4_5_medium_cursor", "monolith_grok_4_5_high_cursor", "monolith_grok_4_5_medium_fast_cursor", "monolith_grok_4_5_high_fast_cursor", "monolith_auto_cursor", "monolith_luna_xhigh_opencode_control"];
+const plannedTreatments = ["monolith", "native_dynamic", "native_isolated", "a2a", "monolith_warm", "a2a_async", "a2a_async_streaming_opencode", "monolith_sol_medium", "monolith_opencode", "monolith_sol_medium_opencode", "monolith_sol_medium_opencode_api", "monolith_sol_low_opencode", "monolith_sol_high_opencode", "monolith_luna_xhigh_opencode", "monolith_luna_high_opencode", "monolith_luna_max_codex_minimal", "monolith_luna_max_opencode_retest", "monolith_luna_max_opencode_speckit", "dynamic_luna_max_opencode_superpowers", "monolith_luna_max_opencode_ai_repo_template", "monolith_luna_xhigh_fast_opencode", "monolith_luna_max_fast_opencode", "monolith_sol_low_fast_opencode", "monolith_sol_medium_fast_opencode", "monolith_grok_4_5_medium_cursor", "monolith_grok_4_5_high_cursor", "monolith_grok_4_5_medium_fast_cursor", "monolith_grok_4_5_high_fast_cursor", "monolith_auto_cursor", "monolith_luna_xhigh_opencode_control", "monolith_opus_5_medium_claude_code", "monolith_sonnet_5_medium_claude_code"];
 const treatmentArtifactsExist = treatment => [
   path.join(root, "results/raw", treatment, "run-metrics.json"),
   path.join(root, "results/raw", treatment, "cleanup.json"),
@@ -37,13 +37,17 @@ const labels = {
   monolith_grok_4_5_high_fast_cursor: "Monolith · Grok 4.5 High Fast · Cursor",
   monolith_auto_cursor: "Monolith · Auto Cost · Cursor",
   monolith_luna_xhigh_opencode_control: "Monolith · Luna Xhigh · OpenCode control",
+  monolith_opus_5_medium_claude_code: "Monolith · Opus 5 Medium · Claude Code",
+  monolith_sonnet_5_medium_claude_code: "Monolith · Sonnet 5 Medium · Claude Code",
 };
 const pricing = {
-  as_of: "2026-08-07",
+  as_of: "2026-08-10",
   source: "https://developers.openai.com/api/docs/pricing",
   priority_source: "https://openai.com/api-priority-processing/",
   grok_source: "https://cursor.com/docs/models-and-pricing",
   cursor_auto_source: "https://cursor.com/docs/models-and-pricing#auto-modes",
+  anthropic_source: "https://platform.claude.com/docs/en/about-claude/pricing",
+  anthropic_sonnet_5_introductory_pricing_ends: "2026-08-31",
   cursor_grok_cache_accounting: "Cursor publishes separate cache-read rates for Grok 4.5 ($0.50/M Standard and $1/M Fast) and no cache-write rate; cache writes are therefore costed at zero.",
   service_tiers: ["standard", "priority"],
   models: {
@@ -52,6 +56,8 @@ const pricing = {
     "grok-4.5": { uncached_input: 2, cached_input: 0.5, cache_write: 0, output: 6 },
     "grok-4.5-fast": { uncached_input: 4, cached_input: 1, cache_write: 0, output: 18 },
     "cursor-auto-cost": { uncached_input: 1.25, cached_input: 0.25, cache_write: 1.25, output: 6 },
+    "claude-opus-5": { uncached_input: 5, cached_input: 0.5, cache_write: 6.25, cache_write_5m: 6.25, cache_write_1h: 10, output: 25 },
+    "claude-sonnet-5": { uncached_input: 2, cached_input: 0.2, cache_write: 2.5, cache_write_5m: 2.5, cache_write_1h: 4, output: 10 },
   },
   priority_models: {
     "gpt-5.6-luna": { uncached_input: 0.4, cached_input: 0.04, cache_write: 0.5, output: 2.4 },
@@ -82,6 +88,8 @@ const pricing = {
     monolith_grok_4_5_high_fast_cursor: 0,
     monolith_auto_cursor: 0,
     monolith_luna_xhigh_opencode_control: 0,
+    monolith_opus_5_medium_claude_code: 0,
+    monolith_sonnet_5_medium_claude_code: 0,
   },
 };
 const qualityGateCenter = 90;
@@ -110,31 +118,35 @@ const rows = treatments.map(treatment => {
   const rateTable = serviceTier === "priority" ? pricing.priority_models : pricing.models;
   const rates = rateTable[metrics.model];
   if (!rates) throw new Error(`No ${serviceTier} pricing configured for ${metrics.model}`);
-  const totalTokens = metrics.usage.input_tokens + metrics.usage.output_tokens;
+  const cacheWriteTokens = metrics.usage.cache_write_input_tokens ?? 0;
+  const totalTokens = metrics.usage.input_tokens + cacheWriteTokens + metrics.usage.output_tokens;
   const uncachedInputTokens = metrics.usage.input_tokens - metrics.usage.cached_input_tokens;
-  const nonCachedTokens = uncachedInputTokens + metrics.usage.output_tokens;
+  const nonCachedTokens = uncachedInputTokens + cacheWriteTokens + metrics.usage.output_tokens;
   const originalQuality = automated.automated_points + manual.manual_points;
   if (posthoc.original_quality_score !== originalQuality) throw new Error(`Post-hoc original score mismatch for ${treatment}`);
   const quality = posthoc.corrected_quality_score;
+  const cacheWriteCost = metrics.usage.cache_write_5m_input_tokens != null || metrics.usage.cache_write_1h_input_tokens != null
+    ? (
+      Number(metrics.usage.cache_write_5m_input_tokens ?? 0) * (rates.cache_write_5m ?? rates.cache_write) +
+      Number(metrics.usage.cache_write_1h_input_tokens ?? 0) * (rates.cache_write_1h ?? rates.cache_write)
+    )
+    : cacheWriteTokens * rates.cache_write;
   const tokenCost = (
     uncachedInputTokens * rates.uncached_input +
     metrics.usage.cached_input_tokens * rates.cached_input +
-    (metrics.usage.cache_write_input_tokens ?? 0) * rates.cache_write +
+    cacheWriteCost +
     metrics.usage.output_tokens * rates.output
   ) / 1_000_000;
   const webSearchCalls = pricing.captured_web_search_calls[treatment] ?? 0;
   const apiCost = tokenCost + webSearchCalls * pricing.web_search_usd_per_call;
   const providerReportedCost = metrics.provider_reported_cost_usd;
-  if (providerReportedCost != null) {
-    const difference = Math.abs(tokenCost - providerReportedCost);
-    const tolerance = Math.max(1e-9, providerReportedCost * 0.01);
-    if (difference > tolerance) {
-      throw new Error(
-        `Calculated token cost does not match provider-reported cost for ${treatment}: `
-        + `${tokenCost} vs ${providerReportedCost}`,
-      );
-    }
-  }
+  const providerCostDifference = providerReportedCost == null ? null : tokenCost - providerReportedCost;
+  const providerCostDifferencePercent = providerReportedCost == null || providerReportedCost === 0
+    ? null
+    : providerCostDifference / providerReportedCost * 100;
+  const providerCostDifferenceFlagged = providerReportedCost == null
+    ? false
+    : Math.abs(providerCostDifference) > Math.max(0.01, providerReportedCost * 0.05);
   const wallMinutes = metrics.wall_seconds / 60;
   const squareRootRoi = quality / Math.sqrt(apiCost * wallMinutes);
   const qualityFactor = gateQualityFactor(quality);
@@ -154,6 +166,9 @@ const rows = treatments.map(treatment => {
     failed_a2a_messages: metrics.a2a_messages_failed ?? null,
     captured_web_search_calls: webSearchCalls,
     provider_reported_cost_usd: providerReportedCost ?? null,
+    provider_cost_difference_usd: providerCostDifference,
+    provider_cost_difference_percent: providerCostDifferencePercent,
+    provider_cost_difference_flagged: providerCostDifferenceFlagged,
     estimated_api_cost_usd: apiCost,
     api_cost_breakdown_usd: { model_tokens: tokenCost, web_search: webSearchCalls * pricing.web_search_usd_per_call },
     token_efficiency: quality / (totalTokens / 1_000_000),
@@ -185,6 +200,7 @@ const requestedComparators = {
   monolith_grok_4_5_medium_fast_cursor: rows.find(row => row.treatment === "monolith_grok_4_5_medium_cursor"),
   monolith_grok_4_5_high_fast_cursor: rows.find(row => row.treatment === "monolith_grok_4_5_high_cursor"),
   monolith_luna_xhigh_opencode_control: rows.find(row => row.treatment === "monolith_luna_xhigh_opencode"),
+  monolith_sonnet_5_medium_claude_code: rows.find(row => row.treatment === "monolith_opus_5_medium_claude_code"),
 };
 const continuationDefinitions = [
   {
@@ -671,6 +687,8 @@ const galleryLabels = {
   monolith_grok_4_5_high_fast_cursor: "Monolith · Grok 4.5 High Fast · Cursor",
   monolith_auto_cursor: "Monolith · Auto Cost · Cursor",
   monolith_luna_xhigh_opencode_control: "Monolith · Luna Xhigh · OpenCode control",
+  monolith_opus_5_medium_claude_code: "Monolith · Opus 5 Medium · Claude Code",
+  monolith_sonnet_5_medium_claude_code: "Monolith · Sonnet 5 Medium · Claude Code",
 };
 const galleryAnchors = {
   monolith: "cold-cache-luna-max-monolith",
@@ -703,6 +721,8 @@ const galleryAnchors = {
   monolith_grok_4_5_high_fast_cursor: "monolith-with-grok-45-high-fast-in-cursor",
   monolith_auto_cursor: "monolith-with-auto-cost-in-cursor",
   monolith_luna_xhigh_opencode_control: "monolith-with-luna-xhigh-in-opencode-control",
+  monolith_opus_5_medium_claude_code: "monolith-with-opus-5-medium-in-claude-code",
+  monolith_sonnet_5_medium_claude_code: "monolith-with-sonnet-5-medium-in-claude-code",
 };
 const galleryLink = row => `[${galleryLabels[row.treatment]}](#${galleryAnchors[row.treatment]})`;
 const galleryRows = decisionRows.map(row =>

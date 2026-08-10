@@ -1,0 +1,24 @@
+{
+  "retrieved_at": "2026-08-10",
+  "currency": "USD",
+  "unit": "per_million_tokens",
+  "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+  "service_tier": "standard",
+  "models": {
+    "claude-opus-5": {
+      "base_input": 5,
+      "cache_write_5m": 6.25,
+      "cache_write_1h": 10,
+      "cache_read": 0.5,
+      "output": 25
+    },
+    "claude-sonnet-5": {
+      "base_input": 2,
+      "cache_write_5m": 2.5,
+      "cache_write_1h": 4,
+      "cache_read": 0.2,
+      "output": 10,
+      "introductory_price_ends": "2026-08-31"
+    }
+  }
+}

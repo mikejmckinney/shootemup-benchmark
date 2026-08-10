@@ -38,6 +38,8 @@ const allTreatments = [
   "monolith_auto_cursor",
   "monolith_luna_xhigh_opencode_control",
   "monolith_luna_max_opencode_ai_repo_template",
+  "monolith_opus_5_medium_claude_code",
+  "monolith_sonnet_5_medium_claude_code",
 ];
 const requested = process.argv.slice(3);
 const treatments = requested.length
