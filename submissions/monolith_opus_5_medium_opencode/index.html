@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+    <meta name="theme-color" content="#0a0618" />
+    <meta name="description" content="Neon Barrage — a neon-drenched browser shoot-'em-up with a global leaderboard." />
+    <title>Neon Barrage</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🛸</text></svg>" />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <h1 class="wordmark"><span>NEON</span> BARRAGE</h1>
+        <button class="icon-btn" data-testid="mute-button" id="mute-button" type="button" aria-pressed="false" aria-label="Mute sound">
+          <span id="mute-icon">🔊</span><span class="icon-label" id="mute-label">Sound on</span>
+        </button>
+      </header>
+
+      <main class="layout">
+        <section class="stage-wrap">
+          <div class="hud" role="status" aria-live="polite">
+            <div class="hud-cell">
+              <span class="hud-label">Score</span>
+              <strong class="hud-value" data-testid="score" id="score">0</strong>
+            </div>
+            <div class="hud-cell hud-wave">
+              <span class="hud-label">Wave</span>
+              <strong class="hud-value" id="wave">1</strong>
+            </div>
+            <div class="hud-cell hud-right">
+              <span class="hud-label">Lives</span>
+              <strong class="hud-value lives" data-testid="lives" id="lives">3</strong>
+            </div>
+          </div>
+
+          <div class="stage" id="stage">
+            <canvas data-testid="game-canvas" id="game-canvas" width="480" height="720" aria-label="Neon Barrage game canvas"></canvas>
+
+            <div class="overlay" id="overlay-idle">
+              <div class="panel">
+                <p class="eyebrow">Sector 7 breach</p>
+                <h2>Neon Barrage</h2>
+                <p class="blurb">Survive escalating waves of chrome drones. Ride the barrage, bank the score.</p>
+                <button class="primary" data-testid="start-button" id="start-button" type="button">Start run</button>
+                <ul class="keys">
+                  <li><kbd>W A S D</kbd> / <kbd>↑ ← ↓ →</kbd> move</li>
+                  <li><kbd>Space</kbd> fire · <kbd>M</kbd> mute · <kbd>P</kbd> pause</li>
+                  <li class="touch-hint">On touch: drag to fly, tap FIRE</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="overlay hidden" id="overlay-over">
+              <div class="panel">
+                <p class="eyebrow danger">Run terminated</p>
+                <h2>Game over</h2>
+                <p class="final">Final score <strong id="final-score">0</strong></p>
+
+                <form class="submit-row" id="submit-form" novalidate>
+                  <label class="sr-only" for="player-name">Leaderboard name</label>
+                  <input
+                    data-testid="player-name"
+                    id="player-name"
+                    name="player-name"
+                    type="text"
+                    maxlength="16"
+                    autocomplete="off"
+                    spellcheck="false"
+                    placeholder="Pilot name (1-16)"
+                  />
+                  <button class="primary" data-testid="submit-score" id="submit-score" type="submit">Submit</button>
+                </form>
+                <p class="form-msg" id="submit-msg" role="status" aria-live="polite"></p>
+                <button class="ghost" id="restart-button" type="button">Play again</button>
+              </div>
+            </div>
+
+            <div class="overlay hidden" id="overlay-pause">
+              <div class="panel"><h2>Paused</h2><p class="blurb">Press <kbd>P</kbd> to resume.</p></div>
+            </div>
+          </div>
+
+          <div class="touch-controls" data-testid="touch-controls" id="touch-controls" aria-hidden="false">
+            <div class="dpad">
+              <button type="button" class="tbtn" data-dir="up" aria-label="Move up">▲</button>
+              <div class="dpad-row">
+                <button type="button" class="tbtn" data-dir="left" aria-label="Move left">◀</button>
+                <button type="button" class="tbtn" data-dir="down" aria-label="Move down">▼</button>
+                <button type="button" class="tbtn" data-dir="right" aria-label="Move right">▶</button>
+              </div>
+            </div>
+            <button type="button" class="tbtn fire" data-dir="fire" aria-label="Fire">FIRE</button>
+          </div>
+        </section>
+
+        <aside class="board-wrap">
+          <div class="board-head">
+            <h2>Global top 10</h2>
+            <button class="ghost small" id="refresh-board" type="button">Refresh</button>
+          </div>
+          <p class="board-status" id="board-status">Loading leaderboard…</p>
+          <ol class="leaderboard" data-testid="leaderboard" id="leaderboard"></ol>
+          <p class="fineprint">Scores are stored in Supabase with row-level security; the browser only ever holds the public publishable key.</p>
+        </aside>
+      </main>
+
+      <footer class="footer">
+        <span>Neon Barrage</span>
+        <span>Canvas · Web Audio · Supabase · Cloudflare Pages</span>
+      </footer>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

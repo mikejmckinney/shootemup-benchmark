@@ -1,0 +1,14 @@
+
+> neon-barrage@1.0.0 test
+> vitest run
+
+
+ RUN  v3.2.4 /workspaces/shootemup-benchmark/candidates/monolith_opus_5_medium_opencode
+
+ ✓ tests/game.test.ts (15 tests) 76ms
+
+ Test Files  1 passed (1)
+      Tests  15 passed (15)
+   Start at  17:23:20
+   Duration  621ms (transform 83ms, setup 0ms, collect 76ms, tests 76ms, environment 0ms, prepare 276ms)
+

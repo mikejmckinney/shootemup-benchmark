@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_opus_5_medium_opencode",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-opus-5-medium-opencode.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-opus-5-medium-opencode",
+  "supabase_url": "https://jgmfieoslqsfmdjwmuru.supabase.co",
+  "supabase_project_ref": "jgmfieoslqsfmdjwmuru",
+  "supabase_public_key": "sb_publishable_iCx1xjP-9SomjS_ubs9MxA_3t7aSeJE",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Vite + TypeScript canvas shmup. Supabase table public.scores has RLS forced, SELECT/INSERT-only grants for anon, and CHECK + WITH CHECK validation on name (1-16, allowlist regex) and score (0..10000000); UPDATE/DELETE denied. Browser holds only the publishable key. Playwright smoke test scripts/verify-production.mjs passed 24/24 on the live URL including a real insert and persistence after reload; 15 vitest unit tests and strict tsc pass. Cloudflare project name uses dashes because Pages rejects underscores."
+}

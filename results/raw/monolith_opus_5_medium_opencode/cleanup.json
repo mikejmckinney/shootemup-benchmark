@@ -1,0 +1,8 @@
+{
+  "treatment": "monolith_opus_5_medium_opencode",
+  "project_ref": "jgmfieoslqsfmdjwmuru",
+  "requested_at": "2026-08-10T17:30:34Z",
+  "pause_http_status": 200,
+  "final_status": "INACTIVE",
+  "confirmed_inactive": true
+}

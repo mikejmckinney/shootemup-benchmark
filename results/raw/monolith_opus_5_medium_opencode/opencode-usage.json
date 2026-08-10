@@ -1,0 +1,59 @@
+{
+  "source": "OpenCode SQLite session ledger",
+  "database": "/home/codespace/.local/share/opencode/opencode.db",
+  "selection": {
+    "candidate_directory": "/workspaces/shootemup-benchmark/candidates/monolith_opus_5_medium_opencode",
+    "started_ms": 1786381972149,
+    "ended_ms": 1786382569608,
+    "rule": "sessions rooted in candidate directory during run, plus recursive parent_id descendants"
+  },
+  "agents_started": 1,
+  "root_sessions": 1,
+  "child_sessions": 0,
+  "peak_concurrent_agents": 1,
+  "turns": 36,
+  "tool_calls": 35,
+  "coordination_events": 0,
+  "coordination_tool_calls": 0,
+  "tool_counts": {
+    "read": 2,
+    "bash": 19,
+    "todowrite": 1,
+    "write": 11,
+    "edit": 2
+  },
+  "usage": {
+    "input_tokens": 1186879,
+    "cached_input_tokens": 1186807,
+    "cache_write_input_tokens": 56003,
+    "output_tokens": 38309,
+    "reasoning_output_tokens": 0
+  },
+  "provider_reported_cost_usd": 1.9015072499999996,
+  "sessions": [
+    {
+      "id": "ses_013563e26ffenyEPU02LyZOPAr",
+      "project_id": "f5a6ad01faab41397ebec214bfc6d27ce1f55e92",
+      "workspace_id": null,
+      "parent_id": null,
+      "slug": "jolly-squid",
+      "directory": "/workspaces/shootemup-benchmark/candidates/monolith_opus_5_medium_opencode",
+      "title": "Benchmark task completion",
+      "version": "1.18.16",
+      "cost": 1.9015072499999996,
+      "tokens_input": 72,
+      "tokens_output": 38309,
+      "tokens_reasoning": 0,
+      "tokens_cache_read": 1186807,
+      "tokens_cache_write": 56003,
+      "agent": "build",
+      "model": {
+        "id": "claude-opus-5",
+        "providerID": "anthropic",
+        "variant": "medium"
+      },
+      "time_created": 1786381976025,
+      "time_updated": 1786382569481
+    }
+  ]
+}
