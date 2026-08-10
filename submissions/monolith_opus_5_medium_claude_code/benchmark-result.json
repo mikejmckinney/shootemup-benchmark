@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_opus_5_medium_claude_code",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-opus-5-medium-claude-code-game.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-opus-5-medium-claude-code-game",
+  "supabase_url": "https://htqzxazubahirqgverex.supabase.co",
+  "supabase_project_ref": "htqzxazubahirqgverex",
+  "supabase_public_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0cXp4YXp1YmFoaXJxZ3ZlcmV4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYzNTg5NzMsImV4cCI6MjEwMTkzNDk3M30.alVlkv2UulwNuHo0jaJcGiBMd66rWx81IdD1CTMnpwE",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Vanilla ES-module canvas game, no runtime deps; dist/ is a copy of source + _headers CSP. 28 vitest unit tests (simulation + leaderboard client) and 30 Chromium e2e checks (npm run e2e) all pass against the production URL, including a real submit + reload round trip. Supabase project shootemup-bench-monolith_opus_5_medium_claude_code-db: public.leaderboard has RLS forced, anon granted SELECT+INSERT only (UPDATE/DELETE return 401), and CHECK constraints plus the insert policy reject bad names and out-of-range scores server-side. Only the anon key ships to the browser. Supabase project intentionally left running for controller verification."
+}

@@ -1,0 +1,15 @@
+
+> neon-barrage@1.0.0 test
+> vitest run
+
+
+ RUN  v2.1.8 /workspaces/shootemup-benchmark/candidates/monolith_opus_5_medium_claude_code
+
+ ✓ tests/game.test.js (18 tests) 89ms
+ ✓ tests/leaderboard.test.js (10 tests) 11ms
+
+ Test Files  2 passed (2)
+      Tests  28 passed (28)
+   Start at  13:12:47
+   Duration  676ms (transform 54ms, setup 0ms, collect 62ms, tests 100ms, environment 0ms, prepare 138ms)
+

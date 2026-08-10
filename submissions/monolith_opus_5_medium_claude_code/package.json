@@ -1,0 +1,23 @@
+{
+  "name": "neon-barrage",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Neon Barrage - a browser arcade shoot-'em-up with a Supabase leaderboard.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p jsconfig.json",
+    "lint": "eslint src scripts tests",
+    "dev": "node scripts/serve.mjs",
+    "deploy": "npm run build && wrangler pages deploy dist --project-name shootemup-bench-monolith-opus-5-medium-claude-code --branch main",
+    "e2e": "node e2e/verify.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.49.1",
+    "eslint": "9.15.0",
+    "typescript": "5.7.2",
+    "vitest": "2.1.8",
+    "wrangler": "3.90.0"
+  }
+}

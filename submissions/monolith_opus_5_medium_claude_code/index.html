@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#05030f" />
+<title>Neon Barrage — arcade shoot-'em-up</title>
+<meta name="description" content="Neon Barrage: a neon arcade shoot-'em-up with a global leaderboard." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&display=swap" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%9A%80%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+<div class="app">
+  <header class="masthead">
+    <div class="brand">
+      <span class="brand__mark" aria-hidden="true"></span>
+      <div>
+        <h1 class="brand__title">Neon <span>Barrage</span></h1>
+        <p class="brand__sub">Hold the line against the barrage.</p>
+      </div>
+    </div>
+    <button type="button" class="icon-button" data-testid="mute-button" id="mute-button"
+            aria-pressed="false" aria-label="Mute sound">
+      <span class="icon-button__glyph" id="mute-glyph">♪</span>
+      <span class="icon-button__label" id="mute-label">Sound on</span>
+    </button>
+  </header>
+
+  <main class="layout">
+    <section class="stage-wrap" aria-label="Game">
+      <div class="hud">
+        <div class="hud__cell">
+          <span class="hud__label">Score</span>
+          <strong class="hud__value" data-testid="score" id="score">0</strong>
+        </div>
+        <div class="hud__cell hud__cell--wave">
+          <span class="hud__label">Wave</span>
+          <strong class="hud__value" id="wave">1</strong>
+        </div>
+        <div class="hud__cell hud__cell--right">
+          <span class="hud__label">Lives</span>
+          <strong class="hud__value" data-testid="lives" id="lives">3</strong>
+        </div>
+      </div>
+
+      <div class="stage" id="stage">
+        <canvas data-testid="game-canvas" id="game-canvas" width="480" height="720"
+                aria-label="Neon Barrage game canvas" role="img"></canvas>
+
+        <div class="overlay" id="overlay" data-state="ready">
+          <div class="overlay__panel">
+            <p class="overlay__eyebrow" id="overlay-eyebrow">Ready</p>
+            <h2 class="overlay__title" id="overlay-title">Neon Barrage</h2>
+            <p class="overlay__text" id="overlay-text">
+              Move with <kbd>WASD</kbd> / <kbd>arrows</kbd>, fire with <kbd>Space</kbd>.
+              Chain kills for combo multipliers.
+            </p>
+
+            <div class="overlay__score" id="final-score-wrap" hidden>
+              <span class="overlay__score-label">Final score</span>
+              <strong class="overlay__score-value" id="final-score">0</strong>
+            </div>
+
+            <button type="button" class="button button--primary" data-testid="start-button" id="start-button">
+              Start game
+            </button>
+
+            <form class="submit-form" id="submit-form" hidden autocomplete="off">
+              <label class="submit-form__label" for="player-name">Add your score to the leaderboard</label>
+              <div class="submit-form__row">
+                <input class="input" data-testid="player-name" id="player-name" name="player-name"
+                       type="text" maxlength="16" minlength="1" placeholder="Pilot name"
+                       aria-describedby="submit-status" />
+                <button type="submit" class="button button--accent" data-testid="submit-score" id="submit-score">
+                  Submit
+                </button>
+              </div>
+              <p class="status" id="submit-status" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="touch" data-testid="touch-controls" id="touch-controls" aria-hidden="false">
+        <div class="touch__pad">
+          <button type="button" class="touch__btn" data-dir="left" aria-label="Move left">◀</button>
+          <div class="touch__stack">
+            <button type="button" class="touch__btn" data-dir="up" aria-label="Move up">▲</button>
+            <button type="button" class="touch__btn" data-dir="down" aria-label="Move down">▼</button>
+          </div>
+          <button type="button" class="touch__btn" data-dir="right" aria-label="Move right">▶</button>
+        </div>
+        <button type="button" class="touch__btn touch__btn--fire" data-dir="fire" aria-label="Fire">FIRE</button>
+      </div>
+    </section>
+
+    <aside class="side" aria-label="Leaderboard">
+      <div class="panel">
+        <div class="panel__head">
+          <h2 class="panel__title">Global leaderboard</h2>
+          <button type="button" class="link-button" id="refresh-board">Refresh</button>
+        </div>
+        <ol class="board" data-testid="leaderboard" id="leaderboard" aria-live="polite">
+          <li class="board__state">Loading leaderboard…</li>
+        </ol>
+        <p class="panel__foot" id="board-status"></p>
+      </div>
+
+      <div class="panel panel--muted">
+        <h2 class="panel__title">Controls</h2>
+        <ul class="keylist">
+          <li><kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd> or <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> — move</li>
+          <li><kbd>Space</kbd> — fire</li>
+          <li><kbd>P</kbd> — pause</li>
+          <li><kbd>M</kbd> — mute</li>
+          <li>Touch: on-screen pad + FIRE</li>
+        </ul>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <span>Neon Barrage</span>
+    <span>Canvas + Web Audio · Supabase leaderboard · Cloudflare Pages</span>
+  </footer>
+</div>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

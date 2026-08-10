@@ -1,0 +1,58 @@
+{
+  "source": "Claude Code terminal result usage event",
+  "session_id": "4aaa3f6a-e995-4fa9-8845-94e59144b8fa",
+  "model": "claude-opus-5",
+  "service_tier": "standard",
+  "speed": "standard",
+  "duration_ms": 1462049,
+  "duration_api_ms": 728591,
+  "turns": 58,
+  "tool_events": 57,
+  "tool_counts": {
+    "Bash": 42,
+    "Read": 2,
+    "Write": 11,
+    "Edit": 2
+  },
+  "prohibited_agent_tool_calls": 0,
+  "usage": {
+    "input_tokens": 3405669,
+    "cached_input_tokens": 3405561,
+    "cache_write_input_tokens": 92580,
+    "cache_write_5m_input_tokens": 0,
+    "cache_write_1h_input_tokens": 92580,
+    "output_tokens": 58249,
+    "reasoning_output_tokens": 0
+  },
+  "provider_reported_cost_usd": 4.0860224999999994,
+  "raw_usage": {
+    "input_tokens": 108,
+    "cache_creation_input_tokens": 92580,
+    "cache_read_input_tokens": 3405561,
+    "output_tokens": 58249,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 92580,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 1,
+        "output_tokens": 884,
+        "cache_read_input_tokens": 98569,
+        "cache_creation_input_tokens": 384,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 384
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  }
+}
