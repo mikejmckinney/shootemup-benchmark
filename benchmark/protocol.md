@@ -28,6 +28,8 @@ The next methodology extension runs AI Repo Template after the authentication-mo
 
 The next runtime/model extension runs two Claude Code monoliths sequentially in the user-requested order: Claude Opus 5 Medium, then Claude Sonnet 5 Medium. Both use Claude Code `2.1.226`, Claude.ai first-party OAuth, Standard speed/service tier, medium effort, the unchanged 45-minute task, and no native or background agents. Preflight must resolve the aliases to `claude-opus-5` and `claude-sonnet-5` and observe a successful Standard-tier response. Claude Code's `Agent`, `ListAgents`, `SendMessage`, `RemoteTrigger`, and worktree-agent controls are disabled; ordinary coding/deployment tools, skills, and MCPs remain available. This extension is sequential, unrandomized, and changes model, runtime, system context, tool surface, authentication, cache state, and provider conditions relative to earlier candidates.
 
+The following runtime comparison runs the same model/effort pair through OpenCode `1.18.16`, sequentially in the user-requested order: Claude Opus 5 Medium, then Claude Sonnet 5 Medium. Both are plain monoliths using Anthropic API authentication, Standard service tier, the unchanged prompt/task and 45-minute ceiling, and an explicit prohibition on delegation or launching other agents. Excluded minimal preflights must resolve `anthropic/claude-opus-5` and `anthropic/claude-sonnet-5`, produce a successful response, and record nonzero provider-reported cost before either timed run. The fixed order is unrandomized and remains subject to cache and provider drift.
+
 ## Treatments
 
 ### `monolith`
@@ -117,6 +119,14 @@ One Claude Code session using `claude-opus-5` at medium effort and Standard spee
 ### `monolith_sonnet_5_medium_claude_code`
 
 One Claude Code session using `claude-sonnet-5` at medium effort and Standard speed through authenticated Claude.ai first-party OAuth. It uses the same monolithic restrictions, candidate task, runtime version, tool surface, credentials, and 45-minute ceiling as the Opus treatment, subject to the fixed sequential order and provider/cache drift.
+
+### `monolith_opus_5_medium_opencode`
+
+One OpenCode `1.18.16` session using `anthropic/claude-opus-5` at medium effort and Standard service tier through Anthropic API authentication. The candidate is instructed to act as the sole implementation agent and not delegate or launch other agents. All work occurs in a fresh candidate directory and counts toward the 45-minute ceiling.
+
+### `monolith_sonnet_5_medium_opencode`
+
+One OpenCode `1.18.16` session using `anthropic/claude-sonnet-5` at medium effort and Standard service tier through Anthropic API authentication. It uses the same monolithic restrictions, prompt, task, runtime, credentials, and ceiling as the Opus OpenCode treatment, subject to fixed-order cache and provider drift.
 
 ### Methodology-extension accounting
 

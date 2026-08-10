@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
-const plannedTreatments = ["monolith", "native_dynamic", "native_isolated", "a2a", "monolith_warm", "a2a_async", "a2a_async_streaming_opencode", "monolith_sol_medium", "monolith_opencode", "monolith_sol_medium_opencode", "monolith_sol_medium_opencode_api", "monolith_sol_low_opencode", "monolith_sol_high_opencode", "monolith_luna_xhigh_opencode", "monolith_luna_high_opencode", "monolith_luna_max_codex_minimal", "monolith_luna_max_opencode_retest", "monolith_luna_max_opencode_speckit", "dynamic_luna_max_opencode_superpowers", "monolith_luna_max_opencode_ai_repo_template", "monolith_luna_xhigh_fast_opencode", "monolith_luna_max_fast_opencode", "monolith_sol_low_fast_opencode", "monolith_sol_medium_fast_opencode", "monolith_grok_4_5_medium_cursor", "monolith_grok_4_5_high_cursor", "monolith_grok_4_5_medium_fast_cursor", "monolith_grok_4_5_high_fast_cursor", "monolith_auto_cursor", "monolith_luna_xhigh_opencode_control", "monolith_opus_5_medium_claude_code", "monolith_sonnet_5_medium_claude_code"];
+const plannedTreatments = ["monolith", "native_dynamic", "native_isolated", "a2a", "monolith_warm", "a2a_async", "a2a_async_streaming_opencode", "monolith_sol_medium", "monolith_opencode", "monolith_sol_medium_opencode", "monolith_sol_medium_opencode_api", "monolith_sol_low_opencode", "monolith_sol_high_opencode", "monolith_luna_xhigh_opencode", "monolith_luna_high_opencode", "monolith_luna_max_codex_minimal", "monolith_luna_max_opencode_retest", "monolith_luna_max_opencode_speckit", "dynamic_luna_max_opencode_superpowers", "monolith_luna_max_opencode_ai_repo_template", "monolith_luna_xhigh_fast_opencode", "monolith_luna_max_fast_opencode", "monolith_sol_low_fast_opencode", "monolith_sol_medium_fast_opencode", "monolith_grok_4_5_medium_cursor", "monolith_grok_4_5_high_cursor", "monolith_grok_4_5_medium_fast_cursor", "monolith_grok_4_5_high_fast_cursor", "monolith_auto_cursor", "monolith_luna_xhigh_opencode_control", "monolith_opus_5_medium_claude_code", "monolith_sonnet_5_medium_claude_code", "monolith_opus_5_medium_opencode", "monolith_sonnet_5_medium_opencode"];
 const treatmentArtifactsExist = treatment => [
   path.join(root, "results/raw", treatment, "run-metrics.json"),
   path.join(root, "results/raw", treatment, "cleanup.json"),
@@ -39,6 +39,8 @@ const labels = {
   monolith_luna_xhigh_opencode_control: "Monolith · Luna Xhigh · OpenCode control",
   monolith_opus_5_medium_claude_code: "Monolith · Opus 5 Medium · Claude Code",
   monolith_sonnet_5_medium_claude_code: "Monolith · Sonnet 5 Medium · Claude Code",
+  monolith_opus_5_medium_opencode: "Monolith · Opus 5 Medium · OpenCode",
+  monolith_sonnet_5_medium_opencode: "Monolith · Sonnet 5 Medium · OpenCode",
 };
 const pricing = {
   as_of: "2026-08-10",
@@ -90,6 +92,8 @@ const pricing = {
     monolith_luna_xhigh_opencode_control: 0,
     monolith_opus_5_medium_claude_code: 0,
     monolith_sonnet_5_medium_claude_code: 0,
+    monolith_opus_5_medium_opencode: 0,
+    monolith_sonnet_5_medium_opencode: 0,
   },
 };
 const qualityGateCenter = 90;

@@ -40,6 +40,20 @@ case "$TREATMENT" in
     AUTH_MODE=api_key
     FRESH_REQUIRED=true
     ;;
+  monolith_opus_5_medium_opencode)
+    MODEL=anthropic/claude-opus-5
+    METRICS_MODEL=claude-opus-5
+    EFFORT=medium
+    AUTH_MODE=anthropic_api_key
+    FRESH_REQUIRED=true
+    ;;
+  monolith_sonnet_5_medium_opencode)
+    MODEL=anthropic/claude-sonnet-5
+    METRICS_MODEL=claude-sonnet-5
+    EFFORT=medium
+    AUTH_MODE=anthropic_api_key
+    FRESH_REQUIRED=true
+    ;;
   monolith_sol_low_opencode)
     MODEL=openai/gpt-5.6-sol
     METRICS_MODEL=gpt-5.6-sol
@@ -132,7 +146,7 @@ case "$TREATMENT" in
     FRESH_REQUIRED=true
     ;;
   *)
-    echo "usage: $0 {monolith_opencode|monolith_sol_medium_opencode|monolith_sol_medium_opencode_api|monolith_sol_low_opencode|monolith_sol_high_opencode|monolith_luna_xhigh_opencode|monolith_luna_xhigh_opencode_control|monolith_luna_high_opencode|monolith_luna_xhigh_fast_opencode|monolith_luna_max_fast_opencode|monolith_sol_low_fast_opencode|monolith_sol_medium_fast_opencode|monolith_luna_max_opencode_retest|monolith_luna_max_opencode_speckit|dynamic_luna_max_opencode_superpowers|monolith_luna_max_opencode_ai_repo_template}" >&2
+    echo "unknown OpenCode treatment: $TREATMENT" >&2
     exit 64
     ;;
 esac
@@ -158,6 +172,12 @@ fi
 if [ "$AUTH_MODE" = api_key ] && [ -z "${OPENAI_API_KEY:-}" ]; then
   echo "OPENAI_API_KEY is required for API-key candidates" >&2
   exit 69
+fi
+if [ "$AUTH_MODE" = anthropic_api_key ]; then
+  if [ ! -r "$OPENCODE_DB" ] || ! "$OPENCODE" auth list 2>/dev/null | rg -q 'Anthropic.*api'; then
+    echo "OpenCode Anthropic API credential is not configured" >&2
+    exit 69
+  fi
 fi
 if [ "$AUTH_MODE" = api_key ] && [ "$FAST_TIER_PREFLIGHT" = true ]; then
   PREFLIGHT_TIER=$SERVICE_TIER
@@ -430,7 +450,7 @@ NODE_NO_WARNINGS=1 node "$ROOT_DIR/scripts/collect_opencode_usage.mjs" \
   --output "$RAW_DIR/opencode-usage.json"
 
 PROVIDER_COST=$(jq -r '.provider_reported_cost_usd // 0' "$RAW_DIR/opencode-usage.json")
-if [ "$AUTH_MODE" = api_key ] && ! awk -v cost="$PROVIDER_COST" 'BEGIN { exit !(cost > 0) }'; then
+if { [ "$AUTH_MODE" = api_key ] || [ "$AUTH_MODE" = anthropic_api_key ]; } && ! awk -v cost="$PROVIDER_COST" 'BEGIN { exit !(cost > 0) }'; then
   echo "invalid API-key candidate: OpenCode reported zero provider cost; refusing OAuth fallback" >&2
   if [ "$RUN_EXIT" -eq 0 ]; then RUN_EXIT=78; fi
 fi
@@ -458,7 +478,7 @@ jq -n --slurpfile ledger "$RAW_DIR/opencode-usage.json" --slurpfile rate_limit "
     reasoning_effort:$effort, runtime:"opencode", service_tier:$service_tier, auth_mode:$auth_mode, methodology:$methodology,
     methodology_version:$methodology_version,
     usage_source:"OpenCode SQLite session ledger",
-    provider_reported_cost_usd:(if $auth_mode == "api_key" then $ledger[0].provider_reported_cost_usd else null end),
+    provider_reported_cost_usd:(if ($auth_mode == "api_key" or $auth_mode == "anthropic_api_key") then $ledger[0].provider_reported_cost_usd else null end),
     agents_started:$ledger[0].agents_started,
     peak_concurrent_agents:$ledger[0].peak_concurrent_agents,
     child_sessions:$ledger[0].child_sessions,

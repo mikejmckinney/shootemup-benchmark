@@ -40,6 +40,8 @@ const allTreatments = [
   "monolith_luna_max_opencode_ai_repo_template",
   "monolith_opus_5_medium_claude_code",
   "monolith_sonnet_5_medium_claude_code",
+  "monolith_opus_5_medium_opencode",
+  "monolith_sonnet_5_medium_opencode",
 ];
 const requested = process.argv.slice(3);
 const treatments = requested.length
