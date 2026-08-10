@@ -1,0 +1,19 @@
+{
+  "classification": "post-benchmark shared-gallery infrastructure retrofit",
+  "verified_at": "2026-08-10T13:47:26.483Z",
+  "timed_score_affected": false,
+  "migration": "supabase/migrations/20260810134036_allow_claude_code_candidates.sql",
+  "shared_project_ref": "lyyyxbxacrxqflxmtlqq",
+  "candidate_id": "monolith_sonnet_5_medium_claude_code",
+  "gallery_url": "https://shootemup-bench-monolith-sonnet-5-medium-claude-code-game.pages.dev",
+  "verification": {
+    "production_http_status": 200,
+    "shared_row_persisted_even_if_candidate_ui_hid_it": true,
+    "shared_partition_get_http_status": 200,
+    "invalid_candidate_post_rejected_http_status": 401,
+    "browser_console_errors": [],
+    "browser_page_errors": [],
+    "verification_rows_removed": 1,
+    "verification_row_remaining": false
+  }
+}

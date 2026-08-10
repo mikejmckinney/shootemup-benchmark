@@ -158,6 +158,7 @@ const rows = treatments.map(treatment => {
     automated_points: automated.automated_points, manual_points: manual.manual_points,
     wall_seconds: metrics.wall_seconds, wall_minutes: wallMinutes,
     total_tokens: totalTokens, uncached_input_tokens: uncachedInputTokens,
+    cache_write_input_tokens: cacheWriteTokens,
     non_cached_tokens: nonCachedTokens, cached_input_tokens: metrics.usage.cached_input_tokens,
     output_tokens: metrics.usage.output_tokens, reasoning_output_tokens: metrics.usage.reasoning_output_tokens,
     agents_started: metrics.agents_started ?? 1,
@@ -366,6 +367,8 @@ const asyncA2a = rows.find(row => row.treatment === "a2a_async");
 const asyncStreamingOpenCode = rows.find(row => row.treatment === "a2a_async_streaming_opencode");
 const minimalCodex = rows.find(row => row.treatment === "monolith_luna_max_codex_minimal");
 const aiRepoTemplate = rows.find(row => row.treatment === "monolith_luna_max_opencode_ai_repo_template");
+const opusClaudeCode = rows.find(row => row.treatment === "monolith_opus_5_medium_claude_code");
+const sonnetClaudeCode = rows.find(row => row.treatment === "monolith_sonnet_5_medium_claude_code");
 const breakEvenUsdPerMinute = (first, second) => (
   first.quality_score * second.estimated_api_cost_usd
   - second.quality_score * first.estimated_api_cost_usd
@@ -484,7 +487,7 @@ const signed = (value, digits = 0) => `${value > 0 ? "+" : ""}${f(value, digits)
 const displayedTimeValueScenario = timeValueScenarios.find(scenario => scenario.usd_per_hour === 3);
 if (!displayedTimeValueScenario) throw new Error("Missing $3/hour displayed sensitivity scenario");
 const table = decisionRows.map(row =>
-  `| ${row.label} | ${row.quality_score} | ${row.quality_gate} | $${f(row.estimated_api_cost_usd, 4)} | ${mmss(row.wall_seconds)} | ${f(row.total_tokens / 1e6, 3)}M | ${f(row.cached_input_tokens / 1e6, 3)}M | ${f(row.uncached_input_tokens / 1e6, 3)}M | ${f(row.output_tokens / 1e6, 3)}M | ${f(row.gate_adjusted_roi, 4)} |`
+  `| ${row.label} | ${row.quality_score} | ${row.quality_gate} | $${f(row.estimated_api_cost_usd, 4)} | ${mmss(row.wall_seconds)} | ${f(row.total_tokens / 1e6, 3)}M | ${f(row.cached_input_tokens / 1e6, 3)}M | ${f(row.uncached_input_tokens / 1e6, 3)}M | ${f(row.cache_write_input_tokens / 1e6, 3)}M | ${f(row.output_tokens / 1e6, 3)}M | ${f(row.gate_adjusted_roi, 4)} |`
 ).join("\n");
 const scenarioLabel = scenario => scenario.key === "luna_max_sol_medium_break_even"
   ? `$${f(scenario.usd_per_hour, 2)}/h Max/Medium tie`
@@ -552,11 +555,11 @@ Quality is an open-ended score using the original monolith as the comparison bas
 
 Scores include the uniform [post-hoc regression review](posthoc-review.md). Original automated and manual evidence remains unchanged; absolute post-hoc deductions are applied directly.
 
-| Candidate | Score | Gate | Cost | Time | Total tokens | Cached input | Uncached input | Output | Gate-adjusted ROI |
-|---|---:|---|---:|---:|---:|---:|---:|---:|---:|
+| Candidate | Score | Gate | Cost | Time | Total tokens | Cached input | Uncached input | Cache writes | Output | Gate-adjusted ROI |
+|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|
 ${table}
 
-Gate-adjusted ROI uses \`score × clamp((score - 87) / 5, 0, 1) / sqrt(API cost × elapsed minutes)\`. The gate factor is 1 for PASS, 0.2–0.8 for BORDERLINE, and 0 for FAIL. It is a comparative index, not conventional financial ROI. Total tokens are cached input + uncached input + output. Reasoning tokens are included in output and are not counted twice. Rows are ranked by gate-adjusted ROI descending; Pareto analysis remains separate below.
+Gate-adjusted ROI uses \`score × clamp((score - 87) / 5, 0, 1) / sqrt(API cost × elapsed minutes)\`. The gate factor is 1 for PASS, 0.2–0.8 for BORDERLINE, and 0 for FAIL. It is a comparative index, not conventional financial ROI. Total tokens are cached input + uncached input + cache writes + output. Reasoning tokens are included in output and are not counted twice. Rows are ranked by gate-adjusted ROI descending; Pareto analysis remains separate below.
 
 - Highest observed quality: **${rows.reduce((a, b) => b.quality_score > a.quality_score ? b : a).label}**.
 - Quality-gate borderline: **${rows.filter(row => row.quality_gate === "BORDERLINE").map(row => row.label).join(", ") || "none"}**.
@@ -574,7 +577,7 @@ At ε=${primaryQualityTolerance}, A2A asynchronous is dominated because Luna Xhi
 
 ## Quality-adjusted efficiency sensitivity
 
-PAYG-equivalent costs use [official OpenAI API rates](${pricing.source}) and [Cursor model rates](${pricing.grok_source}) current on ${pricing.as_of}. Standard Luna costs **$0.20/M uncached input, $0.02/M cached input, $0.25/M cache writes, and $1.20/M output**; Fast Luna doubles those rates. Standard Sol costs **$5.00/M, $0.50/M, $6.25/M, and $30.00/M**; Priority Sol doubles them. Cursor Grok 4.5 Standard costs **$2.00/M uncached input, $0.50/M cache reads, $0 cache writes, and $6.00/M output**; Fast costs **$4.00/M, $1.00/M, $0, and $18.00/M**. Cursor Auto Cost uses **$1.25/M uncached/cache-write input, $0.25/M cache reads, and $6.00/M output**. Captured web searches add $0.01 each. Supabase and Cloudflare free-tier usage adds $0 marginal infrastructure cost.
+PAYG-equivalent costs use [official OpenAI API rates](${pricing.source}), [Cursor model rates](${pricing.grok_source}), and [official Anthropic API rates](${pricing.anthropic_source}) current on ${pricing.as_of}. Standard Luna costs **$0.20/M uncached input, $0.02/M cached input, $0.25/M cache writes, and $1.20/M output**; Fast Luna doubles those rates. Standard Sol costs **$5.00/M, $0.50/M, $6.25/M, and $30.00/M**; Priority Sol doubles them. Cursor Grok 4.5 Standard costs **$2.00/M uncached input, $0.50/M cache reads, $0 cache writes, and $6.00/M output**; Fast costs **$4.00/M, $1.00/M, $0, and $18.00/M**. Cursor Auto Cost uses **$1.25/M uncached/cache-write input, $0.25/M cache reads, and $6.00/M output**. Opus 5 uses **$5.00/M input, $0.50/M cache reads, $6.25/M 5-minute cache writes, $10.00/M 1-hour cache writes, and $25.00/M output**. Sonnet 5 uses its introductory through-August-31 rates of **$2.00/M, $0.20/M, $2.50/M, $4.00/M, and $10.00/M**, respectively. Captured web searches add $0.01 each. Supabase and Cloudflare free-tier usage adds $0 marginal infrastructure cost.
 
 For a stated value of unattended agent time \`r\` in USD per minute:
 
@@ -628,6 +631,7 @@ ${continuationSection}
 - Luna Max OpenCode still leads Minimal Context: OpenCode cost ${f((1 - lunaOpenCode.estimated_api_cost_usd / minimalCodex.estimated_api_cost_usd) * 100, 0)}% less, finished ${mmss(minimalCodex.wall_seconds - lunaOpenCode.wall_seconds)} faster, used ${f((1 - lunaOpenCode.total_tokens / minimalCodex.total_tokens) * 100, 0)}% fewer total tokens, and achieved ${f((lunaOpenCode.gate_adjusted_roi / minimalCodex.gate_adjusted_roi - 1) * 100, 0)}% higher gate-adjusted ROI, while Minimal Context scored two points higher.
 - A2A asynchronous used ${f(rows.find(row => row.treatment === "a2a_async").total_tokens / lunaXhighOpenCode.total_tokens, 1)}× the tokens of Luna Xhigh OpenCode, but that comparison changes architecture, runtime, reasoning effort, and cache/order conditions simultaneously; it does not isolate coordination overhead.
 - Native isolated coordination remained much stronger than unrestricted dynamic delegation in the original architecture set.
+- Opus 5 Medium in Claude Code scored ${opusClaudeCode.quality_score} in ${mmss(opusClaudeCode.wall_seconds)} for $${f(opusClaudeCode.estimated_api_cost_usd, 4)}, passing all automated production checks. Sonnet 5 Medium finished ${mmss(opusClaudeCode.wall_seconds - sonnetClaudeCode.wall_seconds)} faster and cost ${f((1 - sonnetClaudeCode.estimated_api_cost_usd / opusClaudeCode.estimated_api_cost_usd) * 100, 0)}% less, but its hidden leaderboard result and broken primary restart flow reduced quality to ${sonnetClaudeCode.quality_score}, below the gate, and therefore zero gate-adjusted ROI.
 - The fresh Luna Max OpenCode control delivered a corrected score of ${methodologyControl.quality_score} in ${mmss(methodologyControl.wall_seconds)} for $${f(methodologyControl.estimated_api_cost_usd, 4)}. Spec Kit, full-methodology Superpowers, and AI Repo Template all exhausted 45:00 without a timed deployment, scoring ${rows.find(row => row.treatment === "monolith_luna_max_opencode_speckit").quality_score}, ${rows.find(row => row.treatment === "dynamic_luna_max_opencode_superpowers").quality_score}, and ${aiRepoTemplate.quality_score}, respectively. All three receive zero gate-adjusted ROI because they fail the quality gate.
 - Spec Kit used ${f(rows.find(row => row.treatment === "monolith_luna_max_opencode_speckit").total_tokens / methodologyControl.total_tokens, 1)}× the control's tokens while spending most of the run on specification artifacts. Superpowers used ${f(rows.find(row => row.treatment === "dynamic_luna_max_opencode_superpowers").total_tokens / methodologyControl.total_tokens, 1)}× the control's tokens; its six-agent implement-review-fix loop caught real engine defects but completed only two of seven planned tasks. AI Repo Template used ${f(aiRepoTemplate.total_tokens / methodologyControl.total_tokens, 1)}× the control's tokens: template-seed onboarding and its inherited 398-check verification suite consumed about 20 minutes, and repeated local browser-tool recovery consumed the final deployment window despite a locally built and tested game.
 
@@ -643,6 +647,7 @@ ${continuationSection}
 - The rubric score is interval-like rather than proven ratio-scale. The quality gate reduces the risk of rewarding cheap failures, but efficiency ratios should be treated as scenario comparisons rather than literal ratios of value.
 - The PASS/BORDERLINE/FAIL thresholds and the ε=${primaryQualityTolerance} headline Pareto frontier were chosen after these runs and should be preregistered for a replication; ε=3 is reported as a sensitivity. BORDERLINE means the decision is unresolved, not that candidates are proven statistically equivalent.
 - OpenCode and Codex token telemetry come from different runtime event formats. The compiler converts both to cached input, uncached input, and output. The two API-key Fast runs now reconcile locally against provider-reported per-turn cost, but this does not reconcile the older OAuth OpenCode runs or Codex runs against provider billing records.
+- Claude Code exposes cache creation separately from cache reads, so total-token accounting includes those disjoint cache-write tokens. Opus's official-rate estimate reconciles within 0.1% of Claude Code's terminal cost. Sonnet's $${f(sonnetClaudeCode.estimated_api_cost_usd, 4)} estimate uses Anthropic's time-limited introductory list price, while Claude Code reported $${f(sonnetClaudeCode.provider_reported_cost_usd, 4)}; the 33% discrepancy is retained and flagged rather than silently substituting one source.
 - The Sol Medium OpenCode API-versus-OAuth comparison has one run per authentication mode. The API run has request-level transport and provider-cost telemetry, while the older OAuth run does not; stochastic generation, provider load, and sequential execution remain confounders, so the comparison cannot establish an authentication-mode effect.
 - The minimal-context treatment disables several optional Codex surfaces together and has one replicate. It shows that the default integration surface was not necessary for this successful run, but cannot estimate the marginal token contribution of skills, MCP, apps, project instructions, or workflow variation individually.
 - The asynchronous-streaming A2A extension changes transport and runtime together. Its improvement over asynchronous-polling A2A cannot be attributed specifically to streaming, OpenCode, cache/order conditions, or their interaction.
@@ -726,10 +731,10 @@ const galleryAnchors = {
 };
 const galleryLink = row => `[${galleryLabels[row.treatment]}](#${galleryAnchors[row.treatment]})`;
 const galleryRows = decisionRows.map(row =>
-  `| **${galleryLink(row)}** | ${row.quality_score} | ${row.quality_gate} | $${f(row.estimated_api_cost_usd, 4)} | ${mmss(row.wall_seconds)} | ${f(row.total_tokens / 1e6, 3)}M | ${f(row.cached_input_tokens / 1e6, 3)}M | ${f(row.uncached_input_tokens / 1e6, 3)}M | ${f(row.output_tokens / 1e6, 3)}M | ${f(row.gate_adjusted_roi, 4)} |`
+  `| **${galleryLink(row)}** | ${row.quality_score} | ${row.quality_gate} | $${f(row.estimated_api_cost_usd, 4)} | ${mmss(row.wall_seconds)} | ${f(row.total_tokens / 1e6, 3)}M | ${f(row.cached_input_tokens / 1e6, 3)}M | ${f(row.uncached_input_tokens / 1e6, 3)}M | ${f(row.cache_write_input_tokens / 1e6, 3)}M | ${f(row.output_tokens / 1e6, 3)}M | ${f(row.gate_adjusted_roi, 4)} |`
 ).join("\n");
-const galleryTable = `| Candidate | Score | Gate | Cost | Time | Total tokens | Cached input | Uncached input | Output | Gate-adjusted ROI |
-|---|---:|---|---:|---:|---:|---:|---:|---:|---:|
+const galleryTable = `| Candidate | Score | Gate | Cost | Time | Total tokens | Cached input | Uncached input | Cache writes | Output | Gate-adjusted ROI |
+|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|
 ${galleryRows}
 
 ### Quality-tolerance frontier sensitivity
@@ -780,7 +785,7 @@ for (const row of rows) {
   const marker = `<!-- GENERATED_METRICS:${row.treatment} -->`;
   const baselineSuffix = row.treatment === "monolith" ? " baseline" : "";
   const paretoStatus = !row.quality_gate_passed ? "INELIGIBLE" : row.pareto_frontier ? "FRONTIER" : "DOMINATED";
-  const metrics = `${marker}\n**Score ${row.quality_score}${baselineSuffix} · Cost $${f(row.estimated_api_cost_usd, 4)} · Time ${mmss(row.wall_seconds)} · Gate ${row.quality_gate} · Gate-adjusted ROI ${f(row.gate_adjusted_roi, 4)} · Pareto ε=${primaryQualityTolerance} ${paretoStatus}**<br>\nTokens: ${f(row.total_tokens / 1e6, 3)}M total · ${f(row.cached_input_tokens / 1e6, 3)}M cached input · ${f(row.uncached_input_tokens / 1e6, 3)}M uncached input · ${f(row.output_tokens / 1e6, 3)}M output`;
+  const metrics = `${marker}\n**Score ${row.quality_score}${baselineSuffix} · Cost $${f(row.estimated_api_cost_usd, 4)} · Time ${mmss(row.wall_seconds)} · Gate ${row.quality_gate} · Gate-adjusted ROI ${f(row.gate_adjusted_roi, 4)} · Pareto ε=${primaryQualityTolerance} ${paretoStatus}**<br>\nTokens: ${f(row.total_tokens / 1e6, 3)}M total · ${f(row.cached_input_tokens / 1e6, 3)}M cached input · ${f(row.uncached_input_tokens / 1e6, 3)}M uncached input · ${f(row.cache_write_input_tokens / 1e6, 3)}M cache writes · ${f(row.output_tokens / 1e6, 3)}M output`;
   const markerIndex = readme.indexOf(marker);
   const scoreLineStart = markerIndex + marker.length + 1;
   const tokensLineStart = readme.indexOf("Tokens:", scoreLineStart);

@@ -1,0 +1,42 @@
+
+> neon-barrage@1.0.0 test
+> vitest run
+
+
+ RUN  v2.1.8 /tmp/claude-opus-gallery.SNBioV
+
+ ✓ tests/game.test.js (18 tests) 59ms
+ ❯ tests/leaderboard.test.js (10 tests | 1 failed) 23ms
+   × leaderboard client > posts a validated row on submit 11ms
+     → expected { …(3) } to deeply equal { name: 'Pilot', score: 700 }
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/leaderboard.test.js > leaderboard client > posts a validated row on submit
+AssertionError: expected { …(3) } to deeply equal { name: 'Pilot', score: 700 }
+
+- Expected
++ Received
+
+  Object {
+-   "name": "Pilot",
++   "candidate_id": "monolith_opus_5_medium_claude_code",
++   "player_name": "Pilot",
+    "score": 700,
+  }
+
+ ❯ tests/leaderboard.test.js:61:35
+     59|     const [, init] = fetchImpl.mock.calls[0];
+     60|     expect(init.method).toBe('POST');
+     61|     expect(JSON.parse(init.body)).toEqual({ name: 'Pilot', score: 700 …
+       |                                   ^
+     62|     expect(saved).toEqual({ name: 'Pilot', score: 700 });
+     63|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 27 passed (28)
+   Start at  13:45:53
+   Duration  746ms (transform 72ms, setup 0ms, collect 85ms, tests 82ms, environment 0ms, prepare 163ms)
+

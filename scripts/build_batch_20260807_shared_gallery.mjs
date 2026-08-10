@@ -17,6 +17,8 @@ const supported = new Set([
   "monolith_grok_4_5_high_fast_cursor",
   "monolith_auto_cursor",
   "monolith_sol_medium_opencode_api",
+  "monolith_opus_5_medium_claude_code",
+  "monolith_sonnet_5_medium_claude_code",
 ]);
 
 if (!supported.has(treatment)) throw new Error(`unsupported treatment: ${treatment}`);
@@ -86,6 +88,37 @@ if (treatment === "monolith_sol_low_fast_opencode") {
     [
       "body:JSON.stringify({name,score})",
       `body:JSON.stringify({candidate_id:'${treatment}',player_name:name,score})`,
+    ],
+  ]);
+} else if (treatment === "monolith_opus_5_medium_claude_code") {
+  const result = JSON.parse(await fs.readFile(path.join(sourceDir, "benchmark-result.json"), "utf8"));
+  await replaceExactly(path.join(outputDir, "src/config.js"), [
+    [`export const SUPABASE_URL = '${result.supabase_url}';`, `export const SUPABASE_URL = '${sharedUrl}';`],
+    [`export const SUPABASE_ANON_KEY = '${result.supabase_public_key}';`, `export const SUPABASE_ANON_KEY = '${publishableKey}';`],
+  ]);
+  await replaceExactly(path.join(outputDir, "public/_headers"), [
+    [result.supabase_url, sharedUrl],
+  ]);
+  await replaceExactly(path.join(outputDir, "src/leaderboard.js"), [
+    [
+      "?select=name,score,created_at&order=score.desc,created_at.asc&limit=${count}",
+      `?select=name:player_name,score,created_at&candidate_id=eq.${treatment}&order=score.desc,created_at.asc&limit=\${count}`,
+    ],
+    [
+      "body: JSON.stringify({ name: validName.value, score: validScore.value }),",
+      `body: JSON.stringify({ candidate_id: '${treatment}', player_name: validName.value, score: validScore.value }),`,
+    ],
+  ]);
+} else if (treatment === "monolith_sonnet_5_medium_claude_code") {
+  await fs.writeFile(
+    path.join(outputDir, ".env.production"),
+    `VITE_SUPABASE_URL=${sharedUrl}\nVITE_SUPABASE_ANON_KEY=${publishableKey}\n`,
+  );
+  await replaceExactly(path.join(outputDir, "src/leaderboard.ts"), [
+    [".order(\"score\", { ascending: false })", `.eq("candidate_id", "${treatment}")\n      .order("score", { ascending: false })`],
+    [
+      ".insert({ player_name: name.trim(), score });",
+      `.insert({ candidate_id: "${treatment}", player_name: name.trim(), score });`,
     ],
   ]);
 } else {

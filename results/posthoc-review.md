@@ -1,6 +1,6 @@
 # Post-hoc regression review
 
-This supplemental review covers all 30 preserved candidates. Browser checks ran against every timed-run deployment; non-deploying timed candidates received explicit not-applicable records because the affected categories had already scored zero. Supabase REST calls were fulfilled inside the browser, so the audit wrote no leaderboard rows and did not modify candidate source or deployments.
+This supplemental review covers all 32 preserved candidates. Browser checks ran against every timed-run deployment; non-deploying timed candidates received explicit not-applicable records because the affected categories had already scored zero. Supabase REST calls were fulfilled inside the browser, so the audit wrote no leaderboard rows and did not modify candidate source or deployments.
 
 ## Checks and weights
 
@@ -51,5 +51,7 @@ The original monolith remains the comparison baseline, but its discovered defect
 | monolith_auto_cursor | 97 | 2 | -2 | 95 | -3 |
 | monolith_luna_xhigh_opencode_control | 96 | 4 | -4 | 92 | -6 |
 | monolith_luna_max_opencode_ai_repo_template | 26 | 0 | 0 | 26 | -72 |
+| monolith_opus_5_medium_claude_code | 95 | 0 | 0 | 95 | -3 |
+| monolith_sonnet_5_medium_claude_code | 78 | 0 | 0 | 78 | -20 |
 
 Original automated and manual evidence is retained unchanged. Per-candidate browser evidence is in `results/evidence/<candidate>/posthoc-regressions.json`; the derived adjustment is in `posthoc-score.json`.

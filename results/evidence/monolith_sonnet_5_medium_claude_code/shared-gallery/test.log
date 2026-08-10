@@ -1,0 +1,15 @@
+
+> neon-barrage@1.0.0 test
+> vitest run
+
+
+ RUN  v2.1.1 /tmp/claude-sonnet-gallery.1LunQ9
+
+ ✓ tests/game.test.ts  (6 tests) 16ms
+ ✓ tests/leaderboard.test.ts  (8 tests) 6ms
+
+ Test Files  2 passed (2)
+      Tests  14 passed (14)
+   Start at  13:46:32
+   Duration  1.90s (transform 170ms, setup 0ms, collect 238ms, tests 22ms, environment 1.13s, prepare 196ms)
+
