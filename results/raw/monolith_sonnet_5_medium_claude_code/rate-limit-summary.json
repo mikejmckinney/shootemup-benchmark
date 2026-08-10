@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "telemetry_enabled": true,
+  "classification": "no_explicit_rate_limit_observed",
+  "runtime": "claude-code",
+  "auth_mode": "claude_ai_oauth",
+  "evidence_level": "runtime_logs_only",
+  "run_exit_code": 0,
+  "observed_api_responses": 0,
+  "temporary_rate_limit_events": 0,
+  "quota_or_billing_events": 0,
+  "observer_errors": 0,
+  "retry_after_seconds": [],
+  "observed_retry_delay_seconds": [],
+  "minimum_remaining_requests": null,
+  "minimum_remaining_tokens": null,
+  "oauth_limits_reached_before": [],
+  "oauth_limits_reached_after": [],
+  "sources": {
+    "transport_events": null,
+    "session_log": "/workspaces/shootemup-benchmark/results/raw/monolith_sonnet_5_medium_claude_code/session.jsonl",
+    "stderr_log": "/workspaces/shootemup-benchmark/results/raw/monolith_sonnet_5_medium_claude_code/session.stderr.log",
+    "before_snapshot": null,
+    "after_snapshot": null
+  }
+}

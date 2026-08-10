@@ -1,0 +1,255 @@
+{
+  "evaluated_at": "2026-08-10T13:32:06.450Z",
+  "candidate_dir": "/workspaces/shootemup-benchmark/candidates/monolith_sonnet_5_medium_claude_code",
+  "result_artifact_valid": true,
+  "automated_points": 37,
+  "automated_points_available": 54,
+  "checks": {
+    "valid_result_artifact": {
+      "passed": true,
+      "points_awarded": 3,
+      "points_available": 3,
+      "evidence": null
+    },
+    "live_cloudflare_app": {
+      "passed": true,
+      "points_awarded": 5,
+      "points_available": 5,
+      "evidence": {
+        "http_status": 200,
+        "canvas_visible": true
+      }
+    },
+    "required_test_surface": {
+      "passed": true,
+      "points_awarded": 2,
+      "points_available": 2,
+      "evidence": {
+        "selectorPresence": {
+          "start-button": 1,
+          "score": 1,
+          "lives": 1,
+          "mute-button": 1,
+          "leaderboard": 1,
+          "player-name": 1,
+          "submit-score": 1,
+          "touch-controls": 1
+        },
+        "adapterPresent": true
+      }
+    },
+    "game_starts": {
+      "passed": true,
+      "points_awarded": 2,
+      "points_available": 2,
+      "evidence": {
+        "phase": "playing",
+        "score": 0,
+        "lives": 3,
+        "playerX": 480,
+        "playerY": 530,
+        "enemyCount": 0,
+        "projectileCount": 0
+      }
+    },
+    "keyboard_movement": {
+      "passed": true,
+      "points_awarded": 3,
+      "points_available": 3,
+      "evidence": {
+        "initial": {
+          "phase": "playing",
+          "score": 0,
+          "lives": 3,
+          "playerX": 480,
+          "playerY": 530,
+          "enemyCount": 0,
+          "projectileCount": 0
+        },
+        "moved": {
+          "phase": "playing",
+          "score": 0,
+          "lives": 3,
+          "playerX": 585.0000000000006,
+          "playerY": 530,
+          "enemyCount": 1,
+          "projectileCount": 0
+        }
+      }
+    },
+    "keyboard_fire": {
+      "passed": true,
+      "points_awarded": 3,
+      "points_available": 3,
+      "evidence": {
+        "moved": {
+          "phase": "playing",
+          "score": 0,
+          "lives": 3,
+          "playerX": 585.0000000000006,
+          "playerY": 530,
+          "enemyCount": 1,
+          "projectileCount": 0
+        },
+        "fired": {
+          "phase": "playing",
+          "score": 0,
+          "lives": 3,
+          "playerX": 585.0000000000006,
+          "playerY": 530,
+          "enemyCount": 1,
+          "projectileCount": 1
+        }
+      }
+    },
+    "enemies_spawn": {
+      "passed": true,
+      "points_awarded": 3,
+      "points_available": 3,
+      "evidence": {
+        "phase": "playing",
+        "score": 10,
+        "lives": 3,
+        "playerX": 585.0000000000006,
+        "playerY": 530,
+        "enemyCount": 3,
+        "projectileCount": 0
+      }
+    },
+    "hud_state": {
+      "passed": true,
+      "points_awarded": 2,
+      "points_available": 2,
+      "evidence": {
+        "phase": "playing",
+        "score": 10,
+        "lives": 3,
+        "playerX": 585.0000000000006,
+        "playerY": 530,
+        "enemyCount": 3,
+        "projectileCount": 0
+      }
+    },
+    "game_over_adapter_uses_real_state": {
+      "passed": true,
+      "points_awarded": 3,
+      "points_available": 3,
+      "evidence": {
+        "phase": "gameover",
+        "score": 7317,
+        "lives": 3,
+        "playerX": 585.0000000000006,
+        "playerY": 530,
+        "enemyCount": 3,
+        "projectileCount": 0
+      }
+    },
+    "leaderboard_ui_submission": {
+      "passed": false,
+      "points_awarded": 0,
+      "points_available": 6,
+      "evidence": {
+        "testName": "BMX6368735346",
+        "error": "locator.waitFor: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"leaderboard\"]').getByText('BMX6368735346') to be visible\u001b[22m\n\u001b[2m    40 × locator resolved to hidden <span class=\"lb-name\">BMX6368735346</span>\u001b[22m\n"
+      }
+    },
+    "leaderboard_reload_persistence": {
+      "passed": false,
+      "points_awarded": 0,
+      "points_available": 6,
+      "evidence": {
+        "testName": "BMX6368735346",
+        "error": "locator.waitFor: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"leaderboard\"]').getByText('BMX6368735346') to be visible\u001b[22m\n\u001b[2m    40 × locator resolved to hidden <span class=\"lb-name\">BMX6368735346</span>\u001b[22m\n"
+      }
+    },
+    "leaderboard_score_visible": {
+      "passed": false,
+      "points_awarded": 0,
+      "points_available": 3,
+      "evidence": {
+        "error": "locator.waitFor: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"leaderboard\"]').getByText('BMX6368735346') to be visible\u001b[22m\n\u001b[2m    40 × locator resolved to hidden <span class=\"lb-name\">BMX6368735346</span>\u001b[22m\n"
+      }
+    },
+    "mute_control": {
+      "passed": true,
+      "points_awarded": 3,
+      "points_available": 3,
+      "evidence": {
+        "muteBefore": "🔊 Mute sound",
+        "muteAfter": "🔇 Mute sound"
+      }
+    },
+    "restart": {
+      "passed": false,
+      "points_awarded": 0,
+      "points_available": 2,
+      "evidence": {
+        "phase": "gameover",
+        "score": 7317,
+        "lives": 3,
+        "playerX": 585.0000000000006,
+        "playerY": 530,
+        "enemyCount": 3,
+        "projectileCount": 0
+      }
+    },
+    "basic_accessible_labels": {
+      "passed": true,
+      "points_awarded": 1,
+      "points_available": 1,
+      "evidence": {
+        "labeledElements": 3
+      }
+    },
+    "mobile_touch_and_fit": {
+      "passed": true,
+      "points_awarded": 5,
+      "points_available": 5,
+      "evidence": {
+        "touchVisible": true,
+        "canvasBox": {
+          "x": 8,
+          "y": 66.578125,
+          "width": 374,
+          "height": 769.421875
+        }
+      }
+    },
+    "browser_error_free": {
+      "passed": true,
+      "points_awarded": 2,
+      "points_available": 2,
+      "evidence": {
+        "console_errors": [],
+        "page_errors": []
+      }
+    }
+  },
+  "console_errors": [],
+  "page_errors": [],
+  "supabase_requests": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "https://ngqennvfqwihdanrjduz.supabase.co/rest/v1/leaderboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "https://ngqennvfqwihdanrjduz.supabase.co/rest/v1/leaderboard"
+    },
+    {
+      "method": "POST",
+      "status": 201,
+      "url": "https://ngqennvfqwihdanrjduz.supabase.co/rest/v1/leaderboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "https://ngqennvfqwihdanrjduz.supabase.co/rest/v1/leaderboard"
+    }
+  ],
+  "notes": [
+    "leaderboard flow failed: locator.waitFor: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"leaderboard\"]').getByText('BMX6368735346') to be visible\u001b[22m\n\u001b[2m    40 × locator resolved to hidden <span class=\"lb-name\">BMX6368735346</span>\u001b[22m\n"
+  ]
+}

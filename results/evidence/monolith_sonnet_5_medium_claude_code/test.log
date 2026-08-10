@@ -1,0 +1,15 @@
+
+> neon-barrage@1.0.0 test
+> vitest run
+
+
+ RUN  v2.1.1 /workspaces/shootemup-benchmark/candidates/monolith_sonnet_5_medium_claude_code
+
+ ✓ tests/game.test.ts  (6 tests) 43ms
+ ✓ tests/leaderboard.test.ts  (8 tests) 6ms
+
+ Test Files  2 passed (2)
+      Tests  14 passed (14)
+   Start at  13:32:39
+   Duration  4.05s (transform 155ms, setup 0ms, collect 369ms, tests 49ms, environment 2.58s, prepare 560ms)
+

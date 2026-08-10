@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <title>Neon Barrage</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="hud" data-testid="hud">
+      <div class="hud-group">
+        <span class="hud-label">SCORE</span>
+        <span class="hud-value" data-testid="score">0</span>
+      </div>
+      <div class="hud-group">
+        <span class="hud-label">LIVES</span>
+        <span class="hud-value" data-testid="lives">3</span>
+      </div>
+      <button class="icon-btn" data-testid="mute-button" aria-label="Mute sound" aria-pressed="false">🔊</button>
+    </header>
+
+    <main class="stage">
+      <canvas id="game-canvas" data-testid="game-canvas" width="960" height="600" aria-label="Neon Barrage game canvas"></canvas>
+
+      <section class="overlay" id="start-overlay" data-testid="start-overlay">
+        <h1 class="title">NEON BARRAGE</h1>
+        <p class="subtitle">Arrow keys / WASD to move &middot; Space to fire &middot; Touch to play on mobile</p>
+        <button class="primary-btn" data-testid="start-button">START GAME</button>
+
+        <div class="leaderboard-panel">
+          <h2>Top Pilots</h2>
+          <div data-testid="leaderboard" class="leaderboard" aria-live="polite">
+            <p class="lb-status">Loading leaderboard&hellip;</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="overlay hidden" id="gameover-overlay" data-testid="gameover-overlay">
+        <h1 class="title">GAME OVER</h1>
+        <p class="final-score">Score: <span id="final-score">0</span></p>
+
+        <form id="submit-form" class="submit-form" autocomplete="off">
+          <label for="player-name" class="sr-only">Pilot name</label>
+          <input
+            id="player-name"
+            data-testid="player-name"
+            type="text"
+            maxlength="16"
+            minlength="1"
+            placeholder="Enter your name (1-16 chars)"
+            autocomplete="off"
+          />
+          <button type="submit" class="primary-btn" data-testid="submit-score">SUBMIT SCORE</button>
+        </form>
+        <p id="submit-status" class="submit-status" role="status"></p>
+
+        <div class="leaderboard-panel">
+          <h2>Top Pilots</h2>
+          <div data-testid="leaderboard-gameover" class="leaderboard" aria-live="polite"></div>
+        </div>
+
+        <button class="secondary-btn" id="restart-button">PLAY AGAIN</button>
+      </section>
+
+      <div class="touch-controls" data-testid="touch-controls">
+        <div class="touch-stick" id="touch-stick" aria-hidden="true">
+          <div class="touch-stick-nub" id="touch-stick-nub"></div>
+        </div>
+        <button class="touch-fire" id="touch-fire" aria-label="Fire">FIRE</button>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

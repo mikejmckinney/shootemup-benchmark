@@ -1,0 +1,15 @@
+{
+  "treatment": "monolith_sonnet_5_medium_claude_code",
+  "status": "complete",
+  "cloudflare_url": "https://shootemup-bench-monolith-sonnet-5-medium-claude-code-game.pages.dev",
+  "cloudflare_project": "shootemup-bench-monolith-sonnet-5-medium-claude-code-game",
+  "supabase_url": "https://ngqennvfqwihdanrjduz.supabase.co",
+  "supabase_project_ref": "ngqennvfqwihdanrjduz",
+  "supabase_public_key": "sb_publishable_6inKt4w6P_mACrLr8bFpcw_DoeTG8XD",
+  "verification": {
+    "production_http_status": 200,
+    "leaderboard_round_trip": true,
+    "tests_passed": true
+  },
+  "notes": "Vanilla TS + Canvas 2D shoot-em-up, no game framework. Deployed to Cloudflare Pages via Wrangler; leaderboard table in a dedicated Supabase project with RLS (public select + constrained insert only, no update/delete) and DB-level CHECK constraints mirroring client validation. Verified production URL returns 200, direct REST insert/select round trip against the anon key succeeds, and RLS rejects invalid name/score and delete attempts. 14 vitest unit tests pass (validation + core game logic); tsc --noEmit and vite build are clean."
+}

@@ -1,0 +1,47 @@
+{
+  "treatment": "monolith_sonnet_5_medium_claude_code",
+  "scored_at": "2026-08-10T13:37:27.096Z",
+  "original_quality_score": 78,
+  "absolute_supplemental_deductions": 0,
+  "posthoc_adjustment": 0,
+  "corrected_quality_score": 78,
+  "corrected_score_relative_to_baseline": -20,
+  "weights": {
+    "physical_name_entry": 2,
+    "progression_start_consistency": 1,
+    "advertised_keyboard_restart": 1,
+    "immediate_click_restart": 2
+  },
+  "checks": {
+    "progression_start_consistency": {
+      "passed": true,
+      "applicable": false,
+      "before": null,
+      "after": null
+    },
+    "physical_name_entry": {
+      "passed": true,
+      "expected": "WASD wasd",
+      "actual": "WASD wasd"
+    },
+    "advertised_keyboard_restart": {
+      "passed": true,
+      "advertised": false,
+      "applicable": false
+    },
+    "immediate_click_restart": {
+      "passed": true,
+      "button_found": true,
+      "state": {
+        "phase": "playing",
+        "score": 0,
+        "lives": 3,
+        "playerX": 480,
+        "playerY": 530,
+        "enemyCount": 1,
+        "projectileCount": 0
+      }
+    }
+  },
+  "rationale": "The corrected quality score applies the candidate's absolute supplemental deductions directly. The monolith remains the comparison baseline, but its score is not normalized back to 100 and 100 is not a ceiling."
+}
