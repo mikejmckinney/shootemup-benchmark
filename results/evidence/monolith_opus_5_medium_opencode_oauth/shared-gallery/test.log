@@ -1,0 +1,41 @@
+
+> neon-barrage@1.0.0 test
+> vitest run
+
+
+ RUN  v4.1.10 /tmp/opus-oauth-gallery.9DZnnR/app
+
+ ❯ tests/leaderboard.test.ts (9 tests | 1 failed) 83ms
+     × trims the name and posts name + score only 8ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/leaderboard.test.ts > LeaderboardClient.submit > trims the name and posts name + score only
+AssertionError: expected { …(3) } to deeply equal { name: 'ACE', score: 100 }
+
+- Expected
++ Received
+
+  {
+-   "name": "ACE",
++   "candidate_id": "monolith_opus_5_medium_opencode_oauth",
++   "player_name": "ACE",
+    "score": 100,
+  }
+
+ ❯ tests/leaderboard.test.ts:49:45
+     47|     expect(row.name).toBe('ACE');
+     48|     const init = fetchMock.mock.calls[0][1] as RequestInit;
+     49|     expect(JSON.parse(init.body as string)).toEqual({ name: 'ACE', sco…
+       |                                             ^
+     50|   });
+     51|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 26 passed (27)
+   Start at  19:20:41
+   Duration  675ms (transform 124ms, setup 0ms, import 168ms, tests 128ms, environment 0ms)
+

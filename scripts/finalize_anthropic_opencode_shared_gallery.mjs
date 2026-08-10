@@ -8,11 +8,21 @@ const root = path.resolve(import.meta.dirname, "..");
 const token = process.env.SUPABASE_API_KEY;
 const projectRef = "lyyyxbxacrxqflxmtlqq";
 const sharedUrl = `https://${projectRef}.supabase.co`;
-const migration = "supabase/migrations/20260810175132_allow_anthropic_opencode_candidates.sql";
-const treatments = [
+const migrations = {
+  monolith_opus_5_medium_opencode: "supabase/migrations/20260810175132_allow_anthropic_opencode_candidates.sql",
+  monolith_sonnet_5_medium_opencode: "supabase/migrations/20260810175132_allow_anthropic_opencode_candidates.sql",
+  monolith_opus_5_medium_opencode_oauth: "supabase/migrations/20260810193000_allow_opus_opencode_oauth.sql",
+};
+const allTreatments = [
   "monolith_opus_5_medium_opencode",
   "monolith_sonnet_5_medium_opencode",
+  "monolith_opus_5_medium_opencode_oauth",
 ];
+const requestedTreatments = process.argv.slice(2);
+const treatments = requestedTreatments.length ? requestedTreatments : allTreatments;
+for (const treatment of treatments) {
+  if (!allTreatments.includes(treatment)) throw new Error(`unsupported treatment: ${treatment}`);
+}
 
 if (!token) throw new Error("SUPABASE_API_KEY is required");
 
@@ -77,7 +87,7 @@ for (const treatment of treatments) {
     classification: "post-benchmark shared-gallery infrastructure retrofit",
     verified_at: new Date().toISOString(),
     timed_score_affected: false,
-    migration,
+    migration: migrations[treatment],
     shared_project_ref: projectRef,
     candidate_id: treatment,
     gallery_url: result.cloudflare_url,

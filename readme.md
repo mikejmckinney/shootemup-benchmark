@@ -69,6 +69,7 @@ The cost compiler uses Standard Luna rates of $0.20/M uncached input, $0.02/M ca
 | **[Monolith · Opus 5 Medium · OpenCode](#monolith-with-opus-5-medium-in-opencode)** | 100 | PASS | $1.9015 | 9:57 | 1.281M | 1.187M | 0.000M | 0.056M | 0.038M | 22.9900 |
 | **[Monolith · Sol High · OpenCode](#monolith-with-sol-high-in-opencode)** | 94 | PASS | $1.6572 | 14:28 | 1.063M | 0.969M | 0.066M | 0.000M | 0.028M | 19.1979 |
 | **[Monolith · Sol Low · OpenCode](#monolith-with-sol-low-in-opencode)** | 89 | BORDERLINE | $0.6749 | 5:29 | 0.310M | 0.264M | 0.034M | 0.000M | 0.012M | 18.5055 |
+| **[Monolith · Opus 5 Medium · OpenCode OAuth](#monolith-with-opus-5-medium-in-opencode-via-oauth)** | 100 | PASS | $2.6634 | 13:06 | 2.200M | 2.090M | 0.000M | 0.060M | 0.050M | 16.9297 |
 | **[Native isolated subagents](#native-subagents-with-isolated-issues)** | 90 | BORDERLINE | $0.5592 | 25:45 | 13.450M | 12.876M | 0.427M | 0.000M | 0.147M | 14.2301 |
 | **[Monolith · Sol Medium · OpenCode API](#monolith-with-sol-medium-in-opencode-api)** | 89 | BORDERLINE | $1.1060 | 7:47 | 0.786M | 0.736M | 0.000M | 0.033M | 0.018M | 12.1337 |
 | **[Monolith · Sol Medium · Codex](#monolith-with-sol-medium-in-codex)** | 91 | BORDERLINE | $3.0659 | 12:17 | 3.573M | 3.435M | 0.112M | 0.000M | 0.025M | 11.8629 |
@@ -129,6 +130,7 @@ For a stated value of unattended agent time `r` in USD per minute, this secondar
 | [Monolith · Opus 5 Medium · OpenCode](#monolith-with-opus-5-medium-in-opencode) | 52.59 | 41.68 | 28.09 | 25.92 | 21.69 | 16.54 | 8.44 |
 | [Monolith · Sol High · OpenCode](#monolith-with-sol-high-in-opencode) | 56.72 | 39.49 | 23.11 | 20.88 | 16.80 | 12.23 | 5.83 |
 | [Monolith · Sol Low · OpenCode](#monolith-with-sol-low-in-opencode) † | 131.87 | 93.77 | 56.02 | 50.77 | 41.06 | 30.07 | 14.45 |
+| [Monolith · Opus 5 Medium · OpenCode OAuth](#monolith-with-opus-5-medium-in-opencode-via-oauth) | 37.55 | 30.14 | 20.63 | 19.09 | 16.05 | 12.31 | 6.34 |
 | [Native isolated subagents](#native-subagents-with-isolated-issues) † | 160.93 | 48.73 | 18.55 | 16.01 | 11.89 | 7.97 | 3.42 |
 | [Monolith · Sol Medium · OpenCode API](#monolith-with-sol-medium-in-opencode-api) † | 80.47 | 59.53 | 37.03 | 33.76 | 27.60 | 20.46 | 10.01 |
 | [Monolith · Sol Medium · Codex](#monolith-with-sol-medium-in-codex) † | 29.68 | 24.73 | 17.80 | 16.60 | 14.20 | 11.12 | 5.93 |
@@ -741,6 +743,31 @@ Tokens: 0.310M total · 0.264M cached input · 0.034M uncached input · 0.000M c
 | Absolute post-hoc adjustment | −4 | [Regression checks](results/evidence/monolith_sol_low_opencode/posthoc-regressions.json) · [Adjustment](results/evidence/monolith_sol_low_opencode/posthoc-score.json) |
 | **Corrected quality score** | **89** | [Post-hoc methodology](results/posthoc-review.md) |
 
+### Monolith with Opus 5 Medium in OpenCode via OAuth
+
+[![OpenCode Opus 5 Medium OAuth monolith gameplay preview](assets/gallery/monolith_opus_5_medium_opencode_oauth.webp)](https://shootemup-bench-monolith-opus-5-medium.pages.dev)
+
+This run used one Opus 5 agent at medium effort in OpenCode through a Claude Pro OAuth session, with delegation prohibited. The excluded preflight verified OAuth loading, the exact model, and the medium variant before timing began. It completed in 13:06, passed all 54 automated production checks, earned all 46 manual points, and had no post-hoc deductions. The original dedicated Supabase project is paused; the public gallery deployment was separately repointed to the shared leaderboard after scoring. Because subscription billing does not expose a per-run charge, the benchmark reports the API-equivalent cost calculated from the retained token ledger.
+
+<!-- GENERATED_METRICS:monolith_opus_5_medium_opencode_oauth -->
+**Score 100 · Cost $2.6634 · Time 13:06 · Gate PASS · Gate-adjusted ROI 16.9297 · Pareto ε=2 DOMINATED**<br>
+Tokens: 2.200M total · 2.090M cached input · 0.000M uncached input · 0.060M cache writes · 0.050M output
+
+[Play the game](https://shootemup-bench-monolith-opus-5-medium.pages.dev) · [Browse preserved source](submissions/monolith_opus_5_medium_opencode_oauth/) · [Evaluation evidence](results/evidence/monolith_opus_5_medium_opencode_oauth/) · [Run metrics](results/raw/monolith_opus_5_medium_opencode_oauth/run-metrics.json) · [OAuth preflight](results/diagnostics/anthropic-oauth-preflight-monolith_opus_5_medium_opencode_oauth.json) · [Shared-gallery verification](results/evidence/monolith_opus_5_medium_opencode_oauth/shared-gallery-retrofit.json)
+
+| Score component | Result | Evidence |
+|---|---:|---|
+| Automated production behavior | 54 / 54 | [Automated checks](results/evidence/monolith_opus_5_medium_opencode_oauth/automated.json) · [Browser log](results/evidence/monolith_opus_5_medium_opencode_oauth/browser-evaluator.log) |
+| Combat and progression | 5 / 5 | [Judge findings](results/evidence/monolith_opus_5_medium_opencode_oauth/manual-score.json) · [Tests](results/evidence/monolith_opus_5_medium_opencode_oauth/test.log) |
+| Visual design and feedback | 12 / 12 | [Desktop](results/evidence/monolith_opus_5_medium_opencode_oauth/desktop-after.png) · [Mobile](results/evidence/monolith_opus_5_medium_opencode_oauth/mobile.png) |
+| Resilience and accessibility | 2 / 2 | [Judge findings](results/evidence/monolith_opus_5_medium_opencode_oauth/manual-score.json) · [Automated checks](results/evidence/monolith_opus_5_medium_opencode_oauth/automated.json) |
+| Supabase/data security | 10 / 10 | [Migration](submissions/monolith_opus_5_medium_opencode_oauth/supabase/migrations/0001_leaderboard.sql) · [Judge findings](results/evidence/monolith_opus_5_medium_opencode_oauth/manual-score.json) |
+| Engineering quality | 10 / 10 | [Tests](results/evidence/monolith_opus_5_medium_opencode_oauth/test.log) · [Build](results/evidence/monolith_opus_5_medium_opencode_oauth/build.log) |
+| Reproducibility and handoff | 7 / 7 | [Source manifest](results/evidence/monolith_opus_5_medium_opencode_oauth/source-manifest.txt) · [README](submissions/monolith_opus_5_medium_opencode_oauth/README.md) |
+| Original quality score | 100 | [Automated](results/evidence/monolith_opus_5_medium_opencode_oauth/automated.json) + [manual](results/evidence/monolith_opus_5_medium_opencode_oauth/manual-score.json) |
+| Absolute post-hoc adjustment | 0 | [Regression checks](results/evidence/monolith_opus_5_medium_opencode_oauth/posthoc-regressions.json) · [Adjustment](results/evidence/monolith_opus_5_medium_opencode_oauth/posthoc-score.json) |
+| **Corrected quality score** | **100** | [Post-hoc methodology](results/posthoc-review.md) |
+
 ### Native subagents with isolated issues
 
 [![Isolated-subagent gameplay preview](assets/gallery/native_isolated.webp)](https://shootemup-bench-native-isolated-neon-barrage-pages.pages.dev)
@@ -1102,7 +1129,7 @@ These are observations from this task and these runs, not general rankings of mo
 
 The timed benchmark created a fresh Supabase database for every candidate that reached provisioning and paused it after evaluation. All thirty-two dedicated timed-run projects are recorded as `INACTIVE` in their cleanup evidence. After scoring, the former monolith project was resumed as the shared gallery service; the other thirty-one remain inactive. All thirty-one deployed timed-run gallery games use its required `candidate_id` partition for:
 
-`monolith`, `native_dynamic`, `native_isolated`, `a2a`, `monolith_warm`, `a2a_async`, `a2a_async_streaming_opencode`, `monolith_sol_medium`, `monolith_opencode`, `monolith_sol_medium_opencode`, `monolith_sol_medium_opencode_api`, `monolith_sol_low_opencode`, `monolith_sol_high_opencode`, `monolith_luna_xhigh_opencode`, `monolith_luna_high_opencode`, `monolith_luna_max_codex_minimal`, `monolith_luna_max_opencode_retest`, `monolith_luna_xhigh_fast_opencode`, `monolith_luna_max_fast_opencode`, `monolith_luna_xhigh_opencode_control`, `monolith_sol_low_fast_opencode`, `monolith_sol_medium_fast_opencode`, `monolith_grok_4_5_medium_cursor`, `monolith_grok_4_5_high_cursor`, `monolith_grok_4_5_medium_fast_cursor`, `monolith_grok_4_5_high_fast_cursor`, `monolith_auto_cursor`, `monolith_opus_5_medium_claude_code`, `monolith_sonnet_5_medium_claude_code`, `monolith_opus_5_medium_opencode`, and `monolith_sonnet_5_medium_opencode`.
+`monolith`, `native_dynamic`, `native_isolated`, `a2a`, `monolith_warm`, `a2a_async`, `a2a_async_streaming_opencode`, `monolith_sol_medium`, `monolith_opencode`, `monolith_sol_medium_opencode`, `monolith_sol_medium_opencode_api`, `monolith_sol_low_opencode`, `monolith_sol_high_opencode`, `monolith_luna_xhigh_opencode`, `monolith_luna_high_opencode`, `monolith_luna_max_codex_minimal`, `monolith_luna_max_opencode_retest`, `monolith_luna_xhigh_fast_opencode`, `monolith_luna_max_fast_opencode`, `monolith_luna_xhigh_opencode_control`, `monolith_sol_low_fast_opencode`, `monolith_sol_medium_fast_opencode`, `monolith_grok_4_5_medium_cursor`, `monolith_grok_4_5_high_cursor`, `monolith_grok_4_5_medium_fast_cursor`, `monolith_grok_4_5_high_fast_cursor`, `monolith_auto_cursor`, `monolith_opus_5_medium_claude_code`, `monolith_sonnet_5_medium_claude_code`, `monolith_opus_5_medium_opencode`, `monolith_sonnet_5_medium_opencode`, and `monolith_opus_5_medium_opencode_oauth`.
 
 The fresh OpenCode methodology control was added to the shared service after its isolated evaluation. Its preserved submission and original database evidence remain unchanged. AI Repo Template created and migrated a dedicated project but did not deploy its frontend within the timed run; its exploratory continuation later deployed the frontend, restored the same project, and paused it again after evaluation. It is not part of the shared timed-run gallery. Spec Kit and Superpowers did not create Supabase projects during their timed runs; their later exploratory continuations created dedicated projects. All three continuation databases are confirmed `INACTIVE`.
 

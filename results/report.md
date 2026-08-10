@@ -33,6 +33,7 @@ Scores include the uniform [post-hoc regression review](posthoc-review.md). Orig
 | Monolith · Opus 5 Medium · OpenCode | 100 | PASS | $1.9015 | 9:57 | 1.281M | 1.187M | 0.000M | 0.056M | 0.038M | 22.9900 |
 | Monolith · Sol High · OpenCode | 94 | PASS | $1.6572 | 14:28 | 1.063M | 0.969M | 0.066M | 0.000M | 0.028M | 19.1979 |
 | Monolith · Sol Low · OpenCode | 89 | BORDERLINE | $0.6749 | 5:29 | 0.310M | 0.264M | 0.034M | 0.000M | 0.012M | 18.5055 |
+| Monolith · Opus 5 Medium · OpenCode OAuth | 100 | PASS | $2.6634 | 13:06 | 2.200M | 2.090M | 0.000M | 0.060M | 0.050M | 16.9297 |
 | Native isolated subagents | 90 | BORDERLINE | $0.5592 | 25:45 | 13.450M | 12.876M | 0.427M | 0.000M | 0.147M | 14.2301 |
 | Monolith · Sol Medium · OpenCode API | 89 | BORDERLINE | $1.1060 | 7:47 | 0.786M | 0.736M | 0.000M | 0.033M | 0.018M | 12.1337 |
 | Monolith · Sol Medium · Codex | 91 | BORDERLINE | $3.0659 | 12:17 | 3.573M | 3.435M | 0.112M | 0.000M | 0.025M | 11.8629 |
@@ -47,7 +48,7 @@ Scores include the uniform [post-hoc regression review](posthoc-review.md). Orig
 
 Gate-adjusted ROI uses `score × clamp((score - 87) / 5, 0, 1) / sqrt(API cost × elapsed minutes)`. The gate factor is 1 for PASS, 0.2–0.8 for BORDERLINE, and 0 for FAIL. It is a comparative index, not conventional financial ROI. Total tokens are cached input + uncached input + cache writes + output. Reasoning tokens are included in output and are not counted twice. Rows are ranked by gate-adjusted ROI descending; Pareto analysis remains separate below.
 
-- Highest observed quality: **Monolith · Opus 5 Medium · OpenCode**.
+- Highest observed quality (100): **Monolith · Opus 5 Medium · OpenCode, Monolith · Opus 5 Medium · OpenCode OAuth**.
 - Quality-gate borderline: **Native isolated subagents, Monolith · Sol Medium · Codex, Monolith · Sol Medium · OpenCode API, Monolith · Sol Low · OpenCode, Monolith · Sol Medium Fast · OpenCode, Monolith · Grok 4.5 Medium · Cursor**.
 - Quality-gate failures: **Native dynamic subagents, Monolith · Luna High · OpenCode, Monolith · Luna Max · OpenCode + Spec Kit, Dynamic · Luna Max · OpenCode + Superpowers, Monolith · Luna Max · OpenCode + AI Repo Template, Monolith · Sonnet 5 Medium · Claude Code, Monolith · Sonnet 5 Medium · OpenCode**.
 - Pareto frontier at ε=2: **Monolith · Luna Xhigh · OpenCode control, Monolith · Luna Xhigh Fast · OpenCode, Monolith · Luna Xhigh · OpenCode, Monolith · Auto Cost · Cursor, Monolith · Sol Low Fast · OpenCode, Monolith · Grok 4.5 Medium Fast · Cursor, Monolith · Opus 5 Medium · OpenCode**.
@@ -98,6 +99,7 @@ For a stated value of unattended agent time `r` in USD per minute:
 | Monolith · Opus 5 Medium · OpenCode | 52.59 | 41.68 | 28.09 | 25.92 | 21.69 | 16.54 | 8.44 |
 | Monolith · Sol High · OpenCode | 56.72 | 39.49 | 23.11 | 20.88 | 16.80 | 12.23 | 5.83 |
 | Monolith · Sol Low · OpenCode † | 131.87 | 93.77 | 56.02 | 50.77 | 41.06 | 30.07 | 14.45 |
+| Monolith · Opus 5 Medium · OpenCode OAuth | 37.55 | 30.14 | 20.63 | 19.09 | 16.05 | 12.31 | 6.34 |
 | Native isolated subagents † | 160.93 | 48.73 | 18.55 | 16.01 | 11.89 | 7.97 | 3.42 |
 | Monolith · Sol Medium · OpenCode API † | 80.47 | 59.53 | 37.03 | 33.76 | 27.60 | 20.46 | 10.01 |
 | Monolith · Sol Medium · Codex † | 29.68 | 24.73 | 17.80 | 16.60 | 14.20 | 11.12 | 5.93 |
@@ -157,6 +159,7 @@ The original cold monolith remains the architectural comparator for the original
 | Monolith · Sonnet 5 Medium · Claude Code | Monolith · Opus 5 Medium · Claude Code | -17 | -2.4946 | +0.957M | -14:17 |
 | Monolith · Opus 5 Medium · OpenCode | Monolith · Opus 5 Medium · Claude Code | +5 | -2.1838 | -2.275M | -14:28 |
 | Monolith · Sonnet 5 Medium · OpenCode | Monolith · Sonnet 5 Medium · Claude Code | -5 | -0.3677 | -1.211M | +1:09 |
+| Monolith · Opus 5 Medium · OpenCode OAuth | Monolith · Opus 5 Medium · OpenCode | 0 | +0.7619 | +0.919M | +3:09 |
 
 Negative cost/time values are savings; a negative score is a quality regression.
 
@@ -211,6 +214,7 @@ All three methodology continuation databases are confirmed inactive. Their front
 - Native isolated coordination remained much stronger than unrestricted dynamic delegation in the original architecture set.
 - Opus 5 Medium in Claude Code scored 95 in 24:25 for $4.0853, passing all automated production checks. Sonnet 5 Medium finished 14:17 faster and cost 61% less, but its hidden leaderboard result and broken primary restart flow reduced quality to 78, below the gate, and therefore zero gate-adjusted ROI.
 - Opus 5 Medium in OpenCode scored 100 in 9:57 for $1.9015. Against Opus in Claude Code, it scored +5, finished 14:28 faster, and cost 53% less. Sonnet in OpenCode also finished with a lower cost than Sonnet in Claude Code, but its corrected score of 73 failed the quality gate; neither single run establishes a causal runtime effect.
+- Opus 5 Medium through OpenCode OAuth also scored 100, but took 3:09 longer, used 1.7× the tokens, and had a $0.7619 higher API-equivalent cost than the API-key run. Its gate-adjusted ROI was 16.9297 versus 22.9900. This is a one-run comparison through an unsupported OAuth plugin, not evidence that OAuth caused the difference.
 - The fresh Luna Max OpenCode control delivered a corrected score of 94 in 17:56 for $0.1224. Spec Kit, full-methodology Superpowers, and AI Repo Template all exhausted 45:00 without a timed deployment, scoring 4, 9, and 26, respectively. All three receive zero gate-adjusted ROI because they fail the quality gate.
 - Spec Kit used 5.5× the control's tokens while spending most of the run on specification artifacts. Superpowers used 2.5× the control's tokens; its six-agent implement-review-fix loop caught real engine defects but completed only two of seven planned tasks. AI Repo Template used 8.4× the control's tokens: template-seed onboarding and its inherited 398-check verification suite consumed about 20 minutes, and repeated local browser-tool recovery consumed the final deployment window despite a locally built and tested game.
 
@@ -228,6 +232,7 @@ All three methodology continuation databases are confirmed inactive. Their front
 - OpenCode and Codex token telemetry come from different runtime event formats. The compiler converts both to cached input, uncached input, and output. The two API-key Fast runs now reconcile locally against provider-reported per-turn cost, but this does not reconcile the older OAuth OpenCode runs or Codex runs against provider billing records.
 - Claude Code exposes cache creation separately from cache reads, so total-token accounting includes those disjoint cache-write tokens. Opus's official-rate estimate reconciles within 0.1% of Claude Code's terminal cost. Sonnet's $1.5907 estimate uses Anthropic's time-limited introductory list price, while Claude Code reported $2.3867; the 33% discrepancy is retained and flagged rather than silently substituting one source.
 - OpenCode's Anthropic ledger exposes aggregate cache writes rather than separate 5-minute and 1-hour cache-creation buckets. The compiler prices those writes at the 5-minute rate, matching OpenCode's provider-reported costs for both runs. Runtime, system context, tool surface, API-versus-OAuth authentication, run order, and stochastic generation all differ from the Claude Code treatments.
+- The Opus 5 OpenCode OAuth treatment authenticated through the unsupported community `opencode-claude-auth` plugin and a Claude Pro subscription. Its $2.6634 cost is an API-equivalent estimate from OpenCode's token ledger, not an incremental subscription charge or provider invoice. The single sequential OAuth/API pair cannot isolate authentication effects from stochastic output, cache state, plugin behavior, or provider load.
 - The Sol Medium OpenCode API-versus-OAuth comparison has one run per authentication mode. The API run has request-level transport and provider-cost telemetry, while the older OAuth run does not; stochastic generation, provider load, and sequential execution remain confounders, so the comparison cannot establish an authentication-mode effect.
 - The minimal-context treatment disables several optional Codex surfaces together and has one replicate. It shows that the default integration surface was not necessary for this successful run, but cannot estimate the marginal token contribution of skills, MCP, apps, project instructions, or workflow variation individually.
 - The asynchronous-streaming A2A extension changes transport and runtime together. Its improvement over asynchronous-polling A2A cannot be attributed specifically to streaming, OpenCode, cache/order conditions, or their interaction.
@@ -237,4 +242,4 @@ All three methodology continuation databases are confirmed inactive. Their front
 - The first Spec Kit controller launch was excluded as a harness failure because initialization ran from the wrong working directory. It stopped after 26 seconds with zero model tokens and no external resources; all artifacts are retained under `results/harness-failures/`. The corrected run used a fresh repository and a new ephemeral no-cache installation, though transient OS/network caches cannot be perfectly reset.
 - The results cover one full-stack game task and may not transfer to other work.
 
-Every candidate Supabase project that was actually created was confirmed **INACTIVE** after evaluation. The former baseline project was later resumed as the shared gallery service; all 31 timed-run gallery games now use it with an allowlisted `candidate_id` partition, while the other benchmark-specific databases remain paused. Spec Kit and Superpowers created dedicated projects only during exploratory post-timeout continuations; AI Repo Template restored and reused its timed-run project. All three continuation databases are paused. These post-benchmark infrastructure states do not alter retained scores or timed metrics.
+Every candidate Supabase project that was actually created was confirmed **INACTIVE** after evaluation. The former baseline project was later resumed as the shared gallery service; all 32 timed-run gallery games now use it with an allowlisted `candidate_id` partition, while the other benchmark-specific databases remain paused. Spec Kit and Superpowers created dedicated projects only during exploratory post-timeout continuations; AI Repo Template restored and reused its timed-run project. All three continuation databases are paused. These post-benchmark infrastructure states do not alter retained scores or timed metrics.

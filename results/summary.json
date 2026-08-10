@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-10T18:03:15.797Z",
+  "generated_at": "2026-08-10T19:23:59.426Z",
   "replicate_count_per_treatment": 1,
   "models": [
     "gpt-5.6-luna",
@@ -121,7 +121,8 @@
       "monolith_opus_5_medium_claude_code": 0,
       "monolith_sonnet_5_medium_claude_code": 0,
       "monolith_opus_5_medium_opencode": 0,
-      "monolith_sonnet_5_medium_opencode": 0
+      "monolith_sonnet_5_medium_opencode": 0,
+      "monolith_opus_5_medium_opencode_oauth": 0
     }
   },
   "decision_model": {
@@ -245,6 +246,19 @@
         "wall_seconds": -43,
         "estimated_api_cost_usd": 0.10401324999999995,
         "gate_adjusted_roi": -20.076300619045178
+      }
+    },
+    "opus_5_opencode_oauth_vs_api": {
+      "candidate": "monolith_opus_5_medium_opencode_oauth",
+      "comparator": "monolith_opus_5_medium_opencode",
+      "delta": {
+        "comparator_treatment": "monolith_opus_5_medium_opencode",
+        "quality_score": 0,
+        "total_tokens": 918639,
+        "non_cached_tokens": 15409,
+        "wall_seconds": 189,
+        "estimated_api_cost_usd": 0.7618637500000001,
+        "gate_adjusted_roi": -6.060355215058738
       }
     },
     "minimal_context_vs_warm_cache": {
@@ -2845,6 +2859,110 @@
       }
     },
     {
+      "treatment": "monolith_opus_5_medium_opencode_oauth",
+      "label": "Monolith · Opus 5 Medium · OpenCode OAuth",
+      "model": "claude-opus-5",
+      "reasoning_effort": "medium",
+      "runtime": "opencode",
+      "service_tier": "standard",
+      "quality_score": 100,
+      "original_quality_score": 100,
+      "posthoc_adjustment": 0,
+      "automated_points": 54,
+      "manual_points": 46,
+      "wall_seconds": 786,
+      "wall_minutes": 13.1,
+      "total_tokens": 2199830,
+      "uncached_input_tokens": 98,
+      "cache_write_input_tokens": 59974,
+      "non_cached_tokens": 109793,
+      "cached_input_tokens": 2090037,
+      "output_tokens": 49721,
+      "reasoning_output_tokens": 0,
+      "agents_started": 1,
+      "coordination_events": 0,
+      "successful_a2a_messages": null,
+      "failed_a2a_messages": null,
+      "captured_web_search_calls": 0,
+      "provider_reported_cost_usd": null,
+      "provider_cost_difference_usd": null,
+      "provider_cost_difference_percent": null,
+      "provider_cost_difference_flagged": false,
+      "estimated_api_cost_usd": 2.663371,
+      "api_cost_breakdown_usd": {
+        "model_tokens": 2.663371,
+        "web_search": 0
+      },
+      "token_efficiency": 45.458058122673116,
+      "non_cached_token_efficiency": 910.804878270928,
+      "time_efficiency": 458.01526717557255,
+      "cost_efficiency": 37.546402660387905,
+      "cost_per_quality_point_usd": 0.02663371,
+      "square_root_roi": 16.92967101766363,
+      "gate_quality_factor": 1,
+      "gate_adjusted_roi": 16.92967101766363,
+      "quality_gate": "PASS",
+      "quality_gate_passed": true,
+      "cleanup_confirmed": true,
+      "marginal_vs_monolith": {
+        "quality_score": 2,
+        "total_tokens": -14369990,
+        "non_cached_tokens": -214523,
+        "wall_seconds": -941,
+        "estimated_api_cost_usd": 2.18792372
+      },
+      "marginal_vs_comparator": {
+        "comparator_treatment": "monolith_opus_5_medium_opencode",
+        "quality_score": 0,
+        "total_tokens": 918639,
+        "non_cached_tokens": 15409,
+        "wall_seconds": 189,
+        "estimated_api_cost_usd": 0.7618637500000001,
+        "gate_adjusted_roi": -6.060355215058738
+      },
+      "dominated_by": [
+        "monolith_opus_5_medium_opencode"
+      ],
+      "pareto_frontier": false,
+      "quality_tolerance": {
+        "epsilon_0": {
+          "epsilon": 0,
+          "dominated_by": [
+            "monolith_opus_5_medium_opencode"
+          ],
+          "pareto_frontier": false
+        },
+        "epsilon_2": {
+          "epsilon": 2,
+          "dominated_by": [
+            "monolith_opus_5_medium_opencode"
+          ],
+          "pareto_frontier": false
+        },
+        "epsilon_3": {
+          "epsilon": 3,
+          "dominated_by": [
+            "monolith_grok_4_5_medium_fast_cursor",
+            "monolith_opus_5_medium_opencode"
+          ],
+          "pareto_frontier": false
+        }
+      },
+      "strict_dominated_by": [
+        "monolith_opus_5_medium_opencode"
+      ],
+      "strict_pareto_frontier": false,
+      "quality_adjusted_efficiency": {
+        "usd_per_hour_0": 37.546402660387905,
+        "usd_per_hour_3": 30.135268178271808,
+        "usd_per_hour_10": 20.63257692701563,
+        "luna_max_sol_medium_break_even": 19.089165557392523,
+        "luna_xhigh_sol_medium_break_even": 16.05186351934496,
+        "usd_per_hour_25": 12.312686585939494,
+        "usd_per_hour_60": 6.343820747478443
+      }
+    },
+    {
       "treatment": "native_isolated",
       "label": "Native isolated subagents",
       "model": "gpt-5.6-luna",
@@ -3202,7 +3320,8 @@
         "monolith_grok_4_5_medium_fast_cursor",
         "monolith_grok_4_5_high_fast_cursor",
         "monolith_auto_cursor",
-        "monolith_opus_5_medium_opencode"
+        "monolith_opus_5_medium_opencode",
+        "monolith_opus_5_medium_opencode_oauth"
       ],
       "pareto_frontier": false,
       "quality_tolerance": {
@@ -3218,7 +3337,8 @@
             "monolith_grok_4_5_medium_fast_cursor",
             "monolith_grok_4_5_high_fast_cursor",
             "monolith_auto_cursor",
-            "monolith_opus_5_medium_opencode"
+            "monolith_opus_5_medium_opencode",
+            "monolith_opus_5_medium_opencode_oauth"
           ],
           "pareto_frontier": false
         },
@@ -3241,7 +3361,8 @@
             "monolith_grok_4_5_medium_fast_cursor",
             "monolith_grok_4_5_high_fast_cursor",
             "monolith_auto_cursor",
-            "monolith_opus_5_medium_opencode"
+            "monolith_opus_5_medium_opencode",
+            "monolith_opus_5_medium_opencode_oauth"
           ],
           "pareto_frontier": false
         },
@@ -3266,7 +3387,8 @@
             "monolith_grok_4_5_high_fast_cursor",
             "monolith_auto_cursor",
             "monolith_luna_xhigh_opencode_control",
-            "monolith_opus_5_medium_opencode"
+            "monolith_opus_5_medium_opencode",
+            "monolith_opus_5_medium_opencode_oauth"
           ],
           "pareto_frontier": false
         }
@@ -3281,7 +3403,8 @@
         "monolith_grok_4_5_medium_fast_cursor",
         "monolith_grok_4_5_high_fast_cursor",
         "monolith_auto_cursor",
-        "monolith_opus_5_medium_opencode"
+        "monolith_opus_5_medium_opencode",
+        "monolith_opus_5_medium_opencode_oauth"
       ],
       "strict_pareto_frontier": false,
       "quality_adjusted_efficiency": {

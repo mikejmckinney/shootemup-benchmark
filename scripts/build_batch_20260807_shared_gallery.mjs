@@ -21,6 +21,7 @@ const supported = new Set([
   "monolith_sonnet_5_medium_claude_code",
   "monolith_opus_5_medium_opencode",
   "monolith_sonnet_5_medium_opencode",
+  "monolith_opus_5_medium_opencode_oauth",
 ]);
 
 if (!supported.has(treatment)) throw new Error(`unsupported treatment: ${treatment}`);
@@ -137,6 +138,21 @@ if (treatment === "monolith_sol_low_fast_opencode") {
     [
       "body: JSON.stringify({ name: v.name, score }),",
       `body: JSON.stringify({ candidate_id: '${treatment}', player_name: v.name, score }),`,
+    ],
+  ]);
+} else if (treatment === "monolith_opus_5_medium_opencode_oauth") {
+  await fs.writeFile(
+    path.join(outputDir, ".env.production"),
+    `VITE_SUPABASE_URL=${sharedUrl}\nVITE_SUPABASE_PUBLISHABLE_KEY=${publishableKey}\n`,
+  );
+  await replaceExactly(path.join(outputDir, "src/leaderboard.ts"), [
+    [
+      "leaderboard?select=id,name,score,created_at&order=score.desc,created_at.asc&limit=${limit}",
+      `leaderboard?select=id,name:player_name,score,created_at&candidate_id=eq.${treatment}&order=score.desc,created_at.asc&limit=\${limit}`,
+    ],
+    [
+      "body: JSON.stringify({ name: nameCheck.name, score }),",
+      `body: JSON.stringify({ candidate_id: '${treatment}', player_name: nameCheck.name, score }),`,
     ],
   ]);
 } else if (treatment === "monolith_sonnet_5_medium_opencode") {

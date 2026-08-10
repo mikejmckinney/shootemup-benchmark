@@ -380,6 +380,7 @@ const opusClaudeCode = rows.find(row => row.treatment === "monolith_opus_5_mediu
 const sonnetClaudeCode = rows.find(row => row.treatment === "monolith_sonnet_5_medium_claude_code");
 const opusOpenCode = rows.find(row => row.treatment === "monolith_opus_5_medium_opencode");
 const sonnetOpenCode = rows.find(row => row.treatment === "monolith_sonnet_5_medium_opencode");
+const opusOpenCodeOauth = rows.find(row => row.treatment === "monolith_opus_5_medium_opencode_oauth");
 const breakEvenUsdPerMinute = (first, second) => (
   first.quality_score * second.estimated_api_cost_usd
   - second.quality_score * first.estimated_api_cost_usd
@@ -458,6 +459,11 @@ const summary = {
       candidate: "monolith_sol_medium_opencode_api",
       comparator: "monolith_sol_medium_opencode",
       delta: solOpenCodeApi.marginal_vs_comparator,
+    },
+    opus_5_opencode_oauth_vs_api: {
+      candidate: "monolith_opus_5_medium_opencode_oauth",
+      comparator: "monolith_opus_5_medium_opencode",
+      delta: opusOpenCodeOauth.marginal_vs_comparator,
     },
     minimal_context_vs_warm_cache: {
       candidate: "monolith_luna_max_codex_minimal",
@@ -572,7 +578,7 @@ ${table}
 
 Gate-adjusted ROI uses \`score × clamp((score - 87) / 5, 0, 1) / sqrt(API cost × elapsed minutes)\`. The gate factor is 1 for PASS, 0.2–0.8 for BORDERLINE, and 0 for FAIL. It is a comparative index, not conventional financial ROI. Total tokens are cached input + uncached input + cache writes + output. Reasoning tokens are included in output and are not counted twice. Rows are ranked by gate-adjusted ROI descending; Pareto analysis remains separate below.
 
-- Highest observed quality: **${rows.reduce((a, b) => b.quality_score > a.quality_score ? b : a).label}**.
+- Highest observed quality (${Math.max(...rows.map(row => row.quality_score))}): **${rows.filter(row => row.quality_score === Math.max(...rows.map(item => item.quality_score))).map(row => row.label).join(", ")}**.
 - Quality-gate borderline: **${rows.filter(row => row.quality_gate === "BORDERLINE").map(row => row.label).join(", ") || "none"}**.
 - Quality-gate failures: **${rows.filter(row => row.quality_gate === "FAIL").map(row => row.label).join(", ") || "none"}**.
 - Pareto frontier at ε=${primaryQualityTolerance}: **${frontierLabels.join(", ")}**.
@@ -644,6 +650,7 @@ ${continuationSection}
 - Native isolated coordination remained much stronger than unrestricted dynamic delegation in the original architecture set.
 - Opus 5 Medium in Claude Code scored ${opusClaudeCode.quality_score} in ${mmss(opusClaudeCode.wall_seconds)} for $${f(opusClaudeCode.estimated_api_cost_usd, 4)}, passing all automated production checks. Sonnet 5 Medium finished ${mmss(opusClaudeCode.wall_seconds - sonnetClaudeCode.wall_seconds)} faster and cost ${f((1 - sonnetClaudeCode.estimated_api_cost_usd / opusClaudeCode.estimated_api_cost_usd) * 100, 0)}% less, but its hidden leaderboard result and broken primary restart flow reduced quality to ${sonnetClaudeCode.quality_score}, below the gate, and therefore zero gate-adjusted ROI.
 - Opus 5 Medium in OpenCode scored ${opusOpenCode.quality_score} in ${mmss(opusOpenCode.wall_seconds)} for $${f(opusOpenCode.estimated_api_cost_usd, 4)}. Against Opus in Claude Code, it scored ${signed(opusOpenCode.quality_score - opusClaudeCode.quality_score)}, finished ${mmss(opusClaudeCode.wall_seconds - opusOpenCode.wall_seconds)} faster, and cost ${f((1 - opusOpenCode.estimated_api_cost_usd / opusClaudeCode.estimated_api_cost_usd) * 100, 0)}% less. Sonnet in OpenCode also finished with a lower cost than Sonnet in Claude Code, but its corrected score of ${sonnetOpenCode.quality_score} failed the quality gate; neither single run establishes a causal runtime effect.
+- Opus 5 Medium through OpenCode OAuth also scored ${opusOpenCodeOauth.quality_score}, but took ${mmss(opusOpenCodeOauth.wall_seconds - opusOpenCode.wall_seconds)} longer, used ${f(opusOpenCodeOauth.total_tokens / opusOpenCode.total_tokens, 1)}× the tokens, and had a $${f(opusOpenCodeOauth.estimated_api_cost_usd - opusOpenCode.estimated_api_cost_usd, 4)} higher API-equivalent cost than the API-key run. Its gate-adjusted ROI was ${f(opusOpenCodeOauth.gate_adjusted_roi, 4)} versus ${f(opusOpenCode.gate_adjusted_roi, 4)}. This is a one-run comparison through an unsupported OAuth plugin, not evidence that OAuth caused the difference.
 - The fresh Luna Max OpenCode control delivered a corrected score of ${methodologyControl.quality_score} in ${mmss(methodologyControl.wall_seconds)} for $${f(methodologyControl.estimated_api_cost_usd, 4)}. Spec Kit, full-methodology Superpowers, and AI Repo Template all exhausted 45:00 without a timed deployment, scoring ${rows.find(row => row.treatment === "monolith_luna_max_opencode_speckit").quality_score}, ${rows.find(row => row.treatment === "dynamic_luna_max_opencode_superpowers").quality_score}, and ${aiRepoTemplate.quality_score}, respectively. All three receive zero gate-adjusted ROI because they fail the quality gate.
 - Spec Kit used ${f(rows.find(row => row.treatment === "monolith_luna_max_opencode_speckit").total_tokens / methodologyControl.total_tokens, 1)}× the control's tokens while spending most of the run on specification artifacts. Superpowers used ${f(rows.find(row => row.treatment === "dynamic_luna_max_opencode_superpowers").total_tokens / methodologyControl.total_tokens, 1)}× the control's tokens; its six-agent implement-review-fix loop caught real engine defects but completed only two of seven planned tasks. AI Repo Template used ${f(aiRepoTemplate.total_tokens / methodologyControl.total_tokens, 1)}× the control's tokens: template-seed onboarding and its inherited 398-check verification suite consumed about 20 minutes, and repeated local browser-tool recovery consumed the final deployment window despite a locally built and tested game.
 
@@ -661,6 +668,7 @@ ${continuationSection}
 - OpenCode and Codex token telemetry come from different runtime event formats. The compiler converts both to cached input, uncached input, and output. The two API-key Fast runs now reconcile locally against provider-reported per-turn cost, but this does not reconcile the older OAuth OpenCode runs or Codex runs against provider billing records.
 - Claude Code exposes cache creation separately from cache reads, so total-token accounting includes those disjoint cache-write tokens. Opus's official-rate estimate reconciles within 0.1% of Claude Code's terminal cost. Sonnet's $${f(sonnetClaudeCode.estimated_api_cost_usd, 4)} estimate uses Anthropic's time-limited introductory list price, while Claude Code reported $${f(sonnetClaudeCode.provider_reported_cost_usd, 4)}; the 33% discrepancy is retained and flagged rather than silently substituting one source.
 - OpenCode's Anthropic ledger exposes aggregate cache writes rather than separate 5-minute and 1-hour cache-creation buckets. The compiler prices those writes at the 5-minute rate, matching OpenCode's provider-reported costs for both runs. Runtime, system context, tool surface, API-versus-OAuth authentication, run order, and stochastic generation all differ from the Claude Code treatments.
+- The Opus 5 OpenCode OAuth treatment authenticated through the unsupported community \`opencode-claude-auth\` plugin and a Claude Pro subscription. Its $${f(opusOpenCodeOauth.estimated_api_cost_usd, 4)} cost is an API-equivalent estimate from OpenCode's token ledger, not an incremental subscription charge or provider invoice. The single sequential OAuth/API pair cannot isolate authentication effects from stochastic output, cache state, plugin behavior, or provider load.
 - The Sol Medium OpenCode API-versus-OAuth comparison has one run per authentication mode. The API run has request-level transport and provider-cost telemetry, while the older OAuth run does not; stochastic generation, provider load, and sequential execution remain confounders, so the comparison cannot establish an authentication-mode effect.
 - The minimal-context treatment disables several optional Codex surfaces together and has one replicate. It shows that the default integration surface was not necessary for this successful run, but cannot estimate the marginal token contribution of skills, MCP, apps, project instructions, or workflow variation individually.
 - The asynchronous-streaming A2A extension changes transport and runtime together. Its improvement over asynchronous-polling A2A cannot be attributed specifically to streaming, OpenCode, cache/order conditions, or their interaction.
@@ -709,6 +717,7 @@ const galleryLabels = {
   monolith_sonnet_5_medium_claude_code: "Monolith · Sonnet 5 Medium · Claude Code",
   monolith_opus_5_medium_opencode: "Monolith · Opus 5 Medium · OpenCode",
   monolith_sonnet_5_medium_opencode: "Monolith · Sonnet 5 Medium · OpenCode",
+  monolith_opus_5_medium_opencode_oauth: "Monolith · Opus 5 Medium · OpenCode OAuth",
 };
 const galleryAnchors = {
   monolith: "cold-cache-luna-max-monolith",
@@ -745,6 +754,7 @@ const galleryAnchors = {
   monolith_sonnet_5_medium_claude_code: "monolith-with-sonnet-5-medium-in-claude-code",
   monolith_opus_5_medium_opencode: "monolith-with-opus-5-medium-in-opencode",
   monolith_sonnet_5_medium_opencode: "monolith-with-sonnet-5-medium-in-opencode",
+  monolith_opus_5_medium_opencode_oauth: "monolith-with-opus-5-medium-in-opencode-via-oauth",
 };
 const galleryLink = row => `[${galleryLabels[row.treatment]}](#${galleryAnchors[row.treatment]})`;
 const galleryRows = decisionRows.map(row =>
